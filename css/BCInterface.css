@@ -1,0 +1,159 @@
+#printable {
+    display: block;
+    float: left;
+    height: 100%;
+    min-height: 500px;
+}
+
+/*************************************************/
+/******************** MENU ***********************/
+/*************************************************/
+#selectMapsNumber {
+    margin: 5px 0 0 43px;
+}
+
+.rightMenuButtons {
+    height: 33px;
+    width: 129px;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.rightMenuButton {
+    background: linear-gradient(#7F7F7F -200%, #FFFFFF 80%, #7F7F7F 197%) repeat scroll 0 0 transparent;
+    border-right: 2px solid #DDDDDD;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    color: #666666;
+    float: left;
+    font-weight: 500;
+    height: 26px;
+    min-width: auto;
+    padding: 3px 11px;
+    text-align: center;
+}
+
+.rightMenuButton:hover, .rightMenuButton.selected {
+    background: url("../img/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
+    border-left: 1px solid #B04B15;
+    border-right: 1px solid #B04B15;
+    font-weight: 550;
+}
+
+.rightMenuHR {
+    height: 5px;
+    background-color: #333333;
+    margin-bottom: -10px;
+}
+
+.rightMenuSubTool {
+    margin-bottom: 10px;
+}
+
+#submitShowAllLegends .lonelyToolIcone, #submitHideAllLegends .lonelyToolIcone {
+    top: 2px;
+    position: relative;
+}
+
+.select_item_middle {
+    padding: 0 33px 0 0;
+}
+
+/************************************************************************************/
+/******************** PROJECTIONS, RESOURCES, VARIABLES & ... ***********************/
+/************************************************************************************/
+#projectionValue, #timeValue, #elevationValue, #paletteValue {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 10px;
+    color: #416A8A;
+    font-size: 12px;
+}
+
+.projection, .time, .elevation, .palette {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#projectionContent, #timeContent, #elevationContent, #paletteContent {
+    float: left;
+    width: 100%;
+    display: none;
+}
+
+#elevationValue, #menu_elevation {
+	display : none;
+}
+
+/***************************************************/
+/******************** BUTTON ***********************/
+/***************************************************/
+.submitButton {
+    width: 100%;
+}
+
+.ui-dialog .ui-dialog-titlebar-close span {
+    margin: 0;
+}
+
+.ui-button-icon-only .ui-icon {
+    left: 0;
+    top: 0;
+    margin: 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+    margin: 0;
+}
+
+/***************************************************/
+/******************** SLIDER ***********************/
+/***************************************************/
+#slider-range, #slider-nbcolorbands {
+    width: 80%;
+    margin: auto;
+}
+
+/**************************************************************/
+/************************* GRAB *******************************/
+/**************************************************************/
+#hideOrShowLeftMenu {
+    float: left;
+    height: 100%;
+    width: 8px;
+    margin-right: 5px;
+    background-color: #F2F2F2;
+    cursor: pointer;
+    border-right: 1px solid #d6d6d6;
+}
+
+.hideOrShowLeftMenu {
+    position: relative;
+    top: 50%;
+    left: 1px;
+}
+
+#hideOrShowRightMenu {
+    float: right;
+    cursor: pointer;
+}
+
+/************************* SELECT ******************************/
+.select2-container {
+    display: block;
+    margin: auto !important;
+}
+
+#s2id_periodSelect, #s2id_projectionSelect {
+    width: 90%;
+}
+
+#s2id_timeYearSelect, #s2id_timeMonthSelect {
+    float: left;
+    margin-left: 10px !important;
+}
+
+#s2id_timeMonthSelect {
+    width: 100px;
+}

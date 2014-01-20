@@ -1,0 +1,281 @@
+@media print {
+    .BCmapTitleIconeMenu {
+        display: none;
+    }
+   .maximizeDiv { 	/* do no print Maximize icon of OpenLayers.Control.LayerSwitcher */
+        display: none;
+    }
+   .olControlZoom, .BCmaxExtentClass { 	/* do no print Maximize icon of OpenLayers.Control.Zoom */
+        display: none;
+    }
+}
+
+/**************************************************************/
+/************************** MAP *******************************/
+/**************************************************************/
+.olMap {
+    border: 1px solid black;
+    padding: 0 0 25px 0 !important;
+/*  padding: 0 0 42px 0 !important;  */    /* avec test 400x400 */
+    margin:1px;
+}
+
+.BCmap {
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.BCmaxExtentClass
+{
+   background-image: url("../../common/img/maximize.png");
+   width: 20px;
+   height: 20px;
+   position:relative;
+   top: 85px;
+   left: 13px;
+   z-index: 1000;
+   cursor:pointer;
+}
+
+.BCadviseZoomMaxClass {
+    height: 19px;
+    left: 13px;
+    position: relative;
+    top: 21px;
+    width: 20px;
+    z-index: 1000;
+    background-image:  url("../../common/img/maximize.png");
+    opacity: 0;
+}
+
+.BCmap.selected {
+    color: #416A8A;
+}
+
+.BCmapWMS {
+    float: left;
+}
+
+.BCmapTitle {
+    background-color: #EEEEEE;
+    padding: 6px 3px 6px 6px;
+    height: 30px;
+}
+
+.BCmapSubTitle, .BCmapSubTitleShort {
+    margin: 0 120px 0 0;
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.BCmapSubTitle {
+    text-align: center;
+    font-weight: bold;
+    margin-right: 4px;
+    font-size: 12px;
+}
+
+.BCmapTitleIconeMenu {
+    float: right;
+    margin: -15px 12px 0 0;
+    cursor: pointer;
+}
+
+.BCmapTitleIconeMenu[disabled] {
+    opacity: 0.4;
+    cursor: auto;
+}
+
+/**************************************************************/
+/************************* LEGEND *****************************/
+/**************************************************************/
+.complexToolTip {
+    z-index: 2000;
+}
+
+/**************************************************************/
+/************************* LEGEND *****************************/
+/**************************************************************/
+.BClegend {
+    z-index: 1000;
+    float: right;
+    position: relative;
+    display: none;
+    border: 1px dotted #464646;
+    background-color: rgba(200,200,200,0.6);
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+/**************************************************************/
+/*********************** ICONE MENU ***************************/
+/**************************************************************/
+.BCiconeMenu {
+    float: right;
+    background-color: #F2F2F2;
+    color: #666666;
+    position: relative;
+    float: right;
+    z-index: 1000;
+    opacity: 0.8;
+    padding: 6px 4px 0;
+    display: none;
+}
+
+.BCiconeForMenu {
+    clear: left;
+    padding-bottom: 23px;
+}
+
+.BCiconeForMenuImage {
+    float: left;
+    position: relative;
+    top: -1px;
+}
+
+.BCIconeForMenuTitle {
+    float: left;
+}
+
+.BCIconeForMenuTitle:hover {
+    color: deepskyblue;
+}
+
+
+/* ******************************************************** */
+/* ************************* CONTAINER ******************** */
+/* ******************************************************** */
+.BCcontainer {
+    -moz-border-radius: 4px 4px 4px 4px;
+    -moz-box-shadow: 0 0 4px rgba(101, 152, 30, 1);
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -webkit-box-shadow: 0 0 4px rgba(101, 152, 30, 1);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    margin-right: 15px;
+    margin-bottom: 20px;
+    float: left;
+}
+
+.BCcontainerTitle {
+    background: -moz-linear-gradient(center bottom, #DFDFDF 0%, #F2F2F2 66%, #F2F2F2 90%, #E6E6E6 93%, #BEBEBE 96%, #969696 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(223, 223, 223, 1)), color-stop(66%, rgba(242, 242, 242, 1)), color-stop(90%, rgba(242, 242, 242, 1)), color-stop(93%, rgba(230, 230, 230, 1)), color-stop(96%, rgba(210, 210, 210, 1)), to(rgba(140, 140, 140, 1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left bottom, left top, from(rgba(223, 223, 223, 1)), color-stop(66%, rgba(242, 242, 242, 1)), color-stop(90%, rgba(242, 242, 242, 1)), color-stop(93%, rgba(230, 230, 230, 1)), color-stop(96%, rgba(210, 210, 210, 1)), to(rgba(140, 140, 140, 1))); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #DFDFDF 0%, #F2F2F2 66%, #F2F2F2 90%, #E6E6E6 93%, #BEBEBE 96%, #969696 100%); /* Opera 11.10+ */
+    background: linear-gradient(#DFDFDF 0%, #F2F2F2 66%, #F2F2F2 90%, #E6E6E6 93%); /* W3C */
+    height: 22px;
+    padding: 3px 0 0 0;
+    color: #666666;
+    text-align: center;
+    min-width: 90px;
+    margin-top: -2px;
+}
+
+.BCcontainerTitleText {
+    float: left;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.BCcontainerTitleClose {
+    float: right;
+    margin-right: 2px;
+}
+
+.BCcontainerContent {
+    padding: 3px 8px;
+    margin-top: 5px;
+}
+
+
+/* ******************************************************** */
+/* ************************* OPENLAYER ******************** */
+/* ******************************************************** */
+.olImageLoadError {
+/* when OL encounters a 404, don't display the image */
+    display: none !important; /* background-color: #FF0000; */
+
+}
+
+/* ============================================================================= */
+/* for OpenLayers.Control.layerSwitcher */
+
+div.olControlLayerSwitcher {
+    background-color: #AAAAAA;
+    color: white;
+    top: 10px;
+    left: 10px;
+}
+
+div.layersDiv {
+    padding: 4px;
+    float: left;
+}
+
+div.layersDiv .dataLbl {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+div.minimizeDiv {
+    float: right;
+    position: relative !important;
+    margin: 4px;
+}
+
+div.baseLbl, div.baseLayersDiv {
+/* to remove display of the baselayer in OpenLayers.Control.LayerSwitcher */
+    display: none;
+}
+
+/* ============================================================================= */
+/* for OpenLayers.Control.PanZoomBar */
+
+div.olControlPanZoomBar {
+    top: 40px !important;
+    left: 10px !important;
+}
+
+/* ============================================================================= */
+/* for OpenLayers.Control.Zoom */
+
+div.olControlZoom {
+    position: absolute;
+    top: 40px;
+    left: 12px;
+}
+
+div.olControlZoom a {
+    display: block;
+    margin: 1px;
+    padding: 0;
+    color: white;
+    font-size: 18px;
+    font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    height: 18px;
+    width: 18px;
+    line-height: 19px;
+    background: #000000;
+}
+
+@media only screen and (max-width: 600px) {
+    div.olControlZoom a:hover {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+
+a.olControlZoomIn {
+    border-radius: 4px 4px 0 0;
+}
+
+a.olControlZoomOut {
+    border-radius: 0 0 4px 4px;
+}
+
+/* ============================================================================= */
+
