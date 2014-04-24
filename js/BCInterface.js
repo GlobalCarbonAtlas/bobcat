@@ -1313,7 +1313,7 @@ var BCInterfaceW = Class.create( {
 	var divContentFooter = $( '' +
                         '<div class="helpFooterContentRight">' +
                         '<div class="helpFooterContentFloat">A project realised by</div>' +
-                        '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="'+ this.imgPath + '/img/logo_lsce_small.png"/></div><div><img src="'+ this.imgPath + '/img/logo_LSCE_text_2_small.png"/></div></div>' +
+                        '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="'+ this.imgPath + '/logo_lsce_small.png"/></div><div><img src="'+ this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
                         '</div>' );
 
         divFooter.append( divContentFooter );
