@@ -1,6 +1,11 @@
 <div id="pageWrapper">
     <div id="leftMenu" class="non-printable">
-	<div id="helpMenu"><img src="img/help_big_orange.png"></div>
+        <div class="leftMenuUp">
+            <div id="helpMenu"><img src="img/help_big_orange.png"></div>
+            <div class="leftMenuUp">
+                <div id="clearAll">Clear all selections</div>
+            </div>
+        </div>
 	<div class="leftMenu firstLeftMenu">
 	    <div id="submitCreateMap" class="orangeButton">Create map</div>
         </div>
