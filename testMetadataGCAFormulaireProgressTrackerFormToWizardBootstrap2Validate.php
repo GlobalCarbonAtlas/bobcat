@@ -385,7 +385,7 @@
 	      </div><!--Spatial resolution-->
 	      <div class= "row"><!--Spatial coverage-->
 	       <div class= "col-md-24 col-sm-24">
-	       <div class= "label1" id= "spatialCoverageText" title= "Geographical area where data applied">Spatial coverage (*):</div>
+	       <div class= "label1" id= "spatialCoverageText" title= "Geographical area where data applied (only degrees)">Spatial coverage (*):</div>
 
 	        <div class= "row"><!--North bound latitude-->
 		 <div class= "col-md-24 col-sm-24">
@@ -1382,21 +1382,43 @@
 				return spatialCoverageNorthRentre;
 				} 
 			},
+			{input: "#spatialCoverageNorthInput", message: "North latitude must be between 0-90 degrees", action: "keyup, blur",  rule: function() {
+				var spatialCoverageNorthRentre= document.forms["metadataForm"].spatialCoverageNorthInput.value;
+				if (spatialCoverageNorthRentre >90) {spatialCoverageNorthRentre=0;}
+				else {spatialCoverageNorthRentre=1;}
+				return spatialCoverageNorthRentre;
+				}
+			},
+
 			{input: "#spatialCoverageSouthInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
 			{input: "#spatialCoverageSouthInput", message: "Characters not authorized", action: "keyup, blur",  rule: function() {
 				var spatialCoverageSouthRentre= document.forms["metadataForm"].spatialCoverageSouthInput.value;
-				if (/^[0-9.]+$/.test(spatialCoverageSouthRentre)) {spatialCoverageSouthRentre=1;}
+				if (/^[0-9.-]+$/.test(spatialCoverageSouthRentre)) {spatialCoverageSouthRentre=1;}
 				else {spatialCoverageSouthRentre=0;}
 				return spatialCoverageSouthRentre;
 				} 
 			},
+			{input: "#spatialCoverageSouthInput", message: "South latitude must be between 0 and -90 degrees", action: "keyup, blur",  rule: function() {
+				var spatialCoverage= document.forms["metadataForm"].spatialCoverageSouthInput.value;
+				if (spatialCoverage <=0) {spatialCoverage=1;}
+				else {spatialCoverage=0;}
+				return spatialCoverage;
+				}
+			},
 			{input: "#spatialCoverageWestInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
 			{input: "#spatialCoverageWestInput", message: "Characters not authorized", action: "keyup, blur",  rule: function() {
 				var spatialCoverageWestRentre= document.forms["metadataForm"].spatialCoverageWestInput.value;
-				if (/^[0-9.]+$/.test(spatialCoverageWestRentre)) {spatialCoverageWestRentre=1;}
+				if (/^[0-9.-]+$/.test(spatialCoverageWestRentre)) {spatialCoverageWestRentre=1;}
 				else {spatialCoverageWestRentre=0;}
 				return spatialCoverageWestRentre;
 				} 
+			},
+			{input: "#spatialCoverageWestInput", message: "West longitude must be between 0 and -180 degrees", action: "keyup, blur",  rule: function() {
+				var spatialCoverage= document.forms["metadataForm"].spatialCoverageWestInput.value;
+				if (spatialCoverage <=0) {spatialCoverage=1;}
+				else {spatialCoverage=0;}
+				return spatialCoverage;
+				}
 			},
 			{input: "#spatialCoverageEastInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
 			{input: "#spatialCoverageEastInput", message: "Characters not authorized", action: "keyup, blur",  rule: function() {
@@ -1405,6 +1427,13 @@
 				else {spatialCoverageEastRentre=0;}
 				return spatialCoverageEastRentre;
 				} 
+			},
+			{input: "#spatialCoverageEastInput", message: "East longitude must be between 0-180 degrees", action: "keyup, blur",  rule: function() {
+				var spatialCoverage= document.forms["metadataForm"].spatialCoverageEastInput.value;
+				if (spatialCoverage <=180) {spatialCoverage=1;}
+				else {spatialCoverage=0;}
+				return spatialCoverage;
+				}
 			},
 		// Product description:
 			{input: "#addDocProductDetailsStep0Input", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
