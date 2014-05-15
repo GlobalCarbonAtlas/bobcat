@@ -99,6 +99,7 @@ var BCInterfaceW = Class.create( {
         $( "#resourceSelect" ).fancytree().init();
 //        $( "button#btnResetSearchResource" ).click();
 
+
         $( "#mapsNumberSelect" ).select2("val", "2").click();
     },
 
