@@ -1,6 +1,6 @@
 function createContributorRow()
 {
-
+   alert("createContributorRow");
 
 }
 
