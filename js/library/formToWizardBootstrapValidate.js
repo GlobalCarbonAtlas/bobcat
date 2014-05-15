@@ -11,7 +11,7 @@
         //var submmitButtonName = "#" + options.submitButton;
 
         
-	$(element).before("<div class= 'row'><ul id='steps' class= 'col-md-24 col-sm-24'></ul></div</div>");// On ajoute avant (ds le sens css) chq field un element ul avec id steps 
+	$(element).before("<div class= 'row'><ul id='steps' class= 'col-md-24 col-sm-24'></ul></div></div>");// On ajoute avant (ds le sens css) chq field un element ul avec id steps
         
 	steps.each(function(i) {//we iterate through this wrapped set (that returned all fieldsets), wrap each fieldset into a div and append a paragraph that will hold “back” and “next” buttons.
             $(this).wrap("<div id='step" + i + "'></div>");
