@@ -121,6 +121,10 @@ select {
     margin: 5px 10px;
 }
 
+.leftMenuUp {
+    padding: 0;
+}
+
 /********************* STYLES WEDOODATA *************************/
 .menu_link_left, .menu_link_middle, .menu_link_right {
     color: #333333;
@@ -225,6 +229,22 @@ select {
 }
 
 /****************************************************************/
+
+#clearAll {
+    background: url("../img/clearAll.png") no-repeat scroll 6px 0 #F2F2F2;
+    color: #808080;
+    display: block;
+    position: relative;
+    top: 4px;
+    width: 110px;
+    font-size: 11px;
+    font-weight: normal;
+    line-height: 20px;
+    padding-left: 30px;
+    text-decoration: none;
+    text-shadow: 1px 1px #FFFFFF;
+    cursor: pointer;
+}
 
 /*********************** FANCY MENU *****************************/
 .fancytree-container {
