@@ -42,10 +42,7 @@
 
 <form id="metadataForm" method="post" action="testForm.php">
 <!--form id= "metadataForm" method= "post" action="testForm.php" onsubmit= "return verificationChamps();">--><!-- Tester que sur la derniere page donc !-->
-<div class="row">
-    <div id="mandatoryFieldIndication" class="col-md-24 col-sm-24">(*): mandatory fields</div>
-</div>
-<!-- mandatory field info row-->
+<div id="mandatoryFieldIndication" class="col-md-24 col-sm-24">(*): mandatory fields</div>
 
 <div id="basicInformation" class="row">
     <div class="col-md-push-7 col-md-9 col-sm-push-7 col-sm-9"><!--Pour placer basic info-->
@@ -930,12 +927,12 @@
         createContributorRow( "contributorsContainer", 1 )
     } );
 
-        $( "#metadataForm" ).jqxValidator( {rules: validatorRules } );
+    $( "#metadataForm" ).jqxValidator( {rules: validatorRules } );
 
     // Pour adapter chgment window:
-        $( '#metadataForm' ).jqxValidator( 'updatePosition' );// Ne me fait rien !!!
+    $( '#metadataForm' ).jqxValidator( 'updatePosition' );// Ne me fait rien !!!
 
-        $( "#metadataForm" ).formToWizard();
+    $( "#metadataForm" ).formToWizard();
 
 </script>
 
