@@ -105,166 +105,166 @@ var validatorRules = [
         return freeTextInputRentre;
     }
     },
-    {input: "#dataProducerInfoNameInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
-    {
-        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput.value;
-        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
-        {
-            dataProducerInfoNameRentre = 1;
-        }
-        else
-        {
-            dataProducerInfoNameRentre = 0;
-        }
-        return dataProducerInfoNameRentre;
-    }
-    },
-    {input: "#dataProducerInfoOrganisationInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoMailInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-    {input: "#dataProducerInfoMailInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoRoleSelect", message: "This field is mandatory", action: "change",  rule: function()
-    {
-        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect.value;
-        if( dataProducerInfoRoleRentre == "nullValue" )
-        {
-            dataProducerInfoRoleRentre = 0;
-        }
-        else
-        {
-            dataProducerInfoRoleRentre = 1
-        }
-        return dataProducerInfoRoleRentre;
-    }
-    },
-    {input: "#dataProducerInfoNameInput2", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoNameInput2", message: "Characters not authorized", action: "keyup, blur",  rule: function()
-    {
-        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput2.value;
-        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
-        {
-            dataProducerInfoNameRentre = 1;
-        }
-        else
-        {
-            dataProducerInfoNameRentre = 0;
-        }
-        return dataProducerInfoNameRentre;
-    }
-    },
-    {input: "#dataProducerInfoOrganisationInput2", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoMailInput2", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-    {input: "#dataProducerInfoMailInput2", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoRoleSelect2", message: "This field is mandatory", action: "change",  rule: function()
-    {
-        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect2.value;
-        if( dataProducerInfoRoleRentre == "nullValue" )
-        {
-            dataProducerInfoRoleRentre = 0;
-        }
-        else
-        {
-            dataProducerInfoRoleRentre = 1
-        }
-        return dataProducerInfoRoleRentre;
-    }
-    },
-    {input: "#dataProducerInfoNameInput3", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoNameInput3", message: "Characters not authorized", action: "keyup, blur",  rule: function()
-    {
-        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput3.value;
-        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
-        {
-            dataProducerInfoNameRentre = 1;
-        }
-        else
-        {
-            dataProducerInfoNameRentre = 0;
-        }
-        return dataProducerInfoNameRentre;
-    }
-    },
-    {input: "#dataProducerInfoOrganisationInput3", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoMailInput3", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-    {input: "#dataProducerInfoMailInput3", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoRoleSelect3", message: "This field is mandatory", action: "change",  rule: function()
-    {
-        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect3.value;
-        if( dataProducerInfoRoleRentre == "nullValue" )
-        {
-            dataProducerInfoRoleRentre = 0;
-        }
-        else
-        {
-            dataProducerInfoRoleRentre = 1
-        }
-        return dataProducerInfoRoleRentre;
-    }
-    },
-    {input: "#dataProducerInfoNameInput4", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoNameInput4", message: "Characters not authorized", action: "keyup, blur",  rule: function()
-    {
-        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput4.value;
-        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
-        {
-            dataProducerInfoNameRentre = 1;
-        }
-        else
-        {
-            dataProducerInfoNameRentre = 0;
-        }
-        return dataProducerInfoNameRentre;
-    }
-    },
-    {input: "#dataProducerInfoOrganisationInput4", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoMailInput4", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-    {input: "#dataProducerInfoMailInput4", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoRoleSelect4", message: "This field is mandatory", action: "change",  rule: function()
-    {
-        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect4.value;
-        if( dataProducerInfoRoleRentre == "nullValue" )
-        {
-            dataProducerInfoRoleRentre = 0;
-        }
-        else
-        {
-            dataProducerInfoRoleRentre = 1
-        }
-        return dataProducerInfoRoleRentre;
-    }
-    },
-    {input: "#dataProducerInfoNameInput5", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoNameInput5", message: "Characters not authorized", action: "keyup, blur",  rule: function()
-    {
-        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput5.value;
-        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
-        {
-            dataProducerInfoNameRentre = 1;
-        }
-        else
-        {
-            dataProducerInfoNameRentre = 0;
-        }
-        return dataProducerInfoNameRentre;
-    }
-    },
-    {input: "#dataProducerInfoOrganisationInput5", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoMailInput5", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-    {input: "#dataProducerInfoMailInput5", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-    {input: "#dataProducerInfoRoleSelect5", message: "This field is mandatory", action: "change",  rule: function()
-    {
-        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect5.value;
-        if( dataProducerInfoRoleRentre == "nullValue" )
-        {
-            dataProducerInfoRoleRentre = 0;
-        }
-        else
-        {
-            dataProducerInfoRoleRentre = 1
-        }
-        return dataProducerInfoRoleRentre;
-    }
-    },
+//    {input: "#dataProducerInfoNameInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
+//    {
+//        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput.value;
+//        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
+//        {
+//            dataProducerInfoNameRentre = 1;
+//        }
+//        else
+//        {
+//            dataProducerInfoNameRentre = 0;
+//        }
+//        return dataProducerInfoNameRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoOrganisationInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoMailInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+//    {input: "#dataProducerInfoMailInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoRoleSelect", message: "This field is mandatory", action: "change",  rule: function()
+//    {
+//        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect.value;
+//        if( dataProducerInfoRoleRentre == "nullValue" )
+//        {
+//            dataProducerInfoRoleRentre = 0;
+//        }
+//        else
+//        {
+//            dataProducerInfoRoleRentre = 1
+//        }
+//        return dataProducerInfoRoleRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoNameInput2", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoNameInput2", message: "Characters not authorized", action: "keyup, blur",  rule: function()
+//    {
+//        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput2.value;
+//        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
+//        {
+//            dataProducerInfoNameRentre = 1;
+//        }
+//        else
+//        {
+//            dataProducerInfoNameRentre = 0;
+//        }
+//        return dataProducerInfoNameRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoOrganisationInput2", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoMailInput2", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+//    {input: "#dataProducerInfoMailInput2", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoRoleSelect2", message: "This field is mandatory", action: "change",  rule: function()
+//    {
+//        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect2.value;
+//        if( dataProducerInfoRoleRentre == "nullValue" )
+//        {
+//            dataProducerInfoRoleRentre = 0;
+//        }
+//        else
+//        {
+//            dataProducerInfoRoleRentre = 1
+//        }
+//        return dataProducerInfoRoleRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoNameInput3", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoNameInput3", message: "Characters not authorized", action: "keyup, blur",  rule: function()
+//    {
+//        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput3.value;
+//        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
+//        {
+//            dataProducerInfoNameRentre = 1;
+//        }
+//        else
+//        {
+//            dataProducerInfoNameRentre = 0;
+//        }
+//        return dataProducerInfoNameRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoOrganisationInput3", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoMailInput3", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+//    {input: "#dataProducerInfoMailInput3", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoRoleSelect3", message: "This field is mandatory", action: "change",  rule: function()
+//    {
+//        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect3.value;
+//        if( dataProducerInfoRoleRentre == "nullValue" )
+//        {
+//            dataProducerInfoRoleRentre = 0;
+//        }
+//        else
+//        {
+//            dataProducerInfoRoleRentre = 1
+//        }
+//        return dataProducerInfoRoleRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoNameInput4", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoNameInput4", message: "Characters not authorized", action: "keyup, blur",  rule: function()
+//    {
+//        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput4.value;
+//        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
+//        {
+//            dataProducerInfoNameRentre = 1;
+//        }
+//        else
+//        {
+//            dataProducerInfoNameRentre = 0;
+//        }
+//        return dataProducerInfoNameRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoOrganisationInput4", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoMailInput4", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+//    {input: "#dataProducerInfoMailInput4", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoRoleSelect4", message: "This field is mandatory", action: "change",  rule: function()
+//    {
+//        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect4.value;
+//        if( dataProducerInfoRoleRentre == "nullValue" )
+//        {
+//            dataProducerInfoRoleRentre = 0;
+//        }
+//        else
+//        {
+//            dataProducerInfoRoleRentre = 1
+//        }
+//        return dataProducerInfoRoleRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoNameInput5", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoNameInput5", message: "Characters not authorized", action: "keyup, blur",  rule: function()
+//    {
+//        var dataProducerInfoNameRentre = document.forms["metadataForm"].dataProducerInfoNameInput5.value;
+//        if( /^[a-zA-Z ._-]+$/.test( dataProducerInfoNameRentre ) )
+//        {
+//            dataProducerInfoNameRentre = 1;
+//        }
+//        else
+//        {
+//            dataProducerInfoNameRentre = 0;
+//        }
+//        return dataProducerInfoNameRentre;
+//    }
+//    },
+//    {input: "#dataProducerInfoOrganisationInput5", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoMailInput5", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+//    {input: "#dataProducerInfoMailInput5", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+//    {input: "#dataProducerInfoRoleSelect5", message: "This field is mandatory", action: "change",  rule: function()
+//    {
+//        var dataProducerInfoRoleRentre = document.forms["metadataForm"].dataProducerInfoRoleSelect5.value;
+//        if( dataProducerInfoRoleRentre == "nullValue" )
+//        {
+//            dataProducerInfoRoleRentre = 0;
+//        }
+//        else
+//        {
+//            dataProducerInfoRoleRentre = 1
+//        }
+//        return dataProducerInfoRoleRentre;
+//    }
+//    },
     {input: "#metadatCreatorInfoNameInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#metadatCreatorInfoNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {

@@ -12,7 +12,7 @@
     <!-- Chgment css par default (avec http://getbootstrap.com/customize/?id=10472302) : 24 colonnes et 0px entre chq.-->
     <link rel="stylesheet" href="bootstrapCustom/css/bootstrap.css" media="screen"/>
     <!-- A mettre avant css avec modif pour que ces modifs soient prises en omptes sans passer par !important. -->
-    <link rel="stylesheet" href="testMetadataGCAFormulaireBootstrap.css"/>
+    <link rel="stylesheet" href="css/testMetadataGCAFormulaireBootstrap.css"/>
     <script type="text/javascript" src="js/library/jquery-1.9.1.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" src="js/library/formToWizardBootstrapValidate.js"></script>
@@ -48,335 +48,143 @@
 <!-- mandatory field info row-->
 
 <div id="basicInformation" class="row">
-<div class="col-md-push-7 col-md-9 col-sm-push-7 col-sm-9"><!--Pour placer basic info-->
-<fieldset class="fieldset1">
-<legend class="legend1">Basic information</legend>
-<fieldset id="basicInfoDataFile" class="fieldset2">
-<legend class="legend2">About data:</legend>
+    <div class="col-md-push-7 col-md-9 col-sm-push-7 col-sm-9"><!--Pour placer basic info-->
+        <fieldset class="fieldset1">
+            <legend class="legend1">Basic information</legend>
+            <fieldset id="basicInfoDataFile" class="fieldset2">
+                <legend class="legend2">About data:</legend>
 
-<div class="form-group">
-    <div class="row"><!--row Data date creation-->
-        <div class="col-md-24 col-sm-24">
-            <div class="label1ContactLegend" id="dataDateCreationText" title="Creation date of the product file">Creation date (*):</div>
-            <div id="dataDateCreationInput" class="dateInput" name="dataDateCreation"></div>
-            <!-- Pour accueillir calendar de jqx-->
-        </div>
-    </div>
-    <!--row Data date creation-->
-    <div class="label1" id="dataFileNameText"
-         title="Construct a name to your data file thanks to Product type, category, title and version. Necessary to mention/exchange your data">Product name (*):
-    </div>
-    <div id="prodTypeRow" class="row">
-        <div class="col-md-24 col-sm-24">
-            <div class="col-md-7 col-sm-7">
-                <div class="label2 form-control-xxl" id="dataProductTypeSelectText">Product type:</div>
-                <select id="dataProductTypeSelect" class="form-control form-control-xl" name="dataProductType">
-                    <option value="nullValue">----</option>
-                    <option value="CO2Flux">CO2_flux</option>
-                    <option value="carbonStock">Carbon_stock</option>
-                    <option value="CH4Flux">CH4_flux</option>
-                    <option value="otherValue">Other</option>
-                </select>
-            </div>
-            <div class="col-md-16 col-sm-16">
-                <div class="label2" id="dataProductTypeFreeTextText">Other type (free text):</div>
-                <input id="dataProductTypeFreeTextInput" class="form-control form-control-m" name="dataProductType" type="text"><!-- name doit etre le meme que son select-->
-            </div>
-        </div>
-    </div>
-    <!--prodTypeRow-->
-    <div id="prodCategoryRow" class="row">
-        <div class="col-md-24 col-sm-24">
-            <div class="col-md-7 col-sm-7">
-                <div class="label2 form-control-xxl" id="dataProductCategorySelectText">Product category:</div>
-                <select class="form-control form-control-xl dataProductCategoryClass" id="dataProductCategorySelect" name="dataProductCategory">
-                    <option value="nullValue">----</option>
-                    <option value="inversionModel">Inversion_model</option>
-                    <option value="landModel">Land_model</option>
-                    <option value="oceanModel">Ocean_model</option>
-                    <option value="otherValue">Other</option>
-                </select>
-            </div>
-            <div class="col-md-16 col-sm-16">
-                <div class="label2" id="dataProductCategoryFreeTextText">Other category (free text):</div>
-                <input id="dataProductCategoryFreeTextInput" class="form-control form-control-m" name="dataProductCategory" type="text">
-            </div>
-        </div>
-    </div>
-</div>
-<!--prodCategoryRow-->
-
-<div id="prodNameTitleAndVersion" class="row"><!--row Product title et Product version-->
-    <div class="col-md-24 col-sm-24">
-        <div class="col-md-9 col-sm-9">
-            <div class="label2 form-control-xxl" id="prodNameTitleText">Product title (*):</div>
-            <input id="prodNameTitleInput" class="form-control form-control-xl mandatoryField" name="prodNameTitle" type="text">
-        </div>
-        <div class="col-md-14 col-sm-14">
-            <div class="label2 form-control-xxl" id="prodNameVersionText">Product version (*):</div>
-            <input id="prodNameVersionInput" class="form-control form-control-m" name="prodNameVersion" type="text">
-        </div>
-    </div>
-</div>
-<!--row Product title et Product version-->
-
-
-<!--**************************************************************************************** -->
-<!--*********************************** DATA CONTRIBUTOR *********************************** -->
-<!--**************************************************************************************** -->
-<div class="row"><!-- row: rangee avec ts les elements sur data creator info-->
-<div class="col-md-24 col-sm-24">
-    <div id="dataProducerInfoText" class="label1" title="Information about the person who created the data file">Data contributors information (*):</div>
-
-
-    <div class="row"><!-- Row name et organisation-->
-        <div class="col-md-9 col-sm-9">
-            <div id="dataProducerInfoNameText" class="label2 form-control-l">Name (*):</div>
-            <input id="dataProducerInfoNameInput" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName" type="text">
-        </div>
-        <div class="col-md-14 col-sm-14">
-            <div id="dataProducerInfoOrganisationText" class="label2 form-control-xxl">Name of the organisation (*):</div>
-            <input id="dataProducerInfoOrganisationInput" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation" type="text">
-        </div>
-    </div>
-    <!-- Row Name et organisation-->
-    <div class="row"><!-- Mail et Role-->
-        <div class="col-md-24 col-sm-24">
-            <div class="col-md-9 col-sm-9">
-                <div id="dataProducerInfoMailText" class="label2 form-control-l">Mail (*):</div>
-                <input id="dataProducerInfoMailInput" class="form-control form-control-xl" name="dataProducerInfoMail" type="text">
-            </div>
-            <div class="col-md-14 col-sm-14">
-                <div id="dataProducerInfoRoleText" class="label2 form-control-xxl">Role (*):</div>
-                <select id="dataProducerInfoRoleSelect" class="form-control form-control-m" name="dataProducerInfoRole">
-                    <option value="nullValue">----</option>
-                    <option value="originator">Originator</option>
-                    <option value="pointOfContact">Point of contact</option>
-                    <option value="principalInvestigator">Principal investigator</option>
-                    <option value="processor">Processor</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <!-- Mail et Role-->
-</div>
-<!-- row: rangee avec ts les elements/creator information-->
-
-<div class="row"><!-- row 2: rangee avec ts les elements sur data creator info-->
-    <div id="dataContributorContainer2" class="col-md-24 col-sm-24">
-        <div id="dataProducerInfoText2" class="label1" title="Information about the person who created the data file">Data contributors information 2:</div>
-        <div class="row"><!-- Row 2 name et organisation-->
-            <div class="col-md-9 col-sm-9">
-                <div id="dataProducerInfoNameText2" class="label2 form-control-l">Name (*):</div>
-                <input id="dataProducerInfoNameInput2" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName2" type="text">
-            </div>
-            <div class="col-md-14 col-sm-14">
-                <div id="dataProducerInfoOrganisationText2" class="label2 form-control-xxl">Name of the organisation (*):</div>
-                <input id="dataProducerInfoOrganisationInput2" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation2" type="text">
-            </div>
-        </div>
-        <!-- Row 2 Name et organisation-->
-        <div class="row"><!-- Mail et Role-->
-            <div class="col-md-24 col-sm-24">
-                <div class="col-md-9 col-sm-9">
-                    <div id="dataProducerInfoMailText2" class="label2 form-control-l">Mail (*):</div>
-                    <input id="dataProducerInfoMailInput2" class="form-control form-control-xl" name="dataProducerInfoMail2" type="text">
-                </div>
-                <div class="col-md-14 col-sm-14">
-                    <div id="dataProducerInfoRoleText2" class="label2 form-control-xxl">Role (*):</div>
-                    <select id="dataProducerInfoRoleSelect2" class="form-control form-control-m" name="dataProducerInfoRole2">
-                        <option value="nullValue">----</option>
-                        <option value="originator">Originator</option>
-                        <option value="pointOfContact">Point of contact</option>
-                        <option value="principalInvestigator">Principal investigator</option>
-                        <option value="processor">Processor</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <!-- Mail et Role-->
-    </div>
-    <!-- row 3: rangee avec ts les elements/creator information-->
-
-    <div class="row"><!-- row 3: rangee avec ts les elements sur data creator info-->
-        <div id="dataContributorContainer3" class="col-md-24 col-sm-24">
-            <div id="dataProducerInfoText3" class="label1" title="Information about the person who created the data file">Data contributors information 3:</div>
-            <div class="row"><!-- Row 3 name et organisation-->
-                <div class="col-md-9 col-sm-9">
-                    <div id="dataProducerInfoNameText3" class="label2 form-control-l">Name (*):</div>
-                    <input id="dataProducerInfoNameInput3" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName3" type="text">
-                </div>
-                <div class="col-md-14 col-sm-14">
-                    <div id="dataProducerInfoOrganisationText3" class="label2 form-control-xxl">Name of the organisation (*):</div>
-                    <input id="dataProducerInfoOrganisationInput3" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation3" type="text">
-                </div>
-            </div>
-            <!-- Row 3 Name et organisation-->
-            <div class="row"><!-- Mail et Role-->
-                <div class="col-md-24 col-sm-24">
-                    <div class="col-md-9 col-sm-9">
-                        <div id="dataProducerInfoMailText3" class="label2 form-control-l">Mail (*):</div>
-                        <input id="dataProducerInfoMailInput3" class="form-control form-control-xl" name="dataProducerInfoMail3" type="text">
+                <div class="form-group">
+                    <div class="row"><!--row Data date creation-->
+                        <div class="col-md-24 col-sm-24">
+                            <div class="label1ContactLegend" id="dataDateCreationText" title="Creation date of the product file">Creation date (*):</div>
+                            <div id="dataDateCreationInput" class="dateInput" name="dataDateCreation"></div>
+                            <!-- Pour accueillir calendar de jqx-->
+                        </div>
                     </div>
-                    <div class="col-md-14 col-sm-14">
-                        <div id="dataProducerInfoRoleText3" class="label2 form-control-xxl">Role (*):</div>
-                        <select id="dataProducerInfoRoleSelect3" class="form-control form-control-m" name="dataProducerInfoRole3">
-                            <option value="nullValue">----</option>
-                            <option value="originator">Originator</option>
-                            <option value="pointOfContact">Point of contact</option>
-                            <option value="principalInvestigator">Principal investigator</option>
-                            <option value="processor">Processor</option>
-                        </select>
+                    <!--row Data date creation-->
+                    <div class="label1" id="dataFileNameText"
+                         title="Construct a name to your data file thanks to Product type, category, title and version. Necessary to mention/exchange your data">Product name (*):
+                    </div>
+                    <div id="prodTypeRow" class="row">
+                        <div class="col-md-24 col-sm-24">
+                            <div class="col-md-7 col-sm-7">
+                                <div class="label2 form-control-xxl" id="dataProductTypeSelectText">Product type:</div>
+                                <select id="dataProductTypeSelect" class="form-control form-control-xl" name="dataProductType">
+                                    <option value="nullValue">----</option>
+                                    <option value="CO2Flux">CO2_flux</option>
+                                    <option value="carbonStock">Carbon_stock</option>
+                                    <option value="CH4Flux">CH4_flux</option>
+                                    <option value="otherValue">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-16 col-sm-16">
+                                <div class="label2" id="dataProductTypeFreeTextText">Other type (free text):</div>
+                                <input id="dataProductTypeFreeTextInput" class="form-control form-control-m" name="dataProductType" type="text"><!-- name doit etre le meme que son select-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--prodTypeRow-->
+                    <div id="prodCategoryRow" class="row">
+                        <div class="col-md-24 col-sm-24">
+                            <div class="col-md-7 col-sm-7">
+                                <div class="label2 form-control-xxl" id="dataProductCategorySelectText">Product category:</div>
+                                <select class="form-control form-control-xl dataProductCategoryClass" id="dataProductCategorySelect" name="dataProductCategory">
+                                    <option value="nullValue">----</option>
+                                    <option value="inversionModel">Inversion_model</option>
+                                    <option value="landModel">Land_model</option>
+                                    <option value="oceanModel">Ocean_model</option>
+                                    <option value="otherValue">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-16 col-sm-16">
+                                <div class="label2" id="dataProductCategoryFreeTextText">Other category (free text):</div>
+                                <input id="dataProductCategoryFreeTextInput" class="form-control form-control-m" name="dataProductCategory" type="text">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Mail et Role-->
-        </div>
-        <!-- row 3: rangee avec ts les elements/creator information-->
+                <!--prodCategoryRow-->
 
-        <div class="row"><!-- row 4: rangee avec ts les elements sur data creator info-->
-            <div id="dataContributorContainer4" class="col-md-24 col-sm-24">
-                <div id="dataProducerInfoText4" class="label1" title="Information about the person who created the data file">Data contributors information 4:</div>
-                <div class="row"><!-- Row 4 name et organisation-->
-                    <div class="col-md-9 col-sm-9">
-                        <div id="dataProducerInfoNameText4" class="label2 form-control-l">Name (*):</div>
-                        <input id="dataProducerInfoNameInput4" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName4" type="text">
-                    </div>
-                    <div class="col-md-14 col-sm-14">
-                        <div id="dataProducerInfoOrganisationText4" class="label2 form-control-xxl">Name of the organisation (*):</div>
-                        <input id="dataProducerInfoOrganisationInput4" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation4" type="text">
-                    </div>
-                </div>
-                <!-- Row 4 Name et organisation-->
-                <div class="row"><!-- Mail et Role-->
+                <div id="prodNameTitleAndVersion" class="row"><!--row Product title et Product version-->
                     <div class="col-md-24 col-sm-24">
                         <div class="col-md-9 col-sm-9">
-                            <div id="dataProducerInfoMailText4" class="label2 form-control-l">Mail (*):</div>
-                            <input id="dataProducerInfoMailInput4" class="form-control form-control-xl" name="dataProducerInfoMail4" type="text">
+                            <div class="label2 form-control-xxl" id="prodNameTitleText">Product title (*):</div>
+                            <input id="prodNameTitleInput" class="form-control form-control-xl mandatoryField" name="prodNameTitle" type="text">
                         </div>
                         <div class="col-md-14 col-sm-14">
-                            <div id="dataProducerInfoRoleText4" class="label2 form-control-xxl">Role (*):</div>
-                            <select id="dataProducerInfoRoleSelect4" class="form-control form-control-m" name="dataProducerInfoRole4">
-                                <option value="nullValue">----</option>
-                                <option value="originator">Originator</option>
-                                <option value="pointOfContact">Point of contact</option>
-                                <option value="principalInvestigator">Principal investigator</option>
-                                <option value="processor">Processor</option>
-                            </select>
+                            <div class="label2 form-control-xxl" id="prodNameVersionText">Product version (*):</div>
+                            <input id="prodNameVersionInput" class="form-control form-control-m" name="prodNameVersion" type="text">
                         </div>
                     </div>
                 </div>
-                <!-- Mail et Role-->
-            </div>
-            <!-- row 4: rangee avec ts les elements/creator information-->
+                <!--row Product title et Product version-->
 
-            <div class="row"><!-- row 5: rangee avec ts les elements sur data creator info-->
-                <div id="dataContributorContainer5" class="col-md-24 col-sm-24">
-                    <div id="dataProducerInfoText5" class="label1" title="Information about the person who created the data file">Data contributors information 5:</div>
-                    <div class="row"><!-- Row 5 name et organisation-->
-                        <div class="col-md-9 col-sm-9">
-                            <div id="dataProducerInfoNameText5" class="label2 form-control-l">Name (*):</div>
-                            <input id="dataProducerInfoNameInput5" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName5" type="text">
-                        </div>
-                        <div class="col-md-14 col-sm-14">
-                            <div id="dataProducerInfoOrganisationText5" class="label2 form-control-xxl">Name of the organisation (*):</div>
-                            <input id="dataProducerInfoOrganisationInput5" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation5" type="text">
-                        </div>
+
+                <!--**************************************************************************************** -->
+                <!--*********************************** DATA CONTRIBUTOR *********************************** -->
+                <!--**************************************************************************************** -->
+                <div id="contributorsContainer"></div>
+
+                <div id="contributorsContainerButton" class="row col-md-24 col-sm-24">
+                    <div class="cursorPointer addQuitAllContainerText" title="Click to add/delete creator information (no more than 5)">
+                        Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.svg" class="img-responsive img-rounded addQuitAllContainer">
                     </div>
-                    <!-- Row 5 Name et organisation-->
-                    <div class="row"><!-- Mail et Role-->
-                        <div class="col-md-24 col-sm-24">
-                            <div class="col-md-9 col-sm-9">
-                                <div id="dataProducerInfoMailText5" class="label2 form-control-l">Mail (*):</div>
-                                <input id="dataProducerInfoMailInput5" class="form-control form-control-xl" name="dataProducerInfoMail5" type="text">
+                </div>
+                <!--**************************************************************************************** -->
+
+            </fieldset>
+            <fieldset id="basicInfoMetadat" class="fieldset2">
+                <legend class="legend2">About metadata file:</legend>
+                <div class="form-group"><!--Permet mettre espacement adapt?/form-->
+                    <div class="row">
+                        <div class="col-md-24 col-sm-24"><!--col metadata date creation-->
+                            <div id="metadataDateCreationLabel" class="label1ContactLegend" for="metadataDateCreationInput" title="Date of creation of this file (metadata file)">
+                                Metadata date
+                                of creation (*):
                             </div>
-                            <div class="col-md-14 col-sm-14">
-                                <div id="dataProducerInfoRoleText5" class="label2 form-control-xxl">Role (*):</div>
-                                <select id="dataProducerInfoRoleSelect5" class="form-control form-control-m" name="dataProducerInfoRole5">
+                            <div id="metadataDateCreationInput" class="dateInput" name="metadataDateCreation"></div>
+                            <!-- Pour accueillir calendrier jqx-->
+                        </div>
+                        <!--col metadata date creation-->
+                    </div>
+                    <div id="metadatCreatorInfoRow" class="row"><!-- row: rangee avec ts les elements/creator information-->
+                        <div class="col-md-24 col-sm-24">
+                            <div id="metadatCreatorInfo" class="label1" title="Information about the person who created the metadata file">Metadata creator information (*):</div>
+                            <div class="col-md-9 col-sm-9"><!--col Name, role-->
+                                <div id="metadatCreatorInfoNameLabel" class="label2">Name (*):</div>
+                                <input id="metadatCreatorInfoNameInput" class="mandatoryField form-control form-control-xl" name="metadatCreatorInfoName" type="text">
+
+                                <div id="metadatCreatorInfoRoleLabel" class="label2 form-control-xxl">Role (*):</div>
+                                <select id="metadatCreatorInfoRoleSelect" class="form-control form-control-xl" name="metadatCreatorInfoRole">
                                     <option value="nullValue">----</option>
+                                    <option value="resourceProvider">Resource provider</option>
+                                    <option value="custodian">Custodian</option>
+                                    <option value="owner">Owner</option>
+                                    <option value="user">user</option>
+                                    <option value="distibutor">Distributor</option>
                                     <option value="originator">Originator</option>
                                     <option value="pointOfContact">Point of contact</option>
                                     <option value="principalInvestigator">Principal investigator</option>
                                     <option value="processor">Processor</option>
+                                    <option value="publisher">Publisher</option>
+                                    <option value="author">Author</option>
                                 </select>
                             </div>
+                            <!--col name, role-->
+                            <div class="col-md-14 col-sm-14"><!--col Mail-->
+                                <div id="metadatCreatorInfoMailLabel" class="label2">Mail (*):</div>
+                                <input id="metadatCreatorInfoMailInput" class="mandatoryField form-control form-control-l toto" name="metadatCreatorInfoMail" type="text">
+                            </div>
+                            <!--col Mail-->
                         </div>
                     </div>
-                    <!-- Mail et Role-->
-                </div>
-                <!-- row 5: rangee avec ts les elements/creator information-->
-
-                <div class="row"><!-- rangee avec bouton add/quit-->
-                    <div class="col-md-24 col-sm-24">
-                        <div class="cursorPointer addQuitAllContainerText" title="Click to add/delete creator information (no more than 5)">Add/delete creator information:
-                        </div>
-                    </div>
-                    <div class="col-md-24 col-sm-24">
-                        <div class="col-md-push-2 col-md-1 col-sm-push-2 col-sm-1">
-                            <img id="addCreatorInfoButton" src="img/addChamp.svg" class=" img-responsive img-rounded addQuitAllContainer">
-                        </div>
-                        <div class="col-md-push-3 col-md-1 col-sm-push-3 col-sm-1">
-                            <img id="quitCreatorInfoButton" src="img/quitChamp.svg" class=" img-responsive img-rounded addQuitAllContainer">
-                        </div>
-                    </div>
-                    <!-- rangee avec bouton add/quit-->
-
+                    <!-- row: rangee avec ts les elements/creator information (= allContainer)-->
                 </div>
                 <!--form-group-->
-
-                <!--**************************************************************************************** -->
-
-</fieldset>
-<fieldset id="basicInfoMetadat" class="fieldset2">
-    <legend class="legend2">About metadata file:</legend>
-    <div class="form-group"><!--Permet mettre espacement adapt?/form-->
-        <div class="row">
-            <div class="col-md-24 col-sm-24"><!--col metadata date creation-->
-                <div id="metadataDateCreationLabel" class="label1ContactLegend" for="metadataDateCreationInput" title="Date of creation of this file (metadata file)">Metadata date
-                    of creation (*):
-                </div>
-                <div id="metadataDateCreationInput" class="dateInput" name="metadataDateCreation"></div>
-                <!-- Pour accueillir calendrier jqx-->
-            </div>
-            <!--col metadata date creation-->
-        </div>
-        <div id="metadatCreatorInfoRow" class="row"><!-- row: rangee avec ts les elements/creator information-->
-            <div class="col-md-24 col-sm-24">
-                <div id="metadatCreatorInfo" class="label1" title="Information about the person who created the metadata file">Metadata creator information (*):</div>
-                <div class="col-md-9 col-sm-9"><!--col Name, role-->
-                    <div id="metadatCreatorInfoNameLabel" class="label2">Name (*):</div>
-                    <input id="metadatCreatorInfoNameInput" class="mandatoryField form-control form-control-xl" name="metadatCreatorInfoName" type="text">
-
-                    <div id="metadatCreatorInfoRoleLabel" class="label2 form-control-xxl">Role (*):</div>
-                    <select id="metadatCreatorInfoRoleSelect" class="form-control form-control-xl" name="metadatCreatorInfoRole">
-                        <option value="nullValue">----</option>
-                        <option value="resourceProvider">Resource provider</option>
-                        <option value="custodian">Custodian</option>
-                        <option value="owner">Owner</option>
-                        <option value="user">user</option>
-                        <option value="distibutor">Distributor</option>
-                        <option value="originator">Originator</option>
-                        <option value="pointOfContact">Point of contact</option>
-                        <option value="principalInvestigator">Principal investigator</option>
-                        <option value="processor">Processor</option>
-                        <option value="publisher">Publisher</option>
-                        <option value="author">Author</option>
-                    </select>
-                </div>
-                <!--col name, role-->
-                <div class="col-md-14 col-sm-14"><!--col Mail-->
-                    <div id="metadatCreatorInfoMailLabel" class="label2">Mail (*):</div>
-                    <input id="metadatCreatorInfoMailInput" class="mandatoryField form-control form-control-l toto" name="metadatCreatorInfoMail" type="text">
-                </div>
-                <!--col Mail-->
-            </div>
-        </div>
-        <!-- row: rangee avec ts les elements/creator information (= allContainer)-->
+            </fieldset>
+        </fieldset>
     </div>
-    <!--form-group-->
-</fieldset>
-</fieldset>
-</div>
 </div>
 <!-- Basic Information-->
 
@@ -1101,52 +909,33 @@
                         </div>
                     </div>
                 </div>
-                <!-- row Data policy-->
+            </fieldset>
+            <!-- row Data policy-->
         </div>
         <!-- Form-group-->
-        </fieldset>
     </div>
-</div>
 </div>
 
 
 <input id="submitFormButon" type="submit" value="Submit"/>
-<!--</div>--><!-- =  ???-->
 </form>
-</div><!-- Fin container -->
+</div>
+<!-- Fin container -->
 
 <script text="text/javascript">
     // See http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/
     $( document ).ready( function()
     {
         manageFormDiv();
+        createContributorRow( "contributorsContainer", 1 )
     } );
 
-    $( "#metadataForm" ).jqxValidator( {rules: validatorRules } );
+        $( "#metadataForm" ).jqxValidator( {rules: validatorRules } );
 
     // Pour adapter chgment window:
-    $( '#metadataForm' ).jqxValidator( 'updatePosition' );// Ne me fait rien !!!
+        $( '#metadataForm' ).jqxValidator( 'updatePosition' );// Ne me fait rien !!!
 
-    // Operation sur XML metadat via DOM :
-    //var xmlDoc=loadXMLDoc();// On appelle la fonction (script ds .js externe):
-    // On peut ensuite faire les operations que l'on veut sur le xml metadat:
-
-    /*var txtValue= xmlDoc.getElementsByTagName("gco:CharacterString")[0].childNodes[0].nodeValue;// txt= valeur du 1er node  text
-       console.log(txtValue); */
-
-    // Test: je change cette "valeur" :
-    /*var txtNew= xmlDoc.getElementsByTagName("gco:CharacterString")[0].childNodes[0];
-         txtNew.nodeValue= "gygygy";
-       var txtValue2= xmlDoc.getElementsByTagName("gco:CharacterString")[0].childNodes[0].nodeValue;
-     console.log(txtValue2);// OK, ?a marche, m'affiche bien gygygy mais ne me l'a pas change sur xml: comment garder les chgments ????
-
-     // Pour avoir acces plus "proprement" a texte productName:
-     var fileIdentifier= xmlDoc.getElementsByTagName("gmd:fileIdentifier")[0].childNodes[0];// Etape 1: identifier clairement quel est l'element que l'on veut (avec tagName et position). On peut ensuite appeler les proprietes pour cet element (nodeName, ....).
-     var fileIdentifierNodeName= fileIdentifier.nodeName;// = #text si childNodes[0] !!!
-     console.log(fileIdentifierNodeName);*/
-
-
-    $( "#metadataForm" ).formToWizard();
+        $( "#metadataForm" ).formToWizard();
 
 </script>
 
