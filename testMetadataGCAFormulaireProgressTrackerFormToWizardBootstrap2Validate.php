@@ -42,6 +42,7 @@
 
 <form id="metadataForm" method="post" action="testForm.php">
 <!--form id= "metadataForm" method= "post" action="testForm.php" onsubmit= "return verificationChamps();">--><!-- Tester que sur la derniere page donc !-->
+<<<<<<< HEAD
 <HEAD>
  <div class= "row">
   <div id= "mandatoryFieldIndication" class= "col-md-24 col-sm-24">(*): mandatory fields</div>
@@ -1567,6 +1568,8 @@
 	var xmlDoc=loadXMLDoc();// On appelle la fonction (script ds .js externe):
 	 // On peut ensuite faire les operations que l'on veut sur le xml metadat:
 =======
+=======
+>>>>>>> b2812f050c65eb9ec13e7bb000fbeb962c216d74
 <div id="mandatoryFieldIndication" class="col-md-24 col-sm-24">(*): mandatory fields</div>
 
 <div id="basicInformation" class="row">
@@ -1641,7 +1644,6 @@
                     </div>
                 </div>
                 <!--row Product title et Product version-->
->>>>>>> 17ce9a4c02bf568305a9ecd5b65d73f27246a537
 
 
                 <!--**************************************************************************************** -->
