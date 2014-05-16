@@ -335,7 +335,7 @@
        <div class= "form-group"><!--Permet mettre espacement adapt?/form. A mettre après legend2 parce que si non applique style propre à legend 2 et non souhaité.-->
 	      <div class= "row" ><!-- row temporal resol-->
 	         <div class= "col-md-24 col-sm-24"><!--Temporal resolution-->
-	           <div class= "label1ContactLegend" id= "temporalResolutionText">Temporal resolution (*):</div>
+	           <div class= "label1ContactLegend" id= "temporalResolutionText" title= "Temporal resolution for original product">Temporal resolution (*):</div>
 		  <div class= "col-md-8 col-sm-8"><!--Temporal resolution Select-->
 	            <div class= "label2 form-control-xxl" id= "temporalResolutionTextSelect">Select a temporal resolution:</div>
                  	<select name="temporalResolution" class= "form-control form-control-xl" id= "temporalResolutionSelect">
@@ -1556,11 +1556,9 @@
 		$('#metadataForm').jqxValidator('updatePosition');// Ne me fait rien !!!
 
 	// Operation sur XML metadat via DOM :
-	//var xmlDoc=loadXMLDoc();// On appelle la fonction (script ds .js externe):
+	var xmlDoc=loadXMLDoc();// On appelle la fonction (script ds .js externe):
 	 // On peut ensuite faire les operations que l'on veut sur le xml metadat:
 
-	  /*var txtValue= xmlDoc.getElementsByTagName("gco:CharacterString")[0].childNodes[0].nodeValue;// txt= valeur du 1er node  text
-	  console.log(txtValue); */
 
 	// Test: je change cette "valeur" :
 	  /*var txtNew= xmlDoc.getElementsByTagName("gco:CharacterString")[0].childNodes[0];

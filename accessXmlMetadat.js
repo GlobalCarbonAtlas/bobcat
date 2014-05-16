@@ -1,4 +1,5 @@
 //CF http://www.w3schools.com/dom/dom_parser.asp
+// Et http://siddh.developpez.com/articles/ajax/
   //Fonction pour charger xml comme un DOM document, exploitable par js ensuite :
 function loadXMLDoc() {
 if (window.XMLHttpRequest)

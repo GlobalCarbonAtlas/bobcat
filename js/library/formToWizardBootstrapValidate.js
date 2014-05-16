@@ -43,7 +43,7 @@
 			ndatCreator= ndatCreator + 1;});
 		$("#quitCreatorInfoButton").click(function(){
 			ndatCreator= ndatCreator - 1;});
-
+		/*
 
 	$("#stepDesc1").click(function() {// On ne doit avoir aucun champ a valider ici si non, se superposent. Tt est dans php.
 			//var validationInfoName = $('#metadataForm').jqxValidator('validate', '#metadatCreatorInfoOrganisationInput');
@@ -82,8 +82,8 @@
 
 		// Temporal and geograph info:
 	$("#stepDesc2").click(function() {
-			/*var reponseValidationForm = $('#metadataForm').jqxValidator('validate');
-			if (reponseValidationForm== true)*/
+			//var reponseValidationForm = $('#metadataForm').jqxValidator('validate');
+			//if (reponseValidationForm== true)
 			var temporalResolutionSelect= $('#metadataForm').jqxValidator('validateInput', '#temporalResolutionSelect');
 			var temporalResolFreeTextInput= $('#metadataForm').jqxValidator('validateInput', '#temporalResolFreeTextInput');
 			var temporalCoverageBegin= $('#metadataForm').jqxValidator('validateInput', '#temporalCoverageBegin');
@@ -106,9 +106,9 @@
 				return false;
 			}	
 		});
-				
+			*/	
   // Pour permettre de passer champ a l'autre.
-		/*  	
+		  	
 	$("#stepDesc0").click(function() {
 		$("#step0").show(); $("#step1").hide(); $("#step2").hide(); $("#step3").hide();
 $("#step4").hide(); $("#step5").hide();
@@ -133,7 +133,7 @@ $("#step3").hide(); $("#step5").hide();
 		$("#step5").show(); $("#step0").hide(); $("#step1").hide(); $("#step2").hide();
 $("#step3").hide(); $("#step4").hide();
 	});
-		*/
+		
 
     }
 

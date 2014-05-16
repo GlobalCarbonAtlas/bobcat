@@ -89,6 +89,7 @@ var BCInterfaceW = Class.create( {
         this.bindRange();
         this.resizePrintable();
         this.updateLegendButtons();
+	this.onClickCreateMetadataInfoGVQ();
 
      },
 
@@ -1323,6 +1324,16 @@ var BCInterfaceW = Class.create( {
 // **************************************************************
 // ************************* OTHER ******************************
 // **************************************************************
+        // Pascal Part ........
+	onClickCreateMetadataInfoGVQ: function()
+		{ 
+		$("#createAndEditMetadata").click(function() {
+             		window.open("testMetadataGCAFormulaireProgressTrackerFormToWizardBootstrap2Validate.php");
+		});
+	},
+
+	// Fin ......
+	
     basename: function( path )
     {
         return path.replace( /.*\//, "" );

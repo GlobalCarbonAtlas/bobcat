@@ -67,7 +67,10 @@
                 <select id="timeMonthSelect"></select>
             </div>
         </div>
-	
+
+	<!--Pascal part.-->
+		<button id= "createAndEditMetadata" class="leftMenu" type="button">Create metadata</button>
+	<!-- Fin-->
 	<div class="noticeLSCE leftMenu">
             Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.1
         </div>
