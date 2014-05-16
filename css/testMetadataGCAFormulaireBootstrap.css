@@ -1,0 +1,297 @@
+[class*="col"] {
+/*Permet adapter css colonnes / bootstrap*/
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+ul {
+    margin-top: 0.5% !important; /*Conflit/Bootstrap*/
+    height: 80px;
+    background-image: url(../img/containerSteps2.svg);
+    background-size: 100% 215%;
+    background-position: 2%;
+}
+
+li {
+    display: inline-block;
+    height: 110%;
+    font-size: 13px; /*J'ai fixe taille parce que si non, qd reduction largeur ecran, lettre s'adpate et menu n'est plus centre verticalement*/
+    color: rgb(70, 70, 70);
+    background-image: url(../img/arrow3.svg);
+    background-size: 99% 120%;
+    cursor: pointer;
+}
+
+.stepsSpan {
+    width: 63px !important; /*Permet de fixer largeur meme qd col change de taille= espace ou l'on ecrit le texte (span)*/
+}
+
+span {
+    position: fixed; /*Pour ne pas que change de position verticale qd col change de taille*/
+    left: 10%;
+}
+
+#stepDesc0 span {
+/*Permet de bien positionner le texte ds element ul*/
+    margin-top: 20px;
+}
+
+#stepDesc1 span {
+    margin-top: 5px;
+}
+
+#stepDesc2 span {
+    margin-top: 10px;
+}
+
+#stepDesc3 span {
+    margin-top: 10px;
+}
+
+#stepDesc4 span {
+    margin-top: 10px;
+}
+
+#stepDesc5 span {
+    margin-top: 5px;
+}
+
+li.current {
+/* = menu en cours, actif*/
+    color: rgb(250, 80, 0);
+    font-style: italic;
+    font-size: 13.5px;
+}
+
+/* Champs formulaire: */
+#mandatoryFieldIndication {
+    margin-left: 1%;
+    height: 5%;
+    color: rgb(140, 10, 10);
+    font-size: 13px;
+    margin-bottom: -1%;
+    /*margin-top: 2%;*/
+    top: 16px;
+}
+
+.legend1 {
+    color: rgb(250, 80, 0);
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 3px;
+    padding-bottom: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.legend2 {
+    color: rgb(20, 20, 130);
+    font-size: 17px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    margin-bottom: 10px !important;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+select {
+    font-size: 12px !important;
+    color: rgb(20, 20, 20) !important;
+    margin-bottom: 3px !important;
+    height: 22px;
+}
+
+input {
+    font-size: 13px !important;
+    height: 22px !important;
+    font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
+    color: rgb(20, 20, 20) !important;
+    margin-bottom: 3px !important;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 3px;
+}
+
+.dateInput {
+    margin-bottom: 3px !important; /*width: 20px !important;*/
+}
+
+textarea {
+    font-size: 13px;
+    border: 1px dotted rgb(100, 100, 100) !important;
+    border-radius: 3px;
+    margin-bottom: 3px !important;
+}
+
+.label1 {
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-top: 16px;
+    font-family: Arial !important;
+}
+
+.label1ContactLegend {
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-family: Arial !important;
+}
+
+#temporalResolutionText {
+}
+
+#temporalCoverageContainer {
+    padding-top: 88px;
+}
+
+#dataDateCreationText {
+    margin-top: -15px;
+}
+
+#dataDateCreationInput {
+    margin-bottom: 16px !important;
+}
+
+#spatialCoverageWestContainer {
+    margin-right: -4px;
+}
+
+#spatialCoverageEastContainer {
+    margin-left: -8px;
+}
+
+.label2 {
+    font-size: 14px;
+    font-style: italic;
+    color: rgb(80, 80, 80);
+    font-weight: normal;
+    font-style: oblique;
+    letter-spacing: 1px;
+    font-family: "Comic Sans MS", "Trebuchet MS" !important; /*margin-bottom: 10px;*/
+}
+
+#metadatCreatorInfoPhoneLabel {
+    cursor: pointer;
+}
+
+.chooseSelectClass {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(130, 130, 130);
+    border: solid 0.5px rgb(100, 100, 100);
+    border-radius: 7px;
+    width: 50%;
+    cursor: pointer;
+    text-align: center;
+}
+
+.chooseSelectClass:hover {
+    border: solid 0.5px rgb(250, 80, 0);
+}
+
+.fieldset1 {
+    background-image: url(../img/ContainerBasicInfo.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border: solid 2px rgb(100, 100, 100);
+    padding: 1%;
+    border-style: ridge;
+    border-width: 2px;
+    border-radius: 4px;
+}
+
+.fieldset2 {
+    border: 1px solid blue;
+    border-style: inset;
+    padding-left: 5px;
+    padding-right: 2px;
+    margin-top: -5px;
+    margin-bottom: 13px;
+    border-radius: 7px;
+}
+
+#validFieldContainer {
+    width: 138px;
+    border: solid 1px rgb(120, 120, 120);
+    border-radius: 3px;
+    margin-left: 15px;
+}
+
+.addQuitAllContainerText {
+    margin-top: 15px;
+}
+
+.addQuitAllContainer {
+    height: 15px;
+    border: solid 1px rgb(90, 90, 90);
+}
+
+.addQuitAllContainer:hover {
+    border: solid 2px rgb(250, 80, 0);
+}
+
+.imageCentreSpatialCov {
+    height: 60px;
+    border: solid 1px rgb(0, 0, 0);
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+#submitFormButon {
+    position: fixed;
+    top: 33px;
+    right: 2%;
+    width: 10%;
+    height: 36px;
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(34, 169, 210);
+    border: solid 2px rgb(120, 120, 120);
+    border-radius: 3px;
+    text-align: center;
+    font-size: 14px !important;
+}
+
+#submitFormButon:hover {
+    font-weight: bold;
+    border: solid 2px rgb(250, 80, 0);
+}
+
+.calendarActifClass {
+    border: solid 2px rgb(250, 80, 0) !important;
+}
+
+.form-control-xs {
+    width: 15% !important;
+}
+
+.form-control-s {
+    width: 25% !important;
+}
+
+.form-control-m {
+    width: 50% !important;
+}
+
+.form-control-l {
+    width: 75% !important;
+}
+
+.form-control-xl {
+    width: 90% !important;
+}
+
+.form-control-xxl {
+    width: 100% !important;
+}
+
+#addCreatorInfoButton, .removeCreatorInfoButton, .dataContributorNumber {
+    display: inline;
+    margin: -1px 0 0 3px;
+
+}
