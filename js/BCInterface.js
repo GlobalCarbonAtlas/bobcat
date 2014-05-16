@@ -21,8 +21,8 @@ var BCInterfaceW = Class.create( {
         this.rangeDiv = $( "#getRange" );
         this.submitButton = $( "#submitCreateMap" );
 
-        this.threddsPath = jQuery.i18n.prop("threddsPath") != "[threddsPath]" ? jQuery.i18n.prop("threddsPath") : "Atlas/Flux";
-        this.hostName = jQuery.i18n.prop("hostname") ? jQuery.i18n.prop("hostname") : location.hostname;
+        this.threddsPath = jQuery.i18n.prop( "threddsPath" ) != "[threddsPath]" ? jQuery.i18n.prop( "threddsPath" ) : "Atlas/Flux";
+        this.hostName = jQuery.i18n.prop( "hostname" ) ? jQuery.i18n.prop( "hostname" ) : location.hostname;
         this.imgPath = "img";
 
         /**
@@ -41,12 +41,12 @@ var BCInterfaceW = Class.create( {
         this.variableNamesToDisplay = variableNamesToKeepArray;
         this.variable = false;
 
-        this.selectedPeriod = $( "#periodSelect" ).select2("val");
+        this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
         this.time = false;
         this.elevation = false;
-        this.projection = $( "#projectionSelect" ).select2("val");
-        this.palette = $( "#paletteSelect" ).select2("val");
-        this.mapsNumber = $( "#mapsNumberSelect" ).select2("val");
+        this.projection = $( "#projectionSelect" ).select2( "val" );
+        this.palette = $( "#paletteSelect" ).select2( "val" );
+        this.mapsNumber = $( "#mapsNumberSelect" ).select2( "val" );
 
         this.hashBobcats = new Hashtable();
         this.selectedBobcat = false;
@@ -94,13 +94,28 @@ var BCInterfaceW = Class.create( {
 
     initInterface: function()
     {
-        $( "#projectionSelect" ).select2("val", "EPSG:4087").click();
-        $( "#periodSelect" ).select2( "val", "monthlymean" ).click();
+        $( "#projectionSelect" ).select2( "val", "EPSG:4087" ).click();
+        $( "#periodSelect" ).select2( "val", "monthlymean" );
+        this.time = false;
+        this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
         $( "#resourceSelect" ).fancytree().init();
-//        $( "button#btnResetSearchResource" ).click();
 
+        $( "#mapsNumberSelect" ).select2( "val", "2" ).click();
+        // Range
+        $( "#slider-range" ).slider( {
+            min: -1000,
+            max: 1000,
+            step: 5,
+            values: [-500, 500] } );
+        $( "#slider-range-text" ).val( '[' + $( "#slider-range" ).slider( "values", 0 ) + "," + $( "#slider-range" ).slider( "values", 1 ) + ']' );
+        // Palette
+        $( "#paletteSelect" ).select2( "val", "blue_yellow_red" );
+        this.palette = $( "#paletteSelect" ).select2( "val" );
+        // Colors number
+        $( "#slider-nbcolorbands" ).slider( "value", 90 );
+        $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
 
-        $( "#mapsNumberSelect" ).select2("val", "2").click();
+        this.onClickDeleteAllMaps();
     },
 
 
@@ -129,12 +144,12 @@ var BCInterfaceW = Class.create( {
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( resource )[1] );
 
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-        var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get(resource)[1] + "/" + selectedPeriod + "/" + resource
-            + "_" + selectedPeriod + "_XYT.nc";
+        var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
+                + "_" + selectedPeriod + "_XYT.nc";
 
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
-            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
-        var mapShortTitle = selectedPeriod.indexOf("longterm") != -1 ? selectedPeriod.replace("longterm-","") : false;
+                this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+        var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
 
         var options = {container: $( '#printable' ),
             id: id,
@@ -178,14 +193,16 @@ var BCInterfaceW = Class.create( {
         }, this ), true );
 
         // Select layer accordingly to variable displayed
-        switch(this.variable) {
+        switch( this.variable )
+        {
             case "Terrestrial_flux":
-                this.selectedBobcat.map.layers[1].setVisibility(false);
+                this.selectedBobcat.map.layers[1].setVisibility( false );
                 break;
             case "Ocean_flux":
-                this.selectedBobcat.map.layers[2].setVisibility(false);
+                this.selectedBobcat.map.layers[2].setVisibility( false );
                 break;
-        };
+        }
+        ;
 
         this.resizeAllMaps();
     },
@@ -199,27 +216,28 @@ var BCInterfaceW = Class.create( {
     },
 
     /* Disable + or - when zoom levels are reached */
-    handleZoom: function() {
-        switch(this.getZoom())
+    handleZoom: function()
+    {
+        switch( this.getZoom() )
         {
             case 0:
-                $(".olControlZoomIn").css("pointer-events", "auto");
-                $(".olControlZoomIn").css("background-color", "");
-                $(".olControlZoomOut").css("pointer-events", "none");
-                $(".olControlZoomOut").css("background-color", "#8F8F8F");
+                $( ".olControlZoomIn" ).css( "pointer-events", "auto" );
+                $( ".olControlZoomIn" ).css( "background-color", "" );
+                $( ".olControlZoomOut" ).css( "pointer-events", "none" );
+                $( ".olControlZoomOut" ).css( "background-color", "#8F8F8F" );
                 // $(".olControlZoomOut").css("opacity", "0.4");	// Could have been used but nicer with background-color
                 break;
-            case 7:		// 8 levels
-                $(".olControlZoomIn").css("pointer-events", "none");
-                $(".olControlZoomIn").css("background-color", "#8F8F8F");
-                $(".olControlZoomOut").css("pointer-events", "auto");
-                $(".olControlZoomOut").css("background-color", "");
+            case 7:        // 8 levels
+                $( ".olControlZoomIn" ).css( "pointer-events", "none" );
+                $( ".olControlZoomIn" ).css( "background-color", "#8F8F8F" );
+                $( ".olControlZoomOut" ).css( "pointer-events", "auto" );
+                $( ".olControlZoomOut" ).css( "background-color", "" );
                 break;
             default:
-                $(".olControlZoomIn").css("pointer-events", "auto");
-                $(".olControlZoomIn").css("background-color", "");
-                $(".olControlZoomOut").css("pointer-events", "auto");
-                $(".olControlZoomOut").css("background-color", "");
+                $( ".olControlZoomIn" ).css( "pointer-events", "auto" );
+                $( ".olControlZoomIn" ).css( "background-color", "" );
+                $( ".olControlZoomOut" ).css( "pointer-events", "auto" );
+                $( ".olControlZoomOut" ).css( "background-color", "" );
         }
     },
 
@@ -255,7 +273,7 @@ var BCInterfaceW = Class.create( {
             return;
 
         var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber;
-        var newWidth = Math.round( newWidth / 4 ) * 4;                  // Prepare map width to host 4 tiles 
+        var newWidth = Math.round( newWidth / 4 ) * 4;                  // Prepare map width to host 4 tiles
 
         var linesNumber = Math.ceil( this.hashBobcats.keys().length / this.mapsNumber );
         var newHeight = (this.printableInitHeight / linesNumber) - 30;
@@ -305,7 +323,7 @@ var BCInterfaceW = Class.create( {
     {
         $( "#projectionSelect" ).on( 'click', jQuery.proxy( function( event )
         {
-            this.projection = $( "#projectionSelect" ).select2("val");
+            this.projection = $( "#projectionSelect" ).select2( "val" );
         }, this ) );
     },
 
@@ -378,26 +396,26 @@ var BCInterfaceW = Class.create( {
         // Filter
         var tree = $( "#resourceSelect" ).fancytree( "getTree" );
         $( "input[name=searchResource]" ).keyup(
-            function( e )
-            {
-                tree.options.filter.mode = "hide";
-                var match = $( this ).val();
-                if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
+                function( e )
                 {
-                    $( "button#btnResetSearchResource" ).click();
-                    return;
-                }
-                // Pass text as filter string (will be matched as substring in the node title)
-                var n = tree.applyFilter( match );
-                $( "button#btnResetSearchResource" ).attr( "disabled", false );
-            } );
+                    tree.options.filter.mode = "hide";
+                    var match = $( this ).val();
+                    if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
+                    {
+                        $( "button#btnResetSearchResource" ).click();
+                        return;
+                    }
+                    // Pass text as filter string (will be matched as substring in the node title)
+                    var n = tree.applyFilter( match );
+                    $( "button#btnResetSearchResource" ).attr( "disabled", false );
+                } );
 
         $( "button#btnResetSearchResource" ).click(
-            function( e )
-            {
-                $( "input[name=searchResource]" ).val( "" );
-                tree.clearFilter();
-            } ).attr( "disabled", true );
+                function( e )
+                {
+                    $( "input[name=searchResource]" ).val( "" );
+                    tree.clearFilter();
+                } ).attr( "disabled", true );
     },
 
     onSelectResource: function( isInit, data )
@@ -431,11 +449,11 @@ var BCInterfaceW = Class.create( {
     {
         if( i < this.selectedResourceKeys.length )
         {
-            var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i])[1] );
+            var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-            var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod +  "/" +
-                this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+            var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
+                    this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getVariables( url, i, this.selectedResourceKeys[i] );
         }
@@ -443,7 +461,7 @@ var BCInterfaceW = Class.create( {
         {
             this.variableDiv.empty();
 
-            if( 1 < this.selectedResourceKeys.length )
+            if( 1 <= this.selectedResourceKeys.length )
                 this.reduceHashVariable();
 
             if( 0 == this.hashVariables.keys().length )
@@ -490,7 +508,8 @@ var BCInterfaceW = Class.create( {
     {
         jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, key )
         {
-            if( this.selectedResourceKeys.length != this.hashVariables.get( key )[1].length )
+            var intersectArray = $.arrayIntersect( this.selectedResourceKeys, this.hashVariables.get( key )[1] );
+            if( this.selectedResourceKeys.length != intersectArray.length )
                 this.hashVariables.remove( key );
         }, this ) )
     },
@@ -527,7 +546,7 @@ var BCInterfaceW = Class.create( {
             {
                 var variableName = $( element ).children( "Name" ).text();
                 var index = this.variablesToDisplay.indexOf( variableName );
-                if( variableName && -1 && (index != -1))
+                if( variableName && -1 && (index != -1) )
                 {
                     var filesArray = null == this.hashVariables.get( variableName ) ? new Array() : this.hashVariables.get( variableName )[1];
                     filesArray.push( fileKey );
@@ -548,8 +567,8 @@ var BCInterfaceW = Class.create( {
     fillVariablesError: function()
     {
         var message = $( '<div></div>' )
-            .html( "<BR/>Unable to read file" )
-            .dialog(
+                .html( "<BR/>Unable to read file" )
+                .dialog(
             {
                 modal: true,
                 resizable: false,
@@ -611,7 +630,7 @@ var BCInterfaceW = Class.create( {
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( fileArray[i] )[1] + "/" + selectedPeriod + "/" +
-                this.basename(fileArray[i]) + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+                    this.basename( fileArray[i] ) + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getTimes( url, i );
         }
@@ -620,7 +639,7 @@ var BCInterfaceW = Class.create( {
             // timeArray is one simple array with all common times.
             this.timeArray = this.hashVariables.get( this.variable )[2] && this.hashVariables.get( this.variable )[2][0] ? this.hashVariables.get( this.variable )[2][0] : new Array();
             if( 1 < this.selectedResourceKeys.length )
-                this.timeArray = this.reduceTimesArray( 2 );
+                this.timeArray = this.reduceTimesArray();
 
             if( 0 == this.timeArray.length )
             {
@@ -692,12 +711,11 @@ var BCInterfaceW = Class.create( {
     },
 
     /**
-     * - times : i = 2
-     * @param i
+     * - times : i = 2 in this.hashVariables.get( this.variable )
      */
-    reduceTimesArray: function( i )
+    reduceTimesArray: function()
     {
-        var array = this.hashVariables.get( this.variable )[i];
+        var array = this.hashVariables.get( this.variable )[2];
         if( !array )
             return new Array();
         var result = array[0] ? array[0] : new Array();
@@ -768,8 +786,8 @@ var BCInterfaceW = Class.create( {
     getTimesError: function()
     {
         var message = $( '<div></div>' )
-            .html( "Unable to get Dimension Time" )
-            .dialog(
+                .html( "Unable to get Dimension Time" )
+                .dialog(
             {
                 modal: true,
                 resizable: false,
@@ -824,14 +842,14 @@ var BCInterfaceW = Class.create( {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[0] )[1] );
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-            var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/"  + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-                + "_" + selectedPeriod + "_XYT.nc";
+            var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
+                    + "_" + selectedPeriod + "_XYT.nc";
 
             var url = resourceUrl
-                + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMetadata&item=minmax&SRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=200&HEIGHT=200"
-                + "&TIME=" + this.time
-                + "&ELEVATION=" + this.elevation
-                + "&LAYERS=" + this.variable;
+                    + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMetadata&item=minmax&SRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=200&HEIGHT=200"
+                    + "&TIME=" + this.time
+                    + "&ELEVATION=" + this.elevation
+                    + "&LAYERS=" + this.variable;
 
             this.getRange( url, previousRange );
         }, this ) );
@@ -880,8 +898,8 @@ var BCInterfaceW = Class.create( {
         $( "#slider-range-text" ).val( previousRange );
         this.rangeDiv.blur();
         var message = $( '<div></div>' )
-            .html( "Unable to get range" )
-            .dialog(
+                .html( "Unable to get range" )
+                .dialog(
             {
                 modal: true,
                 autoOpen: false,
@@ -933,30 +951,30 @@ var BCInterfaceW = Class.create( {
 // **************************************************************
     updateLegend: function()
     {
-        if( 0 == this.selectedResourceKeys.length || !this.variable || !this.palette)
+        if( 0 == this.selectedResourceKeys.length || !this.variable || !this.palette )
             return;
 
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[0] )[1] );
 
         var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-            + "_" + selectedPeriod + "_XYT.nc" ;
+                + "_" + selectedPeriod + "_XYT.nc";
         var colorscalerange = $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' );
         var numcolorbands = $( "#slider-nbcolorbands-text" ).html();
         // Initial legend size is 110x264 ; here take 80% of the size
         $( "#legend" ).html( "<img id='legendImg' width='88px;' height='211px;' src='"
-            + resourceUrl
-            + "?REQUEST=GetLegendGraphic"
-            + "&LAYER=" + this.variable
-            + "&PALETTE=" + this.palette
-            + "&COLORSCALERANGE=" + colorscalerange
-            + "&NUMCOLORBANDS=" + numcolorbands
-            + "' alt=''/>" );
+                + resourceUrl
+                + "?REQUEST=GetLegendGraphic"
+                + "&LAYER=" + this.variable
+                + "&PALETTE=" + this.palette
+                + "&COLORSCALERANGE=" + colorscalerange
+                + "&NUMCOLORBANDS=" + numcolorbands
+                + "' alt=''/>" );
 
-        $( "#legendImg").load( jQuery.proxy( function()
+        $( "#legendImg" ).load( jQuery.proxy( function()
         {
-            if(!this.leftMenuInitWidth)
+            if( !this.leftMenuInitWidth )
                 this.leftMenuInitWidth = $( "#leftMenu" ).width();
-            if(!this.rightMenuInitWidth)
+            if( !this.rightMenuInitWidth )
                 this.rightMenuInitWidth = $( "#rightMenu" ).width();
         }, this ) );
 
@@ -969,15 +987,15 @@ var BCInterfaceW = Class.create( {
             //console.log(this.hashBobcats.get( key ).map.layers[0].getFullRequestString());
             var map = this.hashBobcats.get( key );
             var wms1 = map.wms1;
-            wms1.mergeNewParams({ STYLES: "boxfill/" + this.palette,
+            wms1.mergeNewParams( { STYLES: "boxfill/" + this.palette,
                 NUMCOLORBANDS: numcolorbands,
-                COLORSCALERANGE: colorscalerange });
+                COLORSCALERANGE: colorscalerange } );
             // replace also the inner legend image
-            $( "#BClegendImg" + key ).replaceWith("<img id='BClegendImg" + key + "' width='66px;' height='158px;' src='" +
-                resourceUrl + "?REQUEST=GetLegendGraphic" + "&LAYER=" + map.variable +
-                "&PALETTE=" + this.palette + "&COLORSCALERANGE=" + colorscalerange +
-                "&NUMCOLORBANDS=" + numcolorbands
-                + "' alt=''/>");
+            $( "#BClegendImg" + key ).replaceWith( "<img id='BClegendImg" + key + "' width='66px;' height='158px;' src='" +
+                    resourceUrl + "?REQUEST=GetLegendGraphic" + "&LAYER=" + map.variable +
+                    "&PALETTE=" + this.palette + "&COLORSCALERANGE=" + colorscalerange +
+                    "&NUMCOLORBANDS=" + numcolorbands
+                    + "' alt=''/>" );
         }, this ) );
 
 
@@ -1027,7 +1045,7 @@ var BCInterfaceW = Class.create( {
     {
         $( "#mapsNumberSelect" ).on( 'click', jQuery.proxy( function( event )
         {
-            this.mapsNumber = $( "#mapsNumberSelect" ).select2("val");
+            this.mapsNumber = $( "#mapsNumberSelect" ).select2( "val" );
             this.resizeAllMaps();
         }, this ) );
     },
@@ -1039,7 +1057,7 @@ var BCInterfaceW = Class.create( {
     {
         $( "#paletteSelect" ).on( 'click', jQuery.proxy( function( event )
         {
-            this.palette = $( "#paletteSelect" ).select2("val");
+            this.palette = $( "#paletteSelect" ).select2( "val" );
             this.updateLegend();
         }, this ) );
     },
@@ -1233,14 +1251,14 @@ var BCInterfaceW = Class.create( {
     createHelp: function()
     {
         this.displayElementsForHelp();
-        if(this.helpElements.isOneMapDisplay)
+        if( this.helpElements.isOneMapDisplay )
             this.displayHelp();
         else
-            jQuery(".BCmapTitleIconeMenu img").load(jQuery.proxy(function()
+            jQuery( ".BCmapTitleIconeMenu img" ).load( jQuery.proxy( function()
             {
-                if(!this.help)
+                if( !this.help )
                     this.displayHelp();
-            }, this));
+            }, this ) );
     },
 
     displayHelp: function()
@@ -1288,7 +1306,7 @@ var BCInterfaceW = Class.create( {
         ];
         parameters.parentContainerId = "#pageWrapper";
         //parameters.globalMarginTop = -110;
-        //parameters.globalMarginLeft = -110;		// TODO: do not handle width resizing 
+        //parameters.globalMarginLeft = -110;		// TODO: do not handle width resizing
 
         this.help = new Help( parameters );
 
@@ -1303,7 +1321,7 @@ var BCInterfaceW = Class.create( {
     removeHelp: function()
     {
         this.hideElementsForHelp();
-        this.help.remove();			// ?? error does not exist 
+        this.help.remove();			// ?? error does not exist
         this.help = false;
     },
 
@@ -1330,10 +1348,10 @@ var BCInterfaceW = Class.create( {
         this.help.wrapper.append( divFooter );
 
         var divContentFooter = $( '' +
-            '<div class="helpFooterContentRight">' +
-            '<div class="helpFooterContentFloat">A project realised by</div>' +
-            '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="'+ this.imgPath + '/logo_lsce_small.png"/></div><div><img src="'+ this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
-            '</div>' );
+                '<div class="helpFooterContentRight">' +
+                '<div class="helpFooterContentFloat">A project realised by</div>' +
+                '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
+                '</div>' );
 
         divFooter.append( divContentFooter );
     },
@@ -1388,7 +1406,7 @@ var BCInterfaceW = Class.create( {
     resizePrintable: function()
     {
         $( "#printable" ).width( $( "#pageWrapper" ).width() - $( "#leftMenu" ).width() - $( "#rightMenu" ).width() - 37 );
-        $("#printable").height($("#leftMenu").height());
+        $( "#printable" ).height( $( "#leftMenu" ).height() );
         this.printableInitHeight = $( "#printable" ).height();
     },
 
@@ -1415,10 +1433,10 @@ var BCInterfaceW = Class.create( {
 
     updateHeightMenus: function()
     {
-        var maxSize = Math.max($("#leftMenu").height(), $("#rightMenu").height());
-        $("#leftMenu").height(maxSize);
-        $("#rightMenu").height(maxSize);
-        $("#hideOrShowLeftMenu").height(maxSize);
+        var maxSize = Math.max( $( "#leftMenu" ).height(), $( "#rightMenu" ).height() );
+        $( "#leftMenu" ).height( maxSize );
+        $( "#rightMenu" ).height( maxSize );
+        $( "#hideOrShowLeftMenu" ).height( maxSize );
 
     }
 
