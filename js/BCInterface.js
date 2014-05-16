@@ -1270,7 +1270,7 @@ var BCInterfaceW = Class.create( {
         parameters.helpArray = [
             // Left menu
             {linkType:"simple", divToHelpId:"clearAll", text:"Init all the selected fields", marginTop:5, marginLeft:31},
-            {linkType:"simple", divToHelpId:"hideOrShowLeftMenu", text:"Slide this menu to get more space", textLengthByLine:40, marginTop:5, marginLeft:2},
+            {linkType:"simple", divToHelpId:"hideOrShowLeftMenu", text:"Slide this menu to get more space", textLengthByLine:40, marginTop:98, marginLeft:2},
             {linkType:"simple", divToHelpId:"submitCreateMap", text:"Create map(s) with all selected parameters. One by one selected resource", linkedHelp: ["resourceSelect"], textLengthByLine:45, marginTop:11, marginLeft:-20},
             {linkType:"right", divToHelpId:"s2id_projectionSelect", text:"Pick a projection", marginTop:20, marginLeft:$( "#s2id_projectionSelect" ).width() / 2, stage:1},
             {linkType:"right", divToHelpId:"s2id_periodSelect", text:"Choose a period", marginTop:20, marginLeft:$( "#s2id_periodSelect" ).width() / 2, stage:1},
