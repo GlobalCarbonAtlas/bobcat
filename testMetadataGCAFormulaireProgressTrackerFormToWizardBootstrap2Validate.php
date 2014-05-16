@@ -42,7 +42,7 @@
 
 <form id="metadataForm" method="post" action="testForm.php">
 <!--form id= "metadataForm" method= "post" action="testForm.php" onsubmit= "return verificationChamps();">--><!-- Tester que sur la derniere page donc !-->
-<<<<<<< HEAD
+<HEAD>
  <div class= "row">
   <div id= "mandatoryFieldIndication" class= "col-md-24 col-sm-24">(*): mandatory fields</div>
  </div><!-- mandatory field info row-->
