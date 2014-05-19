@@ -703,10 +703,9 @@ var BCInterfaceW = Class.create( {
                 this.timeMonthSelect.select2( "val", this.previousTime.replace( splitedPreviousTime[0], "" ) );
             }
             this.time = this.timeYearSelect.select2( "val" ) + this.timeMonthSelect.select2( "val" );
-            //console.log( "time : " + this.time );
 
+            this.updateLegend();
             this.submitButton.removeClass( "disabled" );
-
         }
     },
 
@@ -983,8 +982,6 @@ var BCInterfaceW = Class.create( {
         // Update maps with new STYLES (palette), NUMCOLORBANDS and COLORSCALERANGE
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
-            //console.log("-------------- " + key);
-            //console.log(this.hashBobcats.get( key ).map.layers[0].getFullRequestString());
             var map = this.hashBobcats.get( key );
             var wms1 = map.wms1;
             wms1.mergeNewParams( { STYLES: "boxfill/" + this.palette,
