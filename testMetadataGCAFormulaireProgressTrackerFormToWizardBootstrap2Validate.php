@@ -40,7 +40,7 @@
 <body>
 <div class="container-fluid"><!-- POur prendre tte la largeur ?cran-->
 
-<form id="metadataForm" method="post" action="testForm.php">
+<form id="metadataForm" method="post" action="testForm2.php" >
 <!--form id= "metadataForm" method= "post" action="testForm.php" onsubmit= "return verificationChamps();">--><!-- Tester que sur la derniere page donc !-->
 <div id="mandatoryFieldIndication" class="col-md-24 col-sm-24">(*): mandatory fields</div>
 
@@ -69,9 +69,9 @@
                                 <div class="label2 form-control-xxl" id="dataProductTypeSelectText">Product type:</div>
                                 <select id="dataProductTypeSelect" class="form-control form-control-xl" name="dataProductType">
                                     <option value="nullValue">----</option>
-                                    <option value="CO2Flux">CO2_flux</option>
-                                    <option value="carbonStock">Carbon_stock</option>
-                                    <option value="CH4Flux">CH4_flux</option>
+                                    <option value="CO2_flux">CO2 flux</option>
+                                    <option value="Carbon_stock">Carbon stock</option>
+                                    <option value="CH4_flux">CH4 flux</option>
                                     <option value="otherValue">Other</option>
                                 </select>
                             </div>
@@ -88,9 +88,9 @@
                                 <div class="label2 form-control-xxl" id="dataProductCategorySelectText">Product category:</div>
                                 <select class="form-control form-control-xl dataProductCategoryClass" id="dataProductCategorySelect" name="dataProductCategory">
                                     <option value="nullValue">----</option>
-                                    <option value="inversionModel">Inversion_model</option>
-                                    <option value="landModel">Land_model</option>
-                                    <option value="oceanModel">Ocean_model</option>
+                                    <option value="Inversion_model">Inversion model</option>
+                                    <option value="Land_model">Land model</option>
+                                    <option value="Ocean_model">Ocean model</option>
                                     <option value="otherValue">Other</option>
                                 </select>
                             </div>
@@ -155,17 +155,17 @@
                                 <div id="metadatCreatorInfoRoleLabel" class="label2 form-control-xxl">Role (*):</div>
                                 <select id="metadatCreatorInfoRoleSelect" class="form-control form-control-xl" name="metadatCreatorInfoRole">
                                     <option value="nullValue">----</option>
-                                    <option value="resourceProvider">Resource provider</option>
-                                    <option value="custodian">Custodian</option>
-                                    <option value="owner">Owner</option>
-                                    <option value="user">user</option>
-                                    <option value="distibutor">Distributor</option>
-                                    <option value="originator">Originator</option>
-                                    <option value="pointOfContact">Point of contact</option>
-                                    <option value="principalInvestigator">Principal investigator</option>
-                                    <option value="processor">Processor</option>
-                                    <option value="publisher">Publisher</option>
-                                    <option value="author">Author</option>
+                                    <option value="Resource provider">Resource provider</option>
+                                    <option value="Custodian">Custodian</option>
+                                    <option value="Owner">Owner</option>
+                                    <option value="User">user</option>
+                                    <option value="Distibutor">Distributor</option>
+                                    <option value="Originator">Originator</option>
+                                    <option value="Point of contact">Point of contact</option>
+                                    <option value="Principal investigator">Principal investigator</option>
+                                    <option value="Processor">Processor</option>
+                                    <option value="Publisher">Publisher</option>
+                                    <option value="Author">Author</option>
                                 </select>
                             </div>
                             <!--col name, role-->
@@ -200,10 +200,10 @@
                                     <div class="label2 form-control-xxl" id="temporalResolutionTextSelect">Select a temporal resolution:</div>
                                     <select name="temporalResolution" class="form-control form-control-xl" id="temporalResolutionSelect">
                                         <option value="nullValue">----</option>
-                                        <option value="tempResolAnnual">Annual</option>
-                                        <option value="tempResolMonthly">Monthly</option>
-                                        <option value="tempResolDaily">Daily</option>
-                                        <option value="tempResolHourly">hourly</option>
+                                        <option value="Annual">Annual</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Daily">Daily</option>
+                                        <option value="Hourly">hourly</option>
                                         <option value="otherValue">Other</option>
                                     </select>
                                 </div>
@@ -241,8 +241,8 @@
                                 <div class="col-md-8 col-sm-8">
                                     <div class="label2 form-control-xxl" id="spatialResolutionLongUnitText">Unit:</div>
                                     <select id="spatialResolutionUnitLongSelect" class="form-control form-control-xxl" name="spatialResolutionLongUnit">
-                                        <option value="degrees">Degrees</option>
-                                        <option value="meters">Meters</option>
+                                        <option value="Degrees">Degrees</option>
+                                        <option value="Meters">Meters</option>
                                     </select>
                                 </div>
                                 <div class="col-md-11 col-sm-11">
@@ -299,9 +299,9 @@
                                                     <div class="label2 form-control-xl" id="selectCategoryVerticalLevelText">Select a vertical level:</div>
                                                     <select name="verticalLevel" class="form-control form-control-xl" id="selectCategoryVerticalLevelSelect">
                                                         <option value="">None</option>
-                                                        <option value="AtmLevel">Atmospheric levels</option>
-                                                        <option value="SurfaceLevel">Surface level</option>
-                                                        <option value="BelowGroundLevel">Below-ground levels</option>
+                                                        <option value="Atmospheric levels">Atmospheric levels</option>
+                                                        <option value="Surface level">Surface level</option>
+                                                        <option value="Below-ground levels">Below-ground levels</option>
                                                         <option value="otherValue">Other</option>
                                                     </select>
                                                 </div>
@@ -413,13 +413,13 @@
                     <div class="label2 form-control-xs" id="citationAuthorRoleText">Role:</div>
                     <select id="citationAuthorRoleSelect" name="citationAuthorRole" class="form-control form-control-xl">
                         <option value="">----</option>
-                        <option value="resourceProvider">Resource provider</option>
-                        <option value="distibutor">Distributor</option>
-                        <option value="originator">Originator</option>
-                        <option value="pointOfContact">Point of contact</option>
-                        <option value="principalInvestigator">Principal investigator</option>
-                        <option value="processor">Processor</option>
-                        <option value="author">Author</option>
+                        <option value="Resource provider">Resource provider</option>
+                        <option value="Distibutor">Distributor</option>
+                        <option value="Originator">Originator</option>
+                        <option value="Point of contact">Point of contact</option>
+                        <option value="Principal investigator">Principal investigator</option>
+                        <option value="Processor">Processor</option>
+                        <option value="Author">Author</option>
                     </select>
                 </div>
             </div>
@@ -441,13 +441,13 @@
                         <div class="label1 form-control-xxl" id="citationCategoryText" title="medium in witch it is published">Category (*):</div>
                         <select id="citationCategorySelect" name="citationBookCategory" class="form-control form-control-xl">
                             <option value="nullValue">----</option>
-                            <option value="bookChapter">Book chapter</option>
-                            <option value="book">Book</option>
-                            <option value="reportManual">Report manual</option>
-                            <option value="journalArticle">Journal article</option>
-                            <option value="magazineNewspaper">Magazine newspaper</option>
-                            <option value="AtlasOrPaperMap">Atlas or paperMap</option>
-                            <option value="applicationProgram">Application, program</option>
+                            <option value="Book chapter">Book chapter</option>
+                            <option value="Book">Book</option>
+                            <option value="Report manual">Report manual</option>
+                            <option value="Journal article">Journal article</option>
+                            <option value="Magazine newspaper">Magazine newspaper</option>
+                            <option value="Atlas or paperMap">Atlas or paperMap</option>
+                            <option value="Application, program">Application, program</option>
                         </select>
                     </div>
                     <div class="col-md-11 col-sm-11">
@@ -500,13 +500,13 @@
                     <div class="label2 form-control-xs" id="citationAuthorRoleText2">Role:</div>
                     <select id="citationAuthorRoleSelect2" name="citationAuthorRole2" class="form-control form-control-xl">
                         <option value="">----</option>
-                        <option value="resourceProvider">Resource provider</option>
-                        <option value="distibutor">Distributor</option>
-                        <option value="originator">Originator</option>
-                        <option value="pointOfContact">Point of contact</option>
-                        <option value="principalInvestigator">Principal investigator</option>
-                        <option value="processor">Processor</option>
-                        <option value="author">Author</option>
+                        <option value="Resource provider">Resource provider</option>
+                        <option value="Distibutor">Distributor</option>
+                        <option value="Originator">Originator</option>
+                        <option value="Point of contact">Point of contact</option>
+                        <option value="Principal investigator">Principal investigator</option>
+                        <option value="Processor">Processor</option>
+                        <option value="Author">Author</option>
                     </select>
                 </div>
             </div>
@@ -528,13 +528,13 @@
                         <div class="label1 form-control-xxl" id="citationCategoryText2" title="medium in witch it is published">Category (*):</div>
                         <select id="citationCategorySelect2" name="citationBookCategory2" class="form-control form-control-xl">
                             <option value="nullValue">----</option>
-                            <option value="bookChapter">Book chapter</option>
-                            <option value="book">Book</option>
-                            <option value="reportManual">Report manual</option>
-                            <option value="journalArticle">Journal article</option>
-                            <option value="magazineNewspaper">Magazine newspaper</option>
-                            <option value="AtlasOrPaperMap">Atlas or paperMap</option>
-                            <option value="applicationProgram">Application, program</option>
+                            <option value="Book chapter">Book chapter</option>
+                            <option value="Book">Book</option>
+                            <option value="Report manual">Report manual</option>
+                            <option value="Journal article">Journal article</option>
+                            <option value="Magazine newspaper">Magazine newspaper</option>
+                            <option value="Atlas or paperMap">Atlas or paperMap</option>
+                            <option value="Application, program">Application, program</option>
                         </select>
                     </div>
                     <div class="col-md-11 col-sm-11">
@@ -587,13 +587,13 @@
                     <div class="label2 form-control-xs" id="citationAuthorRoleText3">Role:</div>
                     <select id="citationAuthorRoleSelect3" name="citationAuthorRole3" class="form-control form-control-xl">
                         <option value="">----</option>
-                        <option value="resourceProvider">Resource provider</option>
-                        <option value="distibutor">Distributor</option>
-                        <option value="originator">Originator</option>
-                        <option value="pointOfContact">Point of contact</option>
-                        <option value="principalInvestigator">Principal investigator</option>
-                        <option value="processor">Processor</option>
-                        <option value="author">Author</option>
+                        <option value="Resource provider">Resource provider</option>
+                        <option value="Distibutor">Distributor</option>
+                        <option value="Originator">Originator</option>
+                        <option value="Point of contact">Point of contact</option>
+                        <option value="Principal investigator">Principal investigator</option>
+                        <option value="Processor">Processor</option>
+                        <option value="Author">Author</option>
                     </select>
                 </div>
             </div>
@@ -615,13 +615,13 @@
                         <div class="label1 form-control-xxl" id="citationCategoryText3" title="medium in witch it is published">Category (*):</div>
                         <select id="citationCategorySelect3" name="citationBookCategory3" class="form-control form-control-xl">
                             <option value="nullValue">----</option>
-                            <option value="bookChapter">Book chapter</option>
-                            <option value="book">Book</option>
-                            <option value="reportManual">Report manual</option>
-                            <option value="journalArticle">Journal article</option>
-                            <option value="magazineNewspaper">Magazine newspaper</option>
-                            <option value="AtlasOrPaperMap">Atlas or paperMap</option>
-                            <option value="applicationProgram">Application, program</option>
+                            <option value="Book chapter">Book chapter</option>
+                            <option value="Book">Book</option>
+                            <option value="Report manual">Report manual</option>
+                            <option value="Journal article">Journal article</option>
+                            <option value="Magazine newspaper">Magazine newspaper</option>
+                            <option value="Atlas or paperMap">Atlas or paperMap</option>
+                            <option value="Application, program">Application, program</option>
                         </select>
                     </div>
                     <div class="col-md-11 col-sm-11">
@@ -674,13 +674,13 @@
                     <div class="label2 form-control-xs" id="citationAuthorRoleText4">Role:</div>
                     <select id="citationAuthorRoleSelect4" name="citationAuthorRole4" class="form-control form-control-xl">
                         <option value="">----</option>
-                        <option value="resourceProvider">Resource provider</option>
-                        <option value="distibutor">Distributor</option>
-                        <option value="originator">Originator</option>
-                        <option value="pointOfContact">Point of contact</option>
-                        <option value="principalInvestigator">Principal investigator</option>
-                        <option value="processor">Processor</option>
-                        <option value="author">Author</option>
+                        <option value="Resource provider">Resource provider</option>
+                        <option value="Distributor">Distributor</option>
+                        <option value="Originator">Originator</option>
+                        <option value="Point of contact">Point of contact</option>
+                        <option value="Principal investigator">Principal investigator</option>
+                        <option value="Processor">Processor</option>
+                        <option value="Author">Author</option>
                     </select>
                 </div>
             </div>
@@ -702,13 +702,13 @@
                         <div class="label1 form-control-xxl" id="citationCategoryText4" title="medium in witch it is published">Category (*):</div>
                         <select id="citationCategorySelect4" name="citationBookCategory4" class="form-control form-control-xl">
                             <option value="nullValue">----</option>
-                            <option value="bookChapter">Book chapter</option>
-                            <option value="book">Book</option>
-                            <option value="reportManual">Report manual</option>
-                            <option value="journalArticle">Journal article</option>
-                            <option value="magazineNewspaper">Magazine newspaper</option>
-                            <option value="AtlasOrPaperMap">Atlas or paperMap</option>
-                            <option value="applicationProgram">Application, program</option>
+                            <option value="Book chapter">Book chapter</option>
+                            <option value="Book">Book</option>
+                            <option value="Report manual">Report manual</option>
+                            <option value="Journal article">Journal article</option>
+                            <option value="Magazine newspaper">Magazine newspaper</option>
+                            <option value="Atlas or paperMap">Atlas or paperMap</option>
+                            <option value="Application, program">Application, program</option>
                         </select>
                     </div>
                     <div class="col-md-11 col-sm-11">
@@ -761,13 +761,13 @@
                     <div class="label2 form-control-xs" id="citationAuthorRoleText5">Role:</div>
                     <select id="citationAuthorRoleSelect5" name="citationAuthorRole5" class="form-control form-control-xl">
                         <option value="">----</option>
-                        <option value="resourceProvider">Resource provider</option>
-                        <option value="distibutor">Distributor</option>
-                        <option value="originator">Originator</option>
-                        <option value="pointOfContact">Point of contact</option>
-                        <option value="principalInvestigator">Principal investigator</option>
-                        <option value="processor">Processor</option>
-                        <option value="author">Author</option>
+                        <option value="Resource provider">Resource provider</option>
+                        <option value="Distibutor">Distributor</option>
+                        <option value="Originator">Originator</option>
+                        <option value="Point of contact">Point of contact</option>
+                        <option value="Principal investigator">Principal investigator</option>
+                        <option value="Processor">Processor</option>
+                        <option value="Author">Author</option>
                     </select>
                 </div>
             </div>
@@ -789,13 +789,13 @@
                         <div class="label1 form-control-xxl" id="citationCategoryText5" title="medium in witch it is published">Category (*):</div>
                         <select id="citationCategorySelect5" name="citationBookCategory5" class="form-control form-control-xl">
                             <option value="nullValue">----</option>
-                            <option value="bookChapter">Book chapter</option>
-                            <option value="book">Book</option>
-                            <option value="reportManual">Report manual</option>
-                            <option value="journalArticle">Journal article</option>
-                            <option value="magazineNewspaper">Magazine newspaper</option>
-                            <option value="AtlasOrPaperMap">Atlas or paperMap</option>
-                            <option value="applicationProgram">Application, program</option>
+                        <option value="Resource provider">Resource provider</option>
+                        <option value="Distibutor">Distributor</option>
+                        <option value="Originator">Originator</option>
+                        <option value="Point of contact">Point of contact</option>
+                        <option value="Principal investigator">Principal investigator</option>
+                        <option value="Processor">Processor</option>
+                        <option value="Author">Author</option>
                         </select>
                     </div>
                     <div class="col-md-11 col-sm-11">
@@ -889,9 +889,9 @@
                                 <div class="label2 form-control-xxl" id="dataPolicyChooseText">Select a data policy:</div>
                                 <select id="dataPolicyChooseSelect" class="form-control form-control-m" name="dataPolicy" type="text">
                                     <option value="">None</option>
-                                    <option value="freeToUse">Free to use</option>
-                                    <option value="restrictedToScientists">Restricted to scientists</option>
-                                    <option value="notFree">Not free: contact PI</option>
+                                    <option value="Free to use">Free to use</option>
+                                    <option value="Restricted to scientists">Restricted to scientists</option>
+                                    <option value="Not free: contact PI">Not free: contact PI</option>
                                     <option value="otherValue">Other</option>
                                 </select>
                             </div>
@@ -915,6 +915,8 @@
 
 
 <input id="submitFormButon" type="submit" value="Submit"/>
+<!--Je vais declancher le submit avec action custom (= juste avertir php cible que action submit faite par envoi var avec get) garce a jQ submit-->
+
 </form>
 </div>
 <!-- Fin container -->
@@ -923,14 +925,45 @@
     // See http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/
     $( document ).ready( function()
     {
-        manageFormDiv();
-        createContributorRow( "contributorsContainer", 1 )
+        manageFormDiv();// Cf metadataGCAForm_script.js
+        createContributorRow( "contributorsContainer", 1 );
+	
+	$("#metadataForm").submit(function(event){// On appelle le form, pas le bouton submit !
+	// Pour ne pas a avoir a recharger page parce que on a besoin d'envoyer instruction de garder le xml au php cible apres avoir rentre les info  du form (ds array post)
+		// CF http://fr.openclassrooms.com/forum/sujet/submit-sans-recharger-la-page#.U3yrKt3eUcA
+			// Je passe avant variable pour indiquer nombre de champs dynamiques.
+		var nDataContributors= $( 'input[id^="dataProducerInfoNameInput"]' ).length;
+
+		var dataDateCreation= $(this).find("input[name=dataDateCreation]").val();				
+		var dataProductTypeSelect= $(this).find("select[name=dataProductType]").val();				
+		var dataProductTypeInput= $(this).find("input[name=dataProductType]").val();				
+		var dataProductCategorySelect= $(this).find("select[name=dataProductCategory]").val();			
+		var dataProductCategoryInput= $(this).find("input[name=dataProductCategory]").val();			
+		var prodNameTitle= $(this).find("input[name=prodNameTitle]").val();			
+		var prodNameVersion= $(this).find("input[name=prodNameVersion]").val();			
+		var dataProducerInfoName1= $(this).find("input[name=dataProducerInfoName1]").val();			
+		var dataProducerInfoName11= $(this).find("input[name=dataProducerInfoName11]").val();			
+		var dataProducerInfoOrganisation1= $(this).find("input[name=dataProducerInfoOrganisation1]").val();			
+		var dataProducerInfoMail1= $(this).find("input[name=dataProducerInfoMail1]").val();			
+		var dataProducerInfoRole1= $(this).find("select[name=dataProducerInfoRole1]").val();			
+		var metadataDateCreation= $(this).find("input[name=metadataDateCreation]").val();			
+		var metadatCreatorInfoName= $(this).find("input[name=metadatCreatorInfoName]").val();			
+		var metadatCreatorInfoMail= $(this).find("input[name=metadatCreatorInfoMail]").val();			
+		var metadatCreatorInfoRole= $(this).find("select[name=metadatCreatorInfoRole]").val();			
+
+	
+		$.post("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php",
+			// On passe les variables via array post. Syntaxe : ("php_cible", {naem a donner/appel post: var contenant valeur, pareil}, fonction associe si on veut);
+			{nDataContributorsPost: nDataContributors, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoRole1Post: dataProducerInfoRole1, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, 
+},
+			function(data) {alert(data);}
+		);
+		event.preventDefault();// annule action submit par defaut du form (cad envoi post et recharge page).
+	});
+
     } );
 
-    $( "#metadataForm" ).jqxValidator( {rules: validatorRules } );
-
-    // Pour adapter chgment window:
-    $( '#metadataForm' ).jqxValidator( 'updatePosition' );// Ne me fait rien !!!
+    $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );// Cf file metadataGCAFormValidationRules_script.js ds /js.
 
     $( "#metadataForm" ).formToWizard();
 

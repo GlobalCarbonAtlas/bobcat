@@ -261,6 +261,23 @@ textarea {
     font-weight: bold;
     border: solid 2px rgb(250, 80, 0);
 }
+#keepXMLFileButton {
+    position: fixed;
+    top: 80px;
+    right: 2%;
+    width: 10%;
+    height: 36px;
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(34, 169, 210);
+    border: solid 2px rgb(120, 120, 120);
+    border-radius: 3px;
+    text-align: center;
+    font-size: 14px !important;
+}
+#keepXMLFileButton:hover {
+    font-weight: bold;
+    border: solid 2px rgb(250, 80, 0);
+}
 
 .calendarActifClass {
     border: solid 2px rgb(250, 80, 0) !important;

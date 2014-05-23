@@ -137,9 +137,21 @@ function manageFormDiv()
     {
         var contributorsLastId = $( 'input[id^="dataProducerInfoNameInput"]' ).last().attr( 'id' ).replace( "dataProducerInfoNameInput", "" );
         if( 5 > $( 'input[id^="dataProducerInfoNameInput"]' ).length )
+	{
             createContributorRow( "contributorsContainer", contributorsLastId + 1 );
+		// Used to pass to php file (target, not form : to construct xml) parameters to actualise metadata xml.
+	    var nDataCreator= $( 'input[id^="dataProducerInfoNameInput"]' ).length;
+	    $.ajax({
+        	type: "GET",
+        	url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php?param="+nDataCreator+"",// On passe le 'name' du parametre et sa valeur via l'url avec ? (si methode get !).
+	   	timeout: 3000,
+        	success: function (data) {alert(data);},// Ici on va avoir la reponse du cote client (le fichier php traite) puisque on passe alert(data). Mais on ne fait rien comme retour car in veut juste passer parametres au php. J'ai juste mis l'affichage reponse php pour controler mais a enlever.
+        	error: function () {alert("php file used to update metadata file was not find on the server");},
+             });
+	}
         else
             alert( "You can't add more than 5 contributors" );
+	alert(nDataCreator);
     } );
 
 
@@ -213,7 +225,7 @@ function manageFormDiv()
             $( "#dataProductCategoryFreeTextInput" ).prop( "disabled", false );
             $( '#metadataForm' ).jqxValidator( 'hideHint', '#dataProductCategorySelect' );// On doit effacer message d'erreur si c'est other pour ne pas gener apparition input free text. Message d'erreur si other se montrera de tte fa?on a la phase de validation gnale.
         }
-        else if( dataProductCategorySelectRentre == "inversionModel" || dataProductCategorySelectRentre == "landModel" || dataProductCategorySelectRentre == "oceanModel" || dataProductCategorySelectRentre == "nullValue" )
+        else if( dataProductCategorySelectRentre == "Inversion_model" || dataProductCategorySelectRentre == "Land_model" || dataProductCategorySelectRentre == "Ocean_model" || dataProductCategorySelectRentre == "nullValue" )
         { //Il faut que l'on disabled freeTextInput parce que select et freeText ayant le meme name, si on ne le fait pas, envoi POST se fait mal : si on est avec other et donc selectInput et FreeTextInput ensemble, le post prend bien le freeTextInput en compte et pas le select dc OK.
             $( "#dataProductCategoryFreeTextInput" ).prop( "disabled", true );
             $( "#dataProductCategoryFreeTextInput" ).fadeIn( "slow" ).hide();
@@ -230,7 +242,7 @@ function manageFormDiv()
             $( "#dataProductTypeFreeTextInput" ).prop( "disabled", false );
             $( '#metadataForm' ).jqxValidator( 'hideHint', '#dataProductTypeSelect' );
         }
-        else if( dataProductTypeSelectRentre == "CO2Flux" || dataProductTypeSelectRentre == "carbonStock" || dataProductTypeSelectRentre == "CH4Flux" || dataProductTypeSelectRentre == "nullValue" )
+        else if( dataProductTypeSelectRentre == "CO2_flux" || dataProductTypeSelectRentre == "Carbon_stock" || dataProductTypeSelectRentre == "CH4_flux" || dataProductTypeSelectRentre == "nullValue" )
         {
             $( "#dataProductTypeFreeTextInput" ).prop( "disabled", true );
             $( "#dataProductTypeFreeTextInput" ).fadeIn( "slow" ).hide();
@@ -248,7 +260,7 @@ function manageFormDiv()
             $( "#temporalResolFreeTextInput" ).prop( "disabled", false );
             $( '#metadataForm' ).jqxValidator( 'hideHint', '#temporalResolutionSelect' );
         }
-        else if( temporalResolutionTypeSelectRentre == "tempResolAnnual" || temporalResolutionTypeSelectRentre == "tempResolMonthly" || temporalResolutionTypeSelectRentre == "tempResolDaily" || temporalResolutionTypeSelectRentre == "tempResolHourly" || temporalResolutionTypeSelectRentre == "nullValue" )
+        else if( temporalResolutionTypeSelectRentre == "Annual" || temporalResolutionTypeSelectRentre == "Monthly" || temporalResolutionTypeSelectRentre == "Daily" || temporalResolutionTypeSelectRentre == "Hourly" || temporalResolutionTypeSelectRentre == "nullValue" )
         {
             $( "#temporalResolFreeTextInput" ).prop( "disabled", true );
             $( "#temporalResolFreeTextText" ).fadeIn( "slow" ).hide();
@@ -263,7 +275,7 @@ function manageFormDiv()
             $( "#verticalLevelOtherContainer" ).fadeIn( "slow" ).show();
             $( "#verticalLevelFreeTextInput" ).prop( "disabled", false );
         }
-        else if( verticalLevelSelectRentre == "" || verticalLevelSelectRentre == "AtmLevel" || verticalLevelSelectRentre == "SurfaceLevel" || verticalLevelSelectRentre == "BelowGroundLevel" )
+        else if( verticalLevelSelectRentre == "" || verticalLevelSelectRentre == "Atmospheric levels" || verticalLevelSelectRentre == "Surface level" || verticalLevelSelectRentre == "Below-ground levels" )
         {
             $( "#verticalLevelFreeTextInput" ).prop( "disabled", true );
             $( "#verticalLevelOtherContainer" ).fadeIn( "slow" ).hide();
@@ -278,7 +290,7 @@ function manageFormDiv()
             $( "#dataPolicyFreeContainer" ).fadeIn( "slow" ).show();
             $( "#dataPolicyFreeInput" ).prop( "disabled", false );
         }
-        else if( dataPolicySelectRentre == "" || dataPolicySelectRentre == "freeToUse" || dataPolicySelectRentre == "restrictedToScientists" || dataPolicySelectRentre == "notFree" )
+        else if( dataPolicySelectRentre == "" || dataPolicySelectRentre == "Free to use" || dataPolicySelectRentre == "Restricted to scientists" || dataPolicySelectRentre == "Not free: contact PI" )
         {
             $( "#dataPolicyFreeInput" ).prop( "disabled", true );
             $( "#dataPolicyFreeContainer" ).fadeIn( "slow" ).hide();
@@ -311,3 +323,5 @@ function manageFormDiv()
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#citationDOIInput" ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 }
+
+        
