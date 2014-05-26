@@ -34,7 +34,8 @@
 <body>
 <div class="container-fluid">
 
-<form id="metadataForm" method="post" action="testForm2.php">
+<!--<form id="metadataForm" method="post" action="testForm2.php">-->
+<form id="metadataForm" method="post">
 <!--form id= "metadataForm" method= "post" action="testForm.php" onsubmit= "return verificationChamps();">--><!-- Tester que sur la derniere page donc !-->
 <div id="mandatoryFieldIndication" class="col-md-24 col-sm-24">(*): mandatory fields</div>
 
@@ -911,7 +912,8 @@
 
         $( '#metadataForm' ).on( 'validationError', function ( event )
         {
-            alert( "Some fields are empty or incorrect. Please check your form." );
+            var errorNumber = event.args.invalidInputs.length;
+            alert( "Some fields are empty or incorrect. Please check your form : " + errorNumber + " errors." );
         } );
         $( '#metadataForm' ).on( 'validationSuccess', function ( event )
         {

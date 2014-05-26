@@ -70,6 +70,18 @@ function removeContributorRow( divId )
 {
     $( "#" + divId ).remove();
     manageContributorsDiv();
+    $( '#metadataForm' ).jqxValidator( 'hide' );
+//    hideHintByDiv( $( "#contributorsContainer" ) );
+}
+
+function hideHintByDiv( div )
+{
+    div.children().each( function( i, d )
+    {
+        $( '#metadataForm' ).jqxValidator( 'hideHint', '#' + d.id );
+        if( 0 < d.childElementCount )
+            hideHintByDiv( $( d ) );
+    } );
 }
 
 /**
@@ -105,12 +117,12 @@ function manageContributorsDiv()
  */
 function validateContributorsDiv( index )
 {
-    $( "#metadataForm" ).jqxValidator( {rules: [
+    validatorRules = $.merge( validatorRules, [
 
         {input: "#dataProducerInfoNameInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
         {input: "#dataProducerInfoNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
-            return /^[a-zA-Z ._-]+$/.test( arguments[0].value );
+            return ("" == arguments[0].value || /^[a-zA-Z0-9._-]+$/.test( arguments[0].value ));
         }
         },
         {input: "#dataProducerInfoOrganisationInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
@@ -121,7 +133,9 @@ function validateContributorsDiv( index )
             return "nullValue" != arguments[0].value;
         }
         }
-    ]} );
+    ] );
+
+    $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
 }
 <!--**************************************************************************************** -->
 
