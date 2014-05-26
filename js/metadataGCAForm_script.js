@@ -318,7 +318,7 @@ function manageFormDiv()
     $( "#citationAuthorMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#principalInvestigatorContactMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#keywordsInfoInput" ).jqxInput( {height: "20px", placeHolder: "keyword 1, keyword 2, ..."} );
-    $( "#discoveredIssueArea" ).jqxInput( {height: "20px", placeHolder: "If no information available, precise 'none'"} );
+    $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, precise 'none'"} );
     $( "#standAloneInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#citationDOIInput" ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
