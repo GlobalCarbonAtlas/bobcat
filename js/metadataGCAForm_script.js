@@ -132,34 +132,43 @@ function validateContributorsDiv( index )
 <!--**************************************************************************************** -->
 function manageFormDiv()
 {
+
+    <!--********************** CONTRIBUTORS ********************** -->
     // Contributors : add button
     $( "#addCreatorInfoButton" ).click( function()
     {
         var contributorsLastId = $( 'input[id^="dataProducerInfoNameInput"]' ).last().attr( 'id' ).replace( "dataProducerInfoNameInput", "" );
         if( 5 > $( 'input[id^="dataProducerInfoNameInput"]' ).length )
-	{
+        {
             createContributorRow( "contributorsContainer", contributorsLastId + 1 );
-		// Used to pass to php file (target, not form : to construct xml) parameters to actualise metadata xml.
-	    var nDataCreator= $( 'input[id^="dataProducerInfoNameInput"]' ).length;
-	    $.ajax({
-        	type: "GET",
-        	url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php?param="+nDataCreator+"",// On passe le 'name' du parametre et sa valeur via l'url avec ? (si methode get !).
-	   	timeout: 3000,
-        	success: function (data) {alert(data);},// Ici on va avoir la reponse du cote client (le fichier php traite) puisque on passe alert(data). Mais on ne fait rien comme retour car in veut juste passer parametres au php. J'ai juste mis l'affichage reponse php pour controler mais a enlever.
-        	error: function () {alert("php file used to update metadata file was not find on the server");},
-             });
-	}
+
+            // Used to pass to php file (target, not form : to construct xml) parameters to actualise metadata xml.
+            var nDataCreator = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
+            $.ajax( {
+                type: "GET",
+                url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php?param=" + nDataCreator + "",// On passe le 'name' du parametre et sa valeur via l'url avec ? (si methode get !).
+                timeout: 3000,
+                success: function ( data )
+                {
+                    alert( data );
+                },// Ici on va avoir la reponse du cote client (le fichier php traite) puisque on passe alert(data). Mais on ne fait rien comme retour car in veut juste passer parametres au php. J'ai juste mis l'affichage reponse php pour controler mais a enlever.
+                error: function ()
+                {
+                    alert( "php file used to update metadata file was not find on the server" );
+                }
+            } );
+        }
         else
             alert( "You can't add more than 5 contributors" );
-	alert(nDataCreator);
     } );
 
 
+    <!--********************** REFERENCES ********************** -->
     // Ajouts/quitter champs : Inspiré (pas mal modifié) de http://m2-info-upmc.blogspot.fr/2012/12/formulaire-dynamique-avec-jquery.html
     /* J'ai changé d'idée : je n'ai poas construit les champs dynamiquement mais juste hide et show champs deja construits en html et limité leur nombre à 5.
      Parce que l'intégration de la validation avec jqxValidator était compliquée à mettre en place étannt donné que jqxvalidator si s'applique 2 fois efface l'autre si il s'applique au même questionnaire (voir testMetadataGCAFormulaireProgressTrackerFormToWizardBootstrap.php).*/
 
-    for( var nReference = 1; nReference < 6; nReference++ )
+    for( var nReference = 1; 6 > nReference; nReference++ )
     {
         $( "#citationFieldset" + nReference + "" ).hide();
     }
@@ -169,7 +178,7 @@ function manageFormDiv()
     // Authors/citations, Reference::
     $( "#addReferenceInfoButton" ).click( function()
     {
-        if( nReference < 5 )
+        if( 5 > nReference )
         {
             nReference = nReference + 1;
             $( "#citationFieldset" + nReference + "" ).fadeOut( 'slow' ).show();
@@ -186,7 +195,7 @@ function manageFormDiv()
     } );
     $( "#quitReferenceInfoButton" ).click( function()
     {
-        if( nReference > 1 )
+        if( 1 < nReference )
         {
             $( "#citationFieldset" + nReference + "" ).fadeOut( 'slow' ).hide();
             nReference = nReference - 1;// A bien mettre à la fin.
@@ -194,6 +203,7 @@ function manageFormDiv()
     } );
 
 
+    <!--********************** OTHERS FIELDS ********************** -->
     // Pour tt ce qui est select + freeText
     //Note : comment faire test if select / element : CF http://stackoverflow.com/questions/10198398/how-is-jquery-used-to-check-for-the-disabled-attribute-on-an-a-tag
     // Conditions initiales/ apparaitre ou non option free text / select :
@@ -214,91 +224,16 @@ function manageFormDiv()
     $( "#dataPolicyFreeContainer" ).hide();
     $( "#dataPolicyFreeInput" ).prop( "disabled", true );
 
-    // Qd click, qd on passe a Other ds select :
-    $( "#dataProductCategorySelect" ).change( function()
-    {
-        var dataProductCategorySelectRentre = document.forms["metadataForm"].dataProductCategorySelect.value;
-        if( dataProductCategorySelectRentre == "otherValue" )
-        {
-            $( "#dataProductCategoryFreeTextInput" ).fadeIn( "slow" ).show();
-            $( "#dataProductCategoryFreeTextText" ).fadeIn( "slow" ).show();
-            $( "#dataProductCategoryFreeTextInput" ).prop( "disabled", false );
-            $( '#metadataForm' ).jqxValidator( 'hideHint', '#dataProductCategorySelect' );// On doit effacer message d'erreur si c'est other pour ne pas gener apparition input free text. Message d'erreur si other se montrera de tte fa?on a la phase de validation gnale.
-        }
-        else if( dataProductCategorySelectRentre == "Inversion_model" || dataProductCategorySelectRentre == "Land_model" || dataProductCategorySelectRentre == "Ocean_model" || dataProductCategorySelectRentre == "nullValue" )
-        { //Il faut que l'on disabled freeTextInput parce que select et freeText ayant le meme name, si on ne le fait pas, envoi POST se fait mal : si on est avec other et donc selectInput et FreeTextInput ensemble, le post prend bien le freeTextInput en compte et pas le select dc OK.
-            $( "#dataProductCategoryFreeTextInput" ).prop( "disabled", true );
-            $( "#dataProductCategoryFreeTextInput" ).fadeIn( "slow" ).hide();
-            $( "#dataProductCategoryFreeTextText" ).fadeIn( "slow" ).hide();
-        }
-    } );
-    $( "#dataProductTypeSelect" ).change( function()
-    {
-        var dataProductTypeSelectRentre = document.forms["metadataForm"].dataProductTypeSelect.value;
-        if( dataProductTypeSelectRentre == "otherValue" )
-        {
-            $( "#dataProductTypeFreeTextInput" ).fadeIn( "slow" ).show();
-            $( "#dataProductTypeFreeTextText" ).fadeIn( "slow" ).show();
-            $( "#dataProductTypeFreeTextInput" ).prop( "disabled", false );
-            $( '#metadataForm' ).jqxValidator( 'hideHint', '#dataProductTypeSelect' );
-        }
-        else if( dataProductTypeSelectRentre == "CO2_flux" || dataProductTypeSelectRentre == "Carbon_stock" || dataProductTypeSelectRentre == "CH4_flux" || dataProductTypeSelectRentre == "nullValue" )
-        {
-            $( "#dataProductTypeFreeTextInput" ).prop( "disabled", true );
-            $( "#dataProductTypeFreeTextInput" ).fadeIn( "slow" ).hide();
-            $( "#dataProductTypeFreeTextText" ).fadeIn( "slow" ).hide();
-        }
-    } );
-    //
-    $( "#temporalResolutionSelect" ).change( function()
-    {
-        var temporalResolutionTypeSelectRentre = document.forms["metadataForm"].temporalResolutionSelect.value;
-        if( temporalResolutionTypeSelectRentre == "otherValue" )
-        {
-            $( "#temporalResolFreeTextText" ).fadeIn( "slow" ).show();
-            $( "#temporalResolFreeTextInput" ).fadeIn( "slow" ).show();
-            $( "#temporalResolFreeTextInput" ).prop( "disabled", false );
-            $( '#metadataForm' ).jqxValidator( 'hideHint', '#temporalResolutionSelect' );
-        }
-        else if( temporalResolutionTypeSelectRentre == "Annual" || temporalResolutionTypeSelectRentre == "Monthly" || temporalResolutionTypeSelectRentre == "Daily" || temporalResolutionTypeSelectRentre == "Hourly" || temporalResolutionTypeSelectRentre == "nullValue" )
-        {
-            $( "#temporalResolFreeTextInput" ).prop( "disabled", true );
-            $( "#temporalResolFreeTextText" ).fadeIn( "slow" ).hide();
-            $( "#temporalResolFreeTextInput" ).fadeIn( "slow" ).hide();
-        }
-    } );
-    $( "#selectCategoryVerticalLevelSelect" ).change( function()
-    {
-        var verticalLevelSelectRentre = document.forms["metadataForm"].selectCategoryVerticalLevelSelect.value;
-        if( verticalLevelSelectRentre == "otherValue" )
-        {
-            $( "#verticalLevelOtherContainer" ).fadeIn( "slow" ).show();
-            $( "#verticalLevelFreeTextInput" ).prop( "disabled", false );
-        }
-        else if( verticalLevelSelectRentre == "" || verticalLevelSelectRentre == "Atmospheric levels" || verticalLevelSelectRentre == "Surface level" || verticalLevelSelectRentre == "Below-ground levels" )
-        {
-            $( "#verticalLevelFreeTextInput" ).prop( "disabled", true );
-            $( "#verticalLevelOtherContainer" ).fadeIn( "slow" ).hide();
-        }
-    } );
-    //
-    $( "#dataPolicyChooseSelect" ).change( function()
-    {
-        var dataPolicySelectRentre = document.forms["metadataForm"].dataPolicyChooseSelect.value;
-        if( dataPolicySelectRentre == "otherValue" )
-        {
-            $( "#dataPolicyFreeContainer" ).fadeIn( "slow" ).show();
-            $( "#dataPolicyFreeInput" ).prop( "disabled", false );
-        }
-        else if( dataPolicySelectRentre == "" || dataPolicySelectRentre == "Free to use" || dataPolicySelectRentre == "Restricted to scientists" || dataPolicySelectRentre == "Not free: contact PI" )
-        {
-            $( "#dataPolicyFreeInput" ).prop( "disabled", true );
-            $( "#dataPolicyFreeContainer" ).fadeIn( "slow" ).hide();
-        }
-    } );
+    // Other fields in select
+    HideOrShowOtherFieldForSelect( "dataProductTypeSelect", "dataProductTypeFreeTextInput", "dataProductTypeFreeTextText" );
+    HideOrShowOtherFieldForSelect( "dataProductCategorySelect", "dataProductCategoryFreeTextInput", "dataProductCategoryFreeTextText" );
+    HideOrShowOtherFieldForSelect( "temporalResolutionSelect", "temporalResolFreeTextInput", "temporalResolFreeTextText" );
+    HideOrShowOtherFieldForSelect( "selectCategoryVerticalLevelSelect", "verticalLevelFreeTextInput", "verticalLevelOtherContainer" );
+    HideOrShowOtherFieldForSelect( "dataPolicyChooseSelect", "dataPolicyFreeInput", "dataPolicyFreeContainer" );
 
     // Utilisation masques / inputs form avec jqxmaskedinputs : See http://www.jqwidgets.com/community/topic/masked-input-optional-characters/
     $( "#principalInvestigatorContactPhoneInput" ).jqxMaskedInput( {width: 150, height: 20, theme: "bootstrap", promptChar: "-",mask: "+(##)/###########"} );
+
     // Utilisation jqxDateTimeInput :
     $( "#metadataDateCreationInput" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );// Ds ce cas là on affiche par default date du jour dc laisser comme ça, sans avoir a valider
     $( "#dataDateCreationInput" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );// Ds ce cas là on doit afficher erreur si la date n'est pas changée..
@@ -324,4 +259,28 @@ function manageFormDiv()
     $( "#citationDOIInput" ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 }
 
-        
+
+function HideOrShowOtherFieldForSelect( selectId, inputId, textId )
+{
+    $( "#" + selectId ).change( function()
+    {
+        if( "otherValue" == $( "#" + selectId ).val() )
+        {
+            $( "#" + inputId ).fadeIn( "slow" ).show();
+            $( "#" + textId ).fadeIn( "slow" ).show();
+            $( "#" + inputId ).prop( "disabled", false );
+            // On doit effacer message d'erreur si c'est other pour ne pas gener apparition input free text. Message d'erreur si other se montrera de tte fa?on a la phase de validation gnale.
+            $( '#metadataForm' ).jqxValidator( 'hideHint', '#' + selectId );
+        }
+        else
+        {
+            //Il faut que l'on disabled freeTextInput parce que select et freeText ayant le meme name, si on ne le fait pas, envoi POST se fait mal :
+            // si on est avec other et donc selectInput et FreeTextInput ensemble, le post prend bien le freeTextInput en compte et pas le select dc OK.
+            $( "#" + inputId ).prop( "disabled", true );
+            $( "#" + inputId ).fadeIn( "slow" ).hide();
+            $( "#" + textId ).fadeIn( "slow" ).hide();
+        }
+    } );
+}
+
+

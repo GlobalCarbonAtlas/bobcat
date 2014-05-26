@@ -858,8 +858,17 @@
     // See http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/
     $( document ).ready( function()
     {
+        // Create menu band
+        $( "#metadataForm" ).formToWizard();
+
+        // Manage divs
         manageFormDiv();// Cf metadataGCAForm_script.js
+
+        // Init data contributor with one row
         createContributorRow( "contributorsContainer", 1 );
+
+        // Add validators to form
+        $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );// Cf file metadataGCAFormValidationRules_script.js ds /js.
 
         $( "#metadataForm" ).submit( function( event )
         {// On appelle le form, pas le bouton submit !
@@ -899,10 +908,6 @@
         } );
 
     } );
-
-    //        $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );// Cf file metadataGCAFormValidationRules_script.js ds /js.
-
-    $( "#metadataForm" ).formToWizard();
 
 </script>
 
