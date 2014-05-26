@@ -283,4 +283,15 @@ function HideOrShowOtherFieldForSelect( selectId, inputId, textId )
     } );
 }
 
+function hideValidators()
+{
+    $( ".jqx-validator-hint" ).hide();
+}
 
+function validateForm()
+{
+    $( "#steps li" ).removeClass( "current" );
+    $( ".fieldset1" ).show();
+    $( '#metadataForm' ).jqxValidator( 'validate' );
+    $( ".jqx-validator-hint" ).show();
+}

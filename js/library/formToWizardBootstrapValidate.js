@@ -29,6 +29,8 @@
 
             if( "stepDesc5" == d.currentTarget.id )
                 $( "#submitFormButon" ).show();
+
+            hideValidators();
         } );
 
         // Init page with click on first menu

@@ -872,6 +872,8 @@
 
         $( "#metadataForm" ).submit( function( event )
         {// On appelle le form, pas le bouton submit !
+
+            validateForm();
             // Pour ne pas a avoir a recharger page parce que on a besoin d'envoyer instruction de garder le xml au php cible apres avoir rentre les info  du form (ds array post)
             // CF http://fr.openclassrooms.com/forum/sujet/submit-sans-recharger-la-page#.U3yrKt3eUcA
             // Je passe avant variable pour indiquer nombre de champs dynamiques.
@@ -907,6 +909,14 @@
             event.preventDefault();// annule action submit par defaut du form (cad envoi post et recharge page).
         } );
 
+        $( '#metadataForm' ).on( 'validationError', function ( event )
+        {
+            alert( "Some fields are empty or incorrect. Please check your form." );
+        } );
+        $( '#metadataForm' ).on( 'validationSuccess', function ( event )
+        {
+            alert( "Your form is complete and validate." );
+        } );
     } );
 
 </script>
