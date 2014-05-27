@@ -1,116 +1,72 @@
 // Validation en direct des champs (la validation lors du click pour passer a autre menu se fait ds le .js). Doit etre en dehors doc.ready() !!!
  $( "#metadataForm" ).formToWizard();
+
 var validatorRules = [
+
+    <!--*********************************** CREATION DATE *********************************** -->
     {input: "#dataDateCreationInput", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
     {// Note : valuechaged est pour ce genre d'elemet, pour select, choisir change et keyup + blur pr input.
         var d = new Date();// CF http://stackoverflow.com/questions/8398897/how-to-get-current-date-in-jquery
         var day = d.getDate();
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
-        var complete_d = year + "-" + (month < 10 ? "0" : "") + month + "-" + day;
-        if( input.val() == complete_d )
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + day;
+        return (input.val() != complete_d);
     }
     },
+
+    <!--*********************************** PRODUCT NAME *********************************** -->
+    // Product type
     {input: "#dataProductTypeSelect", message: "This field is mandatory", action: "change",  rule: function()
     {
-        var dataProductTypeSelectRentre = document.forms["metadataForm"].dataProductTypeSelect.value;
-        if( dataProductTypeSelectRentre == "nullValue" )
-        {
-            dataProductTypeSelectRentre = 0;
-        }
-        else
-        {
-            dataProductTypeSelectRentre = 1
-        }
-        return dataProductTypeSelectRentre;
+        return "nullValue" != $( "#dataProductTypeSelect" ).val();
     }
     },
     {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#dataProductTypeFreeTextInput", message: "Characters not authorized", action: "blur, keyup",  rule: function()
     {
-        var freeTextInputRentre = document.forms["metadataForm"].dataProductTypeFreeTextInput.value;
-        if( /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ) || freeTextInputRentre == "" )
-        {
-            freeTextInputRentre = 1;
-        }// Rajouter = "" parce que si non, affiche erreur si champ vide/regex.
-        else
-        {
-            freeTextInputRentre = 0;
-        }
-        return freeTextInputRentre;
+        var freeTextInputRentre = $( "#dataProductTypeFreeTextInput" ).val();
+        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
+    }
+    },
+    // Product category
+    {input: "#dataProductCategorySelect", message: "This field is mandatory", action: "change",  rule: function()
+    {
+        return "nullValue" != $( "#dataProductCategorySelect" ).val();
     }
     },
     {input: "#dataProductCategoryFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
-    {input: "#dataProductCategorySelect", message: "This field is mandatory", action: "change",  rule: function()
-    {
-        var dataProductCategorySelectRentre = document.forms["metadataForm"].dataProductCategorySelect.value;
-        if( dataProductCategorySelectRentre == "nullValue" )
-        {
-            dataProductCategorySelectRentre = 0;
-        }
-        else
-        {
-            dataProductCategorySelectRentre = 1
-        }
-        return dataProductCategorySelectRentre;
-    }
-    },
     {input: "#dataProductCategoryFreeTextInput", message: "Character not authorized", action: "blur, keyup",  rule: function()
     {
-        var freeTextInputRentre = document.forms["metadataForm"].dataProductCategoryFreeTextInput.value;
-        if( /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre || freeTextInputRentre == "" ) )
-        {
-            freeTextInputRentre = 1;
-        }
-        else
-        {
-            freeTextInputRentre = 0;
-        }
-        return freeTextInputRentre;
+        var freeTextInputRentre = $( "#dataProductCategoryFreeTextInput" ).val();
+        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
     }
     },
+    // Product title
     {input: "#prodNameTitleInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
     {input: "#prodNameTitleInput", message: "Character not authorized", action: "keyup, blur",  rule: function()
     {
-        var freeTextInputRentre = document.forms["metadataForm"].prodNameTitleInput.value;
-        if( /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ) )
-        {
-            freeTextInputRentre = 1;
-        }
-        else
-        {
-            freeTextInputRentre = 0;
-        }
-        return freeTextInputRentre;
+        var freeTextInputRentre = $( "#prodNameTitleInput" ).val();
+        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
     }
     },
+    // Product version
     {input: "#prodNameVersionInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
     {input: "#prodNameVersionInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var freeTextInputRentre = document.forms["metadataForm"].prodNameVersionInput.value;
-        if( /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ) )
-        {
-            freeTextInputRentre = 1;
-        }
-        else
-        {
-            freeTextInputRentre = 0;
-        }
-        return freeTextInputRentre;
+        var freeTextInputRentre = $( "#prodNameVersionInput" ).val();
+        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
     }
     },
 
-/** DataProducer's fields control are now in the validateContributorsDiv function (medataGCAForm_script.js file).
- * There are added when we create a new contributor.
- */
+    <!--*********************************** DATA CONTRIBUTOR *********************************** -->
+    // DataProducer's fields control are now in the validateContributorsDiv function (medataGCAForm_script.js file).
+    // There are added when we create a new contributor.
 
+    <!--*********************************** METADATA DATE *********************************** -->
+    // None
+
+    <!--*********************************** METADATA CREATOR *********************************** -->
     {input: "#metadatCreatorInfoNameInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#metadatCreatorInfoNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {

@@ -69,8 +69,7 @@ li.current {
     height: 5%;
     color: rgb(140, 10, 10);
     font-size: 13px;
-    margin-bottom: -1%;
-    /*margin-top: 2%;*/
+    margin-bottom: -1%; /*margin-top: 2%;*/
     top: 16px;
 }
 
@@ -145,7 +144,7 @@ textarea {
 }
 
 #temporalCoverageContainer {
-    padding-top: 88px;
+    padding-top: 38px;
 }
 
 #dataDateCreationText {
@@ -261,6 +260,7 @@ textarea {
     font-weight: bold;
     border: solid 2px rgb(250, 80, 0);
 }
+
 #keepXMLFileButton {
     position: fixed;
     top: 80px;
@@ -274,6 +274,7 @@ textarea {
     text-align: center;
     font-size: 14px !important;
 }
+
 #keepXMLFileButton:hover {
     font-weight: bold;
     border: solid 2px rgb(250, 80, 0);
@@ -311,4 +312,9 @@ textarea {
     display: inline;
     margin: -1px 0 0 3px;
 
+}
+
+.divFloatLeft {
+    float: left;
+    margin-right: 22px;
 }
