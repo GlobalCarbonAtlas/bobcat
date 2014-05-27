@@ -140,18 +140,9 @@ function manageFormDiv()
 	{
             createContributorRow( "contributorsContainer", contributorsLastId + 1 );
 		// Used to pass to php file (target, not form : to construct xml) parameters to actualise metadata xml.
-	    var nDataCreator= $( 'input[id^="dataProducerInfoNameInput"]' ).length;
-	    $.ajax({
-        	type: "GET",
-        	url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php?param="+nDataCreator+"",// On passe le 'name' du parametre et sa valeur via l'url avec ? (si methode get !).
-	   	timeout: 3000,
-        	success: function (data) {alert(data);},// Ici on va avoir la reponse du cote client (le fichier php traite) puisque on passe alert(data). Mais on ne fait rien comme retour car in veut juste passer parametres au php. J'ai juste mis l'affichage reponse php pour controler mais a enlever.
-        	error: function () {alert("php file used to update metadata file was not find on the server");},
-             });
 	}
         else
             alert( "You can't add more than 5 contributors" );
-	alert(nDataCreator);
     } );
 
 
@@ -218,7 +209,7 @@ function manageFormDiv()
     $( "#dataProductCategorySelect" ).change( function()
     {
         var dataProductCategorySelectRentre = document.forms["metadataForm"].dataProductCategorySelect.value;
-        if( dataProductCategorySelectRentre == "otherValue" )
+        if( dataProductCategorySelectRentre == "Other_value:_" )
         {
             $( "#dataProductCategoryFreeTextInput" ).fadeIn( "slow" ).show();
             $( "#dataProductCategoryFreeTextText" ).fadeIn( "slow" ).show();
@@ -235,7 +226,7 @@ function manageFormDiv()
     $( "#dataProductTypeSelect" ).change( function()
     {
         var dataProductTypeSelectRentre = document.forms["metadataForm"].dataProductTypeSelect.value;
-        if( dataProductTypeSelectRentre == "otherValue" )
+        if( dataProductTypeSelectRentre == "Other_value:_" )
         {
             $( "#dataProductTypeFreeTextInput" ).fadeIn( "slow" ).show();
             $( "#dataProductTypeFreeTextText" ).fadeIn( "slow" ).show();
@@ -253,7 +244,7 @@ function manageFormDiv()
     $( "#temporalResolutionSelect" ).change( function()
     {
         var temporalResolutionTypeSelectRentre = document.forms["metadataForm"].temporalResolutionSelect.value;
-        if( temporalResolutionTypeSelectRentre == "otherValue" )
+        if( temporalResolutionTypeSelectRentre == "Other_value:_" )
         {
             $( "#temporalResolFreeTextText" ).fadeIn( "slow" ).show();
             $( "#temporalResolFreeTextInput" ).fadeIn( "slow" ).show();
@@ -270,7 +261,7 @@ function manageFormDiv()
     $( "#selectCategoryVerticalLevelSelect" ).change( function()
     {
         var verticalLevelSelectRentre = document.forms["metadataForm"].selectCategoryVerticalLevelSelect.value;
-        if( verticalLevelSelectRentre == "otherValue" )
+        if( verticalLevelSelectRentre == "Other_value:_" )
         {
             $( "#verticalLevelOtherContainer" ).fadeIn( "slow" ).show();
             $( "#verticalLevelFreeTextInput" ).prop( "disabled", false );
@@ -285,7 +276,7 @@ function manageFormDiv()
     $( "#dataPolicyChooseSelect" ).change( function()
     {
         var dataPolicySelectRentre = document.forms["metadataForm"].dataPolicyChooseSelect.value;
-        if( dataPolicySelectRentre == "otherValue" )
+        if( dataPolicySelectRentre == "Other_value:_" )
         {
             $( "#dataPolicyFreeContainer" ).fadeIn( "slow" ).show();
             $( "#dataPolicyFreeInput" ).prop( "disabled", false );
