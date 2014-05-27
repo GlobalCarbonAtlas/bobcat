@@ -43,8 +43,8 @@
 			ndatCreator= ndatCreator + 1;});
 		$("#quitCreatorInfoButton").click(function(){
 			ndatCreator= ndatCreator - 1;});
-		/*
 
+	/*
 	$("#stepDesc1").click(function() {// On ne doit avoir aucun champ a valider ici si non, se superposent. Tt est dans php.
 			//var validationInfoName = $('#metadataForm').jqxValidator('validate', '#metadatCreatorInfoOrganisationInput');
 				// Il faut tester chq element a apart parce que si non, comme on teste tt le form, methode validate retourne tjs false et on ne peut pas passer de page.
@@ -56,7 +56,6 @@
 			var prodNameTitleInput = $('#metadataForm').jqxValidator('validateInput', '#prodNameTitleInput');
 			var prodNameVersionInput = $('#metadataForm').jqxValidator('validateInput', '#prodNameVersionInput');
 			var dataProducerInfoNameInput = $('#metadataForm').jqxValidator('validateInput', '#dataProducerInfoNameInput');
-			//var dataProducerInfoNameInput + ndatCreator = $('#metadataForm').jqxValidator('validateInput', "#dataProducerInfoNameInput"+ndatCreator+"");
 			var dataProducerInfoOrganisationInput = $('#metadataForm').jqxValidator('validateInput', '#dataProducerInfoOrganisationInput');
 			var dataProducerInfoMailInput = $('#metadataForm').jqxValidator('validateInput', '#dataProducerInfoMailInput');
 			var dataProducerInfoRoleSelect = $('#metadataForm').jqxValidator('validateInput', '#dataProducerInfoRoleSelect');
@@ -106,7 +105,7 @@
 				return false;
 			}	
 		});
-			*/	
+	*/			
   // Pour permettre de passer champ a l'autre.
 		  	
 	$("#stepDesc0").click(function() {

@@ -1,4 +1,5 @@
 // Validation en direct des champs (la validation lors du click pour passer a autre menu se fait ds le .js). Doit etre en dehors doc.ready() !!!
+ $( "#metadataForm" ).formToWizard();
 var validatorRules = [
     {input: "#dataDateCreationInput", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
     {// Note : valuechaged est pour ce genre d'elemet, pour select, choisir change et keyup + blur pr input.
