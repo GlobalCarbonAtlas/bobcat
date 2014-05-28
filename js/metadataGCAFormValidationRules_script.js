@@ -22,7 +22,14 @@ var validatorRules = [
         return "nullValue" != $( "#dataProductTypeSelect" ).val();
     }
     },
-    {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+    {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function() 
+    {
+	return ($( "#dataProductTypeSelect" ).val() != "otherValue") || ($("#dataProductTypeSelect" ).val() == "otherValue" && "" != $( "#dataProductTypeFreeTextInput").val());
+	/*if ($( "#dataProductTypeSelect" ).val() == "otherValue")
+	 {return "" != $( "#dataProductTypeFreeTextInput" ).val();}
+	else return true;*/
+    }
+    },
     {input: "#dataProductTypeFreeTextInput", message: "Characters not authorized", action: "blur, keyup",  rule: function()
     {
         var freeTextInputRentre = $( "#dataProductTypeFreeTextInput" ).val();
@@ -35,7 +42,11 @@ var validatorRules = [
         return "nullValue" != $( "#dataProductCategorySelect" ).val();
     }
     },
-    {input: "#dataProductCategoryFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+    {input: "#dataProductCategoryFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
+    {
+	return ($( "#dataProductCategorySelect" ).val() != "otherValue") || ($("#dataProductCategorySelect" ).val() == "otherValue" && "" != $( "#dataProductCategoryFreeTextInput").val());
+    }
+    },
     {input: "#dataProductCategoryFreeTextInput", message: "Character not authorized", action: "blur, keyup",  rule: function()
     {
         var freeTextInputRentre = $( "#dataProductCategoryFreeTextInput" ).val();
@@ -114,7 +125,11 @@ var validatorRules = [
         return temporalResolutionSelectRentre;
     }
     },
-    {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+    {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function() 
+    {
+    return ($( "#temporalResolutionSelect" ).val() != "otherValue") || ($("#temporalResolutionSelect" ).val() == "otherValue" && "" != $( "#temporalResolutionSelect").val());
+    }
+    },
     {input: "#temporalCoverageBegin", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
     {
         var d = new Date();

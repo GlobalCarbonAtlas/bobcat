@@ -122,7 +122,7 @@ function validateContributorsDiv( index )
         {input: "#dataProducerInfoNameInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
         {input: "#dataProducerInfoNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
-            return ("" == arguments[0].value || /^[a-zA-Z0-9._-]+$/.test( arguments[0].value ));
+            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
         }
         },
         {input: "#dataProducerInfoOrganisationInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
