@@ -2,47 +2,72 @@
 <!--*********************************** DATA CONTRIBUTOR *********************************** -->
 <!--**************************************************************************************** -->
 /**
+ * This method returns the array of rules for the contributor's fields
+ * @param index : index of the contributor
+ */
+function getContributorRules(index)
+{
+    return [
+
+        {input: "#dataProducerInfoNameInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+        {input: "#dataProducerInfoNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
+        {
+            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
+        }
+        },
+        {input: "#dataProducerInfoOrganisationInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+        {input: "#dataProducerInfoMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+        {input: "#dataProducerInfoMailInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+        {input: "#dataProducerInfoRoleSelect" + index, message: "This field is mandatory", action: "change",  rule: function( arguments )
+        {
+            return "nullValue" != arguments[0].value;
+        }
+        },
+    ];
+}
+
+/**
  *  This method add a new contributor with the index "index" into the contributors container
- *  and reorganize the list of contributors
+ *  reorganize the list of contributors and add the new contributor's rules to form
  * @param containerId : container's id of the main contributors div
  * @param index : contributor's index
  */
 function createContributorRow( containerId, index )
 {
     var containerDiv = $( '<div id="dataContributorContainer' + index + '" class="row col-md-24 col-sm-24">' +
-            '<div id="dataProducerInfoText' + index + '" class="col-md-24 col-sm-24 label1" title="Information about the person who created the data file">Data contributors information <div id="dataContributorNumber' + index + '" class="dataContributorNumber"></div> :' +
-            '</div>' +
+        '<div id="dataProducerInfoText' + index + '" class="col-md-24 col-sm-24 label1" title="Information about the person who created the data file">Data contributors information <div id="dataContributorNumber' + index + '" class="dataContributorNumber"></div> :' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-9 col-sm-9">' +
-            '<div id="dataProducerInfoNameText' + index + '" class="label2 form-control-l">Name (*):</div>' +
-            '<input id="dataProducerInfoNameInput' + index + '" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName' + index + '" type="text">' +
-            '</div>' +
-            '<div class="col-md-14 col-sm-14">' +
-            '<div id="dataProducerInfoOrganisationText' + index + '" class="label2 form-control-xxl">Name of the organisation (*):</div>' +
-            '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation' + index + '" type="text">' +
-            '</div>' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="col-md-9 col-sm-9">' +
+        '<div id="dataProducerInfoNameText' + index + '" class="label2 form-control-l">Name (*):</div>' +
+        '<input id="dataProducerInfoNameInput' + index + '" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName' + index + '" type="text">' +
+        '</div>' +
+        '<div class="col-md-14 col-sm-14">' +
+        '<div id="dataProducerInfoOrganisationText' + index + '" class="label2 form-control-xxl">Name of the organisation (*):</div>' +
+        '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation' + index + '" type="text">' +
+        '</div>' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-9 col-sm-9">' +
-            '<div id="dataProducerInfoMailText' + index + '" class="label2 form-control-l">Mail (*):</div>' +
-            '<input id="dataProducerInfoMailInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoMail' + index + '" type="text">' +
-            '</div>' +
-            '<div class="col-md-14 col-sm-14">' +
-            '<div id="dataProducerInfoRoleText' + index + '" class="label2 form-control-xxl">Role (*):</div>' +
-            '<select id="dataProducerInfoRoleSelect' + index + '" class="form-control form-control-m" name="dataProducerInfoRole' + index + '">' +
-            '<option value="nullValue">----</option>' +
-            '<option value="originator">Originator</option>' +
-            '<option value="pointOfContact">Point of contact</option>' +
-            '<option value="principalInvestigator">Principal investigator</option>' +
-            '<option value="processor">Processor</option>' +
-            '</select>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="col-md-9 col-sm-9">' +
+        '<div id="dataProducerInfoMailText' + index + '" class="label2 form-control-l">Mail (*):</div>' +
+        '<input id="dataProducerInfoMailInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoMail' + index + '" type="text">' +
+        '</div>' +
+        '<div class="col-md-14 col-sm-14">' +
+        '<div id="dataProducerInfoRoleText' + index + '" class="label2 form-control-xxl">Role (*):</div>' +
+        '<select id="dataProducerInfoRoleSelect' + index + '" class="form-control form-control-m" name="dataProducerInfoRole' + index + '">' +
+        '<option value="nullValue">----</option>' +
+        '<option value="originator">Originator</option>' +
+        '<option value="pointOfContact">Point of contact</option>' +
+        '<option value="principalInvestigator">Principal investigator</option>' +
+        '<option value="processor">Processor</option>' +
+        '</select>' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
 
-            '</div>' );
+        '</div>' );
 
     $( "#" + containerId ).append( containerDiv );
 
@@ -53,25 +78,31 @@ function createContributorRow( containerId, index )
     $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton">' );
     $( "#removeCreatorInfoButton" + index ).click( function()
     {
-        removeContributorRow( "dataContributorContainer" + index );
+        removeContributorRow( "dataContributorContainer", index );
     } );
 
     manageContributorsDiv();
 
-    // Fields validation
-    validateContributorsDiv( index );
+    // Contributor's rules
+    var contributorsRulesArray = getContributorRules(index);
+    addRulesToRulesForm( contributorsRulesArray );
 }
 
 /**
- * This method remove the contributor divs corresponding to the divId and reorganize the contributors list
- * @param divId : contributor's div id
+ * This method remove the contributor divs corresponding to the divId
+ * reorganize the contributors list and remove the contributor rules for the form
+ * @param divName : div's name without the index
+ * @param index : index of the contributor's div to remove
  */
-function removeContributorRow( divId )
+function removeContributorRow( divName, index )
 {
-    $( "#" + divId ).remove();
+    $( "#" + divName+""+index ).remove();
     manageContributorsDiv();
     $( '#metadataForm' ).jqxValidator( 'hide' );
 //    hideHintByDiv( $( "#contributorsContainer" ) );
+
+    var fieldsValidationArray = getContributorRules(index);
+    removeRulesToRulesForm(fieldsValidationArray);
 }
 
 function hideHintByDiv( div )
@@ -110,34 +141,8 @@ function manageContributorsDiv()
         $( element ).html( i + 1 );
     } );
 }
-
-/**
- * This method adds the controls to the contributor fields
- * @param index : contributor's index
- */
-function validateContributorsDiv( index )
-{
-    validatorRules = $.merge( validatorRules, [
-
-        {input: "#dataProducerInfoNameInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-        {input: "#dataProducerInfoNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
-        {
-            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
-        }
-        },
-        {input: "#dataProducerInfoOrganisationInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-        {input: "#dataProducerInfoMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-        {input: "#dataProducerInfoMailInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
-        {input: "#dataProducerInfoRoleSelect" + index, message: "This field is mandatory", action: "change",  rule: function( arguments )
-        {
-            return "nullValue" != arguments[0].value;
-        }
-        }
-    ] );
-
-    $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
-}
 <!--**************************************************************************************** -->
+
 
 
 
@@ -155,8 +160,8 @@ function manageFormDiv()
         if( 5 > $( 'input[id^="dataProducerInfoNameInput"]' ).length )
         {
             createContributorRow( "contributorsContainer", contributorsLastId + 1 );
-		// Used to pass to php file (target, not form : to construct xml) parameters to actualise metadata xml.
-	}
+            // Used to pass to php file (target, not form : to construct xml) parameters to actualise metadata xml.
+        }
         else
             alert( "You can't add more than 5 contributors" );
     } );
@@ -287,6 +292,35 @@ function hideValidators()
     $( ".jqx-validator-hint" ).hide();
 }
 
+/**
+ * This method adds the new rules to the actual form rules
+ * @param rulesArray
+ */
+function addRulesToRulesForm( rulesArray )
+{
+    validatorRules = $.merge( validatorRules, rulesArray );
+    console.log("ADD : "+validatorRules.length);
+    $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
+}
+
+/**
+ * This method remove the new rules to the actual form rules
+ * @param rulesArray
+ */
+function removeRulesToRulesForm( rulesArray )
+{
+    $.each(rulesArray, function(i,d)
+    {
+        validatorRules.splice($.inArray(d, validatorRules), 1);
+    });
+
+    console.log("REMOVE : "+validatorRules.length);
+    $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
+}
+
+/**
+ * This method check the validation on all form fields
+ */
 function validateForm()
 {
     $( "#steps li" ).removeClass( "current" );
