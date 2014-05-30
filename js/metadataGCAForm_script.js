@@ -253,6 +253,9 @@ function createReferenceFieldset( containerIdRef, index )
 
     $( "#" + containerIdRef ).append( containerDivRef );
 
+    // Date
+    $( "#citationDateBookInput" + index ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
+
     // Mail input
     $( "#citationAuthorMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#citationOnlineRessourceInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
@@ -387,7 +390,6 @@ function manageFormDiv()
     $( "#dataDateCreationInput" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );// Ds ce cas là on doit afficher erreur si la date n'est pas changée..
     $( "#temporalCoverageBegin" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
     $( "#temporalCoverageEnd" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
-    //$( "#citationDateBookInput" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
 
     // Utilisation jqxinput pour afficher info qui s'efface quand on commence à rentrer texte ds  input (placeHolder)
     $( "#metadatCreatorInfoMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
@@ -404,7 +406,12 @@ function manageFormDiv()
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
 }
 
-
+/**
+ * This method hide or show the input fields when an "Other" select is choosen
+ * @param selectId
+ * @param inputId
+ * @param textId
+ */
 function HideOrShowOtherFieldForSelect( selectId, inputId, textId )
 {
     $( "#" + selectId ).change( function()
@@ -426,11 +433,6 @@ function HideOrShowOtherFieldForSelect( selectId, inputId, textId )
             $( "#" + textId ).fadeIn( "slow" ).hide();
         }
     } );
-}
-
-function hideValidators()
-{
-    $( ".jqx-validator-hint" ).hide();
 }
 
 /**
