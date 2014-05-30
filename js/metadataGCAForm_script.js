@@ -140,9 +140,30 @@ function manageContributorsDiv()
  * This method returns the array of rules for the contributor's fields
  * @param index : index of the contributor
  */
-function getReferenceRules( index )// TO DO
+function getReferenceRules( index )
 {
-
+    return [
+        {input: "#citationTitleInput" + index, message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+        {input: "#citationDateBookInput" + index, message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
+        {
+            var d = new Date();
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + day;
+            return input.val() != complete_d;
+        }},
+        {input: "#citationAuthorNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
+        {
+            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
+        }},
+        {input: "#citationAuthorMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+        {input: "#citationDOIInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
+        {
+            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
+        }},
+        {input: "#citationOnlineRessourceInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+    ];
 }
 
 /**
@@ -233,6 +254,7 @@ function createReferenceFieldset( containerIdRef, index )
 
     // Mail input
     $( "#citationAuthorMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
+    $( "#citationOnlineRessourceInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
     // Remove button
     $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton">' );

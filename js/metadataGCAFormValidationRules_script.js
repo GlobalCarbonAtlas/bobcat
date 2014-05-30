@@ -1,5 +1,5 @@
 // Validation en direct des champs (la validation lors du click pour passer a autre menu se fait ds le .js). Doit etre en dehors doc.ready() !!!
- $( "#metadataForm" ).formToWizard();
+$( "#metadataForm" ).formToWizard();
 
 var validatorRules = [
 
@@ -22,12 +22,12 @@ var validatorRules = [
         return "nullValue" != $( "#dataProductTypeSelect" ).val();
     }
     },
-    {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function() 
+    {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-	return ($( "#dataProductTypeSelect" ).val() != "otherValue") || ($("#dataProductTypeSelect" ).val() == "otherValue" && "" != $( "#dataProductTypeFreeTextInput").val());
-	/*if ($( "#dataProductTypeSelect" ).val() == "otherValue")
-	 {return "" != $( "#dataProductTypeFreeTextInput" ).val();}
-	else return true;*/
+        return ("otherValue" != $( "#dataProductTypeSelect" ).val()) || ("otherValue" == $( "#dataProductTypeSelect" ).val() && "" != $( "#dataProductTypeFreeTextInput" ).val());
+        /*if ($( "#dataProductTypeSelect" ).val() == "otherValue")
+         {return "" != $( "#dataProductTypeFreeTextInput" ).val();}
+         else return true;*/
     }
     },
     {input: "#dataProductTypeFreeTextInput", message: "Characters not authorized", action: "blur, keyup",  rule: function()
@@ -44,7 +44,7 @@ var validatorRules = [
     },
     {input: "#dataProductCategoryFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-	return ($( "#dataProductCategorySelect" ).val() != "otherValue") || ($("#dataProductCategorySelect" ).val() == "otherValue" && "" != $( "#dataProductCategoryFreeTextInput").val());
+        return ("otherValue" != $( "#dataProductCategorySelect" ).val()) || ("otherValue" == $( "#dataProductCategorySelect" ).val() && "" != $( "#dataProductCategoryFreeTextInput" ).val());
     }
     },
     {input: "#dataProductCategoryFreeTextInput", message: "Character not authorized", action: "blur, keyup",  rule: function()
@@ -125,9 +125,9 @@ var validatorRules = [
         return temporalResolutionSelectRentre;
     }
     },
-    {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function() 
+    {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-    return ($( "#temporalResolutionSelect" ).val() != "otherValue") || ($("#temporalResolutionSelect" ).val() == "otherValue" && "" != $( "#temporalResolutionSelect").val());
+        return ($( "#temporalResolutionSelect" ).val() != "otherValue") || ($( "#temporalResolutionSelect" ).val() == "otherValue" && "" != $( "#temporalResolutionSelect" ).val());
     }
     },
     {input: "#temporalCoverageBegin", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
@@ -299,8 +299,9 @@ var validatorRules = [
     // Product description:
     {input: "#addDocProductDetailsStep0Input", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
 
+    <!--*********************************** KEYWORD AND REFERENCE *********************************** -->
     // Keywords and reference's fields control are now in the validateContributorsDiv function (medataGCAForm_script.js file).
-    // There are added when we create a new contributor.
+    // There are added when we create a new reference.
 
     // Quality data information:
     {input: "#standAloneInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
@@ -324,3 +325,5 @@ var validatorRules = [
     {input: "#principalInvestigatorContactMailInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#originalDataUrlInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
 ];
+
+var validatorRulesInit = jQuery.extend( true, {}, validatorRules );

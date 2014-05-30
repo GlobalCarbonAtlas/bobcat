@@ -336,7 +336,7 @@
             </div>
         </fieldset>
 
-        // Divs dynamically built with the 'createReferenceFieldset' function (metadataGCAForm_script.js)
+        <!-- Divs dynamically built with the 'createReferenceFieldset' function (metadataGCAForm_script.js) -->
         <div id="referencesContainer"></div>
 
         <div id="referencesContainerButton" class="row col-md-24 col-sm-24">
