@@ -8,21 +8,18 @@
 function getContributorRules( index )
 {
     return [
-
         {input: "#dataProducerInfoNameInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
         {input: "#dataProducerInfoNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
             return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
-        }
-        },
+        }},
         {input: "#dataProducerInfoOrganisationInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
         {input: "#dataProducerInfoMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
         {input: "#dataProducerInfoMailInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
         {input: "#dataProducerInfoRoleSelect" + index, message: "This field is mandatory", action: "change",  rule: function( arguments )
         {
             return "nullValue" != arguments[0].value;
-        }
-        },
+        }},
     ];
 }
 
@@ -256,6 +253,9 @@ function createReferenceFieldset( containerIdRef, index )
     $( "#citationAuthorMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#citationOnlineRessourceInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
+    // DOI
+    $( "#citationDOIInput" + index ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
+
     // Remove button
     $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton">' );
     $( "#removeReferenceInfoButton" + index ).click( function()
@@ -392,15 +392,12 @@ function manageFormDiv()
     $( "#spatialCoverageSouthInput" ).jqxInput( {height: "20px", placeHolder: "-90"} );
     $( "#spatialCoverageWestInput" ).jqxInput( {height: "20px", placeHolder: "-180"} );
     $( "#spatialCoverageEastInput" ).jqxInput( {height: "20px", placeHolder: "180"} );
-    //$( "#citationOnlineRessourceInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#addDocProductDetailsStep0Input" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
-    //$( "#citationAuthorMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#principalInvestigatorContactMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#keywordsInfoInput" ).jqxInput( {height: "20px", placeHolder: "keyword 1, keyword 2, ..."} );
     $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, precise 'none'"} );
     $( "#standAloneInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
-    //$( "#citationDOIInput" ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 }
 
 
@@ -440,8 +437,8 @@ function addRulesToRulesForm( rulesArray )
 {
     if( !rulesArray )
         return;
+
     validatorRules = $.merge( validatorRules, rulesArray );
-    console.log( "ADD : " + validatorRules.length );
     $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
 }
 
@@ -455,11 +452,31 @@ function removeRulesToRulesForm( rulesArray )
         return;
     $.each( rulesArray, function( i, d )
     {
-        validatorRules.splice( $.inArray( d, validatorRules ), 1 );
+        var index = getIndex( validatorRules, d );
+        validatorRules.splice( index, 1 );
     } );
 
-    console.log( "REMOVE : " + validatorRules.length );
     $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
+}
+
+/**
+ * This method looks for the index of an rule in a rules array by testing with the action, input and message
+ * (not the rule because it's changed by form '$( "#metadataForm" ).jqxValidator( {rules: validatorRules} )')
+ * @param array
+ * @param element
+ */
+function getIndex( array, element )
+{
+    var result = false;
+    $.each( array, function( i, d )
+    {
+        if( element.action == d.action && element.input == d.input && element.message == d.message )
+        {
+            result = i;
+            return false; // To break the each loop
+        }
+    } );
+    return result;
 }
 
 /**

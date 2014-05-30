@@ -325,5 +325,3 @@ var validatorRules = [
     {input: "#principalInvestigatorContactMailInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#originalDataUrlInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
 ];
-
-var validatorRulesInit = jQuery.extend( true, {}, validatorRules );
