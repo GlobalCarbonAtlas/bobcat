@@ -25,14 +25,18 @@ function getContributorRules(index)
         },
     ];
 }
+function getReferencesRules(index)// TO DO
+{
+
+}
 
 /**
- *  This method add a new contributor with the index "index" into the contributors container
- *  reorganize the list of contributors and add the new contributor's rules to form
- * @param containerId : container's id of the main contributors div
- * @param index : contributor's index
+ *  This method add a new contributor/reference/... with the index "index" into the contributors/references/... container
+ *  reorganize the list of contributors/reference/... and add the new contributor/reference/...'s rules to form
+ * @param containerId : container's id of the main contributors/reference/... div
+ * @param index : contributor/reference/...'s index
  */
-function createContributorRow( containerId, index )
+function createContributorRow( containerId, index )// Il faut passer les variables avec le vrai nom de l'id bien sur. Ensuite cette fonction est initialisé avec id= 1 dans le php du form.
 {
     var containerDiv = $( '<div id="dataContributorContainer' + index + '" class="row col-md-24 col-sm-24">' +
         '<div id="dataProducerInfoText' + index + '" class="col-md-24 col-sm-24 label1" title="Information about the person who created the data file">Data contributors information <div id="dataContributorNumber' + index + '" class="dataContributorNumber"></div> :' +
@@ -75,7 +79,9 @@ function createContributorRow( containerId, index )
     $( "#dataProducerInfoMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
     // Remove button
+    	// Creation:
     $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton">' );
+	// Action:
     $( "#removeCreatorInfoButton" + index ).click( function()
     {
         removeContributorRow( "dataContributorContainer", index );
@@ -86,6 +92,103 @@ function createContributorRow( containerId, index )
     // Contributor's rules
     var contributorsRulesArray = getContributorRules(index);
     addRulesToRulesForm( contributorsRulesArray );
+}
+
+function createReferenceRow( containerIdRef, index )
+{
+	// Ce qu'a fait Vanessa :
+    /*var containerDiv = $( '<div id="dataContributorContainer' + index + '" class="row col-md-24 col-sm-24">' +
+        '<div id="dataProducerInfoText' + index + '" class="col-md-24 col-sm-24 label1" title="Information about the person who created the data file">Data contributors information <div id="dataContributorNumber' + index + '" class="dataContributorNumber"></div> :' +
+        '</div>' +*/
+
+	// Dc d'apres modele de Vanessa, ici, dataContributorContainer= citationFieldset et dataContributorNumber = referenceNumber (= ce qui rajoute 1, 2 .../texte) 
+    var containerDivRef = $('<fieldset id="citationFieldset' + index + '" class="fieldset2">'+
+    '<div id= "legendReferenceIdDiv' + index + '"><legend id= "legendReferenceId' + index + '" class="legend2">Reference <div id="referenceNumber' + index + '" class="referenceNumber"></div> (optional):</legend></div>'+
+    '<div class="form-group">'+
+        '<div class="col-md-24 col-sm-24">'+
+            '<div class="label1ContactLegend form-control-m" id="citationTitleText' + index + '" title="Title of the book, of the article, ...">Title (*):</div>'+
+            '<input id="citationTitleInput' + index + '" class="form-control form-control-m" name="citationTitle' + index + '" type="text">'+
+        '</div>'+
+        '<div class="col-md-24 col-sm-24">'+
+            '<div class="label1 form-control-s" id="citationBookDateText' + index + '">Date (*):</div>'+
+            '<div id="citationDateBookInput' + index + '" class="dateInput" name="citationBookDate' + index + '"></div>'+
+        '</div>'+
+        '<div class="col-md-24 col-sm-24">'+
+            '<div class="label1 form-control-l" id="citationAuthorText' + index + '">First author information:</div>'+
+            '<div class="col-md-6 col-sm-6">'+
+                '<div class="label2 form-control-l" id="citationAuthorNameText' + index + '">Name:</div>'+
+                '<input id="citationAuthorNameInput' + index + '" class="form-control form-control-xl" name="citationAuthorName' + index + '" type="text">'+
+            '</div>'+
+            '<div class="col-md-6 col-sm-6">'+
+                '<div class="label2 form-control-xs" id="citationAuthorOrganisationText' + index + '">Organisation:</div>'+
+                '<input id="citationAuthorOrganisationInput' + index + '" class="form-control form-control-xl" name="citationAuthorOrganisation' + index + '" type="text">'+
+            '</div>'+
+            '<div class="col-md-6 col-sm-6">'+
+                '<div class="label2 form-control-xs" id="citationAuthorMailText' + index + '">Mail:</div>'+
+                '<input id="citationAuthorMailInput' + index + '" class="form-control form-control-xl" name="citationAuthorMail' + index + '" type="text">'+
+            '</div>'+
+            '<div class="col-md-5 col-sm-5">'+
+                '<div class="label2 form-control-xs" id="citationAuthorRoleText' + index + '">Role:</div>'+
+                '<select id="citationAuthorRoleSelect' + index + '" name="citationAuthorRole' + index + '" class="form-control form-control-xl">'+
+                    '<option value="">----</option>'+
+                    '<option value="Resource provider">Resource provider</option>'+
+                    '<option value="Distibutor">Distributor</option>'+
+                    '<option value="Originator">Originator</option>'+
+                    '<option value="Point of contact">Point of contact</option>'+
+                    '<option value="Principal investigator">Principal investigator</option>'+
+                    '<option value="Processor">Processor</option>'+
+                    '<option value="Author">Author</option>'+
+                '</select>'+
+            '</div>'+
+        '</div>'+
+        '<div class="col-md-24 col-sm-24">'+
+            '<div class="col-md-9 col-sm-9">'+
+                '<div class="label1 form-control-xxl" id="nameMagazineText' + index + '">Name of the journal:</div>'+
+                '<input id="nameMagazineInput' + index + '" class="form-control form-control-xl" name="nameMagazine' + index + '" type="text" title="Reference of the journal (eg: Volume 89, number 3)">'+
+            '</div>'+
+            '<div class="col-md-11 col-sm-11">'+
+                '<div class="label1 form-control-xs" id="citationDOIText' + index + '" title="Digital Object Identifier (unique for each publication)">DOI:</div>'+
+                '<input id="citationDOIInput' + index + '" class="form-control form-control-m" name="citationDOI' + index + '" type="text">'+
+            '</div>'+
+        '</div>'+
+        '<div class="col-md-8 col-sm-8">'+
+            '<div class="label1 form-control-xxl" id="citationCategoryText' + index + '" title="medium in witch it is published">Category (*):</div>'+
+            '<select id="citationCategorySelect' + index + '" name="citationBookCategory' + index + '" class="form-control form-control-xl">'+
+                '<option value="nullValue">----</option>'+
+                '<option value="Book chapter">Book chapter</option>'+
+                '<option value="Book">Book</option>'+
+                '<option value="Report manual">Report manual</option>'+
+                '<option value="Journal article">Journal article</option>'+
+                '<option value="Magazine newspaper">Magazine newspaper</option>'+
+                '<option value="Atlas or paperMap">Atlas or paperMap</option>'+
+                '<option value="Application, program">Application, program</option>'+
+            '</select>'+
+        '</div>'+
+        '<div class="col-md-11 col-sm-11">'+
+            '<div class="label1 form-control-xxl" id="citationOnlineRessourceText' + index + '">Online resource:</div>'+
+            '<input id="citationOnlineRessourceInput' + index + '" class="form-control form-control-l" name="citationOnlineRessource' + index + '" type="text">'+
+        '</div>'+
+'</fieldset>');
+
+    $( "#" + containerIdRef ).append( containerDivRef );// Ds ce cas la containerIdRef= referencesContainer
+
+	// PlaceHolder: TO DO
+
+
+    // Remove button references :
+    	// 	Creation : NOT OK.
+    	//$( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton">' );// Rajoute l'element.
+    $( "#legendReferenceIdDiv" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton>' );
+	// Action :
+    $( "#removeReferenceInfoButton" + index ).click( function()// TO DO
+    {
+        removeFieldsetCitation( "citationFieldset", index );
+    } );
+
+    manageReferencesDiv(); // TO DO
+	
+    // Reference's rules // TO DO
+
 }
 
 /**
@@ -104,6 +207,15 @@ function removeContributorRow( divName, index )
     var fieldsValidationArray = getContributorRules(index);
     removeRulesToRulesForm(fieldsValidationArray);
 }
+/*function removeFieldsetCitation( divName, index ) {// TO DO
+    $( "#" + divName+""+index ).remove();
+    manageReferencesDiv();
+    $( '#metadataForm' ).jqxValidator( 'hide' );
+
+    //var fieldsValidationArray = getContributorRules(index);// TO DO
+    //removeRulesToRulesForm(fieldsValidationArray);// TO DO
+
+}*/
 
 function hideHintByDiv( div )
 {
@@ -134,24 +246,38 @@ function manageContributorsDiv()
         $( ".removeCreatorInfoButton" ).show();
     else
         $( ".removeCreatorInfoButton" ).hide();
-
+	
     // Numerate the list of contributors
     jQuery.each( $( 'div[id^="dataContributorNumber"]' ), function( i, element )
     {
         $( element ).html( i + 1 );
     } );
+	
+}
+function manageReferencesDiv()
+{
+    // Hide or show the "add reference  button"//OK
+    if( 5 <= $( 'input[id^="citationTitleInput"]' ).length )
+        $( "#referencesContainerButton" ).hide();
+    else
+        $( "#referencesContainerButton" ).show();
+    // Hide or show the "remove reference button"
+    if( 1 < $( 'input[id^="citationTitleInput"]' ).length )
+        $( ".removeReferenceInfoButton" ).show();
+    else
+        $( ".removeReferenceInfoButton" ).hide();
+    // Numerate the list of references // OK?
+    jQuery.each( $( 'div[id^="referenceNumber"]' ), function( i, element )
+    {
+        $( element ).html( i + 1 );
+    } );
 }
 <!--**************************************************************************************** -->
-
-
-
-
 <!--**************************************************************************************** -->
 <!--***************************************** MAIN ***************************************** -->
 <!--**************************************************************************************** -->
 function manageFormDiv()
 {
-
     <!--********************** CONTRIBUTORS ********************** -->
     // Contributors : add button
     $( "#addCreatorInfoButton" ).click( function()
@@ -160,7 +286,6 @@ function manageFormDiv()
         if( 5 > $( 'input[id^="dataProducerInfoNameInput"]' ).length )
         {
             createContributorRow( "contributorsContainer", contributorsLastId + 1 );
-            // Used to pass to php file (target, not form : to construct xml) parameters to actualise metadata xml.
         }
         else
             alert( "You can't add more than 5 contributors" );
@@ -168,43 +293,17 @@ function manageFormDiv()
 
 
     <!--********************** REFERENCES ********************** -->
-    // Ajouts/quitter champs : Inspiré (pas mal modifié) de http://m2-info-upmc.blogspot.fr/2012/12/formulaire-dynamique-avec-jquery.html
-    /* J'ai changé d'idée : je n'ai poas construit les champs dynamiquement mais juste hide et show champs deja construits en html et limité leur nombre à 5.
-     Parce que l'intégration de la validation avec jqxValidator était compliquée à mettre en place étannt donné que jqxvalidator si s'applique 2 fois efface l'autre si il s'applique au même questionnaire (voir testMetadataGCAFormulaireProgressTrackerFormToWizardBootstrap.php).*/
-
-    for( var nReference = 1; 6 > nReference; nReference++ )
-    {
-        $( "#citationFieldset" + nReference + "" ).hide();
-    }
-
-    var nReference = 1;
-
-    // Authors/citations, Reference::
-    $( "#addReferenceInfoButton" ).click( function()
-    {
-        if( 5 > nReference )
+	$( "#addReferenceInfoButton" ).click( function()
+	{
+        var referencesLastId = $( 'input[id^="citationTitleInput"]' ).last().attr( 'id' ).replace( "citationTitleInput", "" );
+        if( 5 > $( 'input[id^="citationTitleInput"]' ).length )
         {
-            nReference = nReference + 1;
-            $( "#citationFieldset" + nReference + "" ).fadeOut( 'slow' ).show();
-            // Il faut intégrer les fonctions liées a jqx:
-            $( "#citationDateBookInput" + nReference + "" ).jqxDateTimeInput( { width: '150px', height: '20px', formatString: "yyyy-MM-dd"} );
-            $( "#citationAuthorMailInput" + nReference + "" ).jqxInput( {placeHolder: "someone@mail.com"} );
-            $( "#citationOnlineRessourceInput" + nReference + "" ).jqxInput( {placeHolder: "someone@mail.com"} );
-            $( "#citationDOIInput" + nReference + "" ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
+            createReferenceRow( "referencesContainer", referencesLastId + 1 );
         }
         else
-        {
             alert( "You can't add more than 5 references" );
-        }
     } );
-    $( "#quitReferenceInfoButton" ).click( function()
-    {
-        if( 1 < nReference )
-        {
-            $( "#citationFieldset" + nReference + "" ).fadeOut( 'slow' ).hide();
-            nReference = nReference - 1;// A bien mettre à la fin.
-        }
-    } );
+
 
 
     <!--********************** OTHERS FIELDS ********************** -->
@@ -243,7 +342,7 @@ function manageFormDiv()
     $( "#dataDateCreationInput" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );// Ds ce cas là on doit afficher erreur si la date n'est pas changée..
     $( "#temporalCoverageBegin" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
     $( "#temporalCoverageEnd" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
-    $( "#citationDateBookInput" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
+    //$( "#citationDateBookInput" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
 
     // Utilisation jqxinput pour afficher info qui s'efface quand on commence à rentrer texte ds  input (placeHolder)
     $( "#metadatCreatorInfoMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
@@ -252,15 +351,15 @@ function manageFormDiv()
     $( "#spatialCoverageSouthInput" ).jqxInput( {height: "20px", placeHolder: "-90"} );
     $( "#spatialCoverageWestInput" ).jqxInput( {height: "20px", placeHolder: "-180"} );
     $( "#spatialCoverageEastInput" ).jqxInput( {height: "20px", placeHolder: "180"} );
-    $( "#citationOnlineRessourceInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
+    //$( "#citationOnlineRessourceInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#addDocProductDetailsStep0Input" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
-    $( "#citationAuthorMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
+    //$( "#citationAuthorMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#principalInvestigatorContactMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#keywordsInfoInput" ).jqxInput( {height: "20px", placeHolder: "keyword 1, keyword 2, ..."} );
     $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, precise 'none'"} );
     $( "#standAloneInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
-    $( "#citationDOIInput" ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
+    //$( "#citationDOIInput" ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 }
 
 
