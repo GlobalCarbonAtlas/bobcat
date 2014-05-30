@@ -159,6 +159,10 @@ function getReferenceRules( index )
         {
             return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
         }},
+        {input: "#citationCategorySelect" + index, message: "This field is mandatory", action: "change",  rule: function( arguments )
+        {
+            return "nullValue" != arguments[0].value;
+        }},
         {input: "#citationOnlineRessourceInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
     ];
 }

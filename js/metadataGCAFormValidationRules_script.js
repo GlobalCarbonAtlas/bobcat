@@ -296,7 +296,9 @@ var validatorRules = [
         return spatialCoverage;
     }
     },
+
     // Product description:
+    {input: "#textAreaProductDetails",  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#addDocProductDetailsStep0Input", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
 
     <!--*********************************** KEYWORD AND REFERENCE *********************************** -->
