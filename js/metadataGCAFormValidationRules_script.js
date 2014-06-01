@@ -64,6 +64,11 @@ var validatorRules = [
         return ("" == $( "#prodNameVersionInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#prodNameVersionInput" ).val() ));
     }},
 
+    <!--*********************************** PRODUCT NAME *********************************** -->
+    // Data abstract
+    {input: "#dataAbstractTextarea", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
+
+
     <!--*********************************** DATA CONTRIBUTOR *********************************** -->
     // DataProducer's fields control are now in the validateContributorsDiv function (medataGCAForm_script.js file).
     // There are added when we create a new contributor.
@@ -76,7 +81,7 @@ var validatorRules = [
     {input: "#metadatCreatorInfoNameInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#metadatCreatorInfoNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        return ("" == $( "#metadatCreatorInfoNameInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#metadatCreatorInfoNameInput" ).val() ));
+        return ("" == $( "#metadatCreatorInfoNameInput" ).val() || /^[a-zA-Z. _-]+$/.test( $( "#metadatCreatorInfoNameInput" ).val() ));
     }},
 
     // Creator mail
@@ -147,6 +152,10 @@ var validatorRules = [
         }
     }
     },
+    {input: "#temporalCoverageEnd", message: "End date must be after Begin date", action: "valuechanged, keyup", focus: true, rule: function()
+    {
+	 return ( $("#temporalCoverageBegin").val() < $("#temporalCoverageEnd").val() );
+    }},
     {input: "#spatialResolutionValueInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialResolutionValueInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
@@ -289,6 +298,7 @@ var validatorRules = [
     // There are added when we create a new reference.
 
     // Quality data information:
+    {input: "#discoveredIssueArea",  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#standAloneInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
     // Data access:
     {input: "#principalInvestigatorContactNameInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },

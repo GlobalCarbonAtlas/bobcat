@@ -11,7 +11,7 @@ function getContributorRules( index )
         {input: "#dataProducerInfoNameInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
         {input: "#dataProducerInfoNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
-            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
+            return ("" == arguments[0].value || /^[a-zA-Z._ -]+$/.test( arguments[0].value ));
         }},
         {input: "#dataProducerInfoOrganisationInput" + index, message: "This field is mandatory", action: "keyup, blur", rule: "required"},
         {input: "#dataProducerInfoMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
@@ -134,25 +134,25 @@ function manageContributorsDiv()
 <!--************************************** REFERENCES ************************************** -->
 <!--**************************************************************************************** -->
 /**
- * This method returns the array of rules for the contributor's fields
+ * This method returns the array of rules for the reference's fields
  * @param index : index of the contributor
  */
 function getReferenceRules( index )
 {
     return [
         {input: "#citationTitleInput" + index, message: "This field is mandatory", action: "blur, keyup", rule: "required" },
-        {input: "#citationDateBookInput" + index, message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
+        {input: "#citationDateBookInput" + index, message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function()
         {
             var d = new Date();
             var day = d.getDate();
             var month = d.getMonth() + 1;
             var year = d.getFullYear();
             var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + day;
-            return input.val() != complete_d;
+            return $("#citationDateBookInput" +index).val() != complete_d;
         }},
         {input: "#citationAuthorNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
-            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
+            return ("" == arguments[0].value || /^[a-zA-Z._ -]+$/.test( arguments[0].value ));
         }},
         {input: "#citationAuthorMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
         {input: "#citationDOIInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
@@ -252,7 +252,7 @@ function createReferenceFieldset( containerIdRef, index )
             '</fieldset>' );
 
     $( "#" + containerIdRef ).append( containerDivRef );
-
+  
     // Date
     $( "#citationDateBookInput" + index ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
 
@@ -262,7 +262,7 @@ function createReferenceFieldset( containerIdRef, index )
 
     // DOI
     $( "#citationDOIInput" + index ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
-
+	
     // Remove button
     $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton">' );
     $( "#removeReferenceInfoButton" + index ).click( function()
@@ -307,13 +307,6 @@ function manageReferencesDiv()
         $( "#referencesContainerButton" ).hide();
     else
         $( "#referencesContainerButton" ).show();
-
-    // Hide or show the "remove reference button"
-    if( 1 < $( 'input[id^="citationTitleInput"]' ).length )
-        $( ".removeReferenceInfoButton" ).show();
-    else
-        $( ".removeReferenceInfoButton" ).hide();
-
     // Numerate the list of references
     jQuery.each( $( 'div[id^="referenceNumber"]' ), function( i, element )
     {
@@ -340,19 +333,16 @@ function manageFormDiv()
             alert( "You can't add more than 5 contributors" );
     } );
 
-
     <!--********************** REFERENCES ********************** -->
     $( "#addReferenceInfoButton" ).click( function()
     {
+        if($( 'input[id^="citationTitleInput"]' ).length >= 1)
+	{
         var referencesLastId = $( 'input[id^="citationTitleInput"]' ).last().attr( 'id' ).replace( "citationTitleInput", "" );
-        if( 5 > $( 'input[id^="citationTitleInput"]' ).length )
-        {
             createReferenceFieldset( "referencesContainer", referencesLastId + 1 );
         }
-        else
-            alert( "You can't add more than 5 references" );
+	else return false;
     } );
-
 
     <!--********************** OTHERS FIELDS ********************** -->
     // Pour tt ce qui est select + freeText
@@ -404,6 +394,7 @@ function manageFormDiv()
     $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, precise 'none'"} );
     $( "#standAloneInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
+    $( "#textAreaProductDetails" ).jqxInput( {height: "20px", placeHolder: "Precise 'No information available' if you can't have this information"} );
 }
 
 /**

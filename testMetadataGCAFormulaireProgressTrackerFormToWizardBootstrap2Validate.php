@@ -110,6 +110,14 @@
                 </div>
             </div>
 
+                <!--*********************************** DATA ABSTRACT *********************************** -->
+                <div class="label1" id="dataAbstractText"
+                     title="Describe your data in few words">Data abstract (*):
+                </div>
+            <div id="dataAbstractId" class="row col-md-24 col-sm-24">
+                    <textarea id="dataAbstractTextarea" class="form-control form-control-xl" name="dataAbstract" rows="2" cols="60"></textarea>
+                </div>
+
             <!--*********************************** DATA CONTRIBUTOR *********************************** -->
             <div id="contributorsContainer"></div>
 
@@ -305,7 +313,7 @@
             </div>
             <div id="productDetailsdescriptionRow" class="row">
                 <div class="col-md-24 col-sm-24">
-                    <div class="label2 form-control-l" id="addDocProductDetailsStep0Text"> URL to describe the product:</div>
+                    <div class="label2 form-control-l" id="addDocProductDetailsStep0Text"> Document URL to describe the product:</div>
                     <input id="addDocProductDetailsStep0Input" class="form-control form-control-m" name="addDocProductDetailsStep0" type="text">
                 </div>
                 <div class="col-md-24 col-sm-24">
@@ -361,7 +369,13 @@
         <textarea id="discoveredIssueArea" name="discoveredIssueQualityData" rows="10" cols="50"></textarea>
 
         <div class="label2 form-control-xxl" id="standAloneText" title="Reference to a document to illustrate quality description">Document URL to describe quality:</div>
-        <input id="standAloneInput" class="form-control" name="standAloneName" type="text">
+        <input id="standAloneInput" class="form-control form-control-m" name="standAloneName" type="text">
+                <div class="col-md-24 col-sm-24">
+                    <div class="label2 form-control-l" id="addDocDescripQualityInfoText" title="Information about the document related to the url">Information about
+                        the url:
+                    </div>
+                    <textarea id="addDocDescripQualityInfoTextTextArea" name="addDocDescripQualityInfo" rows="2" cols="60"></textarea>
+                </div>
     </fieldset>
 </div>
 
@@ -436,8 +450,15 @@
 
         // Init data contributor with one row
         createContributorDiv( "contributorsContainer", 1 );
-        // Init reference  with one row
+        // Add reference only if necessary (no mandatory but if we choose to fill in some fields are mandatory).
+    $( "#addReferenceInfoButton" ).click( function()
+	{
+        if($( 'input[id^="citationTitleInput"]' ).length<1)
+	{
         createReferenceFieldset( "referencesContainer", 1 );
+	}
+	else {return false;}
+	});
 
         // Add validators to form
         $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
@@ -507,8 +528,8 @@
             // Product description:
             var productDetails = $( this ).find( "textarea[name=productDetailsStep0]" ).val();
             var addDocProductDetails = $( this ).find( "input[name=addDocProductDetailsStep0]" ).val();
-            var addDocDescriptionProductDetails = $( this ).find( "textarea[name=addDocDescripProductDetailsStep0]" ).val();
-            // Keywords and ref:
+	    var addDocDescriptionProductDetails = $( this ).find( "textarea[name=addDocDescripProductDetailsStep0]" ).val();
+	    // Keywords and ref:
             var keywordsInfo = $( this ).find( "input[name=keywordsInfo]" ).val();
             var citationTitle1 = $( this ).find( "input[name=citationTitle]" ).val();
             var citationBookDate1 = $( this ).find( "input[name=citationBookDate]" ).val();
