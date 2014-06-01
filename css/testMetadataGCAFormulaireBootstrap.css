@@ -288,7 +288,7 @@ textarea {
     width: 100% !important;
 }
 
-#addCreatorInfoButton, .removeCreatorInfoButton, .dataContributorNumber, .removeReferenceInfoButton, #addReferenceInfoButton, .referenceNumber  {
+#addCreatorInfoButton, .removeCreatorInfoButton, .dataContributorNumber, #addReferenceInfoButton .removeReferenceInfoButton, .referenceNumber  {
     display: inline;
     margin: -1px 0 0 3px;
 }
