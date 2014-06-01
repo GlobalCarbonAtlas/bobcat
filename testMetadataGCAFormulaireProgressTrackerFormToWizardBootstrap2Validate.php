@@ -323,33 +323,28 @@
 <!--******************************* KEYWORDS AND REFERENCE ********************************* -->
 <!--**************************************************************************************** -->
 <div id="keywordsAbstractAndCitation">
-<fieldset class="fieldset1" id="keywordsAndAbstractAndCitationsFieldset">
-<legend class="legend1">Keywords and reference</legend>
+    <fieldset class="fieldset1" id="keywordsAndAbstractAndCitationsFieldset">
+        <legend class="legend1">Keywords and reference</legend>
 
-<fieldset id="keywordsAndAbstractFieldset" class="fieldset2">
-    <legend class="legend2">Keywords:</legend>
+        <fieldset id="keywordsAndAbstractFieldset" class="fieldset2">
+            <legend class="legend2">Keywords:</legend>
 
-    <div class="form-group">
-        <!--*********************************** LIST OF KEYWORDS *********************************** -->
-        <div class="label1ContactLegend" id="keywordsInfoText">List of keywords describing the product:</div>
-        <input id="keywordsInfoInput" class="form-control form-control-m" name="keywordsInfo" type="text">
-    </div>
-</fieldset>
-
-<!--On va mettre ds ce div tte la partie reference (ds js script): construite dynamiquement-->
-<div id="referencesContainer"></div>
-
-            <div id="referencesContainerButton" class="row col-md-24 col-sm-24">
-                <div class="cursorPointer addQuitAllContainerText" title="Click to add reference information (no more than 5)">Add reference information (5 maximum) : <img id="addReferenceInfoButton" src="img/addChamp.svg" class="img-responsive img-rounded addQuitAllContainer">
-                </div>
+            <div class="form-group">
+                <!--*********************************** LIST OF KEYWORDS *********************************** -->
+                <div class="label1ContactLegend" id="keywordsInfoText">List of keywords describing the product:</div>
+                <input id="keywordsInfoInput" class="form-control form-control-m" name="keywordsInfo" type="text">
             </div>
-            <!--Vanessa: <div id="contributorsContainerButton" class="row col-md-24 col-sm-24">
-                <div class="cursorPointer addQuitAllContainerText" title="Click to add/delete creator information (no more than 5)">
-                    Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.svg" class="img-responsive img-rounded addQuitAllContainer">
-                </div>
-            </div>-->
+        </fieldset>
 
-</fieldset>
+        <!-- Divs dynamically built with the 'createReferenceFieldset' function (metadataGCAForm_script.js) -->
+        <div id="referencesContainer"></div>
+
+        <div id="referencesContainerButton" class="row col-md-24 col-sm-24">
+            <div class="cursorPointer addQuitAllContainerText" title="Click to add reference information (no more than 5)">Add reference information (5 maximum) :
+                <img id="addReferenceInfoButton" src="img/addChamp.svg" class="img-responsive img-rounded addQuitAllContainer">
+            </div>
+        </div>
+    </fieldset>
 </div>
 
 
@@ -440,94 +435,94 @@
         manageFormDiv();
 
         // Init data contributor with one row
-        createContributorRow( "contributorsContainer", 1 );
+        createContributorDiv( "contributorsContainer", 1 );
         // Init reference  with one row
-        createReferenceRow( "referencesContainer", 1 );
+        createReferenceFieldset( "referencesContainer", 1 );
 
         // Add validators to form
         $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
 
-	// Show error(s) if some:
+        // Show error(s) if some:
         $( "#metadataForm" ).submit( function( event )
         {
             validateForm();
             event.preventDefault();
-	});
+        } );
         $( '#metadataForm' ).on( 'validationError', function ( event )
         {
             var errorNumber = event.args.invalidInputs.length;
 //            $("#errorsValidation").html(errorNumber + " errors.");
             alert( "Some fields are empty or incorrect. Please check your form : " + errorNumber + " errors." );
         } );
-	
-	// Keeping file (call php which create and keep xml file) if all ok:
+
+        // Keeping file (call php which create and keep xml file) if all ok:
         $( '#metadataForm' ).on( 'validationSuccess', function ( event )
         {
             alert( "Your form is complete and validate." );
-		var nDataContributors= $( 'input[id^="dataProducerInfoNameInput"]' ).length;
+            var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
 
-		var dataDateCreation= $(this).find("input[name=dataDateCreation]").val();				
-		var dataProductTypeSelect= $(this).find("select[name=dataProductType]").val();				
-		var dataProductTypeInput= $(this).find("input[name=dataProductType]").val();				
-		var dataProductCategorySelect= $(this).find("select[name=dataProductCategory]").val();			
-		var dataProductCategoryInput= $(this).find("input[name=dataProductCategory]").val();			
-		var prodNameTitle= $(this).find("input[name=prodNameTitle]").val();			
-		var prodNameVersion= $(this).find("input[name=prodNameVersion]").val();			
-		var dataProducerInfoName1= $(this).find("input[name=dataProducerInfoName1]").val();			
-		var dataProducerInfoName11= $(this).find("input[name=dataProducerInfoName11]").val();			
-		var dataProducerInfoName111= $(this).find("input[name=dataProducerInfoName111]").val();			
-		var dataProducerInfoName1111= $(this).find("input[name=dataProducerInfoName1111]").val();			
-		var dataProducerInfoName11111= $(this).find("input[name=dataProducerInfoName11111]").val();			
-		var dataProducerInfoOrganisation1= $(this).find("input[name=dataProducerInfoOrganisation1]").val();			
-		var dataProducerInfoOrganisation11= $(this).find("input[name=dataProducerInfoOrganisation11]").val();			
-		var dataProducerInfoOrganisation111= $(this).find("input[name=dataProducerInfoOrganisation111]").val();			
-		var dataProducerInfoOrganisation1111= $(this).find("input[name=dataProducerInfoOrganisation1111]").val();			
-		var dataProducerInfoOrganisation11111= $(this).find("input[name=dataProducerInfoOrganisation11111]").val();			
-		var dataProducerInfoMail1= $(this).find("input[name=dataProducerInfoMail1]").val();			
-		var dataProducerInfoMail11= $(this).find("input[name=dataProducerInfoMail11]").val();			
-		var dataProducerInfoMail111= $(this).find("input[name=dataProducerInfoMail111]").val();			
-		var dataProducerInfoMail1111= $(this).find("input[name=dataProducerInfoMail1111]").val();			
-		var dataProducerInfoMail11111= $(this).find("input[name=dataProducerInfoMail11111]").val();			
-		var dataProducerInfoRole1= $(this).find("select[name=dataProducerInfoRole1]").val();			
-		var dataProducerInfoRole11= $(this).find("select[name=dataProducerInfoRole11]").val();			
-		var dataProducerInfoRole111= $(this).find("select[name=dataProducerInfoRole111]").val();			
-		var dataProducerInfoRole1111= $(this).find("select[name=dataProducerInfoRole1111]").val();			
-		var dataProducerInfoRole11111= $(this).find("select[name=dataProducerInfoRole11111]").val();			
-		var metadataDateCreation= $(this).find("input[name=metadataDateCreation]").val();			
-		var metadatCreatorInfoName= $(this).find("input[name=metadatCreatorInfoName]").val();			
-		var metadatCreatorInfoMail= $(this).find("input[name=metadatCreatorInfoMail]").val();			
-		var metadatCreatorInfoRole= $(this).find("select[name=metadatCreatorInfoRole]").val();			
-	// Temp and geo info :
-		var temporalResolutionSelect= $(this).find("select[name=temporalResolution]").val();			
-		var temporalResolutionInput= $(this).find("input[name=temporalResolution]").val();			
-		var temporalCoverageBeginName= $(this).find("input[name=temporalCoverageBeginName]").val();			
-		var temporalCoverageEndName= $(this).find("input[name=temporalCoverageEndName]").val();			
-		var westBoundLongitude= $(this).find("input[name=westBoundLongitude]").val();			
-		var eastBoundLongitude= $(this).find("input[name=eastBoundLongitude]").val();			
-		var southBoundLatitude= $(this).find("input[name=southBoundLatitude]").val();			
-		var northBoundLatitude= $(this).find("input[name=northBoundLatitude]").val();			
-		var verticalLevel= $(this).find("select[name=verticalLevel]").val();			
-		var spatialResolutionLongUnit= $(this).find("select[name=spatialResolutionLongUnit]").val();			
-		var spatialResolutionValue= $(this).find("input[name=spatialResolutionValue]").val();			
-	// Product description:
-		var productDetails= $(this).find("textarea[name=productDetailsStep0]").val();			
-		var addDocProductDetails= $(this).find("input[name=addDocProductDetailsStep0]").val();			
-		var addDocDescriptionProductDetails= $(this).find("textarea[name=addDocDescripProductDetailsStep0]").val();			
-	// Keywords and ref:
-		var keywordsInfo= $(this).find("input[name=keywordsInfo]").val();			
-		var citationTitle1= $(this).find("input[name=citationTitle]").val();			
-		var citationBookDate1= $(this).find("input[name=citationBookDate]").val();			
-	// Quality information:
-	// data access and policy:
-		var principalInvestigatorContactName= $(this).find("input[name=principalInvestigatorContactName]").val();			
-		var principalInvestigatorContactMail= $(this).find("input[name=principalInvestigatorContactMail]").val();			
-		var principalInvestigatorContactPhone= $(this).find("input[name=principalInvestigatorContactPhone]").val();			
-		var originalDataUrl= $(this).find("input[name=originalDataUrl]").val();			
-		var dataPolicy= $(this).find("select[name=dataPolicy]").val();			
+            var dataDateCreation = $( this ).find( "input[name=dataDateCreation]" ).val();
+            var dataProductTypeSelect = $( this ).find( "select[name=dataProductType]" ).val();
+            var dataProductTypeInput = $( this ).find( "input[name=dataProductType]" ).val();
+            var dataProductCategorySelect = $( this ).find( "select[name=dataProductCategory]" ).val();
+            var dataProductCategoryInput = $( this ).find( "input[name=dataProductCategory]" ).val();
+            var prodNameTitle = $( this ).find( "input[name=prodNameTitle]" ).val();
+            var prodNameVersion = $( this ).find( "input[name=prodNameVersion]" ).val();
+            var dataProducerInfoName1 = $( this ).find( "input[name=dataProducerInfoName1]" ).val();
+            var dataProducerInfoName11 = $( this ).find( "input[name=dataProducerInfoName11]" ).val();
+            var dataProducerInfoName111 = $( this ).find( "input[name=dataProducerInfoName111]" ).val();
+            var dataProducerInfoName1111 = $( this ).find( "input[name=dataProducerInfoName1111]" ).val();
+            var dataProducerInfoName11111 = $( this ).find( "input[name=dataProducerInfoName11111]" ).val();
+            var dataProducerInfoOrganisation1 = $( this ).find( "input[name=dataProducerInfoOrganisation1]" ).val();
+            var dataProducerInfoOrganisation11 = $( this ).find( "input[name=dataProducerInfoOrganisation11]" ).val();
+            var dataProducerInfoOrganisation111 = $( this ).find( "input[name=dataProducerInfoOrganisation111]" ).val();
+            var dataProducerInfoOrganisation1111 = $( this ).find( "input[name=dataProducerInfoOrganisation1111]" ).val();
+            var dataProducerInfoOrganisation11111 = $( this ).find( "input[name=dataProducerInfoOrganisation11111]" ).val();
+            var dataProducerInfoMail1 = $( this ).find( "input[name=dataProducerInfoMail1]" ).val();
+            var dataProducerInfoMail11 = $( this ).find( "input[name=dataProducerInfoMail11]" ).val();
+            var dataProducerInfoMail111 = $( this ).find( "input[name=dataProducerInfoMail111]" ).val();
+            var dataProducerInfoMail1111 = $( this ).find( "input[name=dataProducerInfoMail1111]" ).val();
+            var dataProducerInfoMail11111 = $( this ).find( "input[name=dataProducerInfoMail11111]" ).val();
+            var dataProducerInfoRole1 = $( this ).find( "select[name=dataProducerInfoRole1]" ).val();
+            var dataProducerInfoRole11 = $( this ).find( "select[name=dataProducerInfoRole11]" ).val();
+            var dataProducerInfoRole111 = $( this ).find( "select[name=dataProducerInfoRole111]" ).val();
+            var dataProducerInfoRole1111 = $( this ).find( "select[name=dataProducerInfoRole1111]" ).val();
+            var dataProducerInfoRole11111 = $( this ).find( "select[name=dataProducerInfoRole11111]" ).val();
+            var metadataDateCreation = $( this ).find( "input[name=metadataDateCreation]" ).val();
+            var metadatCreatorInfoName = $( this ).find( "input[name=metadatCreatorInfoName]" ).val();
+            var metadatCreatorInfoMail = $( this ).find( "input[name=metadatCreatorInfoMail]" ).val();
+            var metadatCreatorInfoRole = $( this ).find( "select[name=metadatCreatorInfoRole]" ).val();
+            // Temp and geo info :
+            var temporalResolutionSelect = $( this ).find( "select[name=temporalResolution]" ).val();
+            var temporalResolutionInput = $( this ).find( "input[name=temporalResolution]" ).val();
+            var temporalCoverageBeginName = $( this ).find( "input[name=temporalCoverageBeginName]" ).val();
+            var temporalCoverageEndName = $( this ).find( "input[name=temporalCoverageEndName]" ).val();
+            var westBoundLongitude = $( this ).find( "input[name=westBoundLongitude]" ).val();
+            var eastBoundLongitude = $( this ).find( "input[name=eastBoundLongitude]" ).val();
+            var southBoundLatitude = $( this ).find( "input[name=southBoundLatitude]" ).val();
+            var northBoundLatitude = $( this ).find( "input[name=northBoundLatitude]" ).val();
+            var verticalLevel = $( this ).find( "select[name=verticalLevel]" ).val();
+            var spatialResolutionLongUnit = $( this ).find( "select[name=spatialResolutionLongUnit]" ).val();
+            var spatialResolutionValue = $( this ).find( "input[name=spatialResolutionValue]" ).val();
+            // Product description:
+            var productDetails = $( this ).find( "textarea[name=productDetailsStep0]" ).val();
+            var addDocProductDetails = $( this ).find( "input[name=addDocProductDetailsStep0]" ).val();
+            var addDocDescriptionProductDetails = $( this ).find( "textarea[name=addDocDescripProductDetailsStep0]" ).val();
+            // Keywords and ref:
+            var keywordsInfo = $( this ).find( "input[name=keywordsInfo]" ).val();
+            var citationTitle1 = $( this ).find( "input[name=citationTitle]" ).val();
+            var citationBookDate1 = $( this ).find( "input[name=citationBookDate]" ).val();
+            // Quality information:
+            // data access and policy:
+            var principalInvestigatorContactName = $( this ).find( "input[name=principalInvestigatorContactName]" ).val();
+            var principalInvestigatorContactMail = $( this ).find( "input[name=principalInvestigatorContactMail]" ).val();
+            var principalInvestigatorContactPhone = $( this ).find( "input[name=principalInvestigatorContactPhone]" ).val();
+            var originalDataUrl = $( this ).find( "input[name=originalDataUrl]" ).val();
+            var dataPolicy = $( this ).find( "select[name=dataPolicy]" ).val();
 
             $.post( "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php",
-			{nDataContributorsPost: nDataContributors, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelPost: verticalLevel, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionValuePost: spatialResolutionValue, productDetailsPost: productDetails,  addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails,  keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationBookDate1Post: citationBookDate1, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy,
-		});
+            {nDataContributorsPost: nDataContributors, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelPost: verticalLevel, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionValuePost: spatialResolutionValue, productDetailsPost: productDetails,  addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails,  keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationBookDate1Post: citationBookDate1, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy,
+            } );
         } );
     } );
 

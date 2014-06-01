@@ -1,7 +1,11 @@
 // Validation en direct des champs (la validation lors du click pour passer a autre menu se fait ds le .js). Doit etre en dehors doc.ready() !!!
- $( "#metadataForm" ).formToWizard();
+$( "#metadataForm" ).formToWizard();
 
 var validatorRules = [
+
+    <!--**************************************************************************************** -->
+    <!--*********************************** BASIC INFORMATION ********************************** -->
+    <!--**************************************************************************************** -->
 
     <!--*********************************** CREATION DATE *********************************** -->
     {input: "#dataDateCreationInput", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
@@ -12,63 +16,53 @@ var validatorRules = [
         var year = d.getFullYear();
         var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + day;
         return (input.val() != complete_d);
-    }
-    },
+    }},
 
     <!--*********************************** PRODUCT NAME *********************************** -->
     // Product type
     {input: "#dataProductTypeSelect", message: "This field is mandatory", action: "change",  rule: function()
     {
         return "nullValue" != $( "#dataProductTypeSelect" ).val();
-    }
-    },
-    {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function() 
+    }},
+    {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-	return ($( "#dataProductTypeSelect" ).val() != "otherValue") || ($("#dataProductTypeSelect" ).val() == "otherValue" && "" != $( "#dataProductTypeFreeTextInput").val());
-	/*if ($( "#dataProductTypeSelect" ).val() == "otherValue")
-	 {return "" != $( "#dataProductTypeFreeTextInput" ).val();}
-	else return true;*/
-    }
-    },
+        return ("otherValue" != $( "#dataProductTypeSelect" ).val()) || ("otherValue" == $( "#dataProductTypeSelect" ).val() && "" != $( "#dataProductTypeFreeTextInput" ).val());
+        /*if ($( "#dataProductTypeSelect" ).val() == "otherValue")
+         {return "" != $( "#dataProductTypeFreeTextInput" ).val();}
+         else return true;*/
+    }},
     {input: "#dataProductTypeFreeTextInput", message: "Characters not authorized", action: "blur, keyup",  rule: function()
     {
-        var freeTextInputRentre = $( "#dataProductTypeFreeTextInput" ).val();
-        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
-    }
-    },
+        return ("" == $( "#dataProductTypeFreeTextInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#dataProductTypeFreeTextInput" ).val() ));
+    }},
+
     // Product category
     {input: "#dataProductCategorySelect", message: "This field is mandatory", action: "change",  rule: function()
     {
         return "nullValue" != $( "#dataProductCategorySelect" ).val();
-    }
-    },
+    }},
     {input: "#dataProductCategoryFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-	return ($( "#dataProductCategorySelect" ).val() != "otherValue") || ($("#dataProductCategorySelect" ).val() == "otherValue" && "" != $( "#dataProductCategoryFreeTextInput").val());
-    }
-    },
+        return ("otherValue" != $( "#dataProductCategorySelect" ).val()) || ("otherValue" == $( "#dataProductCategorySelect" ).val() && "" != $( "#dataProductCategoryFreeTextInput" ).val());
+    }},
     {input: "#dataProductCategoryFreeTextInput", message: "Character not authorized", action: "blur, keyup",  rule: function()
     {
-        var freeTextInputRentre = $( "#dataProductCategoryFreeTextInput" ).val();
-        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
-    }
-    },
+        return ("" == $( "#dataProductCategoryFreeTextInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#dataProductCategoryFreeTextInput" ).val() ));
+    }},
+
     // Product title
     {input: "#prodNameTitleInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
     {input: "#prodNameTitleInput", message: "Character not authorized", action: "keyup, blur",  rule: function()
     {
-        var freeTextInputRentre = $( "#prodNameTitleInput" ).val();
-        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
-    }
-    },
+        return ("" == $( "#prodNameTitleInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#prodNameTitleInput" ).val() ));
+    }},
+
     // Product version
     {input: "#prodNameVersionInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
     {input: "#prodNameVersionInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var freeTextInputRentre = $( "#prodNameVersionInput" ).val();
-        return ("" == freeTextInputRentre || /^[a-zA-Z0-9._-]+$/.test( freeTextInputRentre ));
-    }
-    },
+        return ("" == $( "#prodNameVersionInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#prodNameVersionInput" ).val() ));
+    }},
 
     <!--*********************************** DATA CONTRIBUTOR *********************************** -->
     // DataProducer's fields control are now in the validateContributorsDiv function (medataGCAForm_script.js file).
@@ -78,38 +72,27 @@ var validatorRules = [
     // None
 
     <!--*********************************** METADATA CREATOR *********************************** -->
+    // Creator name
     {input: "#metadatCreatorInfoNameInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#metadatCreatorInfoNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var metadatCreatorInfoNameRentre = document.forms["metadataForm"].metadatCreatorInfoNameInput.value;
-        if( /^[a-zA-Z ._-]+$/.test( metadatCreatorInfoNameRentre ) )
-        {
-            metadatCreatorInfoNameRentre = 1;
-        }
-        else
-        {
-            metadatCreatorInfoNameRentre = 0;
-        }
-        return metadatCreatorInfoNameRentre;
-    }
-    },
+        return ("" == $( "#metadatCreatorInfoNameInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#metadatCreatorInfoNameInput" ).val() ));
+    }},
+
+    // Creator mail
     {input: "#metadatCreatorInfoMailInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#metadatCreatorInfoMailInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-    {input: "#metadatCreatorInfoRoleSelect", message: "This field is mandatory", action: "change", rule: function()
-    {// Pour select, cjange, pour vcalendrier : valuechanged, pour input : keyup et blur.
-        var metadataCreatorInfoRoleRentre = document.forms["metadataForm"].metadatCreatorInfoRoleSelect.value;
-        if( metadataCreatorInfoRoleRentre == "nullValue" )
-        {
-            metadataCreatorInfoRoleRentre = 0;
-        }
-        else
-        {
-            metadataCreatorInfoRoleRentre = 1
-        }
-        return metadataCreatorInfoRoleRentre;
-    }
-    },
 
+    // Creator role
+    {input: "#metadatCreatorInfoRoleSelect", message: "This field is mandatory", action: "change", rule: function( arguments )
+    {// Pour select, cjange, pour vcalendrier : valuechanged, pour input : keyup et blur.
+        return "nullValue" != arguments[0].value;
+    }},
+
+
+    <!--**************************************************************************************** -->
+    <!--**************************** TEMPORAL AND GEO INFORMATION ****************************** -->
+    <!--**************************************************************************************** -->
     //temporal and geograph info:
     {input: "#temporalResolutionSelect", message: "This field is mandatory", action: "change",  rule: function()
     {
@@ -125,9 +108,9 @@ var validatorRules = [
         return temporalResolutionSelectRentre;
     }
     },
-    {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function() 
+    {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-    return ($( "#temporalResolutionSelect" ).val() != "otherValue") || ($("#temporalResolutionSelect" ).val() == "otherValue" && "" != $( "#temporalResolutionSelect").val());
+        return ($( "#temporalResolutionSelect" ).val() != "otherValue") || ($( "#temporalResolutionSelect" ).val() == "otherValue" && "" != $( "#temporalResolutionSelect" ).val());
     }
     },
     {input: "#temporalCoverageBegin", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
@@ -296,11 +279,14 @@ var validatorRules = [
         return spatialCoverage;
     }
     },
+
     // Product description:
+    {input: "#textAreaProductDetails",  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#addDocProductDetailsStep0Input", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
 
+    <!--*********************************** KEYWORD AND REFERENCE *********************************** -->
     // Keywords and reference's fields control are now in the validateContributorsDiv function (medataGCAForm_script.js file).
-    // There are added when we create a new contributor.
+    // There are added when we create a new reference.
 
     // Quality data information:
     {input: "#standAloneInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },

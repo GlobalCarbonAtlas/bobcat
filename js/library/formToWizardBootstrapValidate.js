@@ -38,3 +38,9 @@
     }
 
 })( jQuery );
+
+function hideValidators()
+{
+    $( ".jqx-validator-hint" ).hide();
+}
+

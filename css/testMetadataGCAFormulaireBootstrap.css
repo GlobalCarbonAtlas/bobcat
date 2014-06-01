@@ -260,6 +260,7 @@ textarea {
     font-weight: bold;
     border: solid 2px rgb(250, 80, 0);
 }
+
 .calendarActifClass {
     border: solid 2px rgb(250, 80, 0) !important;
 }
@@ -288,10 +289,11 @@ textarea {
     width: 100% !important;
 }
 
-#addCreatorInfoButton, .removeCreatorInfoButton, .dataContributorNumber, #addReferenceInfoButton .removeReferenceInfoButton, .referenceNumber  {
+#addCreatorInfoButton, .removeCreatorInfoButton, .dataContributorNumber, #addReferenceInfoButton, .removeReferenceInfoButton, .referenceNumber {
     display: inline;
     margin: -1px 0 0 3px;
 }
+
 .divFloatLeft {
     float: left;
     margin-right: 22px;
