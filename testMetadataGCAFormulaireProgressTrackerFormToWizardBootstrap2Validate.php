@@ -62,7 +62,7 @@
 
                 <!--*********************************** PRODUCT NAME *********************************** -->
                 <div class="label1" id="dataFileNameText"
-                     title="Construct a name to your data file thanks to Product type, category, title and version. Necessary to mention/exchange your data">Product name (*):
+                     title="Construct a name for your data file thanks to Product type, category, title and version. Necessary to mention/exchange your data">Product name (*):
                 </div>
                 <div id="prodTypeRow" class="row col-md-24 col-sm-24">
                     <div class="col-md-9 col-sm-9">

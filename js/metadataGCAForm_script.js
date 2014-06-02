@@ -157,7 +157,7 @@ function getReferenceRules( index )
         {input: "#citationAuthorMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
         {input: "#citationDOIInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
-            return ("" == arguments[0].value || /^[a-zA-Z._-]+$/.test( arguments[0].value ));
+            return ("" == arguments[0].value || /^[0-9./]+$/.test( arguments[0].value ));
         }},
         {input: "#citationCategorySelect" + index, message: "This field is mandatory", action: "change",  rule: function( arguments )
         {
