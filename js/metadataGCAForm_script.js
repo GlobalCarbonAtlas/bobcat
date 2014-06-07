@@ -147,7 +147,8 @@ function getReferenceRules( index )
             var day = d.getDate();
             var month = d.getMonth() + 1;
             var year = d.getFullYear();
-            var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + day;
+            var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" +  (10 > day ? "0" : "") + day;
+		
             return $("#citationDateBookInput" +index).val() != complete_d;
         }},
         {input: "#citationAuthorNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )

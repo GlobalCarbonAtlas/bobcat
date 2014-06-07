@@ -14,8 +14,9 @@ var validatorRules = [
         var day = d.getDate();
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
-        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + day;
+        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (day<10 ? "0" : "") + day;
         return (input.val() != complete_d);
+	//return (input.val() != "2014-06-06");
     }},
 
     <!--*********************************** PRODUCT NAME *********************************** -->
@@ -124,7 +125,7 @@ var validatorRules = [
         var day = d.getDate();
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
-        var complete_d = year + "-" + (month < 10 ? "0" : "") + month + "-" + day;
+        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (day<10 ? "0" : "") + day;
         if( input.val() == complete_d )
         {
             return false;
@@ -141,7 +142,7 @@ var validatorRules = [
         var day = d.getDate();
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
-        var complete_d = year + "-" + (month < 10 ? "0" : "") + month + "-" + day;
+        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (day<10 ? "0" : "") + day;
         if( input.val() == complete_d )
         {
             return false;

@@ -450,6 +450,7 @@
 
         // Init data contributor with one row
         createContributorDiv( "contributorsContainer", 1 );
+
         // Add reference only if necessary (no mandatory but if we choose to fill in some fields are mandatory).
     $( "#addReferenceInfoButton" ).click( function()
 	{
@@ -472,15 +473,15 @@
         $( '#metadataForm' ).on( 'validationError', function ( event )
         {
             var errorNumber = event.args.invalidInputs.length;
-//            $("#errorsValidation").html(errorNumber + " errors.");
             alert( "Some fields are empty or incorrect. Please check your form : " + errorNumber + " errors." );
         } );
 
         // Keeping file (call php which create and keep xml file) if all ok:
         $( '#metadataForm' ).on( 'validationSuccess', function ( event )
         {
-            alert( "Your form is complete and validate." );
+            alert( "Your form is complete and validate.");
             var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
+	    var nReferences= $( 'input[id^="citationTitleInput"]' ).length;
 
             var dataDateCreation = $( this ).find( "input[name=dataDateCreation]" ).val();
             var dataProductTypeSelect = $( this ).find( "select[name=dataProductType]" ).val();
@@ -489,6 +490,7 @@
             var dataProductCategoryInput = $( this ).find( "input[name=dataProductCategory]" ).val();
             var prodNameTitle = $( this ).find( "input[name=prodNameTitle]" ).val();
             var prodNameVersion = $( this ).find( "input[name=prodNameVersion]" ).val();
+	    var dataAbstract = $( this ).find( "textarea[name=dataAbstract]").val();
             var dataProducerInfoName1 = $( this ).find( "input[name=dataProducerInfoName1]" ).val();
             var dataProducerInfoName11 = $( this ).find( "input[name=dataProducerInfoName11]" ).val();
             var dataProducerInfoName111 = $( this ).find( "input[name=dataProducerInfoName111]" ).val();
@@ -522,7 +524,8 @@
             var eastBoundLongitude = $( this ).find( "input[name=eastBoundLongitude]" ).val();
             var southBoundLatitude = $( this ).find( "input[name=southBoundLatitude]" ).val();
             var northBoundLatitude = $( this ).find( "input[name=northBoundLatitude]" ).val();
-            var verticalLevel = $( this ).find( "select[name=verticalLevel]" ).val();
+            var verticalLevelSelect = $( this ).find( "select[name=verticalLevel]" ).val();
+            var verticalLevelInput = $( this ).find( "input[name=verticalLevel]" ).val();
             var spatialResolutionLongUnit = $( this ).find( "select[name=spatialResolutionLongUnit]" ).val();
             var spatialResolutionValue = $( this ).find( "input[name=spatialResolutionValue]" ).val();
             // Product description:
@@ -531,9 +534,61 @@
 	    var addDocDescriptionProductDetails = $( this ).find( "textarea[name=addDocDescripProductDetailsStep0]" ).val();
 	    // Keywords and ref:
             var keywordsInfo = $( this ).find( "input[name=keywordsInfo]" ).val();
-            var citationTitle1 = $( this ).find( "input[name=citationTitle]" ).val();
-            var citationBookDate1 = $( this ).find( "input[name=citationBookDate]" ).val();
+            var citationTitle1 = $( this ).find( "input[name=citationTitle1]" ).val();
+            var citationTitle11 = $( this ).find( "input[name=citationTitle11]" ).val();
+            var citationTitle111 = $( this ).find( "input[name=citationTitle111]" ).val();
+            var citationTitle1111 = $( this ).find( "input[name=citationTitle1111]" ).val();
+            var citationTitle11111 = $( this ).find( "input[name=citationTitle11111]" ).val();
+            var citationBookDate1 = $( this ).find( "input[name=citationBookDate1]" ).val();
+            var citationBookDate11 = $( this ).find( "input[name=citationBookDate11]" ).val();
+            var citationBookDate111 = $( this ).find( "input[name=citationBookDate111]" ).val();
+            var citationBookDate1111 = $( this ).find( "input[name=citationBookDate1111]" ).val();
+            var citationBookDate11111 = $( this ).find( "input[name=citationBookDate11111]" ).val();
+            var citationAuthorName1 = $( this ).find( "input[name=citationAuthorName1]" ).val();
+            var citationAuthorName11 = $( this ).find( "input[name=citationAuthorName11]" ).val();
+            var citationAuthorName111 = $( this ).find( "input[name=citationAuthorName111]" ).val();
+            var citationAuthorName1111 = $( this ).find( "input[name=citationAuthorName1111]" ).val();
+            var citationAuthorName11111 = $( this ).find( "input[name=citationAuthorName11111]" ).val();
+            var citationAuthorOrganisation1 = $( this ).find( "input[name=citationAuthorOrganisation1]" ).val();
+            var citationAuthorOrganisation11 = $( this ).find( "input[name=citationAuthorOrganisation11]" ).val();
+            var citationAuthorOrganisation111 = $( this ).find( "input[name=citationAuthorOrganisation111]" ).val();
+            var citationAuthorOrganisation1111 = $( this ).find( "input[name=citationAuthorOrganisation1111]" ).val();
+            var citationAuthorOrganisation11111 = $( this ).find( "input[name=citationAuthorOrganisation11111]" ).val();
+            var citationAuthorMail1 = $( this ).find( "input[name=citationAuthorMail1]" ).val();
+            var citationAuthorMail11 = $( this ).find( "input[name=citationAuthorMail11]" ).val();
+            var citationAuthorMail111 = $( this ).find( "input[name=citationAuthorMail111]" ).val();
+            var citationAuthorMail1111 = $( this ).find( "input[name=citationAuthorMail1111]" ).val();
+            var citationAuthorMail11111 = $( this ).find( "input[name=citationAuthorMail11111]" ).val();
+            var citationAuthorRole1 = $( this ).find( "select[name=citationAuthorRole1]" ).val();
+            var citationAuthorRole11 = $( this ).find( "select[name=citationAuthorRole11]" ).val();
+            var citationAuthorRole111 = $( this ).find( "select[name=citationAuthorRole111]" ).val();
+            var citationAuthorRole1111 = $( this ).find( "select[name=citationAuthorRole1111]" ).val();
+            var citationAuthorRole11111 = $( this ).find( "select[name=citationAuthorRole11111]" ).val();
+            var nameMagazine1 = $( this ).find( "input[name=nameMagazine1]" ).val();
+            var nameMagazine11 = $( this ).find( "input[name=nameMagazine11]" ).val();
+            var nameMagazine111 = $( this ).find( "input[name=nameMagazine111]" ).val();
+            var nameMagazine1111 = $( this ).find( "input[name=nameMagazine1111]" ).val();
+            var nameMagazine11111 = $( this ).find( "input[name=nameMagazine11111]" ).val();
+            var citationDOI1 = $( this ).find( "input[name=citationDOI1]" ).val();
+            var citationDOI11 = $( this ).find( "input[name=citationDOI11]" ).val();
+            var citationDOI111 = $( this ).find( "input[name=citationDOI111]" ).val();
+            var citationDOI1111 = $( this ).find( "input[name=citationDOI1111]" ).val();
+            var citationDOI11111 = $( this ).find( "input[name=citationDOI11111]" ).val();
+            var citationBookCategory1 = $( this ).find( "select[name=citationBookCategory1]" ).val();
+            var citationBookCategory11 = $( this ).find( "select[name=citationBookCategory11]" ).val();
+            var citationBookCategory111 = $( this ).find( "select[name=citationBookCategory111]" ).val();
+            var citationBookCategory1111 = $( this ).find( "select[name=citationBookCategory1111]" ).val();
+            var citationBookCategory11111 = $( this ).find( "select[name=citationBookCategory11111]" ).val();
+            var citationOnlineRessource1 = $( this ).find( "input[name=citationOnlineRessource1]" ).val();
+            var citationOnlineRessource11 = $( this ).find( "input[name=citationOnlineRessource11]" ).val();
+            var citationOnlineRessource111 = $( this ).find( "input[name=citationOnlineRessource111]" ).val();
+            var citationOnlineRessource1111 = $( this ).find( "input[name=citationOnlineRessource1111]" ).val();
+            var citationOnlineRessource11111 = $( this ).find( "input[name=citationOnlineRessource11111]" ).val();
             // Quality information:
+	    var qualityDescription = $( this ).find( "textarea[name=discoveredIssueQualityData]" ).val();
+	    var docRelatedToQualityDescUrl = $( this ).find( "input[name=standAloneName]" ).val();
+	    var docRelatedToQualityDescDesc = $( this ).find( "textarea[name=addDocDescripQualityInfo]").val();
+
             // data access and policy:
             var principalInvestigatorContactName = $( this ).find( "input[name=principalInvestigatorContactName]" ).val();
             var principalInvestigatorContactMail = $( this ).find( "input[name=principalInvestigatorContactMail]" ).val();
@@ -542,7 +597,7 @@
             var dataPolicy = $( this ).find( "select[name=dataPolicy]" ).val();
 
             $.post( "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php",
-            {nDataContributorsPost: nDataContributors, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelPost: verticalLevel, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionValuePost: spatialResolutionValue, productDetailsPost: productDetails,  addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails,  keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationBookDate1Post: citationBookDate1, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy,
+            {nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionValuePost: spatialResolutionValue, productDetailsPost: productDetails,  addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails,  keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, citationAuthorMail1Post: citationAuthorMail1, citationAuthorMail11Post: citationAuthorMail11, citationAuthorMail111Post: citationAuthorMail111, citationAuthorMail1111Post: citationAuthorMail1111, citationAuthorMail11111Post: citationAuthorMail11111, citationAuthorRole1Post: citationAuthorRole1,  citationAuthorRole11Post: citationAuthorRole11, citationAuthorRole111Post: citationAuthorRole111, citationAuthorRole1111Post: citationAuthorRole1111, citationAuthorRole11111Post: citationAuthorRole11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11,  citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy,
             } );
         } );
     } );
