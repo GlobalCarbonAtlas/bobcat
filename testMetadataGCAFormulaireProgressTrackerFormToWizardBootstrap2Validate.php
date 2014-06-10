@@ -371,8 +371,7 @@
         <div class="label2 form-control-xxl" id="standAloneText" title="Reference to a document to illustrate quality description">Document URL to describe quality:</div>
         <input id="standAloneInput" class="form-control form-control-m" name="standAloneName" type="text">
                 <div class="col-md-24 col-sm-24">
-                    <div class="label2 form-control-l" id="addDocDescripQualityInfoText" title="Information about the document related to the url">Information about
-                        the url:
+                    <div class="label2 form-control-xxl" id="addDocDescripQualityInfoText">Information about the document related to the url:
                     </div>
                     <textarea id="addDocDescripQualityInfoTextTextArea" name="addDocDescripQualityInfo" rows="2" cols="60"></textarea>
                 </div>

@@ -55,10 +55,10 @@ function createContributorDiv( containerId, index )
             '<div id="dataProducerInfoRoleText' + index + '" class="label2 form-control-xxl">Role (*):</div>' +
             '<select id="dataProducerInfoRoleSelect' + index + '" class="form-control form-control-m" name="dataProducerInfoRole' + index + '">' +
             '<option value="nullValue">----</option>' +
-            '<option value="originator">Originator</option>' +
-            '<option value="pointOfContact">Point of contact</option>' +
-            '<option value="principalInvestigator">Principal investigator</option>' +
-            '<option value="processor">Processor</option>' +
+            '<option value="Originator">Originator</option>' +
+            '<option value="Point of Contact">Point of contact</option>' +
+            '<option value="Principal investigator">Principal investigator</option>' +
+            '<option value="Processor">Processor</option>' +
             '</select>' +
             '</div>' +
             '</div>' +
@@ -186,7 +186,7 @@ function createReferenceFieldset( containerIdRef, index )
             '</div>' +
 
             '<div class="col-md-24 col-sm-24">' +
-            '<div class="label1 form-control-s" id="citationBookDateText' + index + '">Date (*):</div>' +
+            '<div class="label1 form-control-l" id="citationBookDateText' + index + '">Publication date (*):</div>' +
             '<div id="citationDateBookInput' + index + '" class="dateInput" name="citationBookDate' + index + '"></div>' +
             '</div>' +
 
@@ -209,7 +209,7 @@ function createReferenceFieldset( containerIdRef, index )
             '<select id="citationAuthorRoleSelect' + index + '" name="citationAuthorRole' + index + '" class="form-control form-control-xl">' +
             '<option value="">----</option>' +
             '<option value="Resource provider">Resource provider</option>' +
-            '<option value="Distibutor">Distributor</option>' +
+            '<option value="Distributor">Distributor</option>' +
             '<option value="Originator">Originator</option>' +
             '<option value="Point of contact">Point of contact</option>' +
             '<option value="Principal investigator">Principal investigator</option>' +

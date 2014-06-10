@@ -166,7 +166,7 @@ $xmlStringPart4= '</gvq:GVQ_DataIdentification>
                                         <gmd:voice>
                                             <gco:CharacterString>'.$_POST["principalInvestigatorContactPhonePost"].'</gco:CharacterString>
                                         </gmd:voice>
-                                   </gmd:CI_Telephone>ctualized.xml
+                                   </gmd:CI_Telephone>
                                 </gmd:phone>
                                     <gmd:address>
                                         <gmd:CI_Address>
