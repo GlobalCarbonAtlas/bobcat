@@ -120,7 +120,10 @@ textarea {
     border-radius: 3px;
     margin-bottom: 3px !important;
 }
-
+#textAreaProductDetails {
+	display:  block;
+    	height:  100px !important;
+}
 .label1 {
     font-size: 15px;
     color: rgb(0, 0, 0);
@@ -259,6 +262,24 @@ textarea {
 #submitFormButon:hover {
     font-weight: bold;
     border: solid 2px rgb(250, 80, 0);
+}
+#showResultButton {
+    background-color: rgba(118,167,226,0.25);
+    color: rgb(70,70,70);
+    display: block;
+    font-size: 13px;
+    height: 44px;
+    left: 79%;
+    position: fixed;
+    top: 22px;
+    width: 67px;
+    border:  solid 2px rgb(120,120,120);
+    border-radius:  10px;
+    font-weight:  bold;
+    text-align:  center;
+}
+#showResultButton:hover { 
+	border: solid 2px rgb(250, 80, 0);
 }
 
 .calendarActifClass {

@@ -1,6 +1,6 @@
 <?php
 $xmlStringPart1= '<?xml version="1.0" encoding="UTF-8"?>
-<!-- A mettre sans lien http, erreur --><?xml-stylesheet type="text/xsl" href="xslGVQAdapt.xsl"?>
+<?xml-stylesheet type="text/xsl" href="xslMetadataFormTestWithEditiX4.xsl"?>
 <gvq:GVQ_Metadata xmlns:updated19115="http://www.geoviqua.org/19115_updates" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmd19157="http://www.geoviqua.org/gmd19157" xmlns:un="http://www.uncertml.org/2.0" xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd 
 http://www.geoviqua.org/QualityInformationModel/4.0 http://schemas.geoviqua.org/GVQ/4.0/GeoViQua_PQM_UQM.xsd
 http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd" id="dataset_MD">
@@ -394,7 +394,7 @@ $xmlStringPart4= '</gvq:GVQ_DataIdentification>
 		// On verifie si resultat OK :
 			echo $docDom->saveXML();
 		// On garde le fichier avec nouveau nom :
-			$docDom->save("xmlActualized.xml");
+			$docDom->save("xmlDoneByForm/".$_POST["dataProductTypeSelectPost"].$_POST["dataProductTypeInputPost"].'-'.$_POST["dataProductCategorySelectPost"].$_POST["dataProductCategoryInputPost"].'-'.$_POST["prodNameTitlePost"].'-'.$_POST["prodNameVersionPost"].".xml");
 
 
 ?>

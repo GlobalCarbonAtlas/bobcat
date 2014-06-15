@@ -66,13 +66,13 @@
                 </div>
                 <div id="prodTypeRow" class="row col-md-24 col-sm-24">
                     <div class="col-md-9 col-sm-9">
-                        <div class="label2 form-control-xxl" id="dataProductTypeSelectText">Product type:</div>
+                        <div class="label2 form-control-xxl" id="dataProductTypeSelectText">Product type (*):</div>
                         <select id="dataProductTypeSelect" class="form-control form-control-xl" name="dataProductType">
                             <option value="nullValue">----</option>
                             <option value="CO2_flux">CO2 flux</option>
                             <option value="Carbon_stock">Carbon stock</option>
                             <option value="CH4_flux">CH4 flux</option>
-                            <option value="otherValue">Other</option>
+                            <option value="">Other</option>
                         </select>
                     </div>
                     <div class="col-md-14 col-sm-14">
@@ -83,13 +83,13 @@
 
                 <div id="prodCategoryRow" class="row col-md-24 col-sm-24">
                     <div class="col-md-9 col-sm-9">
-                        <div class="label2 form-control-xxl" id="dataProductCategorySelectText">Product category:</div>
+                        <div class="label2 form-control-xxl" id="dataProductCategorySelectText">Product category (*):</div>
                         <select class="form-control form-control-xl dataProductCategoryClass" id="dataProductCategorySelect" name="dataProductCategory">
                             <option value="nullValue">----</option>
                             <option value="Inversion_model">Inversion model</option>
                             <option value="Land_model">Land model</option>
                             <option value="Ocean_model">Ocean model</option>
-                            <option value="otherValue">Other</option>
+                            <option value="">Other</option>
                         </select>
                     </div>
                     <div class="col-md-14 col-sm-14">
@@ -111,16 +111,17 @@
             </div>
 
                 <!--*********************************** DATA ABSTRACT *********************************** -->
-                <div class="label1" id="dataAbstractText"
+	       <div class= "row col-md-24 col-sm-24">
+                <div class="label1 row " id="dataAbstractText"
                      title="Describe your data in few words">Data abstract (*):
                 </div>
-            <div id="dataAbstractId" class="row col-md-24 col-sm-24">
+            	<div id="dataAbstractId" class="row col-md-24 col-sm-24">
                     <textarea id="dataAbstractTextarea" class="form-control form-control-xl" name="dataAbstract" rows="2" cols="60"></textarea>
                 </div>
+	       </div>
 
             <!--*********************************** DATA CONTRIBUTOR *********************************** -->
             <div id="contributorsContainer"></div>
-
             <div id="contributorsContainerButton" class="row col-md-24 col-sm-24">
                 <div class="cursorPointer addQuitAllContainerText" title="Click to add/delete creator information (no more than 5)">
                     Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.svg" class="img-responsive img-rounded addQuitAllContainer">
@@ -196,7 +197,7 @@
                         <option value="Monthly">Monthly</option>
                         <option value="Daily">Daily</option>
                         <option value="Hourly">hourly</option>
-                        <option value="otherValue">Other</option>
+                        <option value="">Other</option>
                     </select>
                 </div>
                 <div class="col-md-13 col-sm-13">
@@ -279,11 +280,11 @@
                         <div class="col-md-11 col-sm-11">
                             <div class="label2 form-control-xl" id="selectCategoryVerticalLevelText">Select a vertical level:</div>
                             <select name="verticalLevel" class="form-control form-control-xl" id="selectCategoryVerticalLevelSelect">
-                                <option value="">None</option>
+                                <option value="None">None</option>
                                 <option value="Atmospheric levels">Atmospheric levels</option>
                                 <option value="Surface level">Surface level</option>
                                 <option value="Below-ground levels">Below-ground levels</option>
-                                <option value="otherValue">Other</option>
+                                <option value="">Other</option>
                             </select>
                         </div>
 
@@ -309,7 +310,7 @@
         <div class="form-group">
             <div id="productDetailsdescriptionRow" class="row">
                 <div class="label1ContactLegend" id="productDetailsDescriptionText">Describe here how was built your product (*):</div>
-                <textarea id="textAreaProductDetails" name="productDetailsStep0" rows="5" cols="60"></textarea>
+                <textarea id="textAreaProductDetails" name="productDetailsStep0" rows="60" cols="60"></textarea>
             </div>
             <div id="productDetailsdescriptionRow" class="row">
                 <div class="col-md-24 col-sm-24">
@@ -320,7 +321,7 @@
                     <div class="label2 form-control-l" id="addDocDescripProductDetailsStep0Text" title="Information about the document related to the url">Information about
                         the url:
                     </div>
-                    <textarea id="addDocDescripProductDetailsStep0TextArea" name="addDocDescripProductDetailsStep0" rows="2" cols="60"></textarea>
+                    <textarea id="addDocDescripProductDetailsStep0TextArea" name="addDocDescripProductDetailsStep0" rows="1" cols="60"></textarea>
                 </div>
             </div>
     </fieldset>
@@ -417,11 +418,11 @@
             <div class="col-md-24 col-sm-24">
                 <div class="label2 form-control-xxl" id="dataPolicyChooseText">Select a data policy:</div>
                 <select id="dataPolicyChooseSelect" class="form-control form-control-m" name="dataPolicy" type="text">
-                    <option value="">None</option>
+                    <option value="None">None</option>
                     <option value="Free to use">Free to use</option>
                     <option value="Restricted to scientists">Restricted to scientists</option>
                     <option value="Not free: contact PI">Not free: contact PI</option>
-                    <option value="otherValue">Other</option>
+                    <option value="">Other</option>
                 </select>
             </div>
             <div id="dataPolicyFreeContainer" class="col-md-24 col-sm-24">
@@ -435,6 +436,7 @@
 <input id="submitFormButon" type="submit" value="Submit"/>
 
 </form>
+	<div id="showResultButton" class= "cursorPointer" title= "Click to visualise the result of the metadata file" style="display:none" >Show the result</div>
 </div>
 
 <script text="text/javascript">
@@ -479,6 +481,46 @@
         $( '#metadataForm' ).on( 'validationSuccess', function ( event )
         {
             alert( "Your form is complete and validate.");
+	    $("#showResultButton").show();
+
+		
+	$("#showResultButton").click(function() {
+		
+		// For Inputs:
+		if ($("#dataProductTypeSelect").val() == "") {
+			var prodTypeInput= $("#dataProductTypeFreeTextInput").val();
+		}	
+		//alert($("#dataProductTypeSelect").val() + $("#dataProductTypeInput").val());//OK
+		else var prodTypeInput= "";
+		if ($("#dataProductCategorySelect").val() == "") {
+			var prodCatInput= $("#dataProductCategoryFreeTextInput").val();
+		}	
+		else var prodCatInput= "";
+			
+		// For Selects: 	
+		if ($("#dataProductTypeFreeTextInput").is(':visible'))
+		{
+			var prodTypeSelect= "";
+		}
+		else var prodTypeSelect= $("#dataProductTypeSelect").val();	
+		if ($("#dataProductCategoryFreeTextInput").is(':visible'))
+		{
+			var prodCatSelect= "";
+		}
+		else var prodCatSelect= $("#dataProductCategorySelect").val();	
+
+	
+		var prodTitle= $("#prodNameTitleInput").val();
+		var prodVersion= $("#prodNameVersionInput").val();
+		var linkToXml = prodTypeSelect + prodTypeInput + "-" + prodCatSelect + prodCatInput + "-" + prodTitle + "-" + prodVersion;
+			
+		window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/"+linkToXml+".xml");
+		//CO2_fluxundefined-Inversion_modelundefined-f-f
+		
+		//window.open("visualiseResult.php");
+//"".$_POST["dataProductTypeSelectPost"].$_POST["dataProductTypeInputPost"].'-'.$_POST["dataProductCategorySelectPost"].$_POST["dataProductCategoryInputPost"].'-'.$_POST["prodNameTitlePost"].'-'.$_POST["prodNameVersionPost"].".xml"	
+	});
+
             var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
 	    var nReferences= $( 'input[id^="citationTitleInput"]' ).length;
 
@@ -600,6 +642,7 @@
             } );
         } );
     } );
+
 
 </script>
 

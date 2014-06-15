@@ -408,7 +408,8 @@ function HideOrShowOtherFieldForSelect( selectId, inputId, textId )
 {
     $( "#" + selectId ).change( function()
     {
-        if( "otherValue" == $( "#" + selectId ).val() )
+        //if( "" == $( "#" + selectId ).val() || "" == $( "#" + selectId ).val() )
+        if( "" == $( "#" + selectId ).val() )
         {
             $( "#" + inputId ).fadeIn( "slow" ).show();
             $( "#" + textId ).fadeIn( "slow" ).show();

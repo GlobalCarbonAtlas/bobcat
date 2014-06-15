@@ -27,8 +27,8 @@ var validatorRules = [
     }},
     {input: "#dataProductTypeFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-        return ("otherValue" != $( "#dataProductTypeSelect" ).val()) || ("otherValue" == $( "#dataProductTypeSelect" ).val() && "" != $( "#dataProductTypeFreeTextInput" ).val());
-        /*if ($( "#dataProductTypeSelect" ).val() == "otherValue")
+        return ("" != $( "#dataProductTypeSelect" ).val()) || ("" == $( "#dataProductTypeSelect" ).val() && "" != $( "#dataProductTypeFreeTextInput" ).val());
+        /*if ($( "#dataProductTypeSelect" ).val() == "Other_value:_")
          {return "" != $( "#dataProductTypeFreeTextInput" ).val();}
          else return true;*/
     }},
@@ -44,7 +44,7 @@ var validatorRules = [
     }},
     {input: "#dataProductCategoryFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-        return ("otherValue" != $( "#dataProductCategorySelect" ).val()) || ("otherValue" == $( "#dataProductCategorySelect" ).val() && "" != $( "#dataProductCategoryFreeTextInput" ).val());
+        return ("" != $( "#dataProductCategorySelect" ).val()) || ("" == $( "#dataProductCategorySelect" ).val() && "" != $( "#dataProductCategoryFreeTextInput" ).val());
     }},
     {input: "#dataProductCategoryFreeTextInput", message: "Character not authorized", action: "blur, keyup",  rule: function()
     {
@@ -116,7 +116,7 @@ var validatorRules = [
     },
     {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-        return ($( "#temporalResolutionSelect" ).val() != "otherValue") || ($( "#temporalResolutionSelect" ).val() == "otherValue" && "" != $( "#temporalResolutionSelect" ).val());
+        return ($( "#temporalResolutionSelect" ).val() != "") || ($( "#temporalResolutionSelect" ).val() == "" && "" != $( "#temporalResolFreeTextInput" ).val());
     }
     },
     {input: "#temporalCoverageBegin", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
@@ -220,7 +220,7 @@ var validatorRules = [
     {input: "#spatialCoverageSouthInput", message: "South latitude must be between 0 and -90 degrees", action: "keyup, blur",  rule: function()
     {
         var spatialCoverage = document.forms["metadataForm"].spatialCoverageSouthInput.value;
-        if( spatialCoverage <= 0 )
+        if( 0 >= spatialCoverage && spatialCoverage >= -90)
         {
             spatialCoverage = 1;
         }
@@ -249,7 +249,7 @@ var validatorRules = [
     {input: "#spatialCoverageWestInput", message: "West longitude must be between 0 and -180 degrees", action: "keyup, blur",  rule: function()
     {
         var spatialCoverage = document.forms["metadataForm"].spatialCoverageWestInput.value;
-        if( spatialCoverage <= 0 )
+        if( 0 >= spatialCoverage && spatialCoverage >= -180 )
         {
             spatialCoverage = 1;
         }
