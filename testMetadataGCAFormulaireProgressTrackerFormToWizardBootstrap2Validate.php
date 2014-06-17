@@ -23,8 +23,6 @@
     <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxdatetimeinput.js"></script>
     <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxcalendar.js"></script>
     <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/globalization/globalize.js"></script>
-    <!--Pour appel et gestion xml metadat comme DOM object :-->
-    <script type="text/javascript" src="accessXmlMetadat.js"></script>
 
     <script type="text/javascript" src="js/metadataGCAFormValidationRules_script.js"></script>
     <script type="text/javascript" src="js/metadataGCAForm_script.js"></script>
@@ -344,6 +342,10 @@
                 <input id="keywordsInfoInput" class="form-control form-control-m" name="keywordsInfo" type="text">
             </div>
         </fieldset>
+	<div id= "referenceTitleBeforeAdd" class="row col-md-24 col-sm-24">
+        	<legend class="legend2">Reference(s):</legend>
+	</div>
+		
 
         <!-- Divs dynamically built with the 'createReferenceFieldset' function (metadataGCAForm_script.js) -->
         <div id="referencesContainer"></div>
@@ -436,7 +438,7 @@
 <input id="submitFormButon" type="submit" value="Submit"/>
 
 </form>
-	<div id="showResultButton" class= "cursorPointer" title= "Click to visualise the result of the metadata file" style="display:none" >Show the result</div>
+	<div id="showResultButton" class= "cursorPointer" title= "Visualise the result of the metadata file. You can change your answers if you are not satisfied (You have to turn to submit the form before!)" style="display:none" >Show the result</div>
 </div>
 
 <script text="text/javascript">
@@ -458,6 +460,7 @@
         if($( 'input[id^="citationTitleInput"]' ).length<1)
 	{
         createReferenceFieldset( "referencesContainer", 1 );
+	$("#referenceTitleBeforeAdd").hide();
 	}
 	else {return false;}
 	});
@@ -490,7 +493,6 @@
 		if ($("#dataProductTypeSelect").val() == "") {
 			var prodTypeInput= $("#dataProductTypeFreeTextInput").val();
 		}	
-		//alert($("#dataProductTypeSelect").val() + $("#dataProductTypeInput").val());//OK
 		else var prodTypeInput= "";
 		if ($("#dataProductCategorySelect").val() == "") {
 			var prodCatInput= $("#dataProductCategoryFreeTextInput").val();
@@ -515,10 +517,6 @@
 		var linkToXml = prodTypeSelect + prodTypeInput + "-" + prodCatSelect + prodCatInput + "-" + prodTitle + "-" + prodVersion;
 			
 		window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/"+linkToXml+".xml");
-		//CO2_fluxundefined-Inversion_modelundefined-f-f
-		
-		//window.open("visualiseResult.php");
-//"".$_POST["dataProductTypeSelectPost"].$_POST["dataProductTypeInputPost"].'-'.$_POST["dataProductCategorySelectPost"].$_POST["dataProductCategoryInputPost"].'-'.$_POST["prodNameTitlePost"].'-'.$_POST["prodNameVersionPost"].".xml"	
 	});
 
             var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
