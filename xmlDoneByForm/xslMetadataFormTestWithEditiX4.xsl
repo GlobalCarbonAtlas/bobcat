@@ -1,40 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- New XSLT document created with EditiX XML Editor (http://www.editix.com) at Mon Jun 02 14:30:21 CEST 2014 -->
-<!-- Comme on a de NS, il faut les declarer ds le style sheet, racine, pour pouvoir ensuite appliquer XPath--><xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gmd19157="http://www.geoviqua.org/gmd19157" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:updated19115="http://www.geoviqua.org/19115_updates" xmlns:un="http://www.uncertml.org/2.0" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmi="http://www.isotc211.org/2005/gmi">
-	<!--<xsl:strip-space elements="*"/>--><!-- CF http://www.w3schools.com/xsl/el_preserve-space.asp et http://w3.erss.univ-tlse2.fr:8080/index.jsp?perso=fsajous&subURL=xml/xslt/instr_strip-space.html -->
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gmd19157="http://www.geoviqua.org/gmd19157" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:updated19115="http://www.geoviqua.org/19115_updates" xmlns:un="http://www.uncertml.org/2.0" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmi="http://www.isotc211.org/2005/gmi">
 	<xsl:preserve-space elements=""/>
 	<xsl:output method="html" indent='yes'/>
-<!-- CF http://xmlfr.org/documentations/faq/010703-0001 -->
 
-	
 <xsl:template match="/">
 	
 	<html>
 		<head>
 			<title><xsl:text>Metadata presentation</xsl:text></title>
 			<link type="text/css" rel="stylesheet" href="cssToXmlActualizedByGCAMetadatForm2.css"/>
-			<script type="text/javascript" src="../js/library/jquery-1.9.1.js"></script>
-			    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-			<script type="text/javascript">
-					<![CDATA[ //Permet de ne pas l'interpreter, si on ne le met pas, certains caracteres comme %, ... seront mal interpretes.
-							$(".hideButtonSVG").click(function() {
-								var partToHide= $(this).parent().parent().find(".subContainerInfo");// On remonte pour reacceder au fils apres pour avoir tjs disponible les boutons (ils doivent en effet etre extereieur au parent qui sera effacé !)
-								partToHide.hide();
-								$(this).parent().find(".showButtonSVG").show();
-								$(this).parent().find(".hideButtonSVG").hide();
-								$(this).parent(".containerButton").css("background-color", "rgba(0,230,0,0.40)");
-							});
-							$(".showButtonSVG").click(function() {
-								var partToShow= $(this).parent().parent().find(".subContainerInfo");
-								partToShow.show();
-								$(this).parent().find(".hideButtonSVG").show();
-								$(this).parent().find(".showButtonSVG").hide();
-								$(this).parent(".containerButton").css("background-color", "rgba(240, 150, 50, 0.6)");
-							});
-					]]>
-			</script>
+			<!--<script src="http://code.jquery.com/jquery-1.9.0.js"></script>-->
+			<script type="text/javascript" src="jQuery1.9.js"></script>
 </head>
+
 <body>
 			<div id="mainTitle">
 				<div id= "presentationMainTitle">GeoViQua, ISO 19115 and 19157 Metadata applied to Global Carbon Atlas data:</div>
@@ -54,7 +32,7 @@
 			 <div class= "subContainerInfo">
 			  <div class="title2" >About data:</div>
 			<xsl:call-template name="dataCreationDateInfo">
-				<xsl:with-param name="dataCreationDate" select="//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"></xsl:with-param><!-- Si je ne mets pas les // ne me le prend pas, comprend pas -->
+				<xsl:with-param name="dataCreationDate" select="//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"></xsl:with-param>
 			</xsl:call-template>
 			<xsl:call-template name="productNameInfo">
 				<xsl:with-param name="productName" select="//gmd:fileIdentifier/gco:CharacterString"></xsl:with-param>
@@ -227,8 +205,25 @@
 			</xsl:call-template>
 		 </div>
 		</div>
-		
-		
+		<script type="text/javascript">
+		// Il faut bien mettre a la fin, une fois ts les elements construits si non, elelemnt sur lequel evenement doit s'effectuer (ici boutons/fleches) n'existe pas dc rien : par contre pour firefox avant ou apres, ça marche bien ! ...
+		<![CDATA[ //Permet de ne pas l'interpreter, si on ne le met pas, certains caracteres comme %, ... seront mal interpretes.
+							$(".hideButtonSVG").click(function() {
+								var partToHide= $(this).parent().parent().find(".subContainerInfo");// On remonte pour reacceder au fils apres pour avoir tjs disponible les boutons (ils doivent en effet etre extereieur au parent qui sera effacé !)
+								partToHide.hide();
+								$(this).parent().find(".showButtonSVG").show();
+								$(this).parent().find(".hideButtonSVG").hide();
+								$(this).parent(".containerButton").css("background-color", "rgba(0,230,0,0.40)");
+							});
+							$(".showButtonSVG").click(function() {
+								var partToShow= $(this).parent().parent().find(".subContainerInfo");
+								partToShow.show();
+								$(this).parent().find(".hideButtonSVG").show();
+								$(this).parent().find(".showButtonSVG").hide();
+								$(this).parent(".containerButton").css("background-color", "rgba(240, 150, 50, 0.6)");
+							});
+					]]>
+		</script>
 </body>
 </html>
 	</xsl:template>
@@ -353,7 +348,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class= "title3">Vertical level (other = personal clasification from data provider):
+		<div class= "title3">Vertical level:
 			<div  class= "respFromXml inlineDisplay">
 			<xsl:value-of select="$verticalLevel"/>
 			</div>
@@ -546,7 +541,7 @@
 		   <xsl:value-of select="$URLAccessData"/>
 		  </div>
 		</div>
-		<div class= "title3">Data policy classification (other = personal clasification from data provider):
+		<div class= "title3">Data policy classification:
 		  <div  class= "respFromXml inlineDisplay">
 		   <xsl:value-of select="$dataPolicyClassification"/>
 		  </div>

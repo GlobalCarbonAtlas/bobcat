@@ -141,23 +141,9 @@ td {
 	/*background-color: rgba(0,230,0,0.40);*/
 	background-color: rgba(240, 150, 50, 0.6);
 }
-.hideButton {
-	background-color: #FF0000;
-    display: block;
-    left: 7%;
-    position: relative;
-    top: 35%;
-}
-.showButtonSVG {
+
+.showButtonSVG,  .hideButtonSVG {
 	height: 47px;
-	 width: 29px;
-	 display: block;
-     position: absolute;
-     left: 10%;
-     top: 5%;
-}
-.hideButtonSVG {
-	 height: 47px;
 	 width: 29px;
 	 display: block;
      position: absolute;

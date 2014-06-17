@@ -309,7 +309,7 @@ $xmlStringPart4= '</gvq:GVQ_DataIdentification>
 	 {
 	  $indexRef= $indexRef."1";
 	$xmlStringPart3ReferencesInfoS= '<gvq:referenceDoc>
-				<gvq:GVQ_Publication id="idCitation">
+				<gvq:GVQ_Publication id="idCitation'.$indexRef.'"><!-- J ai rajoute ici un idex parce que si pls, id se repete et non accepte par xml-->
 					<gmd:title>
 						<gco:CharacterString>'.$_POST["citationTitle".$indexRef."Post"].'</gco:CharacterString>
 					</gmd:title>
