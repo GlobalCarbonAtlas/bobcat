@@ -309,7 +309,7 @@ var Bobcat = Class.create( {
             items.push( { text: "Hide legend", icon: this.imgPath + "/legend_hide.png", alias:"hideLegend", action: jQuery.proxy( this.onClickHideLegend, this )} );
         items.push( { text: "Export to kmz", icon: this.imgPath + "/GoogleEarth-icon.png", alias:"googleearth", action: jQuery.proxy( this.onClickExportToKMZ, this )} );
         items.push( {text: "Get the reference", icon: this.imgPath + "/information.png", alias: "linkmetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfo, this )} );
-        items.push( {text: "Get and complete Metadata", icon: this.imgPath + "/GeoLabelLogo22px.jpg", alias: "getAndCompleteMetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfoGVQ, this )} );
+        items.push( {text: "Get metadata information", icon: this.imgPath + "/GeoLabelLogo22px.jpg", alias: "getAndCompleteMetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfoGVQ, this )} );
 
 	    return { width: 200, items: items};
     },
@@ -360,7 +360,7 @@ var Bobcat = Class.create( {
         iconeMenuDiv.append( iconeMetadata );
   
 	 // Pascal part:
-	var iconeMetadataPascal = $( '<div class="BCiconeForMenu"><div class="BCiconeForMenuImage"><img src="'+ this.imgPath + '/GeoLabelLogo22px.jpg"></div><div class="BCIconeForMenuTitle">&nbsp;Get and complete Metadata</div></div>' );
+	var iconeMetadataPascal = $( '<div class="BCiconeForMenu"><div class="BCiconeForMenuImage"><img src="'+ this.imgPath + '/GeoLabelLogo22px.jpg"></div><div class="BCIconeForMenuTitle">&nbsp;Get metadata information</div></div>' );
         iconeMetadataPascal.on( "click", jQuery.proxy( function()
         {
             this.onClickDisplayMetadataInfoGVQ();
@@ -495,6 +495,7 @@ var Bobcat = Class.create( {
    onClickDisplayMetadataInfoGVQ: function(){
                 $.ajax({
                 url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/Bobcat_v22/metadataAccessTest.html",
+                //url: "http://www.tennis-de-table.com/",// NO
                 success: jQuery.proxy(function(data) {
 $( "<div title='Metadata of the file: "+this.mapTitle+"'>"+data+"</div>" ).dialog({ position: { my: "center", at: "center", of: "#" + this.id}, width: 500, height: 300, maxHeight: 300, maxWidth: 500 });
                         }, this),

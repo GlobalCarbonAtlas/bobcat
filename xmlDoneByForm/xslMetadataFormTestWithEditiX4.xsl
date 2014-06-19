@@ -5,7 +5,8 @@
 
 <xsl:template match="/">
 	
-	<html>
+		<html xmlns= "http://www.w3.org/1999/xhtml">
+		<!--<html>-->
 		<head>
 			<title><xsl:text>Metadata presentation</xsl:text></title>
 			<link type="text/css" rel="stylesheet" href="cssToXmlActualizedByGCAMetadatForm2.css"/>
@@ -26,8 +27,8 @@
 	<div class="containerInfoClass">
 			 <div class="title1">Basic information: </div>
 			 <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.svg" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.svg" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information" width="15px"/>
+				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 			  <div class="title2" >About data:</div>
@@ -91,8 +92,8 @@
 		<div class="containerInfoClass">
 			 <div class="title1" >Temporal and geographical information: </div>
 				<div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.svg" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.svg" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 			  <div class="title2" >Temporal information:</div>
@@ -118,8 +119,8 @@
 		<div class="containerInfoClass">
 			 <div class="title1" >Product description: </div>
 			<div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.svg" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.svg" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 			  <div class= "title3 retourChariot">How was build the data (lineage information):</div><!--J'ai mis le titre ici car particulier ici : le champ lineageInformationPart peut avoir des retours à la ligne dc il faut en tenir compte (cf le template appelé).--> 
@@ -141,8 +142,8 @@
 		<div class="containerInfoClass">
 		       <div class="title1" >Keywords and reference: </div>
 		      <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.svg" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.svg" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 		          <div class="title2" >Keywords:</div>
@@ -169,8 +170,8 @@
 		<div class="containerInfoClass">
 			 <div class="title1" >Quality data information: </div>
 			 <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.svg" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.svg" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
 			</div>
 		       <div class= "subContainerInfo">
 			  <div class= "title3 retourChariot">Quality description (availability of product-errors, product evaluation, ...):
@@ -192,8 +193,8 @@
 		<div class="containerInfoClass">
 		  <div class="title1" >Data access and data use policy: </div>
 			 <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.svg" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.svg" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 			<xsl:call-template name="DataPolicyAccessInfo">

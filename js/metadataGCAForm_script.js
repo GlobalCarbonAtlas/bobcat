@@ -72,7 +72,7 @@ function createContributorDiv( containerId, index )
     $( "#dataProducerInfoMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
     // Remove button
-    $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton">' );
+    $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton">' );
     $( "#removeCreatorInfoButton" + index ).click( function()
     {
         removeContributorDiv( "dataContributorContainer", index );
@@ -265,7 +265,7 @@ function createReferenceFieldset( containerIdRef, index )
     $( "#citationDOIInput" + index ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 	
     // Remove button
-    $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.svg" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton">' );
+    $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton">' );
     $( "#removeReferenceInfoButton" + index ).click( function()
     {
         removeReferenceDiv( "citationFieldset", index );

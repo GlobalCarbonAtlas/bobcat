@@ -122,7 +122,7 @@
             <div id="contributorsContainer"></div>
             <div id="contributorsContainerButton" class="row col-md-24 col-sm-24">
                 <div class="cursorPointer addQuitAllContainerText" title="Click to add/delete creator information (no more than 5)">
-                    Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.svg" class="img-responsive img-rounded addQuitAllContainer">
+                    Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer">
                 </div>
             </div>
         </fieldset>
@@ -352,7 +352,7 @@
 
         <div id="referencesContainerButton" class="row col-md-24 col-sm-24">
             <div class="cursorPointer addQuitAllContainerText" title="Click to add reference information (no more than 5)">Add reference information (5 maximum) :
-                <img id="addReferenceInfoButton" src="img/addChamp.svg" class="img-responsive img-rounded addQuitAllContainer">
+                <img id="addReferenceInfoButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer">
             </div>
         </div>
     </fieldset>
