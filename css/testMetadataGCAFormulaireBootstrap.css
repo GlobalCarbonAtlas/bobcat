@@ -314,7 +314,10 @@ textarea {
     display: inline;
     margin: -1px 0 0 3px;
 }
-
+.addQuitAllContainer {
+	padding-left: 1px;
+	padding-right: 1px;
+}
 .divFloatLeft {
     float: left;
     margin-right: 22px;

@@ -243,7 +243,7 @@
 	</xsl:template>
 	<xsl:template name="productNameInfo">
 		<xsl:param name="productName"></xsl:param>
-		<div class= "title3">Name of the data file (Type-Category-Title-Version): 
+		<div class= "title3">Name of the data file (Type_Category_Title_Version_ISO date): 
 		<div  class= "respFromXml inlineDisplay">
 		<xsl:value-of select="$productName"/>
 		</div>

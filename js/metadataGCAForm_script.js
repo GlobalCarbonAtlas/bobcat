@@ -69,10 +69,11 @@ function createContributorDiv( containerId, index )
     $( "#" + containerId ).append( containerDiv );
 
     // Mail input
+    $( "#dataProducerInfoNameInput" + index ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
     $( "#dataProducerInfoMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
     // Remove button
-    $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton">' );
+    $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton cursorPointer">' );
     $( "#removeCreatorInfoButton" + index ).click( function()
     {
         removeContributorDiv( "dataContributorContainer", index );
@@ -257,6 +258,9 @@ function createReferenceFieldset( containerIdRef, index )
     // Date
     $( "#citationDateBookInput" + index ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
 
+    // Name input
+    $( "#citationAuthorNameInput" + index ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
+	
     // Mail input
     $( "#citationAuthorMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#citationOnlineRessourceInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
@@ -265,7 +269,7 @@ function createReferenceFieldset( containerIdRef, index )
     $( "#citationDOIInput" + index ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 	
     // Remove button
-    $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton">' );
+    $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton cursorPointer">' );
     $( "#removeReferenceInfoButton" + index ).click( function()
     {
         removeReferenceDiv( "citationFieldset", index );
@@ -383,6 +387,7 @@ function manageFormDiv()
     $( "#temporalCoverageEnd" ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
 
     // Utilisation jqxinput pour afficher info qui s'efface quand on commence à rentrer texte ds  input (placeHolder)
+    $( "#metadatCreatorInfoNameInput" ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
     $( "#metadatCreatorInfoMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#spatialResolutionValueInput" ).jqxInput( {height: "20px", placeHolder: "3.5"} );
     $( "#spatialCoverageNorthInput" ).jqxInput( {height: "20px", placeHolder: "90"} );
@@ -390,6 +395,7 @@ function manageFormDiv()
     $( "#spatialCoverageWestInput" ).jqxInput( {height: "20px", placeHolder: "-180"} );
     $( "#spatialCoverageEastInput" ).jqxInput( {height: "20px", placeHolder: "180"} );
     $( "#addDocProductDetailsStep0Input" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
+    $( "#principalInvestigatorContactNameInput" ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
     $( "#principalInvestigatorContactMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#keywordsInfoInput" ).jqxInput( {height: "20px", placeHolder: "keyword 1, keyword 2, ..."} );
     $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, precise 'none'"} );
