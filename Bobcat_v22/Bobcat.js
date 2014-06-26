@@ -525,14 +525,14 @@ var Bobcat = Class.create( {
     {
         if( $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled" ) )
             return;
-        this.onClickDisplayPreviousOrNextTime( true );
+        this.onClickDisplayPreviousOrNextTime( false );
     },
 
     onClickDisplayPrevTimeStep: function( argument )
     {
         if( $( "#BC" + this.id + "RewindIcone" ).attr( "disabled" ) )
             return;
-        this.onClickDisplayPreviousOrNextTime( false );
+        this.onClickDisplayPreviousOrNextTime( true );
     },
 
     updateRewindAndForwardIcones: function( index )
@@ -544,13 +544,13 @@ var Bobcat = Class.create( {
         }
         else if( index + 1 >= this.timeArray.length )
         {
-            $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled", true );
-            $( "#BC" + this.id + "RewindIcone" ).attr( "disabled", false );
+            $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled", false );
+            $( "#BC" + this.id + "RewindIcone" ).attr( "disabled", true );
         }
         else if( index == 0 )
         {
-            $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled", false );
-            $( "#BC" + this.id + "RewindIcone" ).attr( "disabled", true );
+            $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled", true );
+            $( "#BC" + this.id + "RewindIcone" ).attr( "disabled", false );
         }
         else
         {
