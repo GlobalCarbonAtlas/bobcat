@@ -113,12 +113,16 @@ input {
 .dateInput {
     margin-bottom: 3px !important; /*width: 20px !important;*/
 }
+.inLine {
+	display: inline;
+}
 
 textarea {
     font-size: 13px;
     border: 1px dotted rgb(100, 100, 100) !important;
     border-radius: 3px;
     margin-bottom: 3px !important;
+    color: grey;
 }
 #textAreaProductDetails {
 	display:  block;
@@ -165,7 +169,45 @@ textarea {
 #spatialCoverageEastContainer {
     margin-left: -8px;
 }
-
+#map_element {
+	height: 256px;
+	width: 512px;
+	border: 1px solid rgb(20,20,130);
+	display: block;
+	position: relative;
+	top: 5px;
+	left: 5px;
+	background-color: rgb(180,220,255);
+}
+#spatialCoverageDefLim {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+#applySpatialCovButton {
+	width: 10px;
+	height: 10px;
+	background-color: rgb(150,150,150);
+	border: 1px solid rgb(50,50,50);
+    	border-radius: 5px;
+    	color: rgb(255,255,255);
+    	padding-right: 2px;
+    	padding-left: 2px; 
+    	font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
+}
+#removeSpatialCovButton {
+	width: 10px;
+	height: 10px;
+	background-color: rgb(150,150,150);
+	border: 1px solid rgb(50,50,50);
+    	border-radius: 5px;
+    	color: rgb(255,255,255);
+    	padding-right: 2px;
+    	padding-left: 2px; 
+    	font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
+}
+#applySpatialCovButton:hover, #removeSpatialCovButton:hover {
+	border: 2px solid rgb(250,80,0);
+}
 .label2 {
     font-size: 14px;
     font-style: italic;
@@ -286,6 +328,9 @@ textarea {
     border: solid 2px rgb(250, 80, 0) !important;
 }
 
+.form-control-xxs {
+    width: 10% !important;
+}
 .form-control-xs {
     width: 15% !important;
 }
@@ -321,4 +366,7 @@ textarea {
 .divFloatLeft {
     float: left;
     margin-right: 22px;
+}
+input.form-control {
+	color: grey !important;
 }

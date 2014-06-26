@@ -141,7 +141,6 @@ td {
 	/*background-color: rgba(0,230,0,0.40);*/
 	background-color: rgba(240, 150, 50, 0.6);
 }
-
 .showButtonSVG,  .hideButtonSVG {
 	height: 47px;
 	 width: 29px;
@@ -149,4 +148,12 @@ td {
      position: absolute;
      left: 10%;
      top: 5%;
+}
+#map_element {
+     height: 256px;
+     width: 512px;
+     border: 1px solid rgb(20,20,130);
+     display: block;
+     position: relative;
+    background-color: rgb(180,220,255);
 }

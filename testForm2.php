@@ -45,7 +45,7 @@ http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd" id="dataset_MD
 <gmd:citation>
 <gmd:CI_Citation>
 <gmd:title>
-<gco:CharacterString>$productTitle (donc info répétée ici puisque sert aussi à construire Product name)</gco:CharacterString>
+<gco:CharacterString>'.$_POST["dataProductTypeSelectPost"].$_POST["dataProductTypeInputPost"].'_'.$_POST["dataProductCategorySelectPost"].$_POST["dataProductCategoryInputPost"].'_'.$_POST["prodNameTitlePost"].'_'.$_POST["prodNameVersionPost"].'_'.$_POST["dateFillFormIsoPost"].'</gco:CharacterString><!-- Meme info que file name au tt debut-->
 </gmd:title>
 <gmd:date>
 <gmd:CI_Date>
@@ -57,6 +57,16 @@ http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd" id="dataset_MD
 </gmd:dateType>
 </gmd:CI_Date>
 </gmd:date>
+<gmd:identifier>
+              <updated19115:MD_Identifier>
+                        <gmd:code>
+                            <gco:CharacterString>'.$_POST["dataProductTypeSelectPost"].$_POST["dataProductTypeInputPost"].'_'.$_POST["dataProductCategorySelectPost"].$_POST["dataProductCategoryInputPost"].'_'.$_POST["prodNameTitlePost"].'_'.$_POST["prodNameVersionPost"].'_'.$_POST["dateFillFormIsoPost"].'.xml</gco:CharacterString><!-- Pour appeler le bon fichier metadat-->
+                        </gmd:code>
+                        <updated19115:codeSpace>
+                            <gco:CharacterString>http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/</gco:CharacterString><!-- url to access data, xml metadat files -->
+                        </updated19115:codeSpace>
+                    </updated19115:MD_Identifier>
+</gmd:identifier>
 <gmd:presentationForm>
 <gmd:CI_PresentationFormCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_PresentationFormCode" codeListValue="mapDigital">mapDigital</gmd:CI_PresentationFormCode>
 </gmd:presentationForm>

@@ -7,11 +7,12 @@
 	
 		<html xmlns= "http://www.w3.org/1999/xhtml">
 		<!--<html>-->
-		<head>
+<head>
 			<title><xsl:text>Metadata presentation</xsl:text></title>
 			<link type="text/css" rel="stylesheet" href="cssToXmlActualizedByGCAMetadatForm2.css"/>
 			<!--<script src="http://code.jquery.com/jquery-1.9.0.js"></script>-->
 			<script type="text/javascript" src="jQuery1.9.js"></script>
+			<script type="text/javascript" src="../js/OpenLayers-2.12/OpenLayers.js"></script>
 </head>
 
 <body>
@@ -208,6 +209,9 @@
 		</div>
 		<script type="text/javascript">
 		// Il faut bien mettre a la fin, une fois ts les elements construits si non, elelemnt sur lequel evenement doit s'effectuer (ici boutons/fleches) n'existe pas dc rien : par contre pour firefox avant ou apres, ça marche bien ! ...
+
+  $( document ).ready( function()
+        {       
 		<![CDATA[ //Permet de ne pas l'interpreter, si on ne le met pas, certains caracteres comme %, ... seront mal interpretes.
 							$(".hideButtonSVG").click(function() {
 								var partToHide= $(this).parent().parent().find(".subContainerInfo");// On remonte pour reacceder au fils apres pour avoir tjs disponible les boutons (ils doivent en effet etre extereieur au parent qui sera effacé !)
@@ -223,7 +227,79 @@
 								$(this).parent().find(".showButtonSVG").hide();
 								$(this).parent(".containerButton").css("background-color", "rgba(240, 150, 50, 0.6)");
 							});
+
+	//------- Integration map /spatial coverage information : ----------//
+
+	var map = new OpenLayers.Map('map_element', {
+	  });
+
+	var landMaskLayer = new OpenLayers.Layer.WMS( 
+		 "Land mask",
+		 "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+		  	{
+		  	VERSION: '1.1.1',
+		  	LAYERS: "GCA:GCA_landMask",
+		  	transparent: true,
+		  	FORMAT: 'image/png',
+		  	 }, {
+		  	 	isBaseLayer: true,
+		  	 	opacity: 1,
+		  	 	}
+		  	 );
+	var graticulesLayer = new OpenLayers.Layer.WMS(
+		"Graticules",
+		"http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+			{
+			VERSION: '1.1.1',
+			LAYERS: "GCA:GCA_graticules01_05_10",
+			transparent: true,
+			FORMAT: 'image/png',
+			 }, {
+			 isBaseLayer: false,
+			 opacity: 1,
+			 }
+		);
+	var frontiersLayer = new OpenLayers.Layer.WMS(
+		"Frontiers",
+		"http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+			{
+			VERSION: '1.1.1',
+			LAYERS: "GCA:GCA_frontiersCountryAndRegions",
+			transparent: true,
+			FORMAT: 'image/png',
+			 }, {
+			 isBaseLayer: false,
+			 opacity: 1,
+			 }
+		);
+
+    	var vector_layer = new OpenLayers.Layer.Vector('Basic Vector Layer');
+
+	 map.addLayers([landMaskLayer, frontiersLayer, graticulesLayer]);
+	 map.setCenter(new OpenLayers.LonLat(0,0));
+	  map.zoomTo(1);
 					]]>
+                                  // Il faut sortir CDATA pour pouvoir utiliser xsl syntaxe et donc recuperer les variables rentrees ds le xml.
+                                          limNorth= "<xsl:value-of select= "//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:northBoundLatitude/gco:Decimal"/>",
+                                                  limSouth= "<xsl:value-of select= "//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:southBoundLatitude/gco:Decimal"/>",
+                                                          limWest= "<xsl:value-of select= "//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:westBoundLongitude/gco:Decimal"/>",
+                                                                  limEast= "<xsl:value-of select= "//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:eastBoundLongitude/gco:Decimal"/>",
+                                                                         
+        <![CDATA[
+                point_1= new OpenLayers.Geometry.Point( limWest, limNorth); //Comprend pas : si j'appelle avec var geom_point_1= ..., syntax error ..?????????
+                        point_2= new OpenLayers.Geometry.Point( limEast, limNorth );
+                                point_3= new OpenLayers.Geometry.Point(limEast, limSouth);
+                                        point_4= new OpenLayers.Geometry.Point( limWest, limSouth);
+                                               
+        map.addLayer(vector_layer);
+           
+     var geom_linear_ring = new OpenLayers.Geometry.LinearRing([ point_1, point_2, point_3, point_4]);
+              var feature_linear_ring = new OpenLayers.Feature.Vector(geom_linear_ring);
+                       map.layers[3].addFeatures(feature_linear_ring);// On ajoute a vector layer definie avant.
+                                
+    ]]>
+
+  });
 		</script>
 </body>
 </html>
@@ -348,6 +424,8 @@
 					<td><xsl:value-of select="$spatialCoverageEast"/></td>
 				</tr>
 			</table>
+			<div class= "title3">Spatial coverage representation (orange):</div>
+			  <div id='map_element'/>
 		</div>
 		<div class= "title3">Vertical level:
 			<div  class= "respFromXml inlineDisplay">

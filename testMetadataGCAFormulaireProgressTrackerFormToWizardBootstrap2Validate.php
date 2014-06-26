@@ -26,6 +26,7 @@
 
     <script type="text/javascript" src="js/metadataGCAFormValidationRules_script.js"></script>
     <script type="text/javascript" src="js/metadataGCAForm_script.js"></script>
+    <script type='text/javascript' src='js/OpenLayers-2.12/OpenLayers.js'></script>
 
 </head>
 
@@ -242,35 +243,27 @@
 
                 <!--*********************************** SPATIAL COVERAGE *********************************** -->
                 <div class="row col-md-24 col-sm-24">
-                    <div class="label1" id="spatialCoverageText" title="Geographical area where data applied (only degrees). Latitude at the south/Ecuador and longitude at the west/Greenwich are negative">Spatial coverage (*):</div>
-
-                    <div class="col-md-push-10 col-md-5 col-sm-push-10 col-sm-5">
-                        <div class="label2 form-control-l cursorPointer" id="spatialCoverageNorthText" title="North bound latitude">North:</div>
-                        <input id="spatialCoverageNorthInput" class="form-control form-control-m" name="northBoundLatitude" type="text">
-                    </div>
-
-                    <div class="row col-md-24 col-sm-24">
-                        <div id="spatialCoverageWestContainer" class="col-md-push-5 col-md-5 col-sm-push-5 col-sm-5">
-                            <div class="label2 form-control-xxl cursorPointer" id="spatialCoverageWestText" title="West bound longitude">West:</div>
-                            <input id="spatialCoverageWestInput" class="form-control form-control-m" name="westBoundLongitude" type="text">
-                        </div>
-                        <div class="col-md-push-3 col-md-8 col-sm-push-3 col-sm-8">
-                            <div id="spatialCoverageImage">
-                                <img src="img/world.jpeg" class=" img-responsive img-rounded imageCentreSpatialCov form-control-xl">
-                            </div>
-                        </div>
-                        <div id="spatialCoverageEastContainer" class="col-md-push-3 col-md-5 col-sm-push-3 col-sm-5">
-                            <div class="label2 form-control-xxl cursorPointer" id="spatialCoverageEastText" title="East bound longitude">East:</div>
-                            <input id="spatialCoverageEastInput" class="form-control form-control-m" name="eastBoundLongitude" type="text">
-                        </div>
-
-                        <div class="row col-md-24 col-sm-24">
-                            <div class="col-md-push-10 col-md-5 col-sm-push-10 col-sm-5">
-                                <div class="label2 form-control-l cursorPointer" id="spatialCoverageSouthText" title="South bound latitude">South:</div>
-                                <input id="spatialCoverageSouthInput" class="form-control form-control-m" name="southBoundLatitude" type="text">
-                            </div>
-                        </div>
-                    </div>
+                    <div class="label1" id="spatialCoverageText" title= "Geographical area where data applied (only degrees).Tip: longitude at the east of Greenwich and latitude at the south of the Ecuador are negative">Spatial coverage (*):</div>
+                     <div class="label2" id="spatialCoverageIndication1Text"></div>
+		     <div id= "spatialCoverageDefLim" class="col-md-24 col-sm-24">
+					<div class="label2 cursorPointer inLine" id="spatialCoverageNorthText" title="North bound latitude">North:</div>
+                        		  <input id="spatialCoverageNorthInput" class="form-control form-control-xxs" name="northBoundLatitude" type="text">
+                            		<div class="label2 cursorPointer inLine" id="spatialCoverageWestText" title="West bound longitude">West:</div>
+                            		  <input id="spatialCoverageWestInput" class="form-control form-control-xxs" name="westBoundLongitude" type="text">
+                            		<div class="label2 cursorPointer inLine" id="spatialCoverageEastText" title="East bound longitude">East:</div>
+                            		  <input id="spatialCoverageEastInput" class="form-control form-control-xxs" name="eastBoundLongitude" type="text">
+                          		<div class="label2 cursorPointer inLine" id="spatialCoverageSouthText" title="South bound latitude">South:</div>
+                          		  <input id="spatialCoverageSouthInput" class="form-control form-control-xxs" name="southBoundLatitude" type="text">
+		     </div>
+		     <div class="col-md-24 col-sm-24">
+			    <div id= "applySpatialCovButton" class= "cursorPointer inLine">Visualise spatial coverage on the map</div>
+			    <div id= "removeSpatialCovButton"  class= "cursorPointer inLine">Remove spatial coverage on the map</div>
+		     </div>
+			
+                     <div id= "containerMapInfoSpatCov" class="col-md-24 col-sm-24">
+				<div id='map_element'/>
+                     </div>
+                </div>
 
                     <!--*********************************** VERTICAL LEVEL *********************************** -->
                     <div class="row col-md-24 col-sm-24">
@@ -445,6 +438,79 @@
     // See http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/
     $( document ).ready( function()
     {
+   // *************************** Construct a map to visualise spatial coverage :  ***************************************** //
+
+	// Build map://
+	  var map = new OpenLayers.Map('map_element', {
+	  });
+     	  var landMaskLayer = new OpenLayers.Layer.WMS(
+          "Land mask",
+          "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+        	{
+           	VERSION: '1.1.1',
+           	LAYERS: "GCA:GCA_landMask",
+           	transparent: true,
+           	FORMAT: 'image/png',
+       		}, {
+           		isBaseLayer: true,
+           		opacity: 1,
+                   }
+	   );
+     	var frontiersLayer = new OpenLayers.Layer.WMS(
+       "Frontiers",
+       "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+   	{
+           VERSION: '1.1.1',
+           LAYERS: "GCA:GCA_frontiersCountryAndRegions",
+   	   transparent: true,
+           FORMAT: 'image/png',
+       }, {
+           isBaseLayer: false,
+           opacity: 1, 
+       } );
+     var graticulesLayer = new OpenLayers.Layer.WMS(
+       "Graticules",
+       "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+        {
+           VERSION: '1.1.1',
+           LAYERS: "GCA:GCA_graticules01_05_10",
+           transparent: true,
+           FORMAT: 'image/png',
+       }, {
+           isBaseLayer: false,
+           opacity: 1,
+       } );
+
+	  map.addLayers([landMaskLayer, frontiersLayer, graticulesLayer]);
+
+	// Set initial map view:
+	map.setCenter(new OpenLayers.LonLat(0,0));
+	map.zoomTo(1);
+
+	// Build spatial coverage:
+	$("#applySpatialCovButton").click(function() {
+	  var vector_layer = new OpenLayers.Layer.Vector('Basic Vector Layer');
+	  map.addLayer(vector_layer);
+		var limNorth = $('#spatialCoverageNorthInput').val();
+		var limSouth = $('#spatialCoverageSouthInput').val();
+		var limWest = $('#spatialCoverageWestInput').val();
+		var limEast = $('#spatialCoverageEastInput').val();
+	  // Note : les points commencent en haut a gauche et ensuite ds sens montre.
+	var geom_point_1= new OpenLayers.Geometry.Point(limWest, limNorth);
+	var geom_point_2= new OpenLayers.Geometry.Point(limEast, limNorth);
+	var geom_point_3= new OpenLayers.Geometry.Point(limEast, limSouth);
+	var geom_point_4= new OpenLayers.Geometry.Point(limWest, limSouth);
+	  // Si je suis indications livre OL basic p238 : 
+	 var geom_linear_ring = new OpenLayers.Geometry.LinearRing([ geom_point_1, geom_point_2, geom_point_3, geom_point_4]);
+	 var feature_linear_ring = new OpenLayers.Feature.Vector(geom_linear_ring);
+	 map.layers[3].addFeatures(feature_linear_ring);// On ajoute a vector layer definie avant.
+	});
+
+	// Remove spatial cov on map:
+	$("#removeSpatialCovButton").click(function() {
+	  map.layers[3].destroy();
+	});
+   // ******************************************************************** //
 
         // Create menu band
         $( "#metadataForm" ).formToWizard();

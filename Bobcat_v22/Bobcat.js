@@ -164,7 +164,6 @@ var Bobcat = Class.create( {
             theme: null,
             controls: 
             [
-               //new OpenLayers.Control.PanZoomBar( {panIcons: false} ),		// Simple Control.Zoom is enough, Control.PanZoombar too hight 
                new OpenLayers.Control.Zoom( {title: "Zoom in/out"} ),
                new OpenLayers.Control.Navigation(), 
                new OpenLayers.Control.LayerSwitcher( {title: "Show/Hide overlays"} )
@@ -172,8 +171,8 @@ var Bobcat = Class.create( {
             projection: new OpenLayers.Projection( this.projection ),
             maxExtent: new OpenLayers.Bounds( projectionBounds ),
 	    center: centerMap,
-            numZoomLevels: 8,								// according to resolutions array
-            allOverlays: false								// If true see WMS as a layer 
+            numZoomLevels: 8,								
+            allOverlays: false 
         } );
         
 
@@ -309,7 +308,7 @@ var Bobcat = Class.create( {
             items.push( { text: "Hide legend", icon: this.imgPath + "/legend_hide.png", alias:"hideLegend", action: jQuery.proxy( this.onClickHideLegend, this )} );
         items.push( { text: "Export to kmz", icon: this.imgPath + "/GoogleEarth-icon.png", alias:"googleearth", action: jQuery.proxy( this.onClickExportToKMZ, this )} );
         items.push( {text: "Get the reference", icon: this.imgPath + "/information.png", alias: "linkmetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfo, this )} );
-        items.push( {text: "Get metadata information", icon: this.imgPath + "/GeoLabelLogo22px.jpg", alias: "getAndCompleteMetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfoGVQ, this )} );
+        items.push( {text: "Get metadata information/add feedback", icon: this.imgPath + "/GeoLabelLogo22px.jpg", alias: "getAndCompleteMetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfoGVQ, this )} );
 
 	    return { width: 200, items: items};
     },
@@ -360,7 +359,7 @@ var Bobcat = Class.create( {
         iconeMenuDiv.append( iconeMetadata );
   
 	 // Pascal part:
-	var iconeMetadataPascal = $( '<div class="BCiconeForMenu"><div class="BCiconeForMenuImage"><img src="'+ this.imgPath + '/GeoLabelLogo22px.jpg"></div><div class="BCIconeForMenuTitle">&nbsp;Get metadata information</div></div>' );
+	var iconeMetadataPascal = $( '<div class="BCiconeForMenu"><div class="BCiconeForMenuImage"><img src="'+ this.imgPath + '/GeoLabelLogo22px.jpg"></div><div class="BCIconeForMenuTitle">&nbsp;Get metadata information/add feedback</div></div>' );
         iconeMetadataPascal.on( "click", jQuery.proxy( function()
         {
             this.onClickDisplayMetadataInfoGVQ();

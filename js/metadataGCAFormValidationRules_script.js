@@ -215,6 +215,23 @@ var validatorRules = [
         return spatialCoverageNorthRentre;
     }
     },
+    {input: "#spatialCoverageNorthInput", message: "North latitude < south latitude!", action: "keyup, blur",  rule: function()
+	{
+		var spatialCoverageNorthRentre = parseInt(document.forms["metadataForm"].spatialCoverageNorthInput.value);// Si pas parseInt dit que -45>-12.
+		var spatialCoverageSouthRentre = parseInt(document.forms["metadataForm"].spatialCoverageSouthInput.value);
+		if( spatialCoverageNorthRentre < spatialCoverageSouthRentre )
+        	{
+            		spatialCoverageNorthRentre = 0;
+        	}   
+		else
+        	{
+            		spatialCoverageNorthRentre = 1;
+        	}
+        return spatialCoverageNorthRentre;
+	}
+    },
+
+
     {input: "#spatialCoverageSouthInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialCoverageSouthInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
@@ -315,6 +332,17 @@ var validatorRules = [
         }
         return spatialCoverageEastRentre;
     }
+    },
+    {input: "#spatialCoverageEastInput", message: "East longitude < west longitude!", action: "keyup, blur",  rule: function()
+	{
+		var spatialCoverageEastRentre = parseInt(document.forms["metadataForm"].spatialCoverageEastInput.value);
+		var spatialCoverageWestRentre = parseInt(document.forms["metadataForm"].spatialCoverageWestInput.value);
+		if( spatialCoverageEastRentre < spatialCoverageWestRentre )
+            		spatialCoverageEastRentre = 0;
+		else
+            		spatialCoverageEastRentre = 1;
+        return spatialCoverageEastRentre;
+	}
     },
     {input: "#spatialCoverageEastInput", message: "East longitude > 180 degrees!", action: "keyup, blur",  rule: function()
     {
