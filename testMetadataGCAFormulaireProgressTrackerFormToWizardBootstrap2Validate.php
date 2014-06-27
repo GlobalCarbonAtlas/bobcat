@@ -122,7 +122,7 @@
             <!--*********************************** DATA CONTRIBUTOR *********************************** -->
             <div id="contributorsContainer"></div>
             <div id="contributorsContainerButton" class="row col-md-24 col-sm-24">
-                <div class="cursorPointer addQuitAllContainerText" title="Click to add/delete creator information (no more than 5)">
+                <div class="cursorPointer addQuitAllContainerText" title="Click to add creator information (no more than 5)">
                     Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer">
                 </div>
             </div>
@@ -243,8 +243,9 @@
 
                 <!--*********************************** SPATIAL COVERAGE *********************************** -->
                 <div class="row col-md-24 col-sm-24">
-                    <div class="label1" id="spatialCoverageText" title= "Geographical area where data applied (only degrees).Tip: longitude at the east of Greenwich and latitude at the south of the Ecuador are negative">Spatial coverage (*):</div>
-                     <div class="label2" id="spatialCoverageIndication1Text"></div>
+                  <div class="label1" id="spatialCoverageText" title= "Geographical area where data applied (only degrees).Tip: longitude at the east of Greenwich and latitude at the south of the Ecuador are negative">Spatial coverage (*):</div>
+                    <div id="applyGlobalScaleText" class="label2b">Apply global coverage (ie: data covered the entire world):<div id="applyGlobalScaleButton" class= "cursorPointer inLine">Apply</div></div>
+                    <div id="applyOtherSpatialCoverageText" class="label2b">Apply other spatial coverage:</div>
 		     <div id= "spatialCoverageDefLim" class="col-md-24 col-sm-24">
 					<div class="label2 cursorPointer inLine" id="spatialCoverageNorthText" title="North bound latitude">North:</div>
                         		  <input id="spatialCoverageNorthInput" class="form-control form-control-xxs" name="northBoundLatitude" type="text">
@@ -289,32 +290,22 @@
         </fieldset>
     </fieldset>
 </div>
-
-
 <!--**************************************************************************************** -->
 <!--******************************** PRODUCT DESCRIPTION *********************************** -->
 <!--**************************************************************************************** -->
 <div id="productDetailsrow">
     <fieldset class="fieldset1" id="productDetailsfieldset1">
         <legend class="legend1">Product description (methodology)</legend>
-
         <div class="form-group">
             <div id="productDetailsdescriptionRow" class="row">
-                <div class="label1ContactLegend" id="productDetailsDescriptionText">Describe here how was built your product (*):</div>
-                <textarea id="textAreaProductDetails" name="productDetailsStep0" rows="60" cols="60"></textarea>
-            </div>
-            <div id="productDetailsdescriptionRow" class="row">
-                <div class="col-md-24 col-sm-24">
-                    <div class="label2 form-control-l" id="addDocProductDetailsStep0Text"> Document URL to describe the product:</div>
-                    <input id="addDocProductDetailsStep0Input" class="form-control form-control-m" name="addDocProductDetailsStep0" type="text">
+              <div class="label1ContactLegend" id="productDetailsDescriptionText" title= "Eg: 'Step 1: Compilation of satelite data from ...' 'Step 2: We applied to these data a model based on ...' ">Describe here how was built your product step by step:</div>
+            	<div id="productDetailsDescriptionContainer"></div><!-- Is full dynamically by js (with div id= productDetailsDescriptionContainer + -->
+             <div id="productDetailsContainerButton" class="row col-md-11 col-sm-11">
+                <div title="Click to add steps">Add steps: <img id="addProductDetailsStepButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer">
                 </div>
-                <div class="col-md-24 col-sm-24">
-                    <div class="label2 form-control-l" id="addDocDescripProductDetailsStep0Text" title="Information about the document related to the url">Information about
-                        the url:
-                    </div>
-                    <textarea id="addDocDescripProductDetailsStep0TextArea" name="addDocDescripProductDetailsStep0" rows="1" cols="60"></textarea>
-                </div>
-            </div>
+             </div>
+	    </div>
+	</div>
     </fieldset>
 </div>
 
@@ -487,6 +478,14 @@
 	map.setCenter(new OpenLayers.LonLat(0,0));
 	map.zoomTo(1);
 
+	// Choose global scale:
+	$("#applyGlobalScaleButton").click(function() {
+		$("#spatialCoverageNorthInput").val(90);
+		$("#spatialCoverageWestInput").val(-180);
+		$("#spatialCoverageEastInput").val(180);
+		$("#spatialCoverageSouthInput").val(-90);
+	});
+
 	// Build spatial coverage:
 	$("#applySpatialCovButton").click(function() {
 	  var vector_layer = new OpenLayers.Layer.Vector('Basic Vector Layer');
@@ -520,6 +519,9 @@
 
         // Init data contributor with one row
         createContributorDiv( "contributorsContainer", 1 );
+
+        // Init product description with one row
+        createProductDescrStepDiv( "productDetailsDescriptionContainer", 1 );
 
         // Add reference only if necessary (no mandatory but if we choose to fill in some fields are mandatory).
     $( "#addReferenceInfoButton" ).click( function()
@@ -589,6 +591,7 @@
 
             var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
 	    var nReferences= $( 'input[id^="citationTitleInput"]' ).length;
+	    var nDescriptionSteps= $( 'input[id^="addDocProductDetailsStepInput"]' ).length;
 
             var dataDateCreation = $( this ).find( "input[name=dataDateCreation]" ).val();
             var dataProductTypeSelect = $( this ).find( "select[name=dataProductType]" ).val();
@@ -636,9 +639,16 @@
             var spatialResolutionLongUnit = $( this ).find( "select[name=spatialResolutionLongUnit]" ).val();
             var spatialResolutionValue = $( this ).find( "input[name=spatialResolutionValue]" ).val();
             // Product description:
-            var productDetails = $( this ).find( "textarea[name=productDetailsStep0]" ).val();
-            var addDocProductDetails = $( this ).find( "input[name=addDocProductDetailsStep0]" ).val();
-	    var addDocDescriptionProductDetails = $( this ).find( "textarea[name=addDocDescripProductDetailsStep0]" ).val();
+            var productDetails1 = $( this ).find( "textarea[name=productDetailsStep1]" ).val();
+            var productDetails11 = $( this ).find( "textarea[name=productDetailsStep11]" ).val();
+            var productDetails111 = $( this ).find( "textarea[name=productDetailsStep111]" ).val();
+            var productDetails1111 = $( this ).find( "textarea[name=productDetailsStep1111]" ).val();
+            var addDocProductDetails1 = $( this ).find( "input[name=addDocProductDetailsStep1]" ).val();
+            var addDocProductDetails11 = $( this ).find( "input[name=addDocProductDetailsStep11]" ).val();
+            var addDocProductDetails111 = $( this ).find( "input[name=addDocProductDetailsStep111]" ).val();
+	    var addDocDescriptionProductDetails1 = $( this ).find( "textarea[name=addDocDescripProductDetailsStep1]" ).val();
+	    var addDocDescriptionProductDetails11 = $( this ).find( "textarea[name=addDocDescripProductDetailsStep11]" ).val();
+	    var addDocDescriptionProductDetails111 = $( this ).find( "textarea[name=addDocDescripProductDetailsStep111]" ).val();
 	    // Keywords and ref:
             var keywordsInfo = $( this ).find( "input[name=keywordsInfo]" ).val();
             var citationTitle1 = $( this ).find( "input[name=citationTitle1]" ).val();
@@ -704,7 +714,7 @@
             var dataPolicy = $( this ).find( "select[name=dataPolicy]" ).val();
 
             $.post( "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php",
-            {dateFillFormIsoPost: dateFillFormIso, nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionValuePost: spatialResolutionValue, productDetailsPost: productDetails,  addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails,  keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, citationAuthorMail1Post: citationAuthorMail1, citationAuthorMail11Post: citationAuthorMail11, citationAuthorMail111Post: citationAuthorMail111, citationAuthorMail1111Post: citationAuthorMail1111, citationAuthorMail11111Post: citationAuthorMail11111, citationAuthorRole1Post: citationAuthorRole1,  citationAuthorRole11Post: citationAuthorRole11, citationAuthorRole111Post: citationAuthorRole111, citationAuthorRole1111Post: citationAuthorRole1111, citationAuthorRole11111Post: citationAuthorRole11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11,  citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy,
+            {dateFillFormIsoPost: dateFillFormIso, nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, nDescriptionStepsPost: nDescriptionSteps, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionValuePost: spatialResolutionValue, productDetails1Post: productDetails1, productDetails11Post: productDetails11, productDetails111Post: productDetails111, addDocProductDetails1Post: addDocProductDetails1,  addDocProductDetails11Post: addDocProductDetails11,  addDocProductDetails111Post: addDocProductDetails111, addDocDescriptionProductDetails1Post: addDocDescriptionProductDetails1, addDocDescriptionProductDetails11Post: addDocDescriptionProductDetails11, addDocDescriptionProductDetails111Post: addDocDescriptionProductDetails111, keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, citationAuthorMail1Post: citationAuthorMail1, citationAuthorMail11Post: citationAuthorMail11, citationAuthorMail111Post: citationAuthorMail111, citationAuthorMail1111Post: citationAuthorMail1111, citationAuthorMail11111Post: citationAuthorMail11111, citationAuthorRole1Post: citationAuthorRole1,  citationAuthorRole11Post: citationAuthorRole11, citationAuthorRole111Post: citationAuthorRole111, citationAuthorRole1111Post: citationAuthorRole1111, citationAuthorRole11111Post: citationAuthorRole11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11,  citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy,
             } );
         } );
     } );

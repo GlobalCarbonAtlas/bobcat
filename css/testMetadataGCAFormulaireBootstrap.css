@@ -122,7 +122,6 @@ textarea {
     border: 1px dotted rgb(100, 100, 100) !important;
     border-radius: 3px;
     margin-bottom: 3px !important;
-    color: grey;
 }
 #textAreaProductDetails {
 	display:  block;
@@ -146,10 +145,6 @@ textarea {
     letter-spacing: 0.5px;
     font-family: Arial !important;
 }
-
-#temporalResolutionText {
-}
-
 #temporalCoverageContainer {
     padding-top: 38px;
 }
@@ -180,12 +175,10 @@ textarea {
 	background-color: rgb(180,220,255);
 }
 #spatialCoverageDefLim {
-	margin-top: 10px;
+	margin-top: 13px;
 	margin-bottom: 5px;
 }
-#applySpatialCovButton {
-	width: 10px;
-	height: 10px;
+#applySpatialCovButton, #applyGlobalScaleButton, #removeSpatialCovButton {
 	background-color: rgb(150,150,150);
 	border: 1px solid rgb(50,50,50);
     	border-radius: 5px;
@@ -194,21 +187,21 @@ textarea {
     	padding-left: 2px; 
     	font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
 }
-#removeSpatialCovButton {
-	width: 10px;
-	height: 10px;
-	background-color: rgb(150,150,150);
-	border: 1px solid rgb(50,50,50);
-    	border-radius: 5px;
-    	color: rgb(255,255,255);
-    	padding-right: 2px;
-    	padding-left: 2px; 
-    	font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
+#applyGlobalScaleButton {
+	width: 40px;
+	height: 21px;
+	font-size: 13px;
+	text-decoration: none !important;
+	margin-left: 6px;
 }
-#applySpatialCovButton:hover, #removeSpatialCovButton:hover {
+#applySpatialCovButton:hover, #removeSpatialCovButton:hover, #applyGlobalScaleButton:hover {
 	border: 2px solid rgb(250,80,0);
 }
-.label2 {
+#applyOtherSpatialCoverageText {
+	margin-top: 7px;
+	margin-bottom: -7px;
+}
+.label2, .label2b{
     font-size: 14px;
     font-style: italic;
     color: rgb(80, 80, 80);
@@ -216,6 +209,9 @@ textarea {
     font-style: oblique;
     letter-spacing: 1px;
     font-family: "Comic Sans MS", "Trebuchet MS" !important; /*margin-bottom: 10px;*/
+}
+.label2b {
+	text-decoration: underline;
 }
 
 #metadatCreatorInfoPhoneLabel {
@@ -367,6 +363,35 @@ textarea {
     float: left;
     margin-right: 22px;
 }
-input.form-control {
-	color: grey !important;
+::-webkit-input-placeholder {/* CF http://css-tricks.com/snippets/css/style-placeholder-text/*/
+   color: grey !important;
+}
+/* Precise placeholder color: doesn't work for safari which put it grey by default*/
+:-moz-placeholder { /* Firefox 18- */
+   color: rgb(0,0,250) !important;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: rgb(0,0,250) !important;  
+}
+
+:-ms-input-placeholder {/* For ie (we have to precise opacity because put 1 by default, no firefox)*/  
+   color: rgba(0,0,250, 0.5) !important;  
+}
+.DescriptionStepNumberClass {
+	display: inline;
+}
+#addProductDetailsStepButton {
+	display: inline;
+}
+.stepsClass {
+	border: 1px dashed rgba(100,100,255,0.5);
+	margin-top: 3px;
+}
+.removeProductDetailsStepButtonClass {
+	display: inline;
+	margin-left: 7px;
+}
+.stepDescriptionClass  {
+	margin-top: 6px;
 }

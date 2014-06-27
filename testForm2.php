@@ -213,22 +213,9 @@ $xmlStringPart4= '</gvq:GVQ_DataIdentification>
 <gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="feature">Feature</gmd:MD_ScopeCode>
 </gmd19157:level>
 </gmd19157:DQ_Scope>
-</gmd19157:scope>
-<gmd19157:lineage>
-<gmd19157:LI_Lineage>
-<gmd19157:statement>
-<gmx:FileName src="'.$_POST["addDocProductDetailsPost"].'">'.$_POST["addDocDescriptionProductDetailsPost"].'</gmx:FileName>
-</gmd19157:statement>
-<gmd19157:processStep>
-<gmd19157:LI_ProcessStep>
-<gmd19157:description>
-<gco:CharacterString>'.$_POST["productDetailsPost"].'</gco:CharacterString>
-</gmd19157:description>
-</gmd19157:LI_ProcessStep>
-</gmd19157:processStep>
-</gmd19157:LI_Lineage>
-</gmd19157:lineage>
-<gmd19157:standAloneReport>
+</gmd19157:scope>';
+$xmlStringPart5= 
+'<gmd19157:standAloneReport>
 <gmd19157:DQ_StandaloneReportInformation>
 <gmd19157:reportReference>
 <gmd19157:DQM_SourceReference>
@@ -262,10 +249,12 @@ $xmlStringPart4= '</gvq:GVQ_DataIdentification>
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------- CONSTRUCTION OF THE DYNAMIC PARTS:: ----------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-// Var pour ajouter Contributors et References :
+// Var pour ajouter Contributors, descriptionSteps et References :
 $index= '';
 $indexRef= '';
-$compteurBoucle= 1;
+$indexSteps= '';
+$compteurBoucle= 1;// For data contributors.
+$compteurBoucleSteps= 1;
 $compteurBoucleRef= 1;
 
 // 1) $xmlStringPart2DataContributor:
@@ -306,7 +295,34 @@ $compteurBoucle++;
 // On a besoin dy avoir acces depuis exterieur boucle :
 //echo $xmlStringPart2DataContributor;//OK
 
-// 2) $xmlStringPart3ReferencesInfo:
+// ***************************************************************************************************************************************************************//
+// 2) $xmlStringPart2bDescriptionStep:
+$nDescriptionSteps= $_POST["nDescriptionStepsPost"];
+$xmlStringPart2bDescriptionStep= '';
+while ($compteurBoucleSteps <= $nDescriptionSteps)
+{
+$indexSteps= $indexSteps."1";
+$xmlStringPart2bDescriptionStepS=
+'<gmd19157:lineage>
+<gmd19157:LI_Lineage>
+<gmd19157:statement>
+<gmx:FileName src="'.$_POST["addDocProductDetails".$indexSteps."Post"].'">'.$_POST["addDocDescriptionProductDetails".$indexSteps."Post"].'</gmx:FileName>
+</gmd19157:statement>
+<gmd19157:processStep>
+<gmd19157:LI_ProcessStep>
+<gmd19157:description>
+<gco:CharacterString>'.$_POST["productDetails".$indexSteps."Post"].'</gco:CharacterString>
+</gmd19157:description>
+</gmd19157:LI_ProcessStep>
+</gmd19157:processStep>
+</gmd19157:LI_Lineage>
+</gmd19157:lineage>';
+$xmlStringPart2bDescriptionStep= $xmlStringPart2bDescriptionStep.$xmlStringPart2bDescriptionStepS;
+$compteurBoucleSteps++;
+}
+
+// ***************************************************************************************************************************************************************//
+// 3) $xmlStringPart3ReferencesInfo:
 $nReferences= $_POST["nReferencesPost"];
 $xmlStringPart3ReferencesInfo= '';
 while ($compteurBoucleRef <= $nReferences)
@@ -384,7 +400,7 @@ $compteurBoucleRef++;
 // 3) $xmlStringPart4DiscoveredIssueInfo:
 
 // On Regroupe les differentes parties du xml pour creer le xml entier :
-$xmlString= $xmlStringPart1.$xmlStringPart2DataContributor.$xmlStringPart3.$xmlStringPart3ReferencesInfo.$xmlStringPart4;
+$xmlString= $xmlStringPart1.$xmlStringPart2DataContributor.$xmlStringPart3.$xmlStringPart3ReferencesInfo.$xmlStringPart4.$xmlStringPart2bDescriptionStep.$xmlStringPart5;
 
 // On prepare le DOM object:
 $docDom= new DOMDocument();

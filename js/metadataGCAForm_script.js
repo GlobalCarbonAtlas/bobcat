@@ -73,7 +73,7 @@ function createContributorDiv( containerId, index )
     $( "#dataProducerInfoMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
     // Remove button
-    $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton cursorPointer">' );
+    $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton cursorPointer" title= "Click to delete this data contributor information">' );
     $( "#removeCreatorInfoButton" + index ).click( function()
     {
         removeContributorDiv( "dataContributorContainer", index );
@@ -97,7 +97,6 @@ function removeContributorDiv( divName, index )
     $( "#" + divName + "" + index ).remove();
     manageContributorsDiv();
     $( '#metadataForm' ).jqxValidator( 'hide' );
-//    hideHintByDiv( $( "#contributorsContainer" ) );
 
     var contributorsRulesArray = getContributorRules( index );
     removeRulesToRulesForm( contributorsRulesArray );
@@ -130,7 +129,81 @@ function manageContributorsDiv()
     } );
 }
 
+<!--**************************************************************************************** -->
+<!--*********************************** DESCRIPTION PRODUCT  *********************************** -->
+<!--**************************************************************************************** -->
+function getProductDetailsStepRules( index )
+{
+    return [
+    	{input: '#textAreaProductDetails' + index + '',  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+    	{input: '#addDocProductDetailsStepInput' + index + '', message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+    ];
+}
 
+function createProductDescrStepDiv( containerId, index )
+{
+    var containerDiv = $( '<div id="productDetailsDescriptionStepContainer' + index + '" class="row col-md-24 col-sm-24 stepsClass">' +
+		'<div class="label2b form-control-l" id="infoProductDetailsText' + index + '">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div>:' +
+		'</div>' +
+		'<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Description (*):</div>' +
+                '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" cols="60"></textarea>' +
+              '<div id="productDetailsdescriptionRow' + index + '" class="row">' +
+               '<div class="col-md-24 col-sm-24">' +
+               '<div class="label2 form-control-l" id="addDocProductDetailsStepText' + index + '"> Document URL to describe the product:</div>' +
+               '<input id="addDocProductDetailsStepInput' + index + '" class="form-control form-control-m" name="addDocProductDetailsStep' + index + '" type="text">' +
+                '</div>' +
+                '<div class="col-md-24 col-sm-24">' +
+                '<div class="label2 form-control-xxl cursorPointer" id="addDocDescripProductDetailsStepText' + index + '">Information about the document related to the url:</div>' +
+                '<textarea id="addDocDescripProductDetailsStepTextArea' + index + '" name="addDocDescripProductDetailsStep' + index + '" rows="1" cols="60"></textarea>' +
+                '</div>' +
+	        '</div>' +
+                '</div>' +
+    '</div>');
+
+    $("#" + containerId).append(containerDiv);
+
+    // Placeholder indications:
+    $( "#textAreaProductDetails" + index ).jqxInput( {placeHolder: "If you can't full in this part please indicate why you don't have this information"} );
+    $( "#addDocProductDetailsStepInput" + index ).jqxInput( {placeHolder: "something@mail.com"} );
+
+    // Remove button
+    $( "#infoProductDetailsText" + index ).append( '<img id="removeProductDetailsStepButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeProductDetailsStepButtonClass cursorPointer" title= "Click to delete this product description-step">' );
+    $( "#removeProductDetailsStepButton" + index ).click( function()
+    {
+        removeProductDetailsStepDiv( "productDetailsDescriptionStepContainer", index );
+    } );
+
+    manageProductDetailsStepDiv();
+
+	// ProductDetailsStep's rules
+	     var productDetailsStepRulesArray = getProductDetailsStepRules( index );
+	     addRulesToRulesForm(productDetailsStepRulesArray);
+}
+
+function removeProductDetailsStepDiv( divName, index )
+{
+    	$( "#" + divName + "" + index ).remove();
+    	manageProductDetailsStepDiv();
+    	$( '#metadataForm' ).jqxValidator( 'hide' );
+
+    	var productDetailsStepRulesArray = getProductDetailsStepRules( index );
+    	removeRulesToRulesForm(productDetailsStepRulesArray);
+}
+
+function manageProductDetailsStepDiv()
+{
+    // Hide or show the "remove step button"
+    if( 1 < $( 'input[id^="addDocProductDetailsStepInput"]' ).length )
+        $( ".removeProductDetailsStepButtonClass" ).show();
+    else
+        $( ".removeProductDetailsStepButtonClass" ).hide();
+
+    // Numerate the list of step
+    jQuery.each( $( 'div[id^="DescriptionStepNumber"]' ), function( i, element )
+    {
+        $( element ).html( i + 1 );
+    } );
+}
 <!--**************************************************************************************** -->
 <!--************************************** REFERENCES ************************************** -->
 <!--**************************************************************************************** -->
@@ -269,7 +342,7 @@ function createReferenceFieldset( containerIdRef, index )
     $( "#citationDOIInput" + index ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 	
     // Remove button
-    $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton cursorPointer">' );
+    $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton cursorPointer" title= "Click to delete this reference">' );
     $( "#removeReferenceInfoButton" + index ).click( function()
     {
         removeReferenceDiv( "citationFieldset", index );
@@ -349,6 +422,13 @@ function manageFormDiv()
 	else return false;
     } );
 
+    <!--********************** PRODUCT DESCRIPTION  ********************** -->
+    $( "#addProductDetailsStepButton").click( function()
+    	{
+        var productDetailsStepLastId = $( 'input[id^="addDocProductDetailsStepInput"]' ).last().attr( 'id' ).replace( "addDocProductDetailsStepInput", "" );
+        createProductDescrStepDiv( "productDetailsDescriptionContainer", productDetailsStepLastId + 1 );
+    });
+
     <!--********************** OTHERS FIELDS ********************** -->
     // Pour tt ce qui est select + freeText
     //Note : comment faire test if select / element : CF http://stackoverflow.com/questions/10198398/how-is-jquery-used-to-check-for-the-disabled-attribute-on-an-a-tag
@@ -394,14 +474,12 @@ function manageFormDiv()
     $( "#spatialCoverageSouthInput" ).jqxInput( {height: "20px", placeHolder: "-90"} );
     $( "#spatialCoverageWestInput" ).jqxInput( {height: "20px", placeHolder: "-180"} );
     $( "#spatialCoverageEastInput" ).jqxInput( {height: "20px", placeHolder: "180"} );
-    $( "#addDocProductDetailsStep0Input" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#principalInvestigatorContactNameInput" ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
     $( "#principalInvestigatorContactMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#keywordsInfoInput" ).jqxInput( {height: "20px", placeHolder: "keyword 1, keyword 2, ..."} );
     $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, precise 'none'"} );
     $( "#standAloneInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
-    $( "#textAreaProductDetails" ).jqxInput( {height: "20px", placeHolder: "Precise 'No information available' if you can't have this information"} );
 }
 
 /**
