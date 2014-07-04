@@ -3,7 +3,7 @@
         <div class="leftMenuUp">
             <div id="helpMenu"><img src="img/help_big_orange.png"></div>
             <div class="leftMenuUp">
-                <div id="clearAll">Clear all</div>
+                <div id="clearAll">Clear selections</div>
             </div>
         </div>
         <div class="leftMenu firstLeftMenu">
@@ -74,7 +74,7 @@
         </div>
 
         <div class="noticeLSCE leftMenu">
-            Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.1
+            Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.2
         </div>
 
     </div>

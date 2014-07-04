@@ -95,27 +95,19 @@ var BCInterfaceW = Class.create( {
 
     initInterface: function()
     {
-        $( "#projectionSelect" ).select2( "val", "EPSG:4087" ).click();
-        $( "#periodSelect" ).select2( "val", "longterm" );
-        this.time = false;
-        this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
         $( "#resourceSelect" ).fancytree().init();
-
-        $( "#mapsNumberSelect" ).select2( "val", "2" ).click();
-        // Range
-        $( "#slider-range" ).slider( {
-            min: -1000,
-            max: 1000,
-            step: 5,
-            values: [-500, 500] } );
-        $( "#slider-range-text" ).val( '[' + $( "#slider-range" ).slider( "values", 0 ) + "," + $( "#slider-range" ).slider( "values", 1 ) + ']' );
-        // Palette
-        $( "#paletteSelect" ).select2( "val", "blue_yellow_red" );
-        this.palette = $( "#paletteSelect" ).select2( "val" );
-        // Colors number
-        $( "#slider-nbcolorbands" ).slider( "value", 90 );
-        $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
-
+//        $( "#mapsNumberSelect" ).select2( "val", "2" ).click();
+//        // Range
+//        $( "#slider-range" ).slider( {
+//            min: -1000,
+//            max: 1000,
+//            step: 5,
+//            values: [-500, 500] } );
+//        $( "#slider-range-text" ).val( '[' + $( "#slider-range" ).slider( "values", 0 ) + "," + $( "#slider-range" ).slider( "values", 1 ) + ']' );
+//        // Colors number
+//        $( "#slider-nbcolorbands" ).slider( "value", 90 );
+//        $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
+//
         this.onClickDeleteAllMaps();
     },
 
