@@ -41,6 +41,7 @@ var BCInterfaceW = Class.create( {
         this.variableNamesToDisplay = variableNamesToKeepArray;
         this.variable = false;
 
+        $( "#periodSelect" ).select2( "val", "longterm" );
         this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
         this.time = false;
         this.elevation = false;
@@ -95,7 +96,7 @@ var BCInterfaceW = Class.create( {
     initInterface: function()
     {
         $( "#projectionSelect" ).select2( "val", "EPSG:4087" ).click();
-        $( "#periodSelect" ).select2( "val", "monthlymean" );
+        $( "#periodSelect" ).select2( "val", "longterm" );
         this.time = false;
         this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
         $( "#resourceSelect" ).fancytree().init();
