@@ -89,7 +89,6 @@ var BCInterfaceW = Class.create( {
         this.bindRange();
         this.resizePrintable();
         this.updateLegendButtons();
-	this.onClickCreateMetadataInfoGVQ();
 
      },
 
@@ -111,7 +110,7 @@ var BCInterfaceW = Class.create( {
     {
         if( this.hashBobcats.size() )
         {
-            var firstOpenLayerMap = this.hashBobcats.get( this.hashBobcats.keys( 0 )[0] ).map;
+		    var firstOpenLayerMap = this.hashBobcats.get( this.hashBobcats.keys( 0 )[0] ).map;
             this.centerMap = firstOpenLayerMap.getCenter();
             this.zoomMap = firstOpenLayerMap.getZoom();
         }
@@ -1324,16 +1323,6 @@ var BCInterfaceW = Class.create( {
 // **************************************************************
 // ************************* OTHER ******************************
 // **************************************************************
-        // Pascal Part ........
-	onClickCreateMetadataInfoGVQ: function()
-		{ 
-		$("#createAndEditMetadata").click(function() {
-             		window.open("testMetadataGCAFormulaireProgressTrackerFormToWizardBootstrap2Validate.php");
-		});
-	},
-
-	// Fin ......
-	
     basename: function( path )
     {
         return path.replace( /.*\//, "" );

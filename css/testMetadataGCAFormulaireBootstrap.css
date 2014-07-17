@@ -5,12 +5,14 @@
 }
 
 ul {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     margin-top: 0.5% !important; /*Conflit/Bootstrap*/
     height: 80px;
-    background-image: url(../img/containerSteps2.svg);
-    background-size: 100% 215%;
-    background-position: 2%;
+    background-image: url(../img/degradeMenu.png);
 }
+
+
 
 li {
     display: inline-block;
@@ -114,11 +116,12 @@ input {
     margin-bottom: 3px !important; /*width: 20px !important;*/
 }
 .inLine {
-	display: inline;
+	display: inline !important;
 }
 
 textarea {
     font-size: 13px;
+    color: black !important;
     border: 1px dotted rgb(100, 100, 100) !important;
     border-radius: 3px;
     margin-bottom: 3px !important;
@@ -208,7 +211,7 @@ textarea {
     font-weight: normal;
     font-style: oblique;
     letter-spacing: 1px;
-    font-family: "Comic Sans MS", "Trebuchet MS" !important; /*margin-bottom: 10px;*/
+    font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
 }
 .label2b {
 	text-decoration: underline;
@@ -368,15 +371,15 @@ textarea {
 }
 /* Precise placeholder color: doesn't work for safari which put it grey by default*/
 :-moz-placeholder { /* Firefox 18- */
-   color: rgb(0,0,250) !important;  
+   color: rgb(150,150,150) !important;  
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   color: rgb(0,0,250) !important;  
+   color: rgb(150,150,150) !important;  
 }
 
 :-ms-input-placeholder {/* For ie (we have to precise opacity because put 1 by default, no firefox)*/  
-   color: rgba(0,0,250, 0.5) !important;  
+   color: rgba(150,150,150, 0.5) !important;  
 }
 .DescriptionStepNumberClass {
 	display: inline;
@@ -384,14 +387,38 @@ textarea {
 #addProductDetailsStepButton {
 	display: inline;
 }
-.stepsClass {
-	border: 1px dashed rgba(100,100,255,0.5);
-	margin-top: 3px;
-}
 .removeProductDetailsStepButtonClass {
 	display: inline;
 	margin-left: 7px;
 }
 .stepDescriptionClass  {
 	margin-top: 6px;
+}
+#productDetailsContainerButton {
+	margin-bottom: 10px !important;
+}
+#dataAbstractTextarea {
+	width: 84% !important;
+}
+#temporalResolutionSelect, #spatialResolutionUnitLongSelect {
+	width: 90%;
+}
+#spatialResolutionValueLongInput, #spatialResolutionValueLatInput {
+	width: 86%;
+}
+.sameWidthReferenceClass {
+	width: 92%;
+}
+.citationDOIInputClass {
+	width: 89%;
+}
+#mapPanel .olControlZoomToMaxExtentItemInactive{
+	width: 18px;
+	height: 18px;
+	background: #333399 url("http://dev.openlayers.org/releases/OpenLayers-2.9.1/img/zoom-world-mini.png");
+	position: absolute;
+    	left:  3%;
+    	top: 25%;
+    	opacity: 0.69;
+    	z-index:  1004;
 }

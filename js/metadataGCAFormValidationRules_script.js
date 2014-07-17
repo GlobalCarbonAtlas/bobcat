@@ -48,21 +48,21 @@ var validatorRules = [
     }},
     {input: "#dataProductCategoryFreeTextInput", message: "Character not authorized", action: "blur, keyup",  rule: function()
     {
-        return ("" == $( "#dataProductCategoryFreeTextInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#dataProductCategoryFreeTextInput" ).val() ));
+        return ("" == $( "#dataProductCategoryFreeTextInput" ).val() || /^[a-zA-Z0-9.-]+$/.test( $( "#dataProductCategoryFreeTextInput" ).val() ));
     }},
 
     // Product title
     {input: "#prodNameTitleInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
     {input: "#prodNameTitleInput", message: "Character not authorized", action: "keyup, blur",  rule: function()
     {
-        return ("" == $( "#prodNameTitleInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#prodNameTitleInput" ).val() ));
+        return ("" == $( "#prodNameTitleInput" ).val() || /^[a-zA-Z0-9.-]+$/.test( $( "#prodNameTitleInput" ).val() ));
     }},
 
     // Product version
     {input: "#prodNameVersionInput", message: "This field is mandatory", action: "keyup, blur", rule: "required"},
     {input: "#prodNameVersionInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        return ("" == $( "#prodNameVersionInput" ).val() || /^[a-zA-Z0-9._-]+$/.test( $( "#prodNameVersionInput" ).val() ));
+        return ("" == $( "#prodNameVersionInput" ).val() || /^[a-zA-Z0-9.-]+$/.test( $( "#prodNameVersionInput" ).val() ));
     }},
 
     <!--*********************************** PRODUCT NAME *********************************** -->
@@ -157,10 +157,25 @@ var validatorRules = [
     {
 	 return ( $("#temporalCoverageBegin").val() < $("#temporalCoverageEnd").val() );
     }},
-    {input: "#spatialResolutionValueInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
-    {input: "#spatialResolutionValueInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
+    {input: "#spatialResolutionValueLongInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+    {input: "#spatialResolutionValueLongInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var spatialResolutionRentre = document.forms["metadataForm"].spatialResolutionValueInput.value;
+        var spatialResolutionRentre = document.forms["metadataForm"].spatialResolutionValueLongInput.value;
+        if( /^[0-9.]+$/.test( spatialResolutionRentre ) )
+        {
+            spatialResolutionRentre = 1;
+        }
+        else
+        {
+            spatialResolutionRentre = 0;
+        }
+        return spatialResolutionRentre;
+    }
+    },
+    {input: "#spatialResolutionValueLatInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+    {input: "#spatialResolutionValueLatInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
+    {
+        var spatialResolutionRentre = document.forms["metadataForm"].spatialResolutionValueLatInput.value;
         if( /^[0-9.]+$/.test( spatialResolutionRentre ) )
         {
             spatialResolutionRentre = 1;
@@ -373,14 +388,20 @@ var validatorRules = [
     }
     },
 
+    <!--*********************************** PRODUCT DESCRIPTION *********************************** -->
+    {input: "#addDocProductDetailsStepInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+
+
+
     <!--*********************************** KEYWORD AND REFERENCE *********************************** -->
     // Keywords and reference's fields control are now in the validateContributorsDiv function (medataGCAForm_script.js file).
     // There are added when we create a new reference.
 
-    // Quality data information:
+    <!--*********************************** QUALITY DATA INFPORMATION *********************************** -->
     {input: "#discoveredIssueArea",  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#standAloneInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-    // Data access:
+
+    <!--*********************************** DATA ACCESS AND DATA POLICY INFORMATION *********************************** -->
     {input: "#principalInvestigatorContactNameInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#principalInvestigatorContactNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
@@ -399,4 +420,14 @@ var validatorRules = [
     {input: "#principalInvestigatorContactMailInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
     {input: "#principalInvestigatorContactMailInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#originalDataUrlInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+
+
+    {input: "#dataPolicyChooseSelect", message: "This field is mandatory", action: "change",  rule: function()
+    {
+        return "nullValue" != $( "#dataPolicyChooseSelect" ).val();
+    }},
+    {input: "#dataPolicyFreeInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
+    {
+        return ("" != $( "#dataPolicyChooseSelect" ).val()) || ("" == $( "#dataPolicyChooseSelect" ).val() && "" != $( "#dataPolicyFreeInput" ).val());
+    }},
 ];

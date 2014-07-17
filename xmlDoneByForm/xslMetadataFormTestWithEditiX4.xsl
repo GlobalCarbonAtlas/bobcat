@@ -26,31 +26,32 @@
 	<!-- *********************************************************************************************************************************************** -->
 		<!-- BASIC INFORMATION -->
 	<div class="containerInfoClass">
-			 <div class="title1">Basic information: </div>
+			 <div class="title1">General information: </div>
 			 <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information" width="15px"/>
-				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "../img/showButton3.png" title= "Click to show entire information" width="15px"/>
+				<img class= "hideButtonSVG" src= "../img/hideButton3.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
-			  <div class="title2" >About data:</div>
+			  <div class="title2" >About data file:</div>
 			<xsl:call-template name="dataCreationDateInfo">
 				<xsl:with-param name="dataCreationDate" select="//gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"></xsl:with-param>
 			</xsl:call-template>
 			<xsl:call-template name="productNameInfo">
 				<xsl:with-param name="productName" select="//gmd:fileIdentifier/gco:CharacterString"></xsl:with-param>
 			</xsl:call-template>
-			<div class= "title3 retourChariot">Data abstract:</div>
+			<div class= "title3 retourChariot">Product summary:</div>
 			<xsl:call-template name="dataAbstractInfo">
 				<xsl:with-param name="dataAbstract" select="//gmd:abstract/gco:CharacterString"></xsl:with-param>
 			</xsl:call-template>
 			<div id="dataContributorContainer">
-			<div class="title3">Data Contributor information:</div>
+			<div class="title3">Data contributor information:
 				<table>
 					<tr>
 						<th>Name:</th>
 						<th>Organisation:</th>
-						<th>Mail:</th>
+						<th>email:</th>
 						<th>Role:</th>
+						<th>Position:</th>
 					</tr>
 				<xsl:for-each select="//gmd:pointOfContact"><!--element sur lequel il boucle. Si 2 elements identifiés, va me boucler 2 fois, si 3, ... Note : si je ne mets pas // ne me le prend pas, comprends pas ! C'est normal, on est en chemin relatif dc il faut preciser // avant !-->
 					<tr>
@@ -58,21 +59,24 @@
 						<td><xsl:value-of select="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"/></td>
 						<td><xsl:value-of select="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"/></td>
 						<td><xsl:value-of select="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode"/></td>
+						<td><xsl:value-of select="gmd:CI_ResponsibleParty/gmd:positionName/gco:CharacterString"/></td>
 					</tr>
 				</xsl:for-each>
 				</table>
+		 	      </div>
 			</div>
-			<div class="title2" >About metadata:</div>
+			<div class="title2" >About metadata file (this file):</div>
 				<xsl:call-template name="metadataCreationDateInfo">
 					<xsl:with-param name="metadataCreationDate" select="//gmd:dateStamp/gco:Date"></xsl:with-param>
 				</xsl:call-template>
 				<div id="metadataCreatorInfoContainer">
-			<div class="title3">Metadata creator information:</div>
+			<div class="title3">Metadata creator information:
 				<table>
 					<tr>
 						<th>Name:</th>
-						<th>Mail:</th>
+						<th>email:</th>
 						<th>Role:</th>
+						<th>Position:</th>
 					</tr>
 					<tr>
 						<td><xsl:call-template name="metadataCreatorNameInfo">
@@ -84,8 +88,12 @@
 						<td><xsl:call-template name="metadataCreatorRoleInfo">
 							<xsl:with-param name="metadataCreatorRole" select="//gmd:contact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode"></xsl:with-param>
 						</xsl:call-template></td>
+						<td><xsl:call-template name="metadataCreatorPositionInfo">
+							<xsl:with-param name="metadataCreatorPosition" select="//gmd:contact/gmd:CI_ResponsibleParty/gmd:positionName/gco:CharacterString"></xsl:with-param>
+						</xsl:call-template></td>
 					</tr>
 				</table>
+			     </div>
 			</div>
 		</div>
 		</div>
@@ -93,8 +101,9 @@
 		<div class="containerInfoClass">
 			 <div class="title1" >Temporal and geographical information: </div>
 				<div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "../img/showButton3.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" 
+				src= "../img/hideButton3.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 			  <div class="title2" >Temporal information:</div>
@@ -107,7 +116,8 @@
 			<xsl:call-template name="geographicalInfo">
 				
 				<xsl:with-param name="spatialResolutionUnit" select="//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance/@uom"></xsl:with-param><!-- POur récupérer la valeur de l'attribut de gco:Distance -->
-				<xsl:with-param name="spatialResolutionValue" select="//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance"></xsl:with-param>
+				<xsl:with-param name="spatialResolutionLongValue" select="//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance"></xsl:with-param>
+				<xsl:with-param name="spatialResolutionLatValue" select="//gmd:spatialResolution[position()=2]/gmd:MD_Resolution/gmd:distance/gco:Distance"></xsl:with-param>
 				<xsl:with-param name="spatialCoverageNorth" select="//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:northBoundLatitude/gco:Decimal"></xsl:with-param>
 				<xsl:with-param name="spatialCoverageSouth" select="//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:southBoundLatitude/gco:Decimal"></xsl:with-param>
 				<xsl:with-param name="spatialCoverageWest" select="//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:westBoundLongitude/gco:Decimal"></xsl:with-param>
@@ -120,31 +130,34 @@
 		<div class="containerInfoClass">
 			 <div class="title1" >Product description: </div>
 			<div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "../img/showButton3.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "../img/hideButton3.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
-			  <div class= "title3 retourChariot">How was build the data (lineage information):</div><!--J'ai mis le titre ici car particulier ici : le champ lineageInformationPart peut avoir des retours à la ligne dc il faut en tenir compte (cf le template appelé).--> 
-			 <xsl:call-template name="lineageInformationPart">
-				<xsl:with-param name="lineageInformation" select="//gmd19157:lineage/gmd19157:LI_Lineage/gmd19157:processStep/gmd19157:LI_ProcessStep/gmd19157:description/gco:CharacterString"></xsl:with-param>
+			  <div id= "lineageInfoTitle" class= "title2">Description step by step about how this product was built:</div><!--J'ai mis le titre ici car particulier ici : le champ lineageInformationPart peut avoir des retours à la ligne dc il faut en tenir compte (cf le template appelé).-->
+		       <xsl:for-each select="//gmd19157:processStep">
+			<xsl:call-template name="stepsNPart"><!-- Juste pour offrir possibilite ajouter 1, 2, 3 aux titres Steps (voir template appele) -->
 			</xsl:call-template>
+		       <xsl:call-template name="lineageInformationPart">
+				<xsl:with-param name="lineageInformation" select="gmd19157:LI_ProcessStep/gmd19157:description/gco:CharacterString"></xsl:with-param>
+			</xsl:call-template>
+		       </xsl:for-each>
+		       <div id= "complementInfoProdDescriptionTitle" class= "title2">Document to illustrate the description above:</div>
 			<xsl:call-template name="urlToDescribeLineageInfo">
 				<xsl:with-param name="urlToDescribeLineage" select="//gmd19157:lineage/gmd19157:LI_Lineage/gmd19157:statement/gmx:FileName/@src"></xsl:with-param>
 			</xsl:call-template>
-			<div class= "title3 retourChariot">Information about this document:
-</div>
+			<div class= "title3 retourChariot">Comments about the url document:</div>
 			<xsl:call-template name="infoAboutLineageUrlInfo">
 				<xsl:with-param name="infoAboutLineageUrl" select="//gmd19157:lineage/gmd19157:LI_Lineage/gmd19157:statement/gmx:FileName"></xsl:with-param>
 			</xsl:call-template>
-	
 		  </div>
 		</div>
 		<!-- KEYWORDS AND REFERENCE -->
 		<div class="containerInfoClass">
 		       <div class="title1" >Keywords and reference: </div>
 		      <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "../img/showButton3.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "../img/hideButton3.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 		          <div class="title2" >Keywords:</div>
@@ -157,8 +170,7 @@
 				<xsl:with-param name="referencesDate" select="gmd:date/gmd:CI_Date/gmd:date/gco:Date"></xsl:with-param>
 				<xsl:with-param name="referencesAuthorsName" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString"></xsl:with-param>
 				<xsl:with-param name="referencesAuthorsOrganisation" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"></xsl:with-param>
-				<xsl:with-param name="referencesAuthorsMail" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString"></xsl:with-param>
-				<xsl:with-param name="referencesAuthorsRole" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode"></xsl:with-param>
+				<xsl:with-param name="referencesAuthorsPosition" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:positionName/gco:CharacterString"></xsl:with-param>
 				<xsl:with-param name="referencesNameJournal" select="gmd:series/gmd:CI_Series/gmd:name/gco:CharacterString"></xsl:with-param>
 				<xsl:with-param name="referencesDOI" select="gvq:doi/gco:CharacterString"></xsl:with-param>
 				<xsl:with-param name="referencesCategory" select="gvq:category/gvq:GVQ_PublicationCategoryCode"></xsl:with-param>
@@ -171,8 +183,8 @@
 		<div class="containerInfoClass">
 			 <div class="title1" >Quality data information: </div>
 			 <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "../img/showButton3.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "../img/hideButton3.png" title= "Click to only visualize main title"/>
 			</div>
 		       <div class= "subContainerInfo">
 			  <div class= "title3 retourChariot">Quality description (availability of product-errors, product evaluation, ...):
@@ -184,7 +196,7 @@
 				<xsl:with-param name="URLQuality" select="//gmd19157:standAloneReport/gmd19157:DQ_StandaloneReportInformation/gmd19157:reportReference/gmd19157:DQM_SourceReference/gmd19157:citation/gco:CharacterString"></xsl:with-param>
 				
 			</xsl:call-template>
-			<div class= "title3 retourChariot cursorPointer" title= "Information about the document related to quality information">Information about this document:</div>
+			<div class= "title3 retourChariot cursorPointer" title= "Information about the document related to quality information">Comments about the url document:</div>
 			<xsl:call-template name="QualityInfoURLDescriptionInfo">
 				<xsl:with-param name="QualityInfoURLDescription" select="//gmd19157:standAloneReport/gmd19157:DQ_StandaloneReportInformation/gmd19157:abstract/gco:CharacterString"></xsl:with-param>
 			</xsl:call-template>
@@ -194,8 +206,8 @@
 		<div class="containerInfoClass">
 		  <div class="title1" >Data access and data use policy: </div>
 			 <div class="containerButton">
-				<img class= "showButtonSVG" style="display:none" src= "showButton.png" title= "Click to show entire information"/>
-				<img class= "hideButtonSVG" src= "hideButton.png" title= "Click to only visualize main title"/>
+				<img class= "showButtonSVG" style="display:none" src= "../img/showButton3.png" title= "Click to show entire information"/>
+				<img class= "hideButtonSVG" src= "../img/hideButton3.png" title= "Click to only visualize main title"/>
 			</div>
 			 <div class= "subContainerInfo">
 			<xsl:call-template name="DataPolicyAccessInfo">
@@ -218,19 +230,21 @@
 								partToHide.hide();
 								$(this).parent().find(".showButtonSVG").show();
 								$(this).parent().find(".hideButtonSVG").hide();
-								$(this).parent(".containerButton").css("background-color", "rgba(0,230,0,0.40)");
+								//$(this).parent(".containerButton").css("background-color", "rgba(0,230,0,0.40)");
 							});
 							$(".showButtonSVG").click(function() {
 								var partToShow= $(this).parent().parent().find(".subContainerInfo");
 								partToShow.show();
 								$(this).parent().find(".hideButtonSVG").show();
 								$(this).parent().find(".showButtonSVG").hide();
-								$(this).parent(".containerButton").css("background-color", "rgba(240, 150, 50, 0.6)");
+								//$(this).parent(".containerButton").css("background-color", "rgba(240, 150, 50, 0.6)");
 							});
-
+//*******************************************************************************************//
 	//------- Integration map /spatial coverage information : ----------//
+//*******************************************************************************************//
 
 	var map = new OpenLayers.Map('map_element', {
+		resolutions: [0.703125,0.3515625,0.17578125,0.087890625,0.0439453125]
 	  });
 
 	var landMaskLayer = new OpenLayers.Layer.WMS( 
@@ -273,11 +287,20 @@
 			 }
 		);
 
+  // Add zoomToMAxExtent control:// 
+  var navigation_control= new OpenLayers.Control.Navigation();
+  var control_panel= new OpenLayers.Control.Panel({
+	div: document.getElementById("mapPanel"),
+  });
+   control_panel.addControls([new OpenLayers.Control.ZoomToMaxExtent()]);
+   map.addControl(control_panel);
+///////////////////////////////////////////////////////////////
+
     	var vector_layer = new OpenLayers.Layer.Vector('Basic Vector Layer');
 
 	 map.addLayers([landMaskLayer, frontiersLayer, graticulesLayer]);
 	 map.setCenter(new OpenLayers.LonLat(0,0));
-	  map.zoomTo(1);
+	  map.zoomTo(0);
 					]]>
                                   // Il faut sortir CDATA pour pouvoir utiliser xsl syntaxe et donc recuperer les variables rentrees ds le xml.
                                           limNorth= "<xsl:value-of select= "//gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:northBoundLatitude/gco:Decimal"/>",
@@ -366,6 +389,10 @@
 		<xsl:param name="metadataCreatorRole"></xsl:param>
 		<xsl:value-of select="$metadataCreatorRole"/>
 	</xsl:template>
+	<xsl:template name="metadataCreatorPositionInfo">
+		<xsl:param name="metadataCreatorPosition"></xsl:param>
+		<xsl:value-of select="$metadataCreatorPosition"/>
+	</xsl:template>
 <!-- TEMPORAL AND GEOGRAPHICAL INFORMATION -->
 	<xsl:template name="temporalInfo">
 		<xsl:param name="temporalResolution"></xsl:param>
@@ -379,8 +406,8 @@
 		<div class= "title3">temporal coverage:
 			<table>
 				<tr>
-					<th>Begin</th>
-					<th>End</th>
+					<th>Begins</th>
+					<th>Ends</th>
 				</tr>
 				<tr>
 					<td><xsl:value-of select="$temporalCoverageBegin"/></td>
@@ -391,7 +418,8 @@
 	</xsl:template>
 	<xsl:template name="geographicalInfo">
 		<xsl:param name="spatialResolutionUnit"></xsl:param>
-		<xsl:param name="spatialResolutionValue"></xsl:param>
+		<xsl:param name="spatialResolutionLongValue"></xsl:param>
+		<xsl:param name="spatialResolutionLatValue"></xsl:param>
 		<xsl:param name="spatialCoverageNorth"></xsl:param>
 		<xsl:param name="spatialCoverageSouth"></xsl:param>
 		<xsl:param name="spatialCoverageWest"></xsl:param>
@@ -401,11 +429,13 @@
 			<table>
 				<tr>
 					<th>Unit</th>
-					<th>Value</th>
+					<th> Longitude value</th>
+					<th> Latitude value</th>
 				</tr>
 				<tr>
 					<td><xsl:value-of select="$spatialResolutionUnit"/></td>
-					<td><xsl:value-of select="$spatialResolutionValue"/></td>
+					<td><xsl:value-of select="$spatialResolutionLongValue"/></td>
+					<td><xsl:value-of select="$spatialResolutionLatValue"/></td>
 				</tr>
 			</table>
 		</div>
@@ -425,7 +455,7 @@
 				</tr>
 			</table>
 			<div class= "title3">Spatial coverage representation (orange):</div>
-			  <div id='map_element'/>
+			<div id='map_element'><div id= "mapPanel" class= "cursorPointer" title= "Click to turn to initial view (entire world)"/></div>
 		</div>
 		<div class= "title3">Vertical level:
 			<div  class= "respFromXml inlineDisplay">
@@ -434,9 +464,14 @@
 		</div>
 	</xsl:template>
 <!-- PRODUCT DESCRIPTION-->
+	<xsl:template name="stepsNPart">
+		  <div class="title3" >Step <xsl:number level= "any" count="gmd19157:processStep" from="gmd19157:LI_Lineage" format="1"></xsl:number>:</div>
+	</xsl:template>
+
 	<xsl:template name="lineageInformationPart">
 <!--Cas particulier ici : ce champ va surement avoir des retours à la ligne dc il faut en tenir compte, c'est la raison pour laquelle je n'ai pas regroupé tt dans un template pour cette partie.-->
 		<xsl:param name="lineageInformation" select="string(.)"></xsl:param>
+		    <!--<div class="title3" >Step <xsl:number level= "any" count="gmd19157:processStep" from="gmd19157:LI_Lineage" format="1"></xsl:number>:</div>-->
 			<div  class= "respFromXml retourChariotIn">
 			<xsl:choose>
     				<xsl:when test="contains($lineageInformation, '&#xa;')">
@@ -455,7 +490,7 @@
 	</xsl:template>
 	<xsl:template name="urlToDescribeLineageInfo">
 		<xsl:param name="urlToDescribeLineage"></xsl:param>
-		<div class= "title3">Document to describe this data creation:
+		<div class= "title3">URL for additional product description:
 			<div  class= "respFromXml inlineDisplay">
 			<xsl:value-of select="$urlToDescribeLineage"/>
 			</div>
@@ -494,8 +529,7 @@
 	<xsl:param name="referencesDate"></xsl:param>
 	<xsl:param name="referencesAuthorsName"></xsl:param>
 	<xsl:param name="referencesAuthorsOrganisation"></xsl:param>
-	<xsl:param name="referencesAuthorsMail"></xsl:param>
-	<xsl:param name="referencesAuthorsRole"></xsl:param>
+	<xsl:param name="referencesAuthorsPosition"></xsl:param>
 	<xsl:param name="referencesNameJournal"></xsl:param>
 	<xsl:param name="referencesDOI"></xsl:param>
 	<xsl:param name="referencesCategory"></xsl:param>
@@ -517,14 +551,12 @@
 					<tr>
 						<th>Name:</th>
 						<th>Organisation:</th>
-						<th>Mail:</th>
-						<th>Role:</th>
+						<th>Position:</th>
 					</tr>
 					<tr>
 						<td><xsl:value-of select="$referencesAuthorsName"/></td>
 						<td><xsl:value-of select="$referencesAuthorsOrganisation"/></td>
-						<td><xsl:value-of select="$referencesAuthorsMail"/></td>
-						<td><xsl:value-of select="$referencesAuthorsRole"/></td>
+						<td><xsl:value-of select="$referencesAuthorsPosition"/></td>
 					</tr>
 		
 				</table>
@@ -570,7 +602,7 @@
         </xsl:template>
         <xsl:template name="URLQualityInfo">
 	<xsl:param name="URLQuality"></xsl:param>
-	<div class= "title3">Document URL to describe quality:
+	<div class= "title3">URL for additional quality description:
 		<div  class= "respFromXml inlineDisplay">
 		 <xsl:value-of select="$URLQuality"/>
 		</div>
@@ -606,7 +638,7 @@
 				<table>
 					<tr>
 						<th>Name:</th>
-						<th>Mail:</th>
+						<th>email:</th>
 						<th>Phone:</th>
 					</tr>
 					<tr>

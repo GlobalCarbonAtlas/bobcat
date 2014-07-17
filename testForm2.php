@@ -15,6 +15,9 @@ http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd" id="dataset_MD
 <gmd:individualName>
 <gco:CharacterString>'.$_POST["metadatCreatorInfoNamePost"].'</gco:CharacterString>
 </gmd:individualName>
+<gmd:positionName>
+  <gco:CharacterString>'.$_POST["metadatCreatorInfoPositionPost"].'</gco:CharacterString>
+</gmd:positionName>
 <gmd:contactInfo>
 <gmd:CI_Contact>
 <gmd:address>
@@ -95,7 +98,14 @@ $xmlStringPart3= '<gmd:descriptiveKeywords>
 <gmd:spatialResolution>
 <gmd:MD_Resolution>
 <gmd:distance>
-<gco:Distance uom="'.$_POST["spatialResolutionLongUnitPost"].'">'.$_POST["spatialResolutionValuePost"].'</gco:Distance>
+<gco:Distance uom="'.$_POST["spatialResolutionLongUnitPost"].'">'.$_POST["spatialResolutionLongValuePost"].'</gco:Distance><!--Longitude component-->
+</gmd:distance>
+</gmd:MD_Resolution>
+</gmd:spatialResolution>
+<gmd:spatialResolution>
+<gmd:MD_Resolution>
+<gmd:distance>
+<gco:Distance uom="'.$_POST["spatialResolutionLongUnitPost"].'">'.$_POST["spatialResolutionLatValuePost"].'</gco:Distance><!--Latitude component-->
 </gmd:distance>
 </gmd:MD_Resolution>
 </gmd:spatialResolution>
@@ -213,9 +223,16 @@ $xmlStringPart4= '</gvq:GVQ_DataIdentification>
 <gmd:MD_ScopeCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="feature">Feature</gmd:MD_ScopeCode>
 </gmd19157:level>
 </gmd19157:DQ_Scope>
-</gmd19157:scope>';
+</gmd19157:scope>
+<gmd19157:lineage>
+<gmd19157:LI_Lineage>
+<gmd19157:statement>
+<gmx:FileName src="'.$_POST["addDocProductDetailsPost"].'">'.$_POST["addDocDescriptionProductDetailsPost"].'</gmx:FileName>
+</gmd19157:statement>';
 $xmlStringPart5= 
-'<gmd19157:standAloneReport>
+'</gmd19157:LI_Lineage>
+</gmd19157:lineage>
+<gmd19157:standAloneReport>
 <gmd19157:DQ_StandaloneReportInformation>
 <gmd19157:reportReference>
 <gmd19157:DQM_SourceReference>
@@ -272,6 +289,9 @@ $xmlStringPart2DataContributorS=
 <gmd:organisationName>
 <gco:CharacterString>'.$_POST["dataProducerInfoOrganisation".$index."Post"].'</gco:CharacterString>
 </gmd:organisationName>
+<gmd:positionName>
+<gco:CharacterString>'.$_POST["dataProducerInfoPosition".$index."Post"].'</gco:CharacterString>
+</gmd:positionName>
 <gmd:contactInfo>
 <gmd:CI_Contact>
 <gmd:address>
@@ -303,20 +323,13 @@ while ($compteurBoucleSteps <= $nDescriptionSteps)
 {
 $indexSteps= $indexSteps."1";
 $xmlStringPart2bDescriptionStepS=
-'<gmd19157:lineage>
-<gmd19157:LI_Lineage>
-<gmd19157:statement>
-<gmx:FileName src="'.$_POST["addDocProductDetails".$indexSteps."Post"].'">'.$_POST["addDocDescriptionProductDetails".$indexSteps."Post"].'</gmx:FileName>
-</gmd19157:statement>
-<gmd19157:processStep>
+'<gmd19157:processStep>
 <gmd19157:LI_ProcessStep>
 <gmd19157:description>
 <gco:CharacterString>'.$_POST["productDetails".$indexSteps."Post"].'</gco:CharacterString>
 </gmd19157:description>
 </gmd19157:LI_ProcessStep>
-</gmd19157:processStep>
-</gmd19157:LI_Lineage>
-</gmd19157:lineage>';
+</gmd19157:processStep>';
 $xmlStringPart2bDescriptionStep= $xmlStringPart2bDescriptionStep.$xmlStringPart2bDescriptionStepS;
 $compteurBoucleSteps++;
 }
@@ -351,6 +364,9 @@ $xmlStringPart3ReferencesInfoS= '<gvq:referenceDoc>
 <gmd:organisationName>
 <gco:CharacterString>'.$_POST["citationAuthorOrganisation".$indexRef."Post"].'</gco:CharacterString>
 </gmd:organisationName>
+<gmd:positionName>
+  <gco:CharacterString>'.$_POST["citationAuthorPosition".$indexRef."Post"].'</gco:CharacterString>
+</gmd:positionName>
 <gmd:contactInfo>
 <gmd:CI_Contact>
 <gmd:address>
@@ -363,7 +379,7 @@ $xmlStringPart3ReferencesInfoS= '<gvq:referenceDoc>
 </gmd:CI_Contact>
 </gmd:contactInfo>
 <gmd:role>
-<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="author">'.$_POST["citationAuthorRole".$indexRef."Post"].' </gmd:CI_RoleCode>
+<gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="author"/>
 </gmd:role>
 </gmd:CI_ResponsibleParty>
 </gmd:citedResponsibleParty>

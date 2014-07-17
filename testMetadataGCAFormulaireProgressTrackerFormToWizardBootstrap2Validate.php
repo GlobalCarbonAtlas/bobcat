@@ -13,20 +13,20 @@
     <script type="text/javascript" src="js/library/jquery-1.9.1.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" src="js/library/formToWizardBootstrapValidate.js"></script>
-    <!-- CF  http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/ Pas mal adapté, je m'y suis juste inspiré. -->
-    <link rel="stylesheet" href="js/library/jqwidgets-ver3.2.1/jqwidgets/styles/jqx.base.css"/>
-    <link rel="stylesheet" href="js/library/jqwidgets-ver3.2.1/jqwidgets/styles/jqx.bootstrap.css"/>
-    <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxvalidator.js"></script>
-    <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxmaskedinput.js"></script>
-    <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxinput.js"></script>
-    <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxdatetimeinput.js"></script>
-    <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxcalendar.js"></script>
-    <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/globalization/globalize.js"></script>
+    <!-- CF http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/ Pas mal adapt?, je m'y suis juste inspir?. -->
+<link rel="stylesheet" href="js/library/jqwidgets-ver3.2.1/jqwidgets/styles/jqx.base.css"/>
+<link rel="stylesheet" href="js/library/jqwidgets-ver3.2.1/jqwidgets/styles/jqx.bootstrap.css"/>
+<script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxvalidator.js"></script>
+<script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxmaskedinput.js"></script>
+<script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxinput.js"></script>
+<script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxdatetimeinput.js"></script>
+<script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxcalendar.js"></script>
+<script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/globalization/globalize.js"></script>
 
-    <script type="text/javascript" src="js/metadataGCAFormValidationRules_script.js"></script>
-    <script type="text/javascript" src="js/metadataGCAForm_script.js"></script>
-    <script type='text/javascript' src='js/OpenLayers-2.12/OpenLayers.js'></script>
+<script type="text/javascript" src="js/metadataGCAFormValidationRules_script.js"></script>
+<script type="text/javascript" src="js/metadataGCAForm_script.js"></script>
+<script type='text/javascript' src='js/OpenLayers-2.12/OpenLayers.js'></script>
 
 </head>
 
@@ -46,132 +46,134 @@
 <!--*********************************** BASIC INFORMATION ********************************** -->
 <!--**************************************************************************************** -->
 <div id="basicInformation">
-    <fieldset class="fieldset1">
-        <legend class="legend1">Basic information</legend>
+<fieldset class="fieldset1">
+<legend class="legend1">General information</legend>
 
-        <fieldset id="basicInfoDataFile" class="fieldset2">
-            <legend class="legend2">About data:</legend>
+<fieldset id="basicInfoDataFile" class="fieldset2">
+<legend class="legend2">About data file:</legend>
 
-            <div class="form-group">
-                <!--*********************************** CREATION DATE *********************************** -->
-                <div class="row col-md-24 col-sm-24">
-                    <div class="label1ContactLegend" id="dataDateCreationText" title="Creation date of the product file">Creation date (*):</div>
-                    <div id="dataDateCreationInput" class="dateInput" name="dataDateCreation"></div>
-                </div>
+<div class="form-group">
+<!--*********************************** CREATION DATE *********************************** -->
+<div class="row col-md-24 col-sm-24">
+<div class="label1ContactLegend" id="dataDateCreationText" title="Creation date of the product file">Creation date (*):</div>
+<div id="dataDateCreationInput" class="dateInput" name="dataDateCreation"></div>
+</div>
 
-                <!--*********************************** PRODUCT NAME *********************************** -->
-                <div class="label1" id="dataFileNameText"
-                     title="Construct a name for your data file thanks to Product type, category, title and version. Necessary to mention/exchange your data">Product name (*):
-                </div>
-                <div id="prodTypeRow" class="row col-md-24 col-sm-24">
-                    <div class="col-md-9 col-sm-9">
-                        <div class="label2 form-control-xxl" id="dataProductTypeSelectText">Product type (*):</div>
-                        <select id="dataProductTypeSelect" class="form-control form-control-xl" name="dataProductType">
-                            <option value="nullValue">----</option>
-                            <option value="CO2-flux">CO2 flux</option>
-                            <option value="Carbon-stock">Carbon stock</option>
-                            <option value="CH4-flux">CH4 flux</option>
-                            <option value="">Other</option>
-                        </select>
-                    </div>
-                    <div class="col-md-14 col-sm-14">
-                        <div class="label2" id="dataProductTypeFreeTextText">Other type (free text):</div>
-                        <input id="dataProductTypeFreeTextInput" class="form-control form-control-m" name="dataProductType" type="text">
-                    </div>
-                </div>
+<!--*********************************** PRODUCT NAME *********************************** -->
+<div class="label1" id="dataFileNameText"
+title="Construct a name for your data file thanks to Product type, category, title and version. Necessary to mention/exchange your data">Product name (*):
+</div>
+<div id="prodTypeRow" class="row col-md-24 col-sm-24">
+<div class="col-md-10 col-sm-10">
+<div class="label2" id="dataProductTypeSelectText">Product type (*):</div>
+<select id="dataProductTypeSelect" class="form-control form-control-xl" name="dataProductType">
+<option value="nullValue">----</option>
+<option value="CO2-flux">CO2 flux</option>
+<option value="Carbon-stock">Carbon stock</option>
+<option value="CH4-flux">CH4 flux</option>
+<option value="">Other</option>
+</select>
+</div>
+<div class="col-md-13 col-sm-13">
+<div class="label2" id="dataProductTypeFreeTextText">Other type:</div>
+<input id="dataProductTypeFreeTextInput" class="form-control form-control-l" name="dataProductType" type="text">
+</div>
+</div>
 
-                <div id="prodCategoryRow" class="row col-md-24 col-sm-24">
-                    <div class="col-md-9 col-sm-9">
-                        <div class="label2 form-control-xxl" id="dataProductCategorySelectText">Product category (*):</div>
-                        <select class="form-control form-control-xl dataProductCategoryClass" id="dataProductCategorySelect" name="dataProductCategory">
-                            <option value="nullValue">----</option>
-                            <option value="Inversion-model">Inversion model</option>
-                            <option value="Land-model">Land model</option>
-                            <option value="Ocean-model">Ocean model</option>
-                            <option value="">Other</option>
-                        </select>
-                    </div>
-                    <div class="col-md-14 col-sm-14">
-                        <div class="label2" id="dataProductCategoryFreeTextText">Other category (free text):</div>
-                        <input id="dataProductCategoryFreeTextInput" class="form-control form-control-m" name="dataProductCategory" type="text">
-                    </div>
-                </div>
-            </div>
+<div id="prodCategoryRow" class="row col-md-24 col-sm-24">
+<div class="col-md-10 col-sm-10">
+<div class="label2" id="dataProductCategorySelectText">Product category (*):</div>
+<select class="form-control form-control-xl dataProductCategoryClass" id="dataProductCategorySelect" name="dataProductCategory">
+<option value="nullValue">----</option>
+<option value="Inversion-model">Inversion model</option>
+<option value="Land-model">Land model</option>
+<option value="Ocean-model">Ocean model</option>
+<option value="">Other</option>
+</select>
+</div>
+<div class="col-md-13 col-sm-13">
+<div class="label2" id="dataProductCategoryFreeTextText">Other category:</div>
+<input id="dataProductCategoryFreeTextInput" class="form-control form-control-l" name="dataProductCategory" type="text">
+</div>
+</div>
+</div>
 
-            <div id="prodNameTitleAndVersion" class="row col-md-24 col-sm-24">
-                <div class="col-md-9 col-sm-9">
-                    <div class="label2 form-control-xxl" id="prodNameTitleText">Product title (*):</div>
-                    <input id="prodNameTitleInput" class="form-control form-control-xl mandatoryField" name="prodNameTitle" type="text">
-                </div>
-                <div class="col-md-14 col-sm-14">
-                    <div class="label2 form-control-xxl" id="prodNameVersionText">Product version (*):</div>
-                    <input id="prodNameVersionInput" class="form-control form-control-m" name="prodNameVersion" type="text">
-                </div>
-            </div>
+<div id="prodNameTitleAndVersion" class="row col-md-24 col-sm-24">
+<div class="col-md-10 col-sm-10">
+<div class="label2" id="prodNameTitleText">Product title (*):</div>
+<input id="prodNameTitleInput" class="form-control form-control-xl mandatoryField" name="prodNameTitle" type="text">
+</div>
+<div class="col-md-13 col-sm-13">
+<div class="label2" id="prodNameVersionText">Product version (*):</div>
+<input id="prodNameVersionInput" class="form-control form-control-l" name="prodNameVersion" type="text">
+</div>
+</div>
 
-                <!--*********************************** DATA ABSTRACT *********************************** -->
-	       <div class= "row col-md-24 col-sm-24">
-                <div class="label1 row " id="dataAbstractText"
-                     title="Describe your data in few words">Data abstract (*):
-                </div>
-            	<div id="dataAbstractId" class="row col-md-24 col-sm-24">
-                    <textarea id="dataAbstractTextarea" class="form-control form-control-xl" name="dataAbstract" rows="2" cols="60"></textarea>
-                </div>
-	       </div>
+<!--*********************************** DATA ABSTRACT *********************************** -->
+<div class= "row col-md-24 col-sm-24">
+<div class="label1 row " id="dataAbstractText"
+title="Describe your data in few words">Product summary (*):
+</div>
+<div id="dataAbstractId" class="row col-md-24 col-sm-24">
+<textarea id="dataAbstractTextarea" class="form-control" name="dataAbstract" rows="2" cols="60"></textarea>
+</div>
+</div>
 
-            <!--*********************************** DATA CONTRIBUTOR *********************************** -->
-            <div id="contributorsContainer"></div>
-            <div id="contributorsContainerButton" class="row col-md-24 col-sm-24">
-                <div class="cursorPointer addQuitAllContainerText" title="Click to add creator information (no more than 5)">
-                    Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer">
-                </div>
-            </div>
-        </fieldset>
+<!--*********************************** DATA CONTRIBUTOR *********************************** -->
+<div id="contributorsContainer"></div>
+<div id="contributorsContainerButton" class="row col-md-24 col-sm-24">
+<div class="cursorPointer addQuitAllContainerText" title="Click to add creator information (no more than 5)">
+Add creator information (5 maximum) : <img id="addCreatorInfoButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer">
+</div>
+</div>
+</fieldset>
 
-        <fieldset id="basicInfoMetadat" class="fieldset2">
-            <legend class="legend2">About metadata file:</legend>
+<fieldset id="basicInfoMetadat" class="fieldset2">
+<legend class="legend2">About metadata file (this questionnaire):</legend>
 
-            <div class="form-group">
-                <!--*********************************** METADATA DATE *********************************** -->
-                <div class="row col-md-24 col-sm-24">
-                    <div id="metadataDateCreationLabel" class="label1ContactLegend" for="metadataDateCreationInput" title="Date of creation of this file (metadata file)">
-                        Metadata date of creation (*):
-                    </div>
-                    <div id="metadataDateCreationInput" class="dateInput" name="metadataDateCreation"></div>
-                    <!-- Pour accueillir calendrier jqx-->
-                </div>
+<div class="form-group">
+<!--*********************************** METADATA DATE *********************************** -->
+<div class="row col-md-24 col-sm-24">
+<div id="metadataDateCreationLabel" class="label1ContactLegend" for="metadataDateCreationInput" title="Date of creation of this file (metadata file)">
+Metadata date of creation (*):
+</div>
+<div id="metadataDateCreationInput" class="dateInput" name="metadataDateCreation"></div>
+<!-- Pour accueillir calendrier jqx-->
+</div>
 
-                <!--*********************************** METADATA CREATOR *********************************** -->
-                <div id="metadatCreatorInfoRow" class="row col-md-24 col-sm-24">
-                    <div id="metadatCreatorInfo" class="label1" title="Information about the person who created the metadata file">Metadata creator information (*):</div>
-                    <div class="col-md-9 col-sm-9">
-                        <div id="metadatCreatorInfoNameLabel" class="label2">Name (*):</div>
-                        <input id="metadatCreatorInfoNameInput" class="mandatoryField form-control form-control-xl" name="metadatCreatorInfoName" type="text">
+<!--*********************************** METADATA CREATOR *********************************** -->
+<div id="metadatCreatorInfoRow" class="row col-md-24 col-sm-24">
+<div id="metadatCreatorInfo" class="label1" title="Information about the person who created the metadata file">Metadata creator information (*):</div>
+<div class="col-md-10 col-sm-10">
+<div id="metadatCreatorInfoNameLabel" class="label2">Name (*):</div>
+<input id="metadatCreatorInfoNameInput" class="mandatoryField form-control form-control-xl" name="metadatCreatorInfoName" type="text">
 
-                        <div id="metadatCreatorInfoRoleLabel" class="label2 form-control-xxl">Role (*):</div>
-                        <select id="metadatCreatorInfoRoleSelect" class="form-control form-control-xl" name="metadatCreatorInfoRole">
-                            <option value="nullValue">----</option>
-                            <option value="Resource provider">Resource provider</option>
-                            <option value="Custodian">Custodian</option>
-                            <option value="Owner">Owner</option>
-                            <option value="User">user</option>
-                            <option value="Distibutor">Distributor</option>
-                            <option value="Originator">Originator</option>
-                            <option value="Point of contact">Point of contact</option>
-                            <option value="Principal investigator">Principal investigator</option>
-                            <option value="Processor">Processor</option>
-                            <option value="Publisher">Publisher</option>
-                            <option value="Author">Author</option>
-                        </select>
-                    </div>
-                    <div class="col-md-14 col-sm-14">
-                        <div id="metadatCreatorInfoMailLabel" class="label2">Mail (*):</div>
-                        <input id="metadatCreatorInfoMailInput" class="mandatoryField form-control form-control-l toto" name="metadatCreatorInfoMail" type="text">
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </fieldset>
+<div id="metadatCreatorInfoRoleLabel" class="label2">Role (*):</div>
+<select id="metadatCreatorInfoRoleSelect" class="form-control form-control-xl" name="metadatCreatorInfoRole">
+<option value="nullValue">----</option>
+<option value="Resource provider">Resource provider</option>
+<option value="Custodian">Custodian</option>
+<option value="Owner">Owner</option>
+<option value="User">user</option>
+<option value="Distibutor">Distributor</option>
+<option value="Originator">Originator</option>
+<option value="Point of contact">Point of contact</option>
+<option value="Principal investigator">Principal investigator</option>
+<option value="Processor">Processor</option>
+<option value="Publisher">Publisher</option>
+<option value="Author">Author</option>
+</select>
+</div>
+<div class="col-md-13 col-sm-13">
+ <div id="metadatCreatorInfoMailLabel" class="label2">email (*):</div>
+  <input id="metadatCreatorInfoMailInput" class="mandatoryField form-control form-control-l" name="metadatCreatorInfoMail" type="text">
+ <div id="metadatCreatorInfoPositionLabel" class="label2 cursorPointer" title= "Eg: PhD student, Professor, ...">Position:</div>
+  <input id="metadatCreatorInfoPositionInput" class="mandatoryField form-control form-control-l" name="metadatCreatorInfoPosition" type="text">
+</div>
+</div>
+</div>
+</fieldset>
+</fieldset>
 </div>
 
 
@@ -179,134 +181,146 @@
 <!--**************************** TEMPORAL AND GEO INFORMATION ****************************** -->
 <!--**************************************************************************************** -->
 <div id="tempAndGeoInfo">
-    <fieldset class="fieldset1">
-        <legend class="legend1">Temporal and geographical information</legend>
+<fieldset class="fieldset1">
+<legend class="legend1">Temporal and geographical information</legend>
 
-        <fieldset id="temporalInfo" class="fieldset2">
-            <legend class="legend2">Temporal information:</legend>
+<fieldset id="temporalInfo" class="fieldset2">
+<legend class="legend2">Temporal information:</legend>
 
-            <div class="form-group">
-                <!--*********************************** TEMPORAL RESOLUTION *********************************** -->
-                <div class="label1ContactLegend" id="temporalResolutionText">Temporal resolution (*):</div>
-                <div class="col-md-10 col-sm-10">
-                    <div class="label2 form-control-xxl" id="temporalResolutionTextSelect">Temporal resolution:</div>
-                    <select name="temporalResolution" class="form-control form-control-xl" id="temporalResolutionSelect">
-                        <option value="nullValue">----</option>
-                        <option value="Annual">Annual</option>
-                        <option value="Monthly">Monthly</option>
-                        <option value="Daily">Daily</option>
-                        <option value="Hourly">hourly</option>
-                        <option value="">Other</option>
-                    </select>
-                </div>
-                <div class="col-md-13 col-sm-13">
-                    <div class="label2 form-control-xxl" id="temporalResolFreeTextText">Other resolution (free text):</div>
-                    <input id="temporalResolFreeTextInput" class="form-control form-control-xxl" name="temporalResolution" type="text">
-                </div>
+<div class="form-group">
+<!--*********************************** TEMPORAL RESOLUTION *********************************** -->
+<div class="label1ContactLegend" id="temporalResolutionText">Temporal resolution (*):</div>
+<div class="col-md-5 col-sm-5">
+<div class="label2 form-control-xxl" id="temporalResolutionTextSelect">Select value:</div>
+<select name="temporalResolution" class="form-control" id="temporalResolutionSelect">
+<option value="nullValue">----</option>
+<option value="Annual">Annual</option>
+<option value="Monthly">Monthly</option>
+<option value="Daily">Daily</option>
+<option value="Hourly">hourly</option>
+<option value="">Other</option>
+</select>
+</div>
+<div class="col-md-13 col-sm-13">
+<div class="label2 form-control-xxl" id="temporalResolFreeTextText">Other resolution:</div>
+<input id="temporalResolFreeTextInput" class="form-control" name="temporalResolution" type="text">
+</div>
 
-                <!--*********************************** TEMPORAL COVERAGE *********************************** -->
-                <div id=temporalCoverageContainer>
-                    <div class="label1" id="temporalCoverageText" title="Period during which data applied (eg: 1997-01-01 to 2005-12-31)">Temporal coverage (*):</div>
-                    <div class="divFloatLeft">
-                        <div class="label2 form-control-xxl" id="temporalCoverageBeginText">Begin:</div>
-                        <div id="temporalCoverageBegin" class="dateInput" name="temporalCoverageBeginName"></div>
-                    </div>
-                    <div class="divFloatLeft">
-                        <div class="label2 form-control-xxl" id="temporalCoverageEndText">End:</div>
-                        <div id="temporalCoverageEnd" class="dateInput" name="temporalCoverageEndName"></div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
+<!--*********************************** TEMPORAL COVERAGE *********************************** -->
+<div id=temporalCoverageContainer>
+<div class="label1" id="temporalCoverageText" title="Period covered (eg: 1997-01-01 to 2005-12-31)">Temporal coverage (*):</div>
+<div class="divFloatLeft">
+<div class="label2 form-control-xxl" id="temporalCoverageBeginText">Begin:</div>
+<div id="temporalCoverageBegin" class="dateInput" name="temporalCoverageBeginName"></div>
+</div>
+<div class="divFloatLeft">
+<div class="label2 form-control-xxl" id="temporalCoverageEndText">End:</div>
+<div id="temporalCoverageEnd" class="dateInput" name="temporalCoverageEndName"></div>
+</div>
+</div>
+</div>
+</fieldset>
 
-        <fieldset id="temporalInfo" class="fieldset2">
-            <legend class="legend2">Geographical information:</legend>
+<fieldset id="temporalInfo" class="fieldset2">
+<legend class="legend2">Geographical information:</legend>
 
-            <div class="form-group">
-                <!--*********************************** SPATIAL RESOLUTION *********************************** -->
-                <div class="row col-md-24 col-sm-24">
-                    <div class="label1ContactLegend" id="spatialResolutionLongText" title="Level of detail expressed as a ground distance">Spatial resolution for
-                        original product (*):
-                    </div>
-                    <div class="col-md-8 col-sm-8">
-                        <div class="label2 form-control-xxl" id="spatialResolutionLongUnitText">Unit:</div>
-                        <select id="spatialResolutionUnitLongSelect" class="form-control form-control-xxl" name="spatialResolutionLongUnit">
-                            <option value="Degrees">Degrees</option>
-                            <option value="Meters">Meters</option>
-                        </select>
-                    </div>
-                    <div class="col-md-11 col-sm-11">
-                        <div class="label2 form-control-l" id="spatialResolutionValueText">Value:</div>
-                        <input id="spatialResolutionValueInput" class="form-control form-control-l" name="spatialResolutionValue" type="text">
-                    </div>
-                </div>
+<div class="form-group">
+<!--*********************************** SPATIAL RESOLUTION *********************************** -->
+<div class="row col-md-24 col-sm-24">
+ <div class="label1ContactLegend" id="spatialResolutionLongText" title="Level of detail expressed as a ground distance">Spatial resolution for
+original product (*):</div>
+ <div class="col-md-5 col-sm-5">
+  <div class="label2" id="spatialResolutionLongUnitText">Unit:</div>
+  <select id="spatialResolutionUnitLongSelect" class="form-control" name="spatialResolutionLongUnit">
+	<option value="Degrees">Degrees</option>
+	<option value="Meters">Meters</option>
+  </select>
+ </div>
+ <div id= "spatialResolutionValueLongInputRow" class="col-md-6 col-sm-6">
+  <div class="label2 cursorPointer" id="spatialResolutionValueLongText" title="Spatial resolution for longitude component">Longitude value:</div>
+    	<input id="spatialResolutionValueLongInput" class="form-control inLine" name="spatialResolutionValueLong" type="text">
+ </div>
+ <div id= "spatialResolutionValueLatInputRow" class="col-md-6 col-sm-6">
+  <div class="label2 cursorPointer" id="spatialResolutionValueLatText" title="Spatial resolution for longitude component">Latitude value:</div>
+    	<input id="spatialResolutionValueLatInput" class="form-control inLine" name="spatialResolutionValueLat" type="text">
+ </div>
+ <!--<div class="col-md-7 col-sm-7">
+  <div class="label2 cursorPointer" id="spatialResolutionValueLatText" title="Spatial resolution for latitude component">Latitude value:</div>
+ </div>-->
 
-                <!--*********************************** SPATIAL COVERAGE *********************************** -->
-                <div class="row col-md-24 col-sm-24">
-                  <div class="label1" id="spatialCoverageText" title= "Geographical area where data applied (only degrees).Tip: longitude at the east of Greenwich and latitude at the south of the Ecuador are negative">Spatial coverage (*):</div>
-                    <div id="applyGlobalScaleText" class="label2b">Apply global coverage (ie: data covered the entire world):<div id="applyGlobalScaleButton" class= "cursorPointer inLine">Apply</div></div>
-                    <div id="applyOtherSpatialCoverageText" class="label2b">Apply other spatial coverage:</div>
-		     <div id= "spatialCoverageDefLim" class="col-md-24 col-sm-24">
-					<div class="label2 cursorPointer inLine" id="spatialCoverageNorthText" title="North bound latitude">North:</div>
-                        		  <input id="spatialCoverageNorthInput" class="form-control form-control-xxs" name="northBoundLatitude" type="text">
-                            		<div class="label2 cursorPointer inLine" id="spatialCoverageWestText" title="West bound longitude">West:</div>
-                            		  <input id="spatialCoverageWestInput" class="form-control form-control-xxs" name="westBoundLongitude" type="text">
-                            		<div class="label2 cursorPointer inLine" id="spatialCoverageEastText" title="East bound longitude">East:</div>
-                            		  <input id="spatialCoverageEastInput" class="form-control form-control-xxs" name="eastBoundLongitude" type="text">
-                          		<div class="label2 cursorPointer inLine" id="spatialCoverageSouthText" title="South bound latitude">South:</div>
-                          		  <input id="spatialCoverageSouthInput" class="form-control form-control-xxs" name="southBoundLatitude" type="text">
-		     </div>
-		     <div class="col-md-24 col-sm-24">
-			    <div id= "applySpatialCovButton" class= "cursorPointer inLine">Visualise spatial coverage on the map</div>
-			    <div id= "removeSpatialCovButton"  class= "cursorPointer inLine">Remove spatial coverage on the map</div>
-		     </div>
-			
-                     <div id= "containerMapInfoSpatCov" class="col-md-24 col-sm-24">
-				<div id='map_element'/>
-                     </div>
-                </div>
+</div>
 
-                    <!--*********************************** VERTICAL LEVEL *********************************** -->
-                    <div class="row col-md-24 col-sm-24">
-                        <div class="label1" id="verticalLevelText">Vertical level:</div>
-                        <div class="col-md-11 col-sm-11">
-                            <div class="label2 form-control-xl" id="selectCategoryVerticalLevelText">Select a vertical level:</div>
-                            <select name="verticalLevel" class="form-control form-control-xl" id="selectCategoryVerticalLevelSelect">
-                                <option value="None">None</option>
-                                <option value="Atmospheric levels">Atmospheric levels</option>
-                                <option value="Surface level">Surface level</option>
-                                <option value="Below-ground levels">Below-ground levels</option>
-                                <option value="">Other</option>
-                            </select>
-                        </div>
+<!--*********************************** SPATIAL COVERAGE *********************************** -->
+<div class="row col-md-24 col-sm-24">
+<div class="label1" id="spatialCoverageText" title= "Geographical area where data applied (only degrees).Tip: longitude at the east of Greenwich and latitude at the south of the Ecuador are negative">Spatial coverage (*):</div>
+<div id="applyGlobalScaleText" class="label2b">Choose global coverage (ie: data covered the entire world):<div id="applyGlobalScaleButton" class= "cursorPointer inLine">Apply</div></div>
+<div id="applyOtherSpatialCoverageText" class="label2b">Choose other spatial coverage:</div>
+<div id= "spatialCoverageDefLim" class="col-md-24 col-sm-24">
+<div class="label2 cursorPointer inLine" id="spatialCoverageNorthText" title="North bound latitude">North:</div>
+<input id="spatialCoverageNorthInput" class="form-control form-control-xxs" name="northBoundLatitude" type="text">
+<div class="label2 cursorPointer inLine" id="spatialCoverageWestText" title="West bound longitude">West:</div>
+<input id="spatialCoverageWestInput" class="form-control form-control-xxs" name="westBoundLongitude" type="text">
+<div class="label2 cursorPointer inLine" id="spatialCoverageEastText" title="East bound longitude">East:</div>
+<input id="spatialCoverageEastInput" class="form-control form-control-xxs" name="eastBoundLongitude" type="text">
+<div class="label2 cursorPointer inLine" id="spatialCoverageSouthText" title="South bound latitude">South:</div>
+<input id="spatialCoverageSouthInput" class="form-control form-control-xxs" name="southBoundLatitude" type="text">
+</div>
+<div class="col-md-24 col-sm-24">
+<div id= "applySpatialCovButton" class= "cursorPointer inLine">Visualise spatial coverage</div>
+<div id= "removeSpatialCovButton" class= "cursorPointer inLine">Clear</div>
+</div>
+<div id= "containerMapInfoSpatCov" class="col-md-24 col-sm-24">
+<div id='map_element'><div id= "mapPanel"  class= "cursorPointer" title= "Click to turn to initial view (entire world)"/></div>
+</div>
+</div>
 
-                        <div id="verticalLevelOtherContainer" class="col-md-11 col-sm-11">
-                            <div class="label2 form-control-xl" id="verticalLevelFreeTextText">Other vertical level:</div>
-                            <input id="verticalLevelFreeTextInput" class="form-control form-control-xxl" name="verticalLevel" type="text">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </fieldset>
+<!--*********************************** VERTICAL LEVEL *********************************** -->
+<div class="row col-md-24 col-sm-24">
+<div class="label1" id="verticalLevelText">Vertical level:</div>
+<div class="col-md-11 col-sm-11">
+<div class="label2 form-control-xl" id="selectCategoryVerticalLevelText">Select a vertical level:</div>
+<select name="verticalLevel" class="form-control form-control-xl" id="selectCategoryVerticalLevelSelect">
+<option value="None">None</option>
+<option value="Atmospheric levels">Atmospheric levels</option>
+<option value="Surface level">Surface level</option>
+<option value="Below-ground levels">Below-ground levels</option>
+<option value="">Other</option>
+</select>
+</div>
+
+<div id="verticalLevelOtherContainer" class="col-md-11 col-sm-11">
+<div class="label2 form-control-xl" id="verticalLevelFreeTextText">Other vertical level:</div>
+<input id="verticalLevelFreeTextInput" class="form-control form-control-xxl" name="verticalLevel" type="text">
+</div>
+</div>
+</div>
+</div>
+</fieldset>
+</fieldset>
 </div>
 <!--**************************************************************************************** -->
 <!--******************************** PRODUCT DESCRIPTION *********************************** -->
 <!--**************************************************************************************** -->
 <div id="productDetailsrow">
-    <fieldset class="fieldset1" id="productDetailsfieldset1">
-        <legend class="legend1">Product description (methodology)</legend>
-        <div class="form-group">
-            <div id="productDetailsdescriptionRow" class="row">
-              <div class="label1ContactLegend" id="productDetailsDescriptionText" title= "Eg: 'Step 1: Compilation of satelite data from ...' 'Step 2: We applied to these data a model based on ...' ">Describe here how was built your product step by step:</div>
-            	<div id="productDetailsDescriptionContainer"></div><!-- Is full dynamically by js (with div id= productDetailsDescriptionContainer + -->
-             <div id="productDetailsContainerButton" class="row col-md-11 col-sm-11">
-                <div title="Click to add steps">Add steps: <img id="addProductDetailsStepButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer">
-                </div>
-             </div>
+  <fieldset class="fieldset1" id="productDetailsfieldset1">
+    <legend class="legend1">Product description (methodology)</legend>
+      <div class="form-group">
+        <div id="productDetailsdescription" class="row col-md-24 col-sm-24">
+	  <div class="label1ContactLegend cursorPointer" id="productDetailsDescriptionText" title= "Eg: 'Step 1: Compilation of satelite data from ...' 'Step 2: We applied to these data a model based on ...' ">Describe step by step how your product was built:</div>
+	    <div id="productDetailsDescriptionContainer"></div><!-- Is full dynamically by js (with div id= productDetailsDescriptionContainer + -->
+	    <div id="productDetailsContainerButton" class="row col-md-24 col-sm-24">
+	      <div title="Click to add steps">Add steps (5 maximum): <img id="addProductDetailsStepButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer"></div>
 	    </div>
 	</div>
-    </fieldset>
+        <div id="addProductDetailsdescription" class="row col-md-24 col-sm-24">
+	    <div class="label1ContactLegend" id="addDetailsDescriptionText">Document to illustrate the description above:</div>
+              <div class="label2 form-control-l" id="addDocProductDetailsStepText">URL for additional description:</div>
+                <input id="addDocProductDetailsStepInput" class="form-control form-control-l" name="addDocProductDetailsStep" type="text">
+              <div class="label2 form-control-xxl cursorPointer" id="addDocDescripProductDetailsStepText">Comments about the url document:</div>
+                <textarea id="addDocDescripProductDetailsStepTextArea" class= "form-control-l" name="addDocDescripProductDetailsStep" rows="1" cols="60"></textarea>
+        </div>
+</div>
+</fieldset>
 </div>
 
 
@@ -314,32 +328,31 @@
 <!--******************************* KEYWORDS AND REFERENCE ********************************* -->
 <!--**************************************************************************************** -->
 <div id="keywordsAbstractAndCitation">
-    <fieldset class="fieldset1" id="keywordsAndAbstractAndCitationsFieldset">
-        <legend class="legend1">Keywords and reference</legend>
+<fieldset class="fieldset1" id="keywordsAndAbstractAndCitationsFieldset">
+<legend class="legend1">Keywords and reference</legend>
 
-        <fieldset id="keywordsAndAbstractFieldset" class="fieldset2">
-            <legend class="legend2">Keywords:</legend>
+<fieldset id="keywordsAndAbstractFieldset" class="fieldset2">
+<legend class="legend2">Keywords:</legend>
 
-            <div class="form-group">
-                <!--*********************************** LIST OF KEYWORDS *********************************** -->
-                <div class="label1ContactLegend" id="keywordsInfoText">List of keywords describing the product:</div>
-                <input id="keywordsInfoInput" class="form-control form-control-m" name="keywordsInfo" type="text">
-            </div>
-        </fieldset>
-	<div id= "referenceTitleBeforeAdd" class="row col-md-24 col-sm-24">
-        	<legend class="legend2">Reference(s):</legend>
-	</div>
-		
+<div class="form-group">
+<!--*********************************** LIST OF KEYWORDS *********************************** -->
+<div class="label1ContactLegend" id="keywordsInfoText">List of keywords describing the product:</div>
+<input id="keywordsInfoInput" class="form-control form-control-m" name="keywordsInfo" type="text">
+</div>
+</fieldset>
+<div id= "referenceTitleBeforeAdd" class="row col-md-24 col-sm-24">
+<!--<legend class="legend2">Reference(s):</legend>-->
+</div>
 
-        <!-- Divs dynamically built with the 'createReferenceFieldset' function (metadataGCAForm_script.js) -->
-        <div id="referencesContainer"></div>
+<!-- Divs dynamically built with the 'createReferenceFieldset' function (metadataGCAForm_script.js) -->
+<div id="referencesContainer"></div>
 
-        <div id="referencesContainerButton" class="row col-md-24 col-sm-24">
-            <div class="cursorPointer addQuitAllContainerText" title="Click to add reference information (no more than 5)">Add reference information (5 maximum) :
-                <img id="addReferenceInfoButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer">
-            </div>
-        </div>
-    </fieldset>
+<div id="referencesContainerButton" class="row col-md-24 col-sm-24">
+<div class="cursorPointer addQuitAllContainerText" title="Click to add reference information (no more than 5)">Add reference information (5 maximum) :
+<img id="addReferenceInfoButton" src="img/addChamp.png" class="img-responsive img-rounded addQuitAllContainer cursorPointer">
+</div>
+</div>
+</fieldset>
 </div>
 
 
@@ -347,22 +360,22 @@
 <!--******************************* QUALITY DATA INFORMATION ******************************* -->
 <!--**************************************************************************************** -->
 <div id="qualityDataInformation">
-    <fieldset class="fieldset1" id="qualityDataInformationFieldset">
-        <legend class="legend1">Quality data information</legend>
+<fieldset class="fieldset1" id="qualityDataInformationFieldset">
+<legend class="legend1">Quality data information</legend>
 
-        <div class="label1ContactLegend form-control-xxl" id="discoveredIssueText" title="Describe here some issues identified with the quality related to this data.">
-            Quality description (availability of product-errors, product evaluation, ...) (*):
-        </div>
-        <textarea id="discoveredIssueArea" name="discoveredIssueQualityData" rows="10" cols="50"></textarea>
+<div class="label1ContactLegend form-control-xxl" id="discoveredIssueText" title="Describe here relevant issues identified with the quality related to this data.">
+Quality description (availability of product-errors, product evaluation, ...) (*):
+</div>
+<textarea id="discoveredIssueArea" name="discoveredIssueQualityData" rows="5" class= "form-control-l"></textarea>
 
-        <div class="label2 form-control-xxl" id="standAloneText" title="Reference to a document to illustrate quality description">Document URL to describe quality:</div>
-        <input id="standAloneInput" class="form-control form-control-m" name="standAloneName" type="text">
-                <div class="col-md-24 col-sm-24">
-                    <div class="label2 form-control-xxl" id="addDocDescripQualityInfoText">Information about the document related to the url:
-                    </div>
-                    <textarea id="addDocDescripQualityInfoTextTextArea" name="addDocDescripQualityInfo" rows="2" cols="60"></textarea>
-                </div>
-    </fieldset>
+<div class="label2 form-control-xxl" id="standAloneText" title="Reference to a document to illustrate quality description">URL for additional quality description:</div>
+<input id="standAloneInput" class="form-control form-control-l" name="standAloneName" type="text">
+<div class="col-md-24 col-sm-24">
+<div class="label2 form-control-xxl" id="addDocDescripQualityInfoText">Comments about the url document:
+</div>
+<textarea id="addDocDescripQualityInfoTextTextArea" name="addDocDescripQualityInfo" class="form-control-l" rows="2" cols="60"></textarea>
+</div>
+</fieldset>
 </div>
 
 
@@ -370,145 +383,158 @@
 <!--************************** DATA ACCESS AND DATA USE POLICY ***************************** -->
 <!--**************************************************************************************** -->
 <div id="accessAndUseLimitations">
-    <fieldset class="fieldset1" id="accessAndUseLimitationsFieldset">
-        <legend class="legend1">Data access and data use policy</legend>
+<fieldset class="fieldset1" id="accessAndUseLimitationsFieldset">
+<legend class="legend1">Data access and data use policy</legend>
 
-        <div class="form-group">
-            <!--*********************************** PI *********************************** -->
-            <div class="col-md-24 col-sm-24">
-                <div class="label1ContactLegend form-control-l" id="principalInvestigatorContactText">Principal Investigator (PI) contact (*):</div>
-                <div class="col-md-8 col-sm-8">
-                    <div class="label2 form-control-xxl" id="principalInvestigatorContactNameText">Name (*):</div>
-                    <input id="principalInvestigatorContactNameInput" class="form-control form-control-xl" name="principalInvestigatorContactName" type="text">
-                </div>
-                <div class="col-md-8 col-sm-8">
-                    <div class="label2 form-control-xxl" id="principalInvestigatorContactMailText">Mail (*):</div>
-                    <input id="principalInvestigatorContactMailInput" class="form-control form-control-xl" name="principalInvestigatorContactMail" type="text">
-                </div>
-                <div class="col-md-7 col-sm-7">
-                    <div class="label2 form-control-xxl" id="principalInvestigatorContactPhoneText">Phone:</div>
-                    <input id="principalInvestigatorContactPhoneInput" class="form-control form-control-xl" name="principalInvestigatorContactPhone" type="text">
-                </div>
-            </div>
+<div class="form-group">
+<!--*********************************** PI *********************************** -->
+<div class="col-md-24 col-sm-24">
+<div class="label1ContactLegend form-control-l" id="principalInvestigatorContactText">Principal Investigator (PI) contact (*):</div>
+<div class="col-md-13 col-sm-13">
+<div class="label2 form-control-xxl" id="principalInvestigatorContactNameText">Name (*):</div>
+<input id="principalInvestigatorContactNameInput" class="form-control sameWidthReferenceClass" name="principalInvestigatorContactName" type="text">
+</div>
+<div class="col-md-10 col-sm-10">
+<div class="label2" id="principalInvestigatorContactPhoneText">Phone:</div>
+<input id="principalInvestigatorContactPhoneInput" class="form-control" name="principalInvestigatorContactPhone" type="text">
+</div>
+</div>
+<div class="col-md-24 col-sm-24">
+<div class="col-md-13 col-sm-13">
+<div class="label2 form-control-xxl" id="principalInvestigatorContactMailText">email (*):</div>
+<input id="principalInvestigatorContactMailInput" class="form-control sameWidthReferenceClass" name="principalInvestigatorContactMail" type="text">
+</div>
+</div>
 
-            <!--*********************************** ORIGINAL DATA URL *********************************** -->
-            <div class="col-md-9 col-sm-9">
-                <div class="label1 form-control-xxl" id="originalDataUrlText">Original data URL:</div>
-                <input id="originalDataUrlInput" class="form-control form-control-xxl" name="originalDataUrl" type="text">
-            </div>
+<!--*********************************** ORIGINAL DATA URL *********************************** -->
+<div class="col-md-13 col-sm-13">
+<div class="label1 form-control-xxl" id="originalDataUrlText">Original data URL:</div>
+<input id="originalDataUrlInput" class="form-control sameWidthReferenceClass" name="originalDataUrl" type="text">
+</div>
 
-            <!--*********************************** DATA POLICY *********************************** -->
-            <div class="col-md-24 col-sm-24">
-                <div class="label1 form-control-l" id="dataPolicyText">Data policy:</div>
-            </div>
-            <div class="col-md-24 col-sm-24">
-                <div class="label2 form-control-xxl" id="dataPolicyChooseText">Select a data policy:</div>
-                <select id="dataPolicyChooseSelect" class="form-control form-control-m" name="dataPolicy" type="text">
-                    <option value="None">None</option>
-                    <option value="Free to use">Free to use</option>
-                    <option value="Restricted to scientists">Restricted to scientists</option>
-                    <option value="Not free: contact PI">Not free: contact PI</option>
-                    <option value="">Other</option>
-                </select>
-            </div>
-            <div id="dataPolicyFreeContainer" class="col-md-24 col-sm-24">
-                <div class="label2 form-control-xxl" id="dataPolicyFreeText">Other data policy:</div>
-                <textarea id="dataPolicyFreeInput" name="dataPolicy" rows="3" cols="60"></textarea>
-            </div>
-        </div>
-    </fieldset>
+<!--*********************************** DATA POLICY *********************************** -->
+<div class="col-md-24 col-sm-24">
+<div class="label1 form-control-l" id="dataPolicyText">Data policy (*):</div>
+</div>
+<div class="col-md-24 col-sm-24">
+<div class="label2 form-control-xxl" id="dataPolicyChooseText">Select a data policy:</div>
+<select id="dataPolicyChooseSelect" class="form-control form-control-m" name="dataPolicy" type="text">
+<option value="nullValue">----</option>
+<option value="Free to use">Free to use</option>
+<option value="Restricted to scientists">Restricted to scientists-Free to use</option>
+<option value="Not free: contact PI">Not free: contact PI</option>
+<option value="">Other</option>
+</select>
+</div>
+<div id="dataPolicyFreeContainer" class="col-md-24 col-sm-24">
+<div class="label2 form-control-xxl" id="dataPolicyFreeText">Other data policy:</div>
+<textarea id="dataPolicyFreeInput" name="dataPolicy" rows="3" cols="60"></textarea>
+</div>
+</div>
+</fieldset>
 </div>
 
 <input id="submitFormButon" type="submit" value="Submit"/>
 
 </form>
-	<div id="showResultButton" class= "cursorPointer" title= "Visualise the result of the metadata file. You can change your answers if you are not satisfied (You have to turn to submit the form before!)" style="display:none" >Show the result</div>
+<div id="showResultButton" class= "cursorPointer" title= "Visualise the result of the metadata file. You can change your answers if you are not satisfied (You have to turn to submit the form before!)" style="display:none" >Show the result</div>
 </div>
 
 <script text="text/javascript">
-    // See http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/
-    $( document ).ready( function()
-    {
-   // *************************** Construct a map to visualise spatial coverage :  ***************************************** //
+// See http://www.jankoatwarpspeed.com/turn-any-webform-into-a-powerful-wizard-with-jquery-formtowizard-plugin/
+$( document ).ready( function()
+{
+// *************************************************************************************************************************** //
+// *************************** Construct a map to visualise spatial coverage : ***************************************** //
+// *************************************************************************************************************************** //
 
-	// Build map://
-	  var map = new OpenLayers.Map('map_element', {
-	  });
-     	  var landMaskLayer = new OpenLayers.Layer.WMS(
-          "Land mask",
-          "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-        	{
-           	VERSION: '1.1.1',
-           	LAYERS: "GCA:GCA_landMask",
-           	transparent: true,
-           	FORMAT: 'image/png',
-       		}, {
-           		isBaseLayer: true,
-           		opacity: 1,
-                   }
-	   );
-     	var frontiersLayer = new OpenLayers.Layer.WMS(
-       "Frontiers",
-       "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-   	{
-           VERSION: '1.1.1',
-           LAYERS: "GCA:GCA_frontiersCountryAndRegions",
-   	   transparent: true,
-           FORMAT: 'image/png',
-       }, {
-           isBaseLayer: false,
-           opacity: 1, 
-       } );
-     var graticulesLayer = new OpenLayers.Layer.WMS(
-       "Graticules",
-       "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-        {
-           VERSION: '1.1.1',
-           LAYERS: "GCA:GCA_graticules01_05_10",
-           transparent: true,
-           FORMAT: 'image/png',
-       }, {
-           isBaseLayer: false,
-           opacity: 1,
-       } );
+// Build map://
+var map = new OpenLayers.Map('map_element', {
+	resolutions: [0.703125,0.3515625,0.17578125,0.087890625,0.0439453125],// J'ai enleve le 1er resol, celle correspondant a zoom initial (1,4...) pòur fixer le zoom minimal a pìle poil le monde.
+});
+var landMaskLayer = new OpenLayers.Layer.WMS(
+"Land mask",
+"http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+{
+VERSION: '1.1.1',
+LAYERS: "GCA:GCA_landMask",
+transparent: true,
+FORMAT: 'image/png',
+}, {
+isBaseLayer: true,
+opacity: 1,
+}
+);
+var frontiersLayer = new OpenLayers.Layer.WMS(
+"Frontiers",
+"http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+{
+VERSION: '1.1.1',
+LAYERS: "GCA:GCA_frontiersCountryAndRegions",
+transparent: true,
+FORMAT: 'image/png',
+}, {
+isBaseLayer: false,
+opacity: 1,
+} );
+var graticulesLayer = new OpenLayers.Layer.WMS(
+"Graticules",
+"http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
+{
+VERSION: '1.1.1',
+LAYERS: "GCA:GCA_graticules01_05_10",
+transparent: true,
+FORMAT: 'image/png',
+}, {
+isBaseLayer: false,
+opacity: 1,
+} );
+// Add zoomToMAxExtent control: 
+  var navigation_control= new OpenLayers.Control.Navigation();
+  var control_panel= new OpenLayers.Control.Panel({
+	div: document.getElementById("mapPanel"),
+  });
+   control_panel.addControls([new OpenLayers.Control.ZoomToMaxExtent()]);
+   map.addControl(control_panel);
+//////////////////////////////////////////////////////////////////////////
 
-	  map.addLayers([landMaskLayer, frontiersLayer, graticulesLayer]);
+   map.addLayers([landMaskLayer, frontiersLayer, graticulesLayer]);
 
-	// Set initial map view:
-	map.setCenter(new OpenLayers.LonLat(0,0));
-	map.zoomTo(1);
+// Set initial map view:
+map.setCenter(new OpenLayers.LonLat(0,0));
+map.zoomTo(0);// f(resolutions array passee ds map constructor).
 
-	// Choose global scale:
-	$("#applyGlobalScaleButton").click(function() {
-		$("#spatialCoverageNorthInput").val(90);
-		$("#spatialCoverageWestInput").val(-180);
-		$("#spatialCoverageEastInput").val(180);
-		$("#spatialCoverageSouthInput").val(-90);
-	});
+// Choose global scale:
+$("#applyGlobalScaleButton").click(function() {
+$("#spatialCoverageNorthInput").val(90);
+$("#spatialCoverageWestInput").val(-180);
+$("#spatialCoverageEastInput").val(180);
+$("#spatialCoverageSouthInput").val(-90);
+});
 
-	// Build spatial coverage:
-	$("#applySpatialCovButton").click(function() {
-	  var vector_layer = new OpenLayers.Layer.Vector('Basic Vector Layer');
-	  map.addLayer(vector_layer);
-		var limNorth = $('#spatialCoverageNorthInput').val();
-		var limSouth = $('#spatialCoverageSouthInput').val();
-		var limWest = $('#spatialCoverageWestInput').val();
-		var limEast = $('#spatialCoverageEastInput').val();
-	  // Note : les points commencent en haut a gauche et ensuite ds sens montre.
-	var geom_point_1= new OpenLayers.Geometry.Point(limWest, limNorth);
-	var geom_point_2= new OpenLayers.Geometry.Point(limEast, limNorth);
-	var geom_point_3= new OpenLayers.Geometry.Point(limEast, limSouth);
-	var geom_point_4= new OpenLayers.Geometry.Point(limWest, limSouth);
-	  // Si je suis indications livre OL basic p238 : 
-	 var geom_linear_ring = new OpenLayers.Geometry.LinearRing([ geom_point_1, geom_point_2, geom_point_3, geom_point_4]);
-	 var feature_linear_ring = new OpenLayers.Feature.Vector(geom_linear_ring);
-	 map.layers[3].addFeatures(feature_linear_ring);// On ajoute a vector layer definie avant.
-	});
+// Build spatial coverage:
+$("#applySpatialCovButton").click(function() {
+var vector_layer = new OpenLayers.Layer.Vector('Basic Vector Layer');
+map.addLayer(vector_layer);
+var limNorth = $('#spatialCoverageNorthInput').val();
+var limSouth = $('#spatialCoverageSouthInput').val();
+var limWest = $('#spatialCoverageWestInput').val();
+var limEast = $('#spatialCoverageEastInput').val();
+// Note : les points commencent en haut a gauche et ensuite ds sens montre.
+var geom_point_1= new OpenLayers.Geometry.Point(limWest, limNorth);
+var geom_point_2= new OpenLayers.Geometry.Point(limEast, limNorth);
+var geom_point_3= new OpenLayers.Geometry.Point(limEast, limSouth);
+var geom_point_4= new OpenLayers.Geometry.Point(limWest, limSouth);
+// Si je suis indications livre OL basic p238 :
+var geom_linear_ring = new OpenLayers.Geometry.LinearRing([ geom_point_1, geom_point_2, geom_point_3, geom_point_4]);
+var feature_linear_ring = new OpenLayers.Feature.Vector(geom_linear_ring);
+map.layers[3].addFeatures(feature_linear_ring);// On ajoute a vector layer definie avant.
+});
 
-	// Remove spatial cov on map:
-	$("#removeSpatialCovButton").click(function() {
-	  map.layers[3].destroy();
-	});
+// Remove spatial cov on map:
+$("#removeSpatialCovButton").click(function() {
+map.layers[3].destroy();
+});
    // ******************************************************************** //
 
         // Create menu band
@@ -523,16 +549,7 @@
         // Init product description with one row
         createProductDescrStepDiv( "productDetailsDescriptionContainer", 1 );
 
-        // Add reference only if necessary (no mandatory but if we choose to fill in some fields are mandatory).
-    $( "#addReferenceInfoButton" ).click( function()
-	{
-        if($( 'input[id^="citationTitleInput"]' ).length<1)
-	{
-        createReferenceFieldset( "referencesContainer", 1 );
-	$("#referenceTitleBeforeAdd").hide();
-	}
-	else {return false;}
-	});
+	createReferenceFieldset( "referencesContainer", 1 );
 
         // Add validators to form
         $( "#metadataForm" ).jqxValidator( {rules: validatorRules} );
@@ -543,9 +560,10 @@
             validateForm();
             event.preventDefault();
         } );
+
         $( '#metadataForm' ).on( 'validationError', function ( event )
         {
-            var errorNumber = event.args.invalidInputs.length;
+            var errorNumber = (event.args.invalidInputs.length)/2;
             alert( "Some fields are empty or incorrect. Please check your form : " + errorNumber + " errors." );
         } );
 
@@ -553,45 +571,43 @@
         $( '#metadataForm' ).on( 'validationSuccess', function ( event )
         {
             alert( "Your form is complete and validate.");
-	    $("#showResultButton").show();
+$("#showResultButton").show();
 
-		var dateFillForm= new Date();
-		var dateFillFormIso= dateFillForm.toISOString();// name of the xml file created based on this parameter, to be sure to have unique name.
-		
-	$("#showResultButton").click(function() {
-		// For Inputs:
-		if ($("#dataProductTypeSelect").val() == "") {
-			var prodTypeInput= $("#dataProductTypeFreeTextInput").val();
-		}	
-		else var prodTypeInput= "";
-		if ($("#dataProductCategorySelect").val() == "") {
-			var prodCatInput= $("#dataProductCategoryFreeTextInput").val();
-		}	
-		else var prodCatInput= "";
-		// For Selects: 	
-		if ($("#dataProductTypeFreeTextInput").is(':visible'))
-		{
-			var prodTypeSelect= "";
-		}
-		else var prodTypeSelect= $("#dataProductTypeSelect").val();	
-		if ($("#dataProductCategoryFreeTextInput").is(':visible'))
-		{
-			var prodCatSelect= "";
-		}
-		else var prodCatSelect= $("#dataProductCategorySelect").val();	
+var dateFillForm= new Date();
+var dateFillFormIso= dateFillForm.toISOString();// name of the xml file created based on this parameter, to be sure to have unique name.
 
-		var prodTitle= $("#prodNameTitleInput").val();
-		var prodVersion= $("#prodNameVersionInput").val();
-			
-		var linkToXml2= prodTypeSelect + prodTypeInput + "_" + prodCatSelect + prodCatInput + "_" + prodTitle + "_" + prodVersion + "_" + dateFillFormIso; 
-		//window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/"+linkToXml2+".xml");
-		//window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/"+linkToXml+".xml");
-		window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");// Si je fait ca ne m'affiche pa spls fois les fenetres qud je clique sur submit et show button. Par contre meme comportement si je rentre ds parametre Metatada of the file var linkToXml2 !!!
-	});
+$("#showResultButton").click(function() {
+// For Inputs:
+if ($("#dataProductTypeSelect").val() == "") {
+var prodTypeInput= $("#dataProductTypeFreeTextInput").val();
+}	
+else var prodTypeInput= "";
+if ($("#dataProductCategorySelect").val() == "") {
+var prodCatInput= $("#dataProductCategoryFreeTextInput").val();
+}	
+else var prodCatInput= "";
+// For Selects:
+if ($("#dataProductTypeFreeTextInput").is(':visible'))
+{
+var prodTypeSelect= "";
+}
+else var prodTypeSelect= $("#dataProductTypeSelect").val();	
+if ($("#dataProductCategoryFreeTextInput").is(':visible'))
+{
+var prodCatSelect= "";
+}
+else var prodCatSelect= $("#dataProductCategorySelect").val();	
+
+var prodTitle= $("#prodNameTitleInput").val();
+var prodVersion= $("#prodNameVersionInput").val();
+
+var linkToXml2= prodTypeSelect + prodTypeInput + "_" + prodCatSelect + prodCatInput + "_" + prodTitle + "_" + prodVersion + "_" + dateFillFormIso;
+window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");
+});
 
             var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
 	    var nReferences= $( 'input[id^="citationTitleInput"]' ).length;
-	    var nDescriptionSteps= $( 'input[id^="addDocProductDetailsStepInput"]' ).length;
+	    var nDescriptionSteps= $( 'textarea[id^="textAreaProductDetails"]' ).length;
 
             var dataDateCreation = $( this ).find( "input[name=dataDateCreation]" ).val();
             var dataProductTypeSelect = $( this ).find( "select[name=dataProductType]" ).val();
@@ -621,10 +637,16 @@
             var dataProducerInfoRole111 = $( this ).find( "select[name=dataProducerInfoRole111]" ).val();
             var dataProducerInfoRole1111 = $( this ).find( "select[name=dataProducerInfoRole1111]" ).val();
             var dataProducerInfoRole11111 = $( this ).find( "select[name=dataProducerInfoRole11111]" ).val();
+            var dataProducerInfoPosition1 = $( this ).find( "input[name=dataProducerInfoPosition1]" ).val();
+            var dataProducerInfoPosition11 = $( this ).find( "input[name=dataProducerInfoPosition11]" ).val();
+            var dataProducerInfoPosition111 = $( this ).find( "input[name=dataProducerInfoPosition111]" ).val();
+            var dataProducerInfoPosition1111 = $( this ).find( "input[name=dataProducerInfoPosition1111]" ).val();
+            var dataProducerInfoPosition11111 = $( this ).find( "input[name=dataProducerInfoPosition11111]" ).val();
             var metadataDateCreation = $( this ).find( "input[name=metadataDateCreation]" ).val();
             var metadatCreatorInfoName = $( this ).find( "input[name=metadatCreatorInfoName]" ).val();
             var metadatCreatorInfoMail = $( this ).find( "input[name=metadatCreatorInfoMail]" ).val();
             var metadatCreatorInfoRole = $( this ).find( "select[name=metadatCreatorInfoRole]" ).val();
+            var metadatCreatorInfoPosition = $( this ).find( "input[name=metadatCreatorInfoPosition]" ).val();
             // Temp and geo info :
             var temporalResolutionSelect = $( this ).find( "select[name=temporalResolution]" ).val();
             var temporalResolutionInput = $( this ).find( "input[name=temporalResolution]" ).val();
@@ -637,18 +659,16 @@
             var verticalLevelSelect = $( this ).find( "select[name=verticalLevel]" ).val();
             var verticalLevelInput = $( this ).find( "input[name=verticalLevel]" ).val();
             var spatialResolutionLongUnit = $( this ).find( "select[name=spatialResolutionLongUnit]" ).val();
-            var spatialResolutionValue = $( this ).find( "input[name=spatialResolutionValue]" ).val();
+            var spatialResolutionLongValue = $( this ).find( "input[name=spatialResolutionValueLong]" ).val();
+            var spatialResolutionLatValue = $( this ).find( "input[name=spatialResolutionValueLat]" ).val();
             // Product description:
             var productDetails1 = $( this ).find( "textarea[name=productDetailsStep1]" ).val();
             var productDetails11 = $( this ).find( "textarea[name=productDetailsStep11]" ).val();
             var productDetails111 = $( this ).find( "textarea[name=productDetailsStep111]" ).val();
             var productDetails1111 = $( this ).find( "textarea[name=productDetailsStep1111]" ).val();
-            var addDocProductDetails1 = $( this ).find( "input[name=addDocProductDetailsStep1]" ).val();
-            var addDocProductDetails11 = $( this ).find( "input[name=addDocProductDetailsStep11]" ).val();
-            var addDocProductDetails111 = $( this ).find( "input[name=addDocProductDetailsStep111]" ).val();
-	    var addDocDescriptionProductDetails1 = $( this ).find( "textarea[name=addDocDescripProductDetailsStep1]" ).val();
-	    var addDocDescriptionProductDetails11 = $( this ).find( "textarea[name=addDocDescripProductDetailsStep11]" ).val();
-	    var addDocDescriptionProductDetails111 = $( this ).find( "textarea[name=addDocDescripProductDetailsStep111]" ).val();
+            var productDetails11111 = $( this ).find( "textarea[name=productDetailsStep11111]" ).val();
+            var addDocProductDetails = $( this ).find( "input[name=addDocProductDetailsStep]" ).val();
+	    var addDocDescriptionProductDetails = $( this ).find( "textarea[name=addDocDescripProductDetailsStep]" ).val();
 	    // Keywords and ref:
             var keywordsInfo = $( this ).find( "input[name=keywordsInfo]" ).val();
             var citationTitle1 = $( this ).find( "input[name=citationTitle1]" ).val();
@@ -671,16 +691,11 @@
             var citationAuthorOrganisation111 = $( this ).find( "input[name=citationAuthorOrganisation111]" ).val();
             var citationAuthorOrganisation1111 = $( this ).find( "input[name=citationAuthorOrganisation1111]" ).val();
             var citationAuthorOrganisation11111 = $( this ).find( "input[name=citationAuthorOrganisation11111]" ).val();
-            var citationAuthorMail1 = $( this ).find( "input[name=citationAuthorMail1]" ).val();
-            var citationAuthorMail11 = $( this ).find( "input[name=citationAuthorMail11]" ).val();
-            var citationAuthorMail111 = $( this ).find( "input[name=citationAuthorMail111]" ).val();
-            var citationAuthorMail1111 = $( this ).find( "input[name=citationAuthorMail1111]" ).val();
-            var citationAuthorMail11111 = $( this ).find( "input[name=citationAuthorMail11111]" ).val();
-            var citationAuthorRole1 = $( this ).find( "select[name=citationAuthorRole1]" ).val();
-            var citationAuthorRole11 = $( this ).find( "select[name=citationAuthorRole11]" ).val();
-            var citationAuthorRole111 = $( this ).find( "select[name=citationAuthorRole111]" ).val();
-            var citationAuthorRole1111 = $( this ).find( "select[name=citationAuthorRole1111]" ).val();
-            var citationAuthorRole11111 = $( this ).find( "select[name=citationAuthorRole11111]" ).val();
+            var citationAuthorPosition1 = $( this ).find( "input[name=citationAuthorPosition1]" ).val();
+            var citationAuthorPosition11 = $( this ).find( "input[name=citationAuthorPosition11]" ).val();
+            var citationAuthorPosition111 = $( this ).find( "input[name=citationAuthorPosition111]" ).val();
+            var citationAuthorPosition1111 = $( this ).find( "input[name=citationAuthorPosition1111]" ).val();
+            var citationAuthorPosition11111 = $( this ).find( "input[name=citationAuthorPosition11111]" ).val();
             var nameMagazine1 = $( this ).find( "input[name=nameMagazine1]" ).val();
             var nameMagazine11 = $( this ).find( "input[name=nameMagazine11]" ).val();
             var nameMagazine111 = $( this ).find( "input[name=nameMagazine111]" ).val();
@@ -713,16 +728,13 @@
             var originalDataUrl = $( this ).find( "input[name=originalDataUrl]" ).val();
             var dataPolicy = $( this ).find( "select[name=dataPolicy]" ).val();
 
-            $.post( "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php",
-            {dateFillFormIsoPost: dateFillFormIso, nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, nDescriptionStepsPost: nDescriptionSteps, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionValuePost: spatialResolutionValue, productDetails1Post: productDetails1, productDetails11Post: productDetails11, productDetails111Post: productDetails111, addDocProductDetails1Post: addDocProductDetails1,  addDocProductDetails11Post: addDocProductDetails11,  addDocProductDetails111Post: addDocProductDetails111, addDocDescriptionProductDetails1Post: addDocDescriptionProductDetails1, addDocDescriptionProductDetails11Post: addDocDescriptionProductDetails11, addDocDescriptionProductDetails111Post: addDocDescriptionProductDetails111, keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, citationAuthorMail1Post: citationAuthorMail1, citationAuthorMail11Post: citationAuthorMail11, citationAuthorMail111Post: citationAuthorMail111, citationAuthorMail1111Post: citationAuthorMail1111, citationAuthorMail11111Post: citationAuthorMail11111, citationAuthorRole1Post: citationAuthorRole1,  citationAuthorRole11Post: citationAuthorRole11, citationAuthorRole111Post: citationAuthorRole111, citationAuthorRole1111Post: citationAuthorRole1111, citationAuthorRole11111Post: citationAuthorRole11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11,  citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy,
-            } );
+	    var post= {dateFillFormIsoPost: dateFillFormIso, nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, nDescriptionStepsPost: nDescriptionSteps, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, dataProducerInfoPosition1Post: dataProducerInfoPosition1,dataProducerInfoPosition11Post: dataProducerInfoPosition11,dataProducerInfoPosition111Post: dataProducerInfoPosition111, dataProducerInfoPosition1111Post: dataProducerInfoPosition1111, dataProducerInfoPosition11111Post: dataProducerInfoPosition11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, metadatCreatorInfoPositionPost: metadatCreatorInfoPosition, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionLongValuePost: spatialResolutionLongValue, spatialResolutionLatValuePost: spatialResolutionLatValue, productDetails1Post: productDetails1, productDetails11Post: productDetails11, productDetails111Post: productDetails111, productDetails1111Post: productDetails1111, productDetails11111Post: productDetails11111, addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails, keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, citationAuthorPosition1Post: citationAuthorPosition1, citationAuthorPosition11Post: citationAuthorPosition11, citationAuthorPosition111Post: citationAuthorPosition111, citationAuthorPosition1111Post: citationAuthorPosition1111, citationAuthorPosition11111Post: citationAuthorPosition11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11, citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy};
+
+            $.post( "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/testForm2.php", post);
         } );
     } );
-
 
 </script>
 
 </body>
 <html>
-
-

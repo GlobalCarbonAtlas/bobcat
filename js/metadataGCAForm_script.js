@@ -36,30 +36,35 @@ function createContributorDiv( containerId, index )
             '</div>' +
 
             '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-9 col-sm-9">' +
+            '<div class="col-md-10 col-sm-10">' +
             '<div id="dataProducerInfoNameText' + index + '" class="label2 form-control-l">Name (*):</div>' +
             '<input id="dataProducerInfoNameInput' + index + '" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName' + index + '" type="text">' +
             '</div>' +
-            '<div class="col-md-14 col-sm-14">' +
-            '<div id="dataProducerInfoOrganisationText' + index + '" class="label2 form-control-xxl">Name of the organisation (*):</div>' +
-            '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l mandatoryField" name="dataProducerInfoOrganisation' + index + '" type="text">' +
+            '<div class="col-md-13 col-sm-13">' +
+            '<div id="dataProducerInfoOrganisationText' + index + '" class="label2">Organisation name (*):</div>' +
+            '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l" name="dataProducerInfoOrganisation' + index + '" type="text">' +
             '</div>' +
             '</div>' +
 
             '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-9 col-sm-9">' +
-            '<div id="dataProducerInfoMailText' + index + '" class="label2 form-control-l">Mail (*):</div>' +
+            '<div class="col-md-10 col-sm-10">' +
+            '<div id="dataProducerInfoMailText' + index + '" class="label2 form-control-l">email (*):</div>' +
             '<input id="dataProducerInfoMailInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoMail' + index + '" type="text">' +
             '</div>' +
-            '<div class="col-md-14 col-sm-14">' +
-            '<div id="dataProducerInfoRoleText' + index + '" class="label2 form-control-xxl">Role (*):</div>' +
-            '<select id="dataProducerInfoRoleSelect' + index + '" class="form-control form-control-m" name="dataProducerInfoRole' + index + '">' +
+            '<div class="col-md-13 col-sm-13">' +
+            '<div id="dataProducerInfoRoleText' + index + '" class="label2">Role (*):</div>' +
+            '<select id="dataProducerInfoRoleSelect' + index + '" class="form-control form-control-l" name="dataProducerInfoRole' + index + '">' +
             '<option value="nullValue">----</option>' +
             '<option value="Originator">Originator</option>' +
             '<option value="Point of Contact">Point of contact</option>' +
             '<option value="Principal investigator">Principal investigator</option>' +
             '<option value="Processor">Processor</option>' +
             '</select>' +
+            '</div>' +
+	    '<div class="col-md-24 col-sm-24">' +
+	    '<div class="col-md-10 col-sm-10">' +
+            '<div id="dataProducerInfoPositionText' + index + '" class="label2 form-control-l cursorPointer" title= "Eg: PhD student, Professor, ...">Position:</div>' +
+            '<input id="dataProducerInfoPositionInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoPosition' + index + '" type="text">' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -71,6 +76,9 @@ function createContributorDiv( containerId, index )
     // Mail input
     $( "#dataProducerInfoNameInput" + index ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
     $( "#dataProducerInfoMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
+
+    // Position input
+    $( "#dataProducerInfoPositionInput" + index ).jqxInput( {height: "20px", placeHolder: "Eg: Phd student, ..."} );
 
     // Remove button
     $( "#dataProducerInfoText" + index ).append( '<img id="removeCreatorInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeCreatorInfoButton cursorPointer" title= "Click to delete this data contributor information">' );
@@ -136,38 +144,25 @@ function getProductDetailsStepRules( index )
 {
     return [
     	{input: '#textAreaProductDetails' + index + '',  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
-    	{input: '#addDocProductDetailsStepInput' + index + '', message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+    	//{input: '#addDocProductDetailsStepInput' + index + '', message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
     ];
 }
 
 function createProductDescrStepDiv( containerId, index )
 {
-    var containerDiv = $( '<div id="productDetailsDescriptionStepContainer' + index + '" class="row col-md-24 col-sm-24 stepsClass">' +
-		'<div class="label2b form-control-l" id="infoProductDetailsText' + index + '">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div>:' +
-		'</div>' +
-		'<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Description (*):</div>' +
-                '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" cols="60"></textarea>' +
-              '<div id="productDetailsdescriptionRow' + index + '" class="row">' +
-               '<div class="col-md-24 col-sm-24">' +
-               '<div class="label2 form-control-l" id="addDocProductDetailsStepText' + index + '"> Document URL to describe the product:</div>' +
-               '<input id="addDocProductDetailsStepInput' + index + '" class="form-control form-control-m" name="addDocProductDetailsStep' + index + '" type="text">' +
-                '</div>' +
-                '<div class="col-md-24 col-sm-24">' +
-                '<div class="label2 form-control-xxl cursorPointer" id="addDocDescripProductDetailsStepText' + index + '">Information about the document related to the url:</div>' +
-                '<textarea id="addDocDescripProductDetailsStepTextArea' + index + '" name="addDocDescripProductDetailsStep' + index + '" rows="1" cols="60"></textarea>' +
-                '</div>' +
-	        '</div>' +
-                '</div>' +
+    var containerDiv = $( '<div id="productDetailsDescriptionStepContainer' + index + '" class="row col-md-24 col-sm-24">' +
+		'<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div> (*):</div>' +
+                '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" class= "form-control-l"></textarea>' +
     '</div>');
 
     $("#" + containerId).append(containerDiv);
 
     // Placeholder indications:
-    $( "#textAreaProductDetails" + index ).jqxInput( {placeHolder: "If you can't full in this part please indicate why you don't have this information"} );
-    $( "#addDocProductDetailsStepInput" + index ).jqxInput( {placeHolder: "something@mail.com"} );
+    $( "#textAreaProductDetails" + index ).jqxInput( {placeHolder: "If you can't fill in this part please indicate why you don't have this information"} );
+    //$( "#addDocProductDetailsStepInput" + index ).jqxInput( {placeHolder: "something@mail.com"} );
 
     // Remove button
-    $( "#infoProductDetailsText" + index ).append( '<img id="removeProductDetailsStepButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeProductDetailsStepButtonClass cursorPointer" title= "Click to delete this product description-step">' );
+    $( "#stepDescription" + index ).append( '<img id="removeProductDetailsStepButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeProductDetailsStepButtonClass cursorPointer" title= "Click to delete this product description-step">' );
     $( "#removeProductDetailsStepButton" + index ).click( function()
     {
         removeProductDetailsStepDiv( "productDetailsDescriptionStepContainer", index );
@@ -192,8 +187,13 @@ function removeProductDetailsStepDiv( divName, index )
 
 function manageProductDetailsStepDiv()
 {
+    // Hide or show the "add Product details button"
+    if( 5 <= $( 'textarea[id^="textAreaProductDetails"]' ).length )
+        $( "#productDetailsContainerButton" ).hide();
+    else
+        $( "#productDetailsContainerButton" ).show();
     // Hide or show the "remove step button"
-    if( 1 < $( 'input[id^="addDocProductDetailsStepInput"]' ).length )
+    if( 1 < $( 'textarea[id^="textAreaProductDetails"]' ).length )
         $( ".removeProductDetailsStepButtonClass" ).show();
     else
         $( ".removeProductDetailsStepButtonClass" ).hide();
@@ -225,11 +225,11 @@ function getReferenceRules( index )
 		
             return $("#citationDateBookInput" +index).val() != complete_d;
         }},
+        {input: "#citationAuthorNameInput" + index, message: "This field is mandatory", action: "blur, keyup", rule: "required" },
         {input: "#citationAuthorNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
             return ("" == arguments[0].value || /^[a-zA-Z._ -]+$/.test( arguments[0].value ));
         }},
-        {input: "#citationAuthorMailInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
         {input: "#citationDOIInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
         {
             return ("" == arguments[0].value || /^[0-9./]+$/.test( arguments[0].value ));
@@ -239,6 +239,7 @@ function getReferenceRules( index )
             return "nullValue" != arguments[0].value;
         }},
         {input: "#citationOnlineRessourceInput" + index, message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+        {input: "#nameMagazineInput" + index, message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     ];
 }
 
@@ -251,7 +252,7 @@ function getReferenceRules( index )
 function createReferenceFieldset( containerIdRef, index )
 {
     var containerDivRef = $( '<fieldset id="citationFieldset' + index + '" class="fieldset2">' +
-            '<legend id= "legendReferenceId' + index + '" class="legend2">Reference <div id="referenceNumber' + index + '" class="referenceNumber"></div> (optional):</legend>' +
+            '<legend id= "legendReferenceId' + index + '" class="legend2">Reference <div id="referenceNumber' + index + '" class="referenceNumber"></div>:</legend>' +
             '<div class="form-group">' +
 
             '<div class="col-md-24 col-sm-24">' +
@@ -266,47 +267,38 @@ function createReferenceFieldset( containerIdRef, index )
 
             '<div class="col-md-24 col-sm-24">' +
             '<div class="label1 form-control-l" id="citationAuthorText' + index + '">First author information:</div>' +
-            '<div class="col-md-6 col-sm-6">' +
-            '<div class="label2 form-control-l" id="citationAuthorNameText' + index + '">Name:</div>' +
-            '<input id="citationAuthorNameInput' + index + '" class="form-control form-control-xl" name="citationAuthorName' + index + '" type="text">' +
+            '<div class="col-md-13 col-sm-13">' +
+            '<div class="label2" id="citationAuthorNameText' + index + '">Name (*):</div>' +
+            '<input id="citationAuthorNameInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorName' + index + '" type="text">' +
             '</div>' +
-            '<div class="col-md-6 col-sm-6">' +
-            '<div class="label2 form-control-xs" id="citationAuthorOrganisationText' + index + '">Organisation:</div>' +
+            '<div class="col-md-10 col-sm-10">' +
+            '<div class="label2 form-control-xxl" id="citationAuthorOrganisationText' + index + '">Organisation name:</div>' +
             '<input id="citationAuthorOrganisationInput' + index + '" class="form-control form-control-xl" name="citationAuthorOrganisation' + index + '" type="text">' +
             '</div>' +
-            '<div class="col-md-6 col-sm-6">' +
-            '<div class="label2 form-control-xs" id="citationAuthorMailText' + index + '">Mail:</div>' +
-            '<input id="citationAuthorMailInput' + index + '" class="form-control form-control-xl" name="citationAuthorMail' + index + '" type="text">' +
+	    '</div>' +
+     	    '<div class="col-md-24 col-sm-24">' +
+	    '<div class="col-md-13 col-sm-13">' +
+            '<div class="label2 cursorPointer form-control-l" id="citationAuthorPositionText' + index + '" title= "Eg: PhD student, Professor, ...">Position:</div>' +
+            '<input id="citationAuthorPositionInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorPosition' + index + '" type="text">' +
             '</div>' +
-            '<div class="col-md-5 col-sm-5">' +
-            '<div class="label2 form-control-xs" id="citationAuthorRoleText' + index + '">Role:</div>' +
-            '<select id="citationAuthorRoleSelect' + index + '" name="citationAuthorRole' + index + '" class="form-control form-control-xl">' +
-            '<option value="">----</option>' +
-            '<option value="Resource provider">Resource provider</option>' +
-            '<option value="Distributor">Distributor</option>' +
-            '<option value="Originator">Originator</option>' +
-            '<option value="Point of contact">Point of contact</option>' +
-            '<option value="Principal investigator">Principal investigator</option>' +
-            '<option value="Processor">Processor</option>' +
-            '<option value="Author">Author</option>' +
-            '</select>' +
+	    '</div>' +
+
+            '<div class="col-md-24 col-sm-24">' +
+            '<div class="col-md-13 col-sm-13">' +
+            '<div class="label1 form-control-xxl" id="nameMagazineText' + index + '">Name of the journal (*):</div>' +
+            '<input id="nameMagazineInput' + index + '" class="form-control sameWidthReferenceClass" name="nameMagazine' + index + '" type="text" title="Reference of the journal (eg: Volume 89, number 3)">' +
+            '</div>' +
+            '<div class="col-md-10 col-sm-10">' +
+            '<div class="label1 form-control-xs" id="citationDOIText' + index + '" title="Digital Object Identifier (unique for each publication)">DOI:</div>' +
+            '<input id="citationDOIInput' + index + '" class="form-control citationDOIInputClass" name="citationDOI' + index + '" type="text">' +
             '</div>' +
             '</div>' +
 
             '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-9 col-sm-9">' +
-            '<div class="label1 form-control-xxl" id="nameMagazineText' + index + '">Name of the journal:</div>' +
-            '<input id="nameMagazineInput' + index + '" class="form-control form-control-xl" name="nameMagazine' + index + '" type="text" title="Reference of the journal (eg: Volume 89, number 3)">' +
-            '</div>' +
-            '<div class="col-md-11 col-sm-11">' +
-            '<div class="label1 form-control-xs" id="citationDOIText' + index + '" title="Digital Object Identifier (unique for each publication)">DOI:</div>' +
-            '<input id="citationDOIInput' + index + '" class="form-control form-control-m" name="citationDOI' + index + '" type="text">' +
-            '</div>' +
-            '</div>' +
 
-            '<div class="col-md-8 col-sm-8">' +
-            '<div class="label1 form-control-xxl" id="citationCategoryText' + index + '" title="medium in witch it is published">Category (*):</div>' +
-            '<select id="citationCategorySelect' + index + '" name="citationBookCategory' + index + '" class="form-control form-control-xl">' +
+            '<div class="col-md-13 col-sm-13">' +
+            '<div class="label1" id="citationCategoryText' + index + '" title="medium in witch it is published">Category (*):</div>' +
+            '<select id="citationCategorySelect' + index + '" name="citationBookCategory' + index + '" class="form-control sameWidthReferenceClass">' +
             '<option value="nullValue">----</option>' +
             '<option value="Book chapter">Book chapter</option>' +
             '<option value="Book">Book</option>' +
@@ -317,10 +309,12 @@ function createReferenceFieldset( containerIdRef, index )
             '<option value="Application, program">Application, program</option>' +
             '</select>' +
             '</div>' +
+            '<div class="col-md-10 col-sm-10">' +
+            '<div class="label1" id="citationOnlineRessourceText' + index + '">Online resource:</div>' +
+            '<input id="citationOnlineRessourceInput' + index + '" class="form-control citationDOIInputClass" name="citationOnlineRessource' + index + '" type="text">' +
+            '</div>' +
 
-            '<div class="col-md-11 col-sm-11">' +
-            '<div class="label1 form-control-xxl" id="citationOnlineRessourceText' + index + '">Online resource:</div>' +
-            '<input id="citationOnlineRessourceInput' + index + '" class="form-control form-control-l" name="citationOnlineRessource' + index + '" type="text">' +
+
             '</div>' +
 
             '</div>' +
@@ -329,13 +323,15 @@ function createReferenceFieldset( containerIdRef, index )
     $( "#" + containerIdRef ).append( containerDivRef );
   
     // Date
-    $( "#citationDateBookInput" + index ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy-MM-dd"} );
+    $( "#citationDateBookInput" + index ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy"} );
 
     // Name input
     $( "#citationAuthorNameInput" + index ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
+    
+    // Position input
+    $( "#citationAuthorPositionInput" + index ).jqxInput( {placeHolder: "Eg: PhD student, ..."} );
 	
     // Mail input
-    $( "#citationAuthorMailInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#citationOnlineRessourceInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
     // DOI
@@ -385,6 +381,11 @@ function manageReferencesDiv()
         $( "#referencesContainerButton" ).hide();
     else
         $( "#referencesContainerButton" ).show();
+     // Hide or show the "remove Reference button"
+     if( 1 < $( 'input[id^="citationTitleInput"]' ).length )
+        $( ".removeReferenceInfoButton" ).show();
+     else
+        $( ".removeReferenceInfoButton" ).hide();
     // Numerate the list of references
     jQuery.each( $( 'div[id^="referenceNumber"]' ), function( i, element )
     {
@@ -411,7 +412,7 @@ function manageFormDiv()
             alert( "You can't add more than 5 contributors" );
     } );
 
-    <!--********************** REFERENCES ********************** -->
+    <!--********************** REFERENCES **********************-->
     $( "#addReferenceInfoButton" ).click( function()
     {
         if($( 'input[id^="citationTitleInput"]' ).length >= 1)
@@ -425,8 +426,13 @@ function manageFormDiv()
     <!--********************** PRODUCT DESCRIPTION  ********************** -->
     $( "#addProductDetailsStepButton").click( function()
     	{
-        var productDetailsStepLastId = $( 'input[id^="addDocProductDetailsStepInput"]' ).last().attr( 'id' ).replace( "addDocProductDetailsStepInput", "" );
-        createProductDescrStepDiv( "productDetailsDescriptionContainer", productDetailsStepLastId + 1 );
+        var productDetailsStepLastId = $( 'textarea[id^="textAreaProductDetails"]' ).last().attr( 'id' ).replace( "textAreaProductDetails", "" );
+        if( 5 > $( 'textarea[id^="textAreaProductDetails"]' ).length )
+        {
+        	createProductDescrStepDiv( "productDetailsDescriptionContainer", productDetailsStepLastId + 1 );
+	}
+	else
+		alert("You can't add more than 5 steps" );
     });
 
     <!--********************** OTHERS FIELDS ********************** -->
@@ -469,7 +475,9 @@ function manageFormDiv()
     // Utilisation jqxinput pour afficher info qui s'efface quand on commence à rentrer texte ds  input (placeHolder)
     $( "#metadatCreatorInfoNameInput" ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
     $( "#metadatCreatorInfoMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
-    $( "#spatialResolutionValueInput" ).jqxInput( {height: "20px", placeHolder: "3.5"} );
+    $( "#metadatCreatorInfoPositionInput" ).jqxInput( {height: "20px", placeHolder: "Eg: Phd student, ..."} );
+    $( "#spatialResolutionValueLongInput" ).jqxInput( {height: "20px", placeHolder: "Lon (eg: 3.5)"} );
+    $( "#spatialResolutionValueLatInput" ).jqxInput( {height: "20px", placeHolder: "Lat (eg: 3.5)"} );
     $( "#spatialCoverageNorthInput" ).jqxInput( {height: "20px", placeHolder: "90"} );
     $( "#spatialCoverageSouthInput" ).jqxInput( {height: "20px", placeHolder: "-90"} );
     $( "#spatialCoverageWestInput" ).jqxInput( {height: "20px", placeHolder: "-180"} );
@@ -477,9 +485,10 @@ function manageFormDiv()
     $( "#principalInvestigatorContactNameInput" ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
     $( "#principalInvestigatorContactMailInput" ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
     $( "#keywordsInfoInput" ).jqxInput( {height: "20px", placeHolder: "keyword 1, keyword 2, ..."} );
-    $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, precise 'none'"} );
+    $( "#discoveredIssueArea" ).jqxInput( {placeHolder: "If no information available, write 'none'"} );
     $( "#standAloneInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
     $( "#originalDataUrlInput" ).jqxInput( {height: "20px", placeHolder: "something@mail.com"} );
+
 }
 
 /**
