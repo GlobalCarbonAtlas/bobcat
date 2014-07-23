@@ -165,8 +165,7 @@ var BCInterfaceW = Class.create( {
             this.selectBobcat( arguments.object.div.id );
         }, this ), true );
 
-        // Select layer accordingly to variable displayed
-        switch(this.variable) {
+	switch(this.variable) {
 		case "Terrestrial_flux":		
 			this.selectedBobcat.map.layers[1].setVisibility(false); 
 			break;

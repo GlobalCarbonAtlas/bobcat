@@ -229,8 +229,6 @@ var Bobcat = Class.create( {
     {
         // Layers
 	this.get_WMS1();
-	//Pascal : add uncertainty layer
-	this.get_uncertaintyLayer();
 	this.get_landMaskLayer();
 	this.get_oceanMaskLayer();
 	this.get_frontiersLayer();
@@ -238,8 +236,10 @@ var Bobcat = Class.create( {
 	this.get_urbanAreasLayer();
 	this.get_lakesAndRiversLayer();
 	this.get_graticulesLayer();
-        this.map.addLayers( [this.wms1, this.landMaskLayer, this.oceanMaskLayer, this.frontiersLayer, this.namesLayer, this.urbanAreasLayer, this.lakesAndRiversLayer, this.graticulesLayer, this.uncertaintyLayer] );
+        this.map.addLayers( [this.wms1, this.landMaskLayer, this.oceanMaskLayer, this.frontiersLayer, this.namesLayer, this.urbanAreasLayer, this.lakesAndRiversLayer, this.graticulesLayer] );
     },
+
+
 
 
 // **************************************************************
@@ -608,26 +608,6 @@ $( "<div title='Metadata of the file: "+this.mapTitle+"'>"+data+"</div>" ).dialo
             } );
     },
 
- // Pascal ////////////////////
- // Test ajout couche incertitude//
- 
-    get_uncertaintyLayer: function()
-    {
-     this.uncertaintyLayer = new OpenLayers.Layer.WMS(
-       "Uncertainty layer",
-       "http://webportals.ipsl.jussieu.fr:8080/geoserver/uncertainty/wms",
-   	{
-           VERSION: '1.1.1',
-           LAYERS: "uncertainty:rasterToPol",
-   	   transparent: true,
-           FORMAT: 'image/png',
-       }, {
-           isBaseLayer: false,
-           opacity: 1,
-       } );
-   },
-//////////////////////////////////////////////////
-	
     get_landMaskLayer: function()
     {
      this.landMaskLayer = new OpenLayers.Layer.WMS(
