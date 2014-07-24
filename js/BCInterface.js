@@ -21,7 +21,7 @@ var BCInterfaceW = Class.create( {
         this.rangeDiv = $( "#getRange" );
         this.submitButton = $( "#submitCreateMap" );
 
-        this.threddsPath = jQuery.i18n.prop( "threddsPath" ) != "[threddsPath]" ? jQuery.i18n.prop( "threddsPath" ) : "Atlas/Flux";
+        this.threddsPath = jQuery.i18n.prop( "threddsPath" );
         this.hostName = jQuery.i18n.prop( "hostname" ) ? jQuery.i18n.prop( "hostname" ) : location.hostname;
         this.imgPath = "img";
 
