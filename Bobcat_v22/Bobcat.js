@@ -164,10 +164,7 @@ var Bobcat = Class.create( {
             theme: null,
             controls:
                     [
-<<<<<<< HEAD
-=======
                         //new OpenLayers.Control.PanZoomBar( {panIcons: false} ),		// Simple Control.Zoom is enough, Control.PanZoombar too hight
->>>>>>> upstream/master
                         new OpenLayers.Control.Zoom( {title: "Zoom in/out"} ),
                         new OpenLayers.Control.Navigation(),
                         new OpenLayers.Control.LayerSwitcher( {title: "Show/Hide overlays"} )
@@ -175,13 +172,8 @@ var Bobcat = Class.create( {
             projection: new OpenLayers.Projection( this.projection ),
             maxExtent: new OpenLayers.Bounds( projectionBounds ),
             center: centerMap,
-<<<<<<< HEAD
-            numZoomLevels: 8,
-            allOverlays: false
-=======
             numZoomLevels: 8,                                // according to resolutions array
             allOverlays: false                                // If true see WMS as a layer
->>>>>>> upstream/master
         } );
 
 
@@ -564,22 +556,14 @@ var Bobcat = Class.create( {
     {
         if( $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled" ) )
             return;
-<<<<<<< HEAD
-        this.onClickDisplayPreviousOrNextTime( true );
-=======
         this.onClickDisplayPreviousOrNextTime( false );
->>>>>>> upstream/master
     },
 
     onClickDisplayPrevTimeStep: function( argument )
     {
         if( $( "#BC" + this.id + "RewindIcone" ).attr( "disabled" ) )
             return;
-<<<<<<< HEAD
-        this.onClickDisplayPreviousOrNextTime( false );
-=======
         this.onClickDisplayPreviousOrNextTime( true );
->>>>>>> upstream/master
     },
 
     updateRewindAndForwardIcones: function( index )
@@ -591,14 +575,6 @@ var Bobcat = Class.create( {
         }
         else if( index + 1 >= this.timeArray.length )
         {
-<<<<<<< HEAD
-            $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled", true );
-            $( "#BC" + this.id + "RewindIcone" ).attr( "disabled", false );
-        }
-        else if( index == 0 )
-        {
-=======
->>>>>>> upstream/master
             $( "#BC" + this.id + "ForwardIcone" ).attr( "disabled", false );
             $( "#BC" + this.id + "RewindIcone" ).attr( "disabled", true );
         }

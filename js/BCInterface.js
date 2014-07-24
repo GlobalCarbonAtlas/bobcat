@@ -21,12 +21,8 @@ var BCInterfaceW = Class.create( {
         this.rangeDiv = $( "#getRange" );
         this.submitButton = $( "#submitCreateMap" );
 
-<<<<<<< HEAD
-        this.threddsPath = jQuery.i18n.prop( "threddsPath" ) != "[threddsPath]" ? jQuery.i18n.prop( "threddsPath" ) : "Atlas/Flux";
-=======
         this.threddsPath = jQuery.i18n.prop( "threddsPath" );
         this.hostName = jQuery.i18n.prop( "hostname" ) ? jQuery.i18n.prop( "hostname" ) : location.hostname;
->>>>>>> upstream/master
         this.imgPath = "img";
 
         /**
@@ -45,10 +41,7 @@ var BCInterfaceW = Class.create( {
         this.variableNamesToDisplay = variableNamesToKeepArray;
         this.variable = false;
 
-<<<<<<< HEAD
-=======
         $( "#periodSelect" ).select2( "val", "longterm" );
->>>>>>> upstream/master
         this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
         this.time = false;
         this.elevation = false;
@@ -100,8 +93,6 @@ var BCInterfaceW = Class.create( {
         this.updateLegendButtons();
     },
 
-<<<<<<< HEAD
-=======
     initInterface: function()
     {
         $( "#resourceSelect" ).fancytree().init();
@@ -118,7 +109,6 @@ var BCInterfaceW = Class.create( {
 //        $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
 //
         this.onClickDeleteAllMaps();
->>>>>>> upstream/master
     },
 
 
@@ -147,14 +137,8 @@ var BCInterfaceW = Class.create( {
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( resource )[1] );
 
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-<<<<<<< HEAD
-        var urlResource = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
-                + "_" + selectedPeriod + "_XYT.nc";
-=======
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
                 + "_" + selectedPeriod + "_XYT.nc";
-
->>>>>>> upstream/master
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
@@ -200,10 +184,7 @@ var BCInterfaceW = Class.create( {
             this.selectBobcat( arguments.object.div.id );
         }, this ), true );
 
-<<<<<<< HEAD
-=======
         // Select layer accordingly to variable displayed
->>>>>>> upstream/master
         switch( this.variable )
         {
             case "Terrestrial_flux":
@@ -284,11 +265,7 @@ var BCInterfaceW = Class.create( {
             return;
 
         var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber;
-<<<<<<< HEAD
-        var newWidth = Math.round( newWidth / 4 ) * 4;                  // Prepare map width to host 4 tiles 
-=======
         var newWidth = Math.round( newWidth / 4 ) * 4;                  // Prepare map width to host 4 tiles
->>>>>>> upstream/master
 
         var linesNumber = Math.ceil( this.hashBobcats.keys().length / this.mapsNumber );
         var newHeight = (this.printableInitHeight / linesNumber) - 30;
@@ -467,11 +444,7 @@ var BCInterfaceW = Class.create( {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-<<<<<<< HEAD
-            var url = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
-=======
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
->>>>>>> upstream/master
                     this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getVariables( url, i, this.selectedResourceKeys[i] );
@@ -480,11 +453,7 @@ var BCInterfaceW = Class.create( {
         {
             this.variableDiv.empty();
 
-<<<<<<< HEAD
-            if( 1 < this.selectedResourceKeys.length )
-=======
             if( 1 <= this.selectedResourceKeys.length )
->>>>>>> upstream/master
                 this.reduceHashVariable();
 
             if( 0 == this.hashVariables.keys().length )
@@ -652,11 +621,7 @@ var BCInterfaceW = Class.create( {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( fileArray[i] )[1] );
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-<<<<<<< HEAD
-            var url = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( fileArray[i] )[1] + "/" + selectedPeriod + "/" +
-=======
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( fileArray[i] )[1] + "/" + selectedPeriod + "/" +
->>>>>>> upstream/master
                     this.basename( fileArray[i] ) + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getTimes( url, i );
@@ -868,11 +833,7 @@ var BCInterfaceW = Class.create( {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[0] )[1] );
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
-<<<<<<< HEAD
-            var resourceUrl = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-=======
             var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
->>>>>>> upstream/master
                     + "_" + selectedPeriod + "_XYT.nc";
 
             var url = resourceUrl
@@ -986,11 +947,7 @@ var BCInterfaceW = Class.create( {
 
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[0] )[1] );
 
-<<<<<<< HEAD
-        var resourceUrl = "http://" + location.hostname + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-=======
         var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
->>>>>>> upstream/master
                 + "_" + selectedPeriod + "_XYT.nc";
         var colorscalerange = $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' );
         var numcolorbands = $( "#slider-nbcolorbands-text" ).html();
@@ -1301,12 +1258,8 @@ var BCInterfaceW = Class.create( {
 
         parameters.helpArray = [
             // Left menu
-<<<<<<< HEAD
-            {linkType:"simple", divToHelpId:"hideOrShowLeftMenu", text:"Slide this menu to get more space", textLengthByLine:40, marginTop:5, marginLeft:2},
-=======
             {linkType:"simple", divToHelpId:"clearAll", text:"Init all the selected fields", marginTop:5, marginLeft:31},
             {linkType:"simple", divToHelpId:"hideOrShowLeftMenu", text:"Slide this menu to get more space", textLengthByLine:40, marginTop:98, marginLeft:2},
->>>>>>> upstream/master
             {linkType:"simple", divToHelpId:"submitCreateMap", text:"Create map(s) with all selected parameters. One by one selected resource", linkedHelp: ["resourceSelect"], textLengthByLine:45, marginTop:11, marginLeft:-20},
             {linkType:"right", divToHelpId:"s2id_projectionSelect", text:"Pick a projection", marginTop:20, marginLeft:$( "#s2id_projectionSelect" ).width() / 2, stage:1},
             {linkType:"right", divToHelpId:"s2id_periodSelect", text:"Choose a period", marginTop:20, marginLeft:$( "#s2id_periodSelect" ).width() / 2, stage:1},
@@ -1386,11 +1339,7 @@ var BCInterfaceW = Class.create( {
         var divContentFooter = $( '' +
                 '<div class="helpFooterContentRight">' +
                 '<div class="helpFooterContentFloat">A project realised by</div>' +
-<<<<<<< HEAD
-                '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/img/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/img/logo_LSCE_text_2_small.png"/></div></div>' +
-=======
                 '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
->>>>>>> upstream/master
                 '</div>' );
 
         divFooter.append( divContentFooter );
