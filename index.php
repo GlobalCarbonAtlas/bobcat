@@ -25,6 +25,7 @@
 
     <script type="text/javascript" src="js/OpenLayers-2.12/OpenLayers.js"></script>
     <script type="text/javascript" src="js/library/jquery-1.9.1.js"></script>
+<!--    <script type="text/javascript" src="js/library/jquery-1.11.1.min.js"></script>    -->
     <script type="text/javascript" src="js/library/jquery-ui-1.10.2.custom/js/jquery-ui-1.10.2.custom.min.js"></script>
     <script type="text/javascript" src="js/library/jquery.class.js"></script>
     <script type="text/javascript" src="js/library/jquery.ui.touch-punch.min.js"></script>

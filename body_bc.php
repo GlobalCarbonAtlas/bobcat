@@ -1,6 +1,15 @@
 <div id="pageWrapper">
     <div id="leftMenu" class="non-printable">
+<<<<<<< HEAD
         <div id="helpMenu"><img src="img/help_big_orange.png"></div>
+=======
+        <div class="leftMenuUp">
+            <div id="helpMenu"><img src="img/help_big_orange.png"></div>
+            <div class="leftMenuUp">
+                <div id="clearAll">Clear selections</div>
+            </div>
+        </div>
+>>>>>>> upstream/master
         <div class="leftMenu firstLeftMenu">
             <div id="submitCreateMap" class="orangeButton">Create map</div>
         </div>
@@ -69,7 +78,11 @@
         </div>
 
         <div class="noticeLSCE leftMenu">
+<<<<<<< HEAD
             Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.1
+=======
+            Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.2
+>>>>>>> upstream/master
         </div>
 
     </div>
@@ -156,7 +169,10 @@
             </div>
             <div id="slider-nbcolorbands"></div>
             <BR/><BR/>
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
             <div id="legend"></div>
         </div>
     </div>
@@ -171,6 +187,7 @@
 
 $properties = parse_ini_file( "bobcat.properties" );
 
+<<<<<<< HEAD
 function fancytree_build_children( $dirtoread, $category, $elementToSelect )
 {
     $files = glob( $dirtoread . "*.nc" );
@@ -196,10 +213,33 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
                 $fileInfoContent = str_replace( "Contact :", "<b>Contact :</b>", $fileInfoContent );
             }
             else
+=======
+function fancytree_build_children ($dirtoread , $category, $elementToSelect) {
+    $files=glob($dirtoread."*.nc");
+    $len = count($files);
+    $counter = 0;
+    echo "\n";
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            $counter++;
+            $bfile=basename($file);
+            $pfile=explode("_", $bfile);
+            // $pfile[1] represent the title, character "-" replaced by " "
+            $sfile=implode("_", array_slice($pfile, 0, 4));
+            $fileInfo = explode('.nc',$file);
+            $fileInfo = $fileInfo[0].'.info';
+            if (file_exists($fileInfo)) {
+                $fileInfoContent = file_get_contents($fileInfo);
+                $fileInfoContent = str_replace("\n", "<br>", $fileInfoContent);
+                $fileInfoContent = str_replace("Ref :", "<b>Ref :</b>", $fileInfoContent);
+                $fileInfoContent = str_replace("Contact :", "<b>Contact :</b>", $fileInfoContent);
+            } else
+>>>>>>> upstream/master
                 $fileInfoContent = "Not available";
             // If first element to be selected use next line and set true for elementToSelect argument
             //$selectedElement = $elementToSelect && ($counter == 1) ? true : false;
             // To select a specific element
+<<<<<<< HEAD
             $selectedElement = $elementToSelect && strpos( $sfile, $elementToSelect ) ? true : false;
             echo '                    {title:"' . str_replace( "-", " ", $pfile[1] ) . '", key:"' . $sfile . '", selected: "' . $selectedElement . '", icon:false, url:"' . $category . '", complexToolTip:"' . $fileInfoContent . '",}';
             if( $counter != $len )
@@ -208,6 +248,13 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
             }
             else
             {
+=======
+            $selectedElement = $elementToSelect && strpos($sfile, $elementToSelect) ? true : false;
+            echo '                    {title:"'.str_replace("-", " ", $pfile[1]).'", key:"'.$sfile.'", selected: "'.$selectedElement.'", icon:false, url:"'.$category.'", complexToolTip:"'.$fileInfoContent.'",}';
+            if ( $counter != $len ) {
+                echo ','."\n";
+            } else {
+>>>>>>> upstream/master
                 // last line without ,
                 echo "\n";
             }
@@ -223,37 +270,58 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
     $( document ).ready( function ()
     {
         // Load properties file
+<<<<<<< HEAD
         jQuery.i18n.properties( {
+=======
+        jQuery.i18n.properties({
+>>>>>>> upstream/master
             name:'bobcat',
             path:'',
             language:null,
             mode:'both'
+<<<<<<< HEAD
         } );
+=======
+        });
+>>>>>>> upstream/master
 
         var resourcesTreeData = [
             {title:"Inversions", folder:true, expanded: false,
                 children: [
 <?php
+<<<<<<< HEAD
                     fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", false );
+=======
+                    fancytree_build_children($properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversions"]);
+>>>>>>> upstream/master
                 ?>
                 ]
             },
             {title:"Land Models", folder:true, expanded: true,
                 children: [
 <?php
+<<<<<<< HEAD
                     fancytree_build_children( $properties["landModelsResourcesPath"], "LandModels", "CLM4CN" );
+=======
+                    fancytree_build_children($properties["landModelsResourcesPath"], "LandModels", $properties["selectedLandModels"]);
+>>>>>>> upstream/master
                 ?>
                 ]
             },
             {title:"Ocean Models", folder:true, expanded: false,
                 children: [
 <?php
+<<<<<<< HEAD
                     fancytree_build_children( $properties["oceanModelsResourcesPath"], "OceanModels", false );
+=======
+                    fancytree_build_children($properties["oceanModelsResourcesPath"], "OceanModels", $properties["selectedOceanModels"]);
+>>>>>>> upstream/master
                 ?>
                 ]
             }
         ];
 
+<<<<<<< HEAD
         $( "#projectionSelect" ).select2();
         $( "#projectionSelect" ).select2( "val", "EPSG:4087" );
 
@@ -277,6 +345,29 @@ function fancytree_build_children( $dirtoread, $category, $elementToSelect )
 
         var variablesToKeepArray = ["Terrestrial_flux", "Ocean_flux"];
         var variableNamesToKeepArray = ["Terrestrial flux", "Ocean flux"];
+=======
+        $("#projectionSelect").select2();
+        $("#projectionSelect").select2("val", "EPSG:4087");
+
+        $("#periodSelect").select2();
+        $("#periodSelect").select2("val", "monthlymean");
+
+        $("#mapsNumberSelect").select2();
+        $("#mapsNumberSelect").select2("val", "2");
+
+        $("#paletteSelect").select2();
+
+        function format(pal) {
+            return "<img class='flag' src='palettes/" + pal.text + ".png'/></br>" + pal.text;
+        }
+        $("#paletteSelect").select2({
+            formatResult: format
+        });
+        $("#paletteSelect").select2("val", "blue_yellow_red");
+
+        var variablesToKeepArray = JSON.parse(jQuery.i18n.prop( "variablesToKeepArray" ));
+        var variableNamesToKeepArray = JSON.parse(jQuery.i18n.prop( "variableNamesToKeepArray" ));
+>>>>>>> upstream/master
         new BCInterfaceW( resourcesTreeData, variablesToKeepArray, variableNamesToKeepArray );
 
     } );
