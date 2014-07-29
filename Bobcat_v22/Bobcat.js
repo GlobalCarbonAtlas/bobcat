@@ -502,15 +502,14 @@ var Bobcat = Class.create( {
     onClickDisplayMetadataInfoGVQ: function()
     {
         $.ajax( {
-            url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/Bobcat_v22/metadataAccessTest.html",
-            //url: "http://www.tennis-de-table.com/",// NO
+            url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/Bobcat_v22/metadataAccess.html",
             success: jQuery.proxy( function( data )
             {
                 $( "<div title='Metadata of the file: " + this.mapTitle + "'>" + data + "</div>" ).dialog( { position: { my: "center", at: "center", of: "#" + this.id}, width: 500, height: 300, maxHeight: 300, maxWidth: 500 } );
             }, this ),
             error: jQuery.proxy( function( data )
             {
-                $( "<div title='Metadata visualisation'>" + "Not available" + "</div>" ).dialog( { position: { my: "center", at: "center", of: "#" + this.id} } );// Message dc si url passee n'y est pas : data contains the html returned by the url.
+                $( "<div title='Metadata visualisation'>" + "Not available" + "</div>" ).dialog( { position: { my: "center", at: "center", of: "#" + this.id} } );
             }, this )
         } );
     },
