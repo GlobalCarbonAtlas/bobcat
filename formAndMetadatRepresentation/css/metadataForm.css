@@ -1,0 +1,419 @@
+[class*="col"] {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+ul {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-top: 0.5% !important;
+    height: 80px;
+    background-image: url(../img/degradeMenu.png);
+}
+
+
+
+li {
+    display: inline-block;
+    height: 110%;
+    font-size: 13px;
+    color: rgb(70, 70, 70);
+    background-image: url(../img/arrow3.svg);
+    background-size: 99% 120%;
+    cursor: pointer;
+}
+
+.stepsSpan {
+    width: 63px !important;
+}
+
+span {
+    position: fixed;
+    left: 10%;
+}
+
+#stepDesc0 span {
+    margin-top: 20px;
+}
+
+#stepDesc1 span {
+    margin-top: 5px;
+}
+
+#stepDesc2 span {
+    margin-top: 10px;
+}
+
+#stepDesc3 span {
+    margin-top: 10px;
+}
+
+#stepDesc4 span {
+    margin-top: 10px;
+}
+
+#stepDesc5 span {
+    margin-top: 5px;
+}
+
+li.current {
+    color: rgb(250, 80, 0);
+    font-style: italic;
+    font-size: 13.5px;
+}
+
+#mandatoryFieldIndication {
+    margin-left: 1%;
+    height: 5%;
+    color: rgb(140, 10, 10);
+    font-size: 13px;
+    margin-bottom: -1%; 
+    top: 16px;
+}
+
+.legend1 {
+    color: rgb(250, 80, 0);
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 3px;
+    padding-bottom: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.legend2 {
+    color: rgb(20, 20, 130);
+    font-size: 17px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    margin-bottom: 10px !important;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+select {
+    font-size: 12px !important;
+    color: rgb(20, 20, 20) !important;
+    margin-bottom: 3px !important;
+    height: 22px;
+}
+
+input {
+    font-size: 13px !important;
+    height: 22px !important;
+    font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
+    color: rgb(20, 20, 20) !important;
+    margin-bottom: 3px !important;
+    border: 1px solid rgb(180, 180, 180);
+    border-radius: 3px;
+}
+
+.dateInput {
+    margin-bottom: 3px !important; /*width: 20px !important;*/
+}
+.inLine {
+	display: inline !important;
+}
+
+textarea {
+    font-size: 13px;
+    color: black !important;
+    border: 1px dotted rgb(100, 100, 100) !important;
+    border-radius: 3px;
+    margin-bottom: 3px !important;
+}
+#textAreaProductDetails {
+	display:  block;
+    	height:  100px !important;
+}
+.label1 {
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-top: 16px;
+    font-family: Arial !important;
+}
+
+.label1ContactLegend {
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-family: Arial !important;
+}
+#temporalCoverageContainer {
+    padding-top: 38px;
+}
+
+#dataDateCreationText {
+    margin-top: -15px;
+}
+
+#dataDateCreationInput {
+    margin-bottom: 16px !important;
+}
+
+#spatialCoverageWestContainer {
+    margin-right: -4px;
+}
+
+#spatialCoverageEastContainer {
+    margin-left: -8px;
+}
+#map_element {
+	height: 256px;
+	width: 512px;
+	border: 1px solid rgb(20,20,130);
+	display: block;
+	position: relative;
+	top: 5px;
+	left: 5px;
+	background-color: rgb(180,220,255);
+}
+#spatialCoverageDefLim {
+	margin-top: 13px;
+	margin-bottom: 5px;
+}
+#applySpatialCovButton, #applyGlobalScaleButton, #removeSpatialCovButton {
+	background-color: rgb(150,150,150);
+	border: 1px solid rgb(50,50,50);
+    	border-radius: 5px;
+    	color: rgb(255,255,255);
+    	padding-right: 2px;
+    	padding-left: 2px; 
+    	font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
+}
+#applyGlobalScaleButton {
+	width: 40px;
+	height: 21px;
+	font-size: 13px;
+	text-decoration: none !important;
+	margin-left: 6px;
+}
+#applySpatialCovButton:hover, #removeSpatialCovButton:hover, #applyGlobalScaleButton:hover {
+	border: 2px solid rgb(250,80,0);
+}
+#applyOtherSpatialCoverageText {
+	margin-top: 7px;
+	margin-bottom: -7px;
+}
+.label2, .label2b{
+    font-size: 14px;
+    font-style: italic;
+    color: rgb(80, 80, 80);
+    font-weight: normal;
+    font-style: oblique;
+    letter-spacing: 1px;
+    font-family: "helvetica Neue", Helvetica, Verdana, sans-serif !important;
+}
+.label2b {
+	text-decoration: underline;
+}
+
+#metadatCreatorInfoPhoneLabel {
+    cursor: pointer;
+}
+
+.chooseSelectClass {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(130, 130, 130);
+    border: solid 0.5px rgb(100, 100, 100);
+    border-radius: 7px;
+    width: 50%;
+    cursor: pointer;
+    text-align: center;
+}
+
+.chooseSelectClass:hover {
+    border: solid 0.5px rgb(250, 80, 0);
+}
+
+.fieldset1 {
+    background-image: url(../img/ContainerBasicInfo.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border: solid 2px rgb(100, 100, 100);
+    padding: 1%;
+    border-style: ridge;
+    border-width: 2px;
+    border-radius: 4px;
+}
+
+.fieldset2 {
+    border: 1px solid blue;
+    border-style: inset;
+    padding-left: 5px;
+    padding-right: 2px;
+    margin-top: -5px;
+    margin-bottom: 13px;
+    border-radius: 7px;
+}
+
+#validFieldContainer {
+    width: 138px;
+    border: solid 1px rgb(120, 120, 120);
+    border-radius: 3px;
+    margin-left: 15px;
+}
+
+.addQuitAllContainerText {
+    margin-top: 15px;
+}
+
+.addQuitAllContainer {
+    height: 15px;
+    border: solid 1px rgb(90, 90, 90);
+}
+
+.addQuitAllContainer:hover {
+    border: solid 2px rgb(250, 80, 0);
+}
+
+.imageCentreSpatialCov {
+    height: 60px;
+    border: solid 1px rgb(0, 0, 0);
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+#submitFormButon {
+    position: fixed;
+    top: 33px;
+    right: 2%;
+    width: 10%;
+    height: 36px;
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(34, 169, 210);
+    border: solid 2px rgb(120, 120, 120);
+    border-radius: 3px;
+    text-align: center;
+    font-size: 14px !important;
+}
+
+#submitFormButon:hover {
+    font-weight: bold;
+    border: solid 2px rgb(250, 80, 0);
+}
+#showResultButton {
+    background-color: rgba(118,167,226,0.25);
+    color: rgb(70,70,70);
+    display: block;
+    font-size: 13px;
+    height: 44px;
+    left: 79%;
+    position: fixed;
+    top: 22px;
+    width: 67px;
+    border:  solid 2px rgb(120,120,120);
+    border-radius:  10px;
+    font-weight:  bold;
+    text-align:  center;
+}
+#showResultButton:hover { 
+	border: solid 2px rgb(250, 80, 0);
+}
+
+.calendarActifClass {
+    border: solid 2px rgb(250, 80, 0) !important;
+}
+
+.form-control-xxs {
+    width: 10% !important;
+}
+.form-control-xs {
+    width: 15% !important;
+}
+
+.form-control-s {
+    width: 25% !important;
+}
+
+.form-control-m {
+    width: 50% !important;
+}
+
+.form-control-l {
+    width: 75% !important;
+}
+
+.form-control-xl {
+    width: 90% !important;
+}
+
+.form-control-xxl {
+    width: 100% !important;
+}
+
+#addCreatorInfoButton, .removeCreatorInfoButton, .dataContributorNumber, #addReferenceInfoButton, .removeReferenceInfoButton, .referenceNumber {
+    display: inline;
+    margin: -1px 0 0 3px;
+}
+.addQuitAllContainer {
+	padding-left: 1px;
+	padding-right: 1px;
+}
+.divFloatLeft {
+    float: left;
+    margin-right: 22px;
+}
+::-webkit-input-placeholder {
+   color: grey !important;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: rgb(150,150,150) !important;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: rgb(150,150,150) !important;  
+}
+
+:-ms-input-placeholder {/* For ie (we have to precise opacity because put 1 by default, no firefox)*/  
+   color: rgba(150,150,150, 0.5) !important;  
+}
+.DescriptionStepNumberClass {
+	display: inline;
+}
+#addProductDetailsStepButton {
+	display: inline;
+}
+.removeProductDetailsStepButtonClass {
+	display: inline;
+	margin-left: 7px;
+}
+.stepDescriptionClass  {
+	margin-top: 6px;
+}
+#productDetailsContainerButton {
+	margin-bottom: 10px !important;
+}
+#dataAbstractTextarea {
+	width: 84% !important;
+}
+#temporalResolutionSelect, #spatialResolutionUnitLongSelect {
+	width: 90%;
+}
+#spatialResolutionValueLongInput, #spatialResolutionValueLatInput {
+	width: 86%;
+}
+.sameWidthReferenceClass {
+	width: 92%;
+}
+.citationDOIInputClass {
+	width: 89%;
+}
+#mapPanel .olControlZoomToMaxExtentItemInactive{
+	width: 18px;
+	height: 18px;
+	background: #333399 url("http://dev.openlayers.org/releases/OpenLayers-2.9.1/img/zoom-world-mini.png");
+	position: absolute;
+    	left:  3%;
+    	top: 25%;
+    	opacity: 0.69;
+    	z-index:  1004;
+}
