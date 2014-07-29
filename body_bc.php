@@ -219,21 +219,21 @@ function fancytree_build_children ($dirtoread , $category, $elementToSelect) {
         });
 
         var resourcesTreeData = [
-            {title:"Inversions", folder:true, expanded: false,
+            {title:"Inversions", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedInversions" )),
                 children: [
 <?php
                     fancytree_build_children($properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversions"]);
                 ?>
                 ]
             },
-            {title:"Land Models", folder:true, expanded: true,
+            {title:"Land Models", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedLandModels" )),
                 children: [
 <?php
                     fancytree_build_children($properties["landModelsResourcesPath"], "LandModels", $properties["selectedLandModels"]);
                 ?>
                 ]
             },
-            {title:"Ocean Models", folder:true, expanded: false,
+            {title:"Ocean Models", folder:true, expanded:("false" != jQuery.i18n.prop( "selectedOceanModels" )),
                 children: [
 <?php
                     fancytree_build_children($properties["oceanModelsResourcesPath"], "OceanModels", $properties["selectedOceanModels"]);
