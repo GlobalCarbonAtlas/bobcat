@@ -14,7 +14,7 @@ var BCInterfaceW = Class.create( {
 
     initialize: function( resourcesTreeData, variablesToKeepArray, variableNamesToKeepArray )
     {
-        // Parameters
+//        Parameters
         this.variableDiv = $( "#variableSelect" );
         this.timeYearSelect = $( "#timeYearSelect" );
         this.timeMonthSelect = $( "#timeMonthSelect" );
