@@ -1,5 +1,5 @@
 <HTML>
-Test merge Vanessa / Test merge Pascal Bordel !!!!
+Test merge
 <!--
  ##########################################################################
 
