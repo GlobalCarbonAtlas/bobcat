@@ -1,4 +1,8 @@
 <?php
+/* Call server must be dynamic : */
+ $UrlPart1 = $_SERVER["SERVER_NAME"];
+ $UrlPart2 = $_SERVER["PHP_SELF"];
+
 $xmlStringPart1= '<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xsl/xslMetadataForm.xsl"?>
 <gvq:GVQ_Metadata xmlns:updated19115="http://www.geoviqua.org/19115_updates" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gvq="http://www.geoviqua.org/QualityInformationModel/4.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gmd19157="http://www.geoviqua.org/gmd19157" xmlns:un="http://www.uncertml.org/2.0" xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20070417/gmx/gmx.xsd
@@ -68,7 +72,7 @@ http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd" id="dataset_MD
                         <updated19115:codeSpace>
                             <gco:CharacterString>http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/</gco:CharacterString>
                         </updated19115:codeSpace>
-                    </updated19115:MD_Identifier>
+              </updated19115:MD_Identifier>
 </gmd:identifier>
 <gmd:presentationForm>
 <gmd:CI_PresentationFormCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_PresentationFormCode" codeListValue="mapDigital">mapDigital</gmd:CI_PresentationFormCode>

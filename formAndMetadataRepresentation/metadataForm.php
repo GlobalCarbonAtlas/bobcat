@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
+
+<?php
+/* Call server must be dynamic : */
+ $UrlPart1 = $_SERVER["SERVER_NAME"]; // name of the server
+ $UrlPart2 = $_SERVER["PHP_SELF"]; // all excepting server name (include file name)
+?>
+
 <head>
+
+
+<?php
+//echo $_SERVER['HTTP_HOST']." PIF " .$_SERVER['REQUEST_URI'];
+echo $UrlPart1.$UrlPart2;
+?>
+
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,6 +44,8 @@
 </head>
 
 <body>
+
+
 <div class="container-fluid">
 
 <!--<form id="metadataForm" method="post" action="receiveAndKeepInfoFromForm.php"> Passed with ajax, with $.post method-->
@@ -598,7 +614,12 @@ var prodTitle= $("#prodNameTitleInput").val();
 var prodVersion= $("#prodNameVersionInput").val();
 
 var linkToXml2= prodTypeSelect + prodTypeInput + "_" + prodCatSelect + prodCatInput + "_" + prodTitle + "_" + prodVersion + "_" + dateFillFormIso;
-window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/formAndMetadatRepresentation/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");
+
+//window.open("<?php echo $UrlPart1; ?>/bobcat/formAndMetadataRepresentation/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");
+//window.open("<?php echo $_SERVER['HTTP_HOST'] ?>/bobcat/formAndMetadataRepresentation/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");// Pareil
+//window.open("http://localhost/bobcat/formAndMetadataRepresentation/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");//OK
+window.open("xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1"); // Pas droit d'acces.
+
 });
 
             var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;
@@ -726,7 +747,7 @@ window.open("http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/f
 
 	    var post= {dateFillFormIsoPost: dateFillFormIso, nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, nDescriptionStepsPost: nDescriptionSteps, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, dataProducerInfoPosition1Post: dataProducerInfoPosition1,dataProducerInfoPosition11Post: dataProducerInfoPosition11,dataProducerInfoPosition111Post: dataProducerInfoPosition111, dataProducerInfoPosition1111Post: dataProducerInfoPosition1111, dataProducerInfoPosition11111Post: dataProducerInfoPosition11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, metadatCreatorInfoPositionPost: metadatCreatorInfoPosition, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionLongValuePost: spatialResolutionLongValue, spatialResolutionLatValuePost: spatialResolutionLatValue, productDetails1Post: productDetails1, productDetails11Post: productDetails11, productDetails111Post: productDetails111, productDetails1111Post: productDetails1111, productDetails11111Post: productDetails11111, addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails, keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, citationAuthorPosition1Post: citationAuthorPosition1, citationAuthorPosition11Post: citationAuthorPosition11, citationAuthorPosition111Post: citationAuthorPosition111, citationAuthorPosition1111Post: citationAuthorPosition1111, citationAuthorPosition11111Post: citationAuthorPosition11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11, citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy};
 
-            $.post( "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/formAndMetadataRepresentation/receiveAndKeepInfoFromForm.php", post);
+            $.post( "receiveAndKeepInfoFromForm.php", post);
         } );
     } );
 
