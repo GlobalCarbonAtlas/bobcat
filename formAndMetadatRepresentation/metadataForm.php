@@ -30,6 +30,16 @@
 </head>
 
 <body>
+
+<?php
+$tt1= $_SERVER["SERVER_NAME"];
+echo $tt1;
+$tt2= $_SERVER["PHP_SELF"];
+echo $tt2;
+
+
+?>
+
 <div class="container-fluid">
 
 <!--<form id="metadataForm" method="post" action="receiveAndKeepInfoFromForm.php"> Passed with ajax, with $.post method-->
