@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<?php
-/* Call server must be dynamic : */
- $UrlPart1 = $_SERVER["SERVER_NAME"]; // name of the server
- $UrlPart2 = $_SERVER["PHP_SELF"]; // all excepting server name (include file name)
-?>
-
 <head>
-
-
-<?php
-//echo $_SERVER['HTTP_HOST']." PIF " .$_SERVER['REQUEST_URI'];
-echo $UrlPart1.$UrlPart2;
-?>
-
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -615,11 +602,7 @@ var prodVersion= $("#prodNameVersionInput").val();
 
 var linkToXml2= prodTypeSelect + prodTypeInput + "_" + prodCatSelect + prodCatInput + "_" + prodTitle + "_" + prodVersion + "_" + dateFillFormIso;
 
-//window.open("<?php echo $UrlPart1; ?>/bobcat/formAndMetadataRepresentation/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");
-//window.open("<?php echo $_SERVER['HTTP_HOST'] ?>/bobcat/formAndMetadataRepresentation/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");// Pareil
-//window.open("http://localhost/bobcat/formAndMetadataRepresentation/xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1");//OK
-window.open("xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1"); // Pas droit d'acces.
-
+window.open("xmlDoneByForm/"+linkToXml2+".xml", "Metatada of the file:", "status=1, scrollbars=1, resizable=1"); // Must give access right to folder.
 });
 
             var nDataContributors = $( 'input[id^="dataProducerInfoNameInput"]' ).length;

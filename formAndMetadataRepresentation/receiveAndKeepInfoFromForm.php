@@ -1,7 +1,7 @@
 <?php
 /* Call server must be dynamic : */
- $UrlPart1 = $_SERVER["SERVER_NAME"];
- $UrlPart2 = $_SERVER["PHP_SELF"];
+ $UrlPart1= $_SERVER["SERVER_NAME"];
+ $UrlPart2= $_SERVER["PHP_SELF"];
 
 $xmlStringPart1= '<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="../xsl/xslMetadataForm.xsl"?>
@@ -70,7 +70,7 @@ http://www.uncertml.org/2.0 http://www.uncertml.org/uncertml.xsd" id="dataset_MD
                             <gco:CharacterString>'.$_POST["dataProductTypeSelectPost"].$_POST["dataProductTypeInputPost"].'_'.$_POST["dataProductCategorySelectPost"].$_POST["dataProductCategoryInputPost"].'_'.$_POST["prodNameTitlePost"].'_'.$_POST["prodNameVersionPost"].'_'.$_POST["dateFillFormIsoPost"].'.xml</gco:CharacterString>
                         </gmd:code>
                         <updated19115:codeSpace>
-                            <gco:CharacterString>http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/xmlDoneByForm/</gco:CharacterString>
+                            <gco:CharacterString>'.$UrlPart1.'/bobcat/xmlDoneByForm/</gco:CharacterString>
                         </updated19115:codeSpace>
               </updated19115:MD_Identifier>
 </gmd:identifier>
@@ -419,7 +419,7 @@ $docDom= new DOMDocument();
 $docDom-> formatOutput = true; // CF php-xml how to output nice format.
 $docDom-> preserveWhiteSpace = false;
 $docDom->loadXML($xmlString);
-// Keep file with new name :
+// Keep file with new name : Give possibility to read after creation.
 $docDom->save("xmlDoneByForm/".$_POST["dataProductTypeSelectPost"].$_POST["dataProductTypeInputPost"].'_'.$_POST["dataProductCategorySelectPost"].$_POST["dataProductCategoryInputPost"].'_'.$_POST["prodNameTitlePost"].'_'.$_POST["prodNameVersionPost"].'_'.$_POST["dateFillFormIsoPost"].".xml");
 
 
