@@ -57,6 +57,7 @@
 
 var AnyTime =
 {
+
     //=============================================================================
     //  AnyTime.pad() pads a value with a specified number of zeroes and returns
     //  a string containing the padded value.
