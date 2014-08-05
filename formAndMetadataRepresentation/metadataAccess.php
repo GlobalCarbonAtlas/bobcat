@@ -7,16 +7,20 @@
 
 <body>
 
-<script type="text/javascript">
-             var ip = location.host;// To have dynamic call/server.
-             var completeUrlToMetadataXmlFolder= "http://"+ip+"/bobcat/formAndMetadataRepresentation/xmlDoneByForm"
-             var completeUrlToMetadataXml= "http://"+ip+"/bobcat/formAndMetadataRepresentation/xmlDoneByForm/CO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml"
+<!-- To make dynamic calls : -->
+<?php
+    $url = $_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_NAME"];
+    $pathInfoUrl = pathinfo($url);// Array
+    $dirName = $pathInfoUrl["dirname"];//Path without file name.
+    $completeUrl = "http://".$dirName;
+?>
 
+<script type="text/javascript">
                 function clickButonFeedback() {
-			        window.open("https://geoviqua.stcorp.nl/submit_feedback.html?target_code=customType-Inversion_model-SuperTitle-3.2.xml&target_codespace=http://"+ip+"/bobcat/formAndMetadatRepresentation/xmlDoneByForm/");
+			        window.open("https://geoviqua.stcorp.nl/submit_feedback.html?target_code=CO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml&target_codespace=<?php echo $completeUrl."/xmlDoneByForm"; ?>");
                 }
                 function clickButonSeeCompleteMetadat() {
-                	window.open(completeUrlToMetadataXml);
+                	window.open("<?php echo $completeUrl."/xmlDoneByForm/CO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml"; ?>");
                 }
                 $(function() {
                         $(".feedbackButtonClass").button({label: "Add feedback"});
@@ -36,15 +40,9 @@
                 });
             </script>
 
-  <?php
-    $ip = $_SERVER["SERVER_NAME"];
-    $completeUrlToMetadataXmlFolder = "http://".$ip."/bobcat/formAndMetadataRepresentation/xmlDoneByForm";
-    $completeUrlToMetadataXml = "http://".$ip."/bobcat/formAndMetadataRepresentation/xmlDoneByForm/CO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml";
-  ?>
-
 <div id= "metadataGVQContainer">
             <div id= "syntheticInfoText" class= "cursorPointer" title= "Tip: no color= none or incomplete information"><h4>View metadata per category and feedback information:</h4></div>
-		<object id= "geoLabelObject" class= "geoLabelClass" data="http://www.geolabel.net/api/v1/geolabel?metadata=<?php echo $completeUrlToMetadataXml; ?>&feedback=http://geoviqua.stcorp.nl/api/v1/feedback/collections%3Ftarget_code%3DcustomType-Inversion_model-SuperTitle-3.2.xml%26target_codespace%3D"+ completeUrlToMetadataXmlFolder +"/%26format%3Dxml&size=50" type="image/svg+xml" width="200" height="200"></object>
+		<object id= "geoLabelObject" class= "geoLabelClass" data="http://www.geolabel.net/api/v1/geolabel?metadata=<?php echo $completeUrl."/xmlDoneByForm/CO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml"; ?>&feedback=http://geoviqua.stcorp.nl/api/v1/feedback/collections%3Ftarget_code%3DCO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml%26target_codespace%3D<?php echo $completeUrl."/xmlDoneByForm"; ?>/%26format%3Dxml&size=50" type="image/svg+xml" width="200" height="200"></object><!-- geolabelAPI doesn't work if we call a local url -->
 	   <div id= "geoLabelLink">The "GeoLabel" has been created by the <a href= "http://www.geoviqua.org/" TARGET= "_new" title= "">GeoViQua project</a> for GEOSS</div>
 
                 <div class= "feedbackButtonClass" title= "Press here to enter your feedback about this file"></div>
