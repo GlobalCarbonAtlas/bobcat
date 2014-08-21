@@ -307,7 +307,7 @@ var Bobcat = Class.create( {
         var items = new Array();
         if( showLegend )
             items.push( { text: "Show legend", icon: this.imgPath + "/legend_display.png", alias:"showLegend", action: jQuery.proxy( this.onClickShowLegend, this )} );
-        // Pascal : la partie else sert à avoir cette meme info qd click droit/carte..
+        // Pascal : part else is used to get the same info when right click on a map..
         else
             items.push( { text: "Hide legend", icon: this.imgPath + "/legend_hide.png", alias:"hideLegend", action: jQuery.proxy( this.onClickHideLegend, this )} );
         items.push( { text: "Export to kmz", icon: this.imgPath + "/GoogleEarth-icon.png", alias:"googleearth", action: jQuery.proxy( this.onClickExportToKMZ, this )} );
