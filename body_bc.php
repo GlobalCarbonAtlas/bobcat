@@ -73,6 +73,65 @@
             </div>
         </div>
 
+<!--Pascal part : -->
+        <!-- Add way to choose uncertainty : -->
+        <div id= "uncertainty" class="leftMenu">
+
+            <h2 title="Visualize uncertainty information displaying std dev layer or overlaying std dev information above the layer">
+                 <img src="img/5step.png">
+                  UNCERTAINTY
+            </h2>
+
+            <div id= "uncertaintySelect">
+                <input id= "displayStdDev" class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
+                <label class= "uncertaintySelectElementClass" for= "displayStdDev">
+                    <span class= "variable">Display standard deviation</span>
+                </label>
+                <br>
+                <input id= "displayOverlayStdDev"  class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
+                <label  class= "uncertaintySelectElementClass" for= "displayOverlayStdDev">
+                    <span class= "variable">Overlay standard deviation</span>
+                </label>
+                <br>
+            </div>
+            <br>
+            <!-- If Overlay standard deviation choose : -->
+            <div id= "overlayStdDevCase">
+                 <input id= "uncertaintyWithMasking" type= "radio" name= "displayOverlayUncertaintyMode" checked= "checked">
+                 <label for= "uncertaintyWithMasking">
+                    <span class="variable2">Masking areas with values > std dev reference</span>
+                 </label>
+                 <br>
+                 <input id= "uncertaintyWithStippling" type= "radio" name= "displayOverlayUncertaintyMode">
+                 <label for= "uncertaintyWithStippling">
+                    <span class="variable2">Stippling areas with values < std dev reference</span>
+                 </label>
+                 <br>
+            </div>
+                <!-- Slider: -->
+                <div id= "uncertaintyLevelSlider"></div>
+
+
+
+
+           
+
+        </div>
+        <script text="text/javascript">
+                $("#overlayStdDevCase").hide();
+                $("#displayOverlayStdDev").change(
+                    function(){
+                        if ($(this).is(':checked')) {
+                            $("#overlayStdDevCase").show();
+                        }
+                        else $("#overlayStdDevCase").hide();
+                    });
+                 $(function() {
+                    $( "#uncertaintyLevelSlider" ).slider();
+                 });
+            </script>
+<!-- End Pascal part -->        
+
         <div class="noticeLSCE leftMenu">
             Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.2
         </div>

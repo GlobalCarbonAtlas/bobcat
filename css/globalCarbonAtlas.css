@@ -583,6 +583,33 @@ span.fancytree-title:hover div.complexToolTip {
 //   top:-2px;
 }
 
+/* Pascal part : */
+/******************** UNCERTAINTY ***********************/
+#uncertaintySelect {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 19px;
+    font-size: 12px;
+}
+
+.uncertaintySelectElementClass {
+    margin-bottom: 7px;
+}
+
+#overlayStdDevCase {
+    margin-left: 28px;
+    font-size: 11px;
+    margin-top: -15px;
+}
+
+#overlayStdDevCase label{
+    font-weight:normal;
+   display: inline;
+   margin-left: -3px;
+   position: relative;
+   top:-2px;
+}
 /******************** OTHER ***********************/
 .noticeLSCE {
 //    border-top: 1px solid #CCCCCC;
