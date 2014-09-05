@@ -610,6 +610,39 @@ span.fancytree-title:hover div.complexToolTip {
    position: relative;
    top:-2px;
 }
+
+#uncertaintyWithStippling {
+    margin-bottom: -4px;
+}
+
+#uncertaintySliderLabel{
+   cursor: pointer;
+   left: 2px;
+   margin-left: 7px;
+   position: relative;
+}
+
+#uncertaintySelectElementText {
+    cursor: pointer;
+}
+
+#uncertaintyLevelSlider {
+    margin-top: 10px;
+    width: 90%;
+}
+
+#uncertaintySliderValueInput {
+      background-color: #f2f2f2;
+      border: 0 none;
+      display: inline-block;
+      font-size: 11px;
+      height: 16px;
+      left: -1px;
+      position: relative;
+      text-align: center;
+      top: -2px;
+      width: 20%;
+}
 /******************** OTHER ***********************/
 .noticeLSCE {
 //    border-top: 1px solid #CCCCCC;
