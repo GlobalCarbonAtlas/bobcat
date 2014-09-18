@@ -76,80 +76,25 @@
 <!--Pascal part : -->
         <!-- Add way to choose uncertainty : -->
         <div id= "uncertainty" class="leftMenu">
-
             <h2 title="Visualize uncertainty information displaying std dev layer or overlaying std dev information above the layer">
                  <img src="img/6step.png">
                   UNCERTAINTY
             </h2>
-
             <div id= "uncertaintySelect">
                 <input id= "displayStdDev" class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
                 <label class= "uncertaintySelectElementClass" for= "displayStdDev">
-                    <span class= "variable">Display standard deviation</span>
+                    <span class= "variable">Display st dev</span>
                 </label>
                 <br>
                 <input id= "displayOverlayStdDev"  class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
                 <label  class= "uncertaintySelectElementClass" for= "displayOverlayStdDev">
-                    <span id= "uncertaintySelectElementText" class= "variable" title= "Explain what is done with this option">Overlay standard deviation</span>
+                    <span id= "uncertaintySelectElementText" class= "variable" title= "Explain what is done with this option">Overlay st dev</span>
                 </label>
                 <br>
             </div>
-            <br>
-            <!-- If Overlay standard deviation choose : -->
-            <div id= "overlayStdDevCase">
-                 <input id= "uncertaintyWithMasking" type= "radio" name= "displayOverlayUncertaintyMode" checked= "checked">
-                 <label for= "uncertaintyWithMasking">
-                    <span class="variable2">Masking areas with values> std dev reference</span>
-                 </label>
-                 <br>
-                 <div id= "uncertaintyWithStippling">
-                  <input id= "uncertaintyWithStipplingInput" type= "radio" name= "displayOverlayUncertaintyMode">
-                  <label  for= "uncertaintyWithStippling">
-                    <span class="variable2">Stippling areas with values < std dev reference</span>
-                  </label>
-                 </div>
-                 <br>
-                <!-- Slider part: -->
-                    <!-- Way to do it: put in an input element value's slider. To describe input, label associated.-->
-                <label id= "uncertaintySliderLabel" for= "uncertaintySliderValue" title= "Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">Uncertainty threshold: </label>
-                <input id= "uncertaintySliderValueInput" type= "text" readonly>
-                <div id= "uncertaintyLevelSlider">
-                <!-- End slider part: -->
-                </div>
-            </div>
-
         </div>
-
-        <script text="text/javascript">
-                $("#overlayStdDevCase").hide();
-                $("#displayOverlayStdDev").change(
-                    function(){
-                        if ($(this).is(':checked')) {
-                            $("#overlayStdDevCase").show();
-                        }
-                        else $("#overlayStdDevCase").hide();
-                    });
-
-                 $(function() {
-                    //var tt = σ;
-                    var valueArray= ["0", "0.5 σ", "1 σ", "1.5 σ", "2 σ", "σ max"];// --> To write σ symbols, use this method in js (be in utf8). For html, we could use  <?php echo('&#931'); ?> (cf http://www.webstandards.org/learn/reference/charts/entities/symbol_entities/)
-                    $( "#uncertaintyLevelSlider" ).slider({
-                        value: 2,
-                        min: 0,
-                        max: 5,
-                        step: 1,
-                        slide: function(event, ui) {
-                            //$("#uncertaintySliderValueInput").val(ui.value);// Classic way to change value when slide.
-                            $("#uncertaintySliderValueInput").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array. 
-                        }
-                    });
-                    //$("#uncertaintySliderValueInput").val($("#uncertaintyLevelSlider").slider("value"));// --> Classic way to set default value (before slide).
-                    $("#uncertaintySliderValueInput").val(valueArray[2]);// --> Set default value f(array's values).
-                 });
-
-            </script>
-<!-- End Pascal part -->        
-
+            <!-- If Overlay standard deviation choose : Menu qui peut s'appliquer dynamiquement une fois cartes instanciees donc a droite.-->
+   <!--End Pascal part. -->    
         <div class="noticeLSCE leftMenu">
             Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.2
         </div>
@@ -241,6 +186,71 @@
 
             <div id="legend"></div>
         </div>
+       
+        <!-- Pascal part: --> 
+        <div id= "overlayStdDevCase" class= "rightMenuTool">
+
+            <div class="rightMenuTool">&nbsp;
+                <HR width="50%" class="rightMenuHR"/>
+            </div>
+            <h2>UNCERTAINTY</h2>
+
+                 <div id= "uncertaintyWithMasking">
+                  <input id= "uncertaintyWithMaskingInput" type= "radio" name= "displayOverlayUncertaintyMode" checked= "checked">
+                  <label for= "uncertaintyWithMasking">
+                    <span class="variable2">Mask areas > threshold</span>
+                  </label>
+                 </div>
+                 <br>
+                 <div id= "uncertaintyWithStippling">
+                  <input id= "uncertaintyWithStipplingInput" type= "radio" name= "displayOverlayUncertaintyMode">
+                  <label  for= "uncertaintyWithStippling">
+                    <span class="variable2">Stipple areas <  threshold</span>
+                  </label>
+                 </div>
+                 <br>
+                <!-- Slider part: -->
+                    <!-- Way to do it: put in an input element value's slider. To describe input, label associated.-->
+                <label id= "uncertaintySliderLabel" for= "uncertaintySliderValue" title= "Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">St dev threshold: </label>
+                <input id= "uncertaintySliderValueInput" type= "text" readonly>
+                <div id= "uncertaintyLevelSlider">
+                <!-- End slider part: -->
+                </div>
+        </div>
+
+         <script text="text/javascript">
+                $("#overlayStdDevCase").hide();
+                $("#displayOverlayStdDev").change(
+                    function(){
+                        if ($(this).is(':checked')) {
+                            $("#overlayStdDevCase").show();
+                        }
+                        else 
+                            $("#overlayStdDevCase").hide();
+                 });
+                
+                // Slider uncertainty (st dev) threshold part:
+                 $(function() {
+                    //var tt = σ;
+                    var valueArray= ["0", "0.5 σ", "1 σ", "1.5 σ", "2 σ", "2.5 σ", "3 σ"];// --> To write σ symbols, use this method in js (be in utf8). For html, we could use  <?php echo('&#931'); ?> (cf http://www.webstandards.org/learn/reference/charts/entities/symbol_entities/)
+                    $( "#uncertaintyLevelSlider" ).slider({
+                        value: 2,
+                        min: 1,
+                        max: 6,
+                        step: 1,
+                        slide: function(event, ui) {
+                            //$("#uncertaintySliderValueInput").val(ui.value);// Classic way to change value when slide.
+                            $("#uncertaintySliderValueInput").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array. 
+                        }
+                    });
+                    //$("#uncertaintySliderValueInput").val($("#uncertaintyLevelSlider").slider("value"));// --> Classic way to set default value (before slide).
+                    $("#uncertaintySliderValueInput").val(valueArray[2]);// --> Set default value f(array's values).
+                 });
+
+            </script>
+<!-- End Pascal part -->        
+
+
     </div>
 
     <div id="hideOrShowRightMenu">

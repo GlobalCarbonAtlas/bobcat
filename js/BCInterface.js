@@ -15,6 +15,11 @@ var BCInterfaceW = Class.create( {
     initialize: function( resourcesTreeData, variablesToKeepArray, variableNamesToKeepArray )
     {
 //        Parameters
+        // Pascal part :
+        //this.displayUncertaintyModeDiv=$("#uncertaintySelect")// Fonction qui pemet de savoir si choisi uncert et laquelle et en fonction de ça, affichage avec add layer.
+        //this.overlayUncertaintyMode =
+        //this.uncertaintyThreshold =
+        //End Pascal part.
         this.variableDiv = $( "#variableSelect" );
         this.timeYearSelect = $( "#timeYearSelect" );
         this.timeMonthSelect = $( "#timeMonthSelect" );
@@ -92,6 +97,9 @@ var BCInterfaceW = Class.create( {
         this.resizePrintable();
         this.updateLegendButtons();
     },
+
+
+
 
     initInterface: function()
     {
@@ -193,8 +201,13 @@ var BCInterfaceW = Class.create( {
             case "Ocean_flux":
                 this.selectedBobcat.map.layers[2].setVisibility( false );
                 break;
-        }
-        ;
+        };
+        // Pascal part :
+        // Objectif : lancer fonction createUncertaintyResource() lors de la création map.
+        //this.createUncertaintyResource();
+
+
+        // End Pascal part.
 
         this.resizeAllMaps();
     },
@@ -409,6 +422,20 @@ var BCInterfaceW = Class.create( {
                     tree.clearFilter();
                 } ).attr( "disabled", true );
     },
+
+    //Pascal part:
+        /*createUncertaintyResource: function()
+        {
+            switch(this.variable)
+                {
+                    case "Terrestrial_flux":
+                        this.uncertaintyVariable = "terrestrialFluxForUncertainty"
+                    case "Ocean flux":
+                        this.uncertaintyVariable = "oceanFluxForUncertainty"
+                }
+        },*/
+
+    // End pascal part:
 
     onSelectResource: function( isInit, data )
     {
@@ -1295,7 +1322,7 @@ var BCInterfaceW = Class.create( {
         ];
         parameters.parentContainerId = "#pageWrapper";
         //parameters.globalMarginTop = -110;
-        //parameters.globalMarginLeft = -110;		// TODO: do not handle width resizing
+        //parameters.globalMarginLeft = -110;		// sTODO: do not handle width resizing
 
         this.help = new Help( parameters );
 

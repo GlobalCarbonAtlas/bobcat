@@ -189,7 +189,104 @@ var Bobcat = Class.create( {
         // Styles
         $( this.map.viewPortDiv ).addClass( "BCmapWMS" );
 
+        // Pascal part :
+        // Objectif : lancer fonction createUncertaintyResource() lors de la création map (de this.map !).
+        this.createUncertaintyResource();
+
     },
+
+    //Pascal part:
+           createUncertaintyResource: function()//TODO: optimiser le code avec booleens.
+           {
+                if ( $("#displayOverlayStdDev").is(":checked") && $("#displayStdDev").is(":checked"))//TODO: ici on doit avoir les 2 actions.
+                    {
+                        //alert("Les 2 checked");//OK
+                    }
+                else if ( $("#displayStdDev").is(":checked") )
+                    {
+                        //alert("Display checked");//OK
+                    }
+                else if ( $("#displayOverlayStdDev").is(":checked") )
+                    {
+                        //alert("Overlay checked");//OK
+                        this.overlayUncertaintyLayer();
+                    }
+                else return false;// Si rien de coché, rien a creer.
+           },
+
+            overlayUncertaintyLayer: function()
+            {
+                this.get_uncertaintyLayer();
+                this.map.addLayer(this.uncertaintyLayer);
+            },
+
+             get_uncertaintyLayer: function()
+             {
+                 //completeUrlToNcData = this.resource;
+                 /*switch(this.resource)
+                 {
+                       case "inversion":
+
+                        break;
+                       case "";
+
+                        break;
+                 }*/
+                 //alert(this.resource);
+                    //Inversion (variable ocean et terrestrial : pas de diff : la distinction se fait avec this.variable) :
+                    //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/Inversions/longterm-2001-2004/fco2_CCAM_Sep2013-ext3_1992-2008_longterm-2001-2004_XYT.nc
+                    //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/Inversions/longterm-2001-2004/fco2_CCAM_Sep2013-ext3_1992-2008_longterm-2001-2004_XYT.nc
+                   // Land model :
+                   //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/LandModels/longterm-2000-2009/fco2_CLM4CN_Sep2013-ext3_1980-2010_longterm-2000-2009_XYT.nc
+                   // Ocean model :
+                   //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/OceanModels/longterm-2000-2009/fco2_CCSM-BEC_Sep2013-ext3_1980-2009_longterm-2000-2009_XYT.nc
+
+
+                 switch(this.variable)
+                 {
+                       case "Terrestrial_flux":
+                         uncertaintyVariable = 'LANDMODEL';//TODO. Pas correct, adapter : offrir choix /terrestrial or ocean et adpater script python.
+                         break;
+                       case "Ocean_flux"://TODO
+                         uncertaintyVariable = "oceanFlux";
+                         break;
+                 }
+
+                   //alert(this.variable);
+                 // Pour recuperer l'id d'un element :
+                 //huhu = $('#variableSelect').attr('id');//OK
+                 //inputT = $( 'input' ).attr('id')[5];//OK
+                 //inputT = $( 'input[name="variableRadio"]' ).attr('id');//OK
+                 //jjj = $('#resourceSelect ul')[0];//OK
+
+
+                 if ( $("#uncertaintyWithMasking").is(":checked") )
+                       {
+                         overlayMode = "masking";
+                       }
+                 else {overlayMode = "stippling";}
+
+                 thresholdValue = $("#uncertaintySliderValueInput").val();
+                 thresholdValueForPy = thresholdValue.replace(' σ', 'stdDev');// On a besoin de chger symbole sigma parce que ne passe pas ds code .py et donc dans noms couches .shp
+
+                 this.uncertaintyLayer = new OpenLayers.Layer.WMS(
+                 "Uncertainty layer (" +  thresholdValue + ")",
+                 "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
+                     {
+                     VERSION: '1.1.1',
+                     LAYERS: "uncertainty:LONGTERM_" + uncertaintyVariable + "_" + overlayMode + "_" + thresholdValueForPy,
+                     transparent: true,
+                      FORMAT: 'image/png',
+                      }, {
+                      isBaseLayer: false,
+                      opacity: 1,
+                      singleTile: true,
+                      visibility: true,
+                     } );
+
+             },
+
+        // End pascal part:
 
     createZoomToMaxExtent: function()
     {
@@ -238,8 +335,13 @@ var Bobcat = Class.create( {
         this.get_urbanAreasLayer();
         this.get_lakesAndRiversLayer();
         this.get_graticulesLayer();
+        //Pascal part :
         this.map.addLayers( [this.wms1, this.landMaskLayer, this.oceanMaskLayer, this.frontiersLayer, this.namesLayer, this.urbanAreasLayer, this.lakesAndRiversLayer, this.graticulesLayer] );
+        //this.map.addLayers( [this.wms1, this.landMaskLayer, this.oceanMaskLayer, this.frontiersLayer, this.namesLayer, this.urbanAreasLayer, this.uncertaintyLayer, this.uncertaintyLayer2] );// TODO : rajouter graticules et lakes layers et adapter.
+        // End Pascal part.
     },
+
+
 
 
 
@@ -735,6 +837,8 @@ var Bobcat = Class.create( {
             visibility: false
         } );
     },
+
+
 
 // **************************************************************
 // ************************* OTHER ******************************

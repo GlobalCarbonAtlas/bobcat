@@ -598,9 +598,9 @@ span.fancytree-title:hover div.complexToolTip {
 }
 
 #overlayStdDevCase {
-    margin-left: 28px;
+    margin-left: 0px;
     font-size: 11px;
-    margin-top: -15px;
+    margin-top: -9px;
 }
 
 #overlayStdDevCase label{
@@ -613,6 +613,12 @@ span.fancytree-title:hover div.complexToolTip {
 
 #uncertaintyWithStippling {
     margin-bottom: -4px;
+    margin-left: -13px;
+}
+
+#uncertaintyWithMasking {
+    margin-left: -23px;
+    margin-bottom: -13px;
 }
 
 #uncertaintySliderLabel{
@@ -627,8 +633,9 @@ span.fancytree-title:hover div.complexToolTip {
 }
 
 #uncertaintyLevelSlider {
-    margin-top: 10px;
-    width: 90%;
+    margin-top: 2px;
+    width: 85%;
+    margin-left: 7px;
 }
 
 #uncertaintySliderValueInput {
