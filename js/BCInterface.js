@@ -15,11 +15,6 @@ var BCInterfaceW = Class.create( {
     initialize: function( resourcesTreeData, variablesToKeepArray, variableNamesToKeepArray )
     {
 //        Parameters
-        // Pascal part :
-        //this.displayUncertaintyModeDiv=$("#uncertaintySelect")// Fonction qui pemet de savoir si choisi uncert et laquelle et en fonction de ça, affichage avec add layer.
-        //this.overlayUncertaintyMode =
-        //this.uncertaintyThreshold =
-        //End Pascal part.
         this.variableDiv = $( "#variableSelect" );
         this.timeYearSelect = $( "#timeYearSelect" );
         this.timeMonthSelect = $( "#timeMonthSelect" );
@@ -96,10 +91,8 @@ var BCInterfaceW = Class.create( {
         this.bindRange();
         this.resizePrintable();
         this.updateLegendButtons();
+        this.actualiseUncertaintyMapsToThreshold();
     },
-
-
-
 
     initInterface: function()
     {
@@ -202,14 +195,12 @@ var BCInterfaceW = Class.create( {
                 this.selectedBobcat.map.layers[2].setVisibility( false );
                 break;
         };
-        // Pascal part :
-        // Objectif : lancer fonction createUncertaintyResource() lors de la création map.
-        //this.createUncertaintyResource();
-
-
-        // End Pascal part.
 
         this.resizeAllMaps();
+
+        //Pascal part :
+         // Note : tt ce qui se fait ici sera répété pour n cartes.
+        // End Pascal part :
     },
 
     selectBobcat: function( id )
@@ -422,20 +413,6 @@ var BCInterfaceW = Class.create( {
                     tree.clearFilter();
                 } ).attr( "disabled", true );
     },
-
-    //Pascal part:
-        /*createUncertaintyResource: function()
-        {
-            switch(this.variable)
-                {
-                    case "Terrestrial_flux":
-                        this.uncertaintyVariable = "terrestrialFluxForUncertainty"
-                    case "Ocean flux":
-                        this.uncertaintyVariable = "oceanFluxForUncertainty"
-                }
-        },*/
-
-    // End pascal part:
 
     onSelectResource: function( isInit, data )
     {
@@ -963,6 +940,62 @@ var BCInterfaceW = Class.create( {
         this.updateLegend();
     },
 
+// Pascal part :
+// ************************************************************************************************
+// ************************* UPDATE ALL UNCERTAINTY MAPS (RIGHT PART) *****************************
+// ************************************************************************************************
+    actualiseUncertaintyMapsToThreshold: function()
+    {
+        /*$('#uncertaintyLevelSlider').click( function()// --> non, car pas bon element, mais si on applique click a autre chose, marche.
+         {
+            alert(222);
+         });*/
+
+         var sliderValue = $( "#uncertaintySliderValueInput" ).val();
+                             switch (sliderValue)
+                             {
+                                 case "0.5 σ":
+                                     alert("= 0.5");
+                                 break;
+                                 case "1 σ":
+                                     alert("= 1");
+                                 break;
+                             }
+
+        /*if ( $('#displayOverlayStdDefLeft').is(':checked') && $("#uncertaintyWithMaskingInput").is(":checked") )
+        //Test pour voir comment reagit une fonction ici.
+         {
+            alert('Mask mode actif');
+         }
+            else {alert('Mask mode inactif');}
+        alert( this.hashBobcats.keys() );// = id0, id1, id2, ...
+        */
+        /*this.hashBobcats.each( jQuery.proxy( function(key)//
+                {
+                    var sliderValue = $( "#uncertaintySliderValueInput" ).val();
+                    switch (sliderValue)
+                    {
+                        case "0.5 σ":
+                            alert("= 0.5");
+                        break;
+                        case "1 σ":
+                            alert("= 1");
+                        break;
+                    }*/
+
+                    //this.selectedBobcat.map.layers[3].setVisibility(true);//OK.
+
+                    /*$( "#uncertaintySliderValueInput" ).val().change(
+                        function()
+                            {alert(222);}
+                    );*/ //NOT OK.
+                    /*tt = $( "#uncertaintySliderValueInput" ).val();
+                    alert(tt);*/
+                //}, this)
+        //);
+    },
+
+    // End Pascal part.
 
 // **************************************************************
 // ************************* LEGEND *****************************
@@ -1017,6 +1050,11 @@ var BCInterfaceW = Class.create( {
 
     },
 
+    updateUncertaintyMapsThreshold: function()
+    {
+
+    },
+
 
 // **************************************************************
 // ************************ SLIDERS *****************************
@@ -1051,6 +1089,24 @@ var BCInterfaceW = Class.create( {
             }, this )
         } );
         $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
+
+        //Pascal part:
+        // Slider uncertainty (st dev) threshold part: only for the right menu part (to apply to all maps):
+        var valueArray= ["0.5 σ", "1 σ", "1.5 σ", "2 σ", "2.5 σ", "3 σ"];// --> To write σ symbols, use this method in js (be in utf8). For html, we could use  <?php echo('&#931'); ?> (cf http://www.webstandards.org/learn/reference/charts/entities/symbol_entities/)
+        $( "#uncertaintyLevelSlider" ).slider({
+            value: 1,
+            min: 0,
+            max: 5,
+            step: 1,
+            slide: jQuery.proxy( function(event, ui) {
+                $("#uncertaintySliderValueInput").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array.
+                this.updateUncertaintyMapsThreshold();
+            }, this)
+        });
+        $("#uncertaintySliderValueInput").val(valueArray[1]);// --> Set default value f(array's values).
+
+
+        // End Pascal part:
     },
 
 

@@ -198,15 +198,15 @@ var Bobcat = Class.create( {
     //Pascal part:
            createUncertaintyResource: function()//TODO: optimiser le code avec booleens.
            {
-                if ( $("#displayOverlayStdDev").is(":checked") && $("#displayStdDev").is(":checked"))//TODO: ici on doit avoir les 2 actions.
+                if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
                     {
                         //alert("Les 2 checked");//OK
                     }
-                else if ( $("#displayStdDev").is(":checked") )
+                else if ( $("#displayStdDevLeft").is(":checked") )
                     {
                         //alert("Display checked");//OK
                     }
-                else if ( $("#displayOverlayStdDev").is(":checked") )
+                else if ( $("#displayOverlayStdDevLeft").is(":checked") )
                     {
                         //alert("Overlay checked");//OK
                         this.overlayUncertaintyLayer();
@@ -260,13 +260,13 @@ var Bobcat = Class.create( {
                  //jjj = $('#resourceSelect ul')[0];//OK
 
 
-                 if ( $("#uncertaintyWithMasking").is(":checked") )
+                 if ( $("#uncertaintyWithMaskingLeft").is(":checked") )
                        {
                          overlayMode = "masking";
                        }
                  else {overlayMode = "stippling";}
 
-                 thresholdValue = $("#uncertaintySliderValueInput").val();
+                 thresholdValue = $("#uncertaintySliderValueInputLeft").val();
                  thresholdValueForPy = thresholdValue.replace(' σ', 'stdDev');// On a besoin de chger symbole sigma parce que ne passe pas ds code .py et donc dans noms couches .shp
 
                  this.uncertaintyLayer = new OpenLayers.Layer.WMS(
@@ -283,7 +283,6 @@ var Bobcat = Class.create( {
                       singleTile: true,
                       visibility: true,
                      } );
-
              },
 
         // End pascal part:
@@ -335,16 +334,8 @@ var Bobcat = Class.create( {
         this.get_urbanAreasLayer();
         this.get_lakesAndRiversLayer();
         this.get_graticulesLayer();
-        //Pascal part :
         this.map.addLayers( [this.wms1, this.landMaskLayer, this.oceanMaskLayer, this.frontiersLayer, this.namesLayer, this.urbanAreasLayer, this.lakesAndRiversLayer, this.graticulesLayer] );
-        //this.map.addLayers( [this.wms1, this.landMaskLayer, this.oceanMaskLayer, this.frontiersLayer, this.namesLayer, this.urbanAreasLayer, this.uncertaintyLayer, this.uncertaintyLayer2] );// TODO : rajouter graticules et lakes layers et adapter.
-        // End Pascal part.
     },
-
-
-
-
-
 
 // **************************************************************
 // ************************ LEGEND ******************************
