@@ -91,7 +91,9 @@ var BCInterfaceW = Class.create( {
         this.bindRange();
         this.resizePrintable();
         this.updateLegendButtons();
-        this.actualiseUncertaintyMapsToThreshold();
+        //Pascal part :
+        this.changeOverlayUncertActions();
+        // End Pascal part :
     },
 
     initInterface: function()
@@ -197,10 +199,6 @@ var BCInterfaceW = Class.create( {
         };
 
         this.resizeAllMaps();
-
-        //Pascal part :
-         // Note : tt ce qui se fait ici sera répété pour n cartes.
-        // End Pascal part :
     },
 
     selectBobcat: function( id )
@@ -221,7 +219,6 @@ var BCInterfaceW = Class.create( {
                 $( ".olControlZoomIn" ).css( "background-color", "" );
                 $( ".olControlZoomOut" ).css( "pointer-events", "none" );
                 $( ".olControlZoomOut" ).css( "background-color", "#8F8F8F" );
-                // $(".olControlZoomOut").css("opacity", "0.4");	// Could have been used but nicer with background-color
                 break;
             case 7:        // 8 levels
                 $( ".olControlZoomIn" ).css( "pointer-events", "none" );
@@ -940,62 +937,7 @@ var BCInterfaceW = Class.create( {
         this.updateLegend();
     },
 
-// Pascal part :
-// ************************************************************************************************
-// ************************* UPDATE ALL UNCERTAINTY MAPS (RIGHT PART) *****************************
-// ************************************************************************************************
-    actualiseUncertaintyMapsToThreshold: function()
-    {
-        /*$('#uncertaintyLevelSlider').click( function()// --> non, car pas bon element, mais si on applique click a autre chose, marche.
-         {
-            alert(222);
-         });*/
 
-         var sliderValue = $( "#uncertaintySliderValueInput" ).val();
-                             switch (sliderValue)
-                             {
-                                 case "0.5 σ":
-                                     alert("= 0.5");
-                                 break;
-                                 case "1 σ":
-                                     alert("= 1");
-                                 break;
-                             }
-
-        /*if ( $('#displayOverlayStdDefLeft').is(':checked') && $("#uncertaintyWithMaskingInput").is(":checked") )
-        //Test pour voir comment reagit une fonction ici.
-         {
-            alert('Mask mode actif');
-         }
-            else {alert('Mask mode inactif');}
-        alert( this.hashBobcats.keys() );// = id0, id1, id2, ...
-        */
-        /*this.hashBobcats.each( jQuery.proxy( function(key)//
-                {
-                    var sliderValue = $( "#uncertaintySliderValueInput" ).val();
-                    switch (sliderValue)
-                    {
-                        case "0.5 σ":
-                            alert("= 0.5");
-                        break;
-                        case "1 σ":
-                            alert("= 1");
-                        break;
-                    }*/
-
-                    //this.selectedBobcat.map.layers[3].setVisibility(true);//OK.
-
-                    /*$( "#uncertaintySliderValueInput" ).val().change(
-                        function()
-                            {alert(222);}
-                    );*/ //NOT OK.
-                    /*tt = $( "#uncertaintySliderValueInput" ).val();
-                    alert(tt);*/
-                //}, this)
-        //);
-    },
-
-    // End Pascal part.
 
 // **************************************************************
 // ************************* LEGEND *****************************
@@ -1047,14 +989,106 @@ var BCInterfaceW = Class.create( {
                     + "' alt=''/>" );
         }, this ) );
 
-
     },
 
-    updateUncertaintyMapsThreshold: function()
+    // Pascal part :
+    // ************************************************************************************************
+    // ************************* UPDATE ALL UNCERTAINTY MAPS (RIGHT PART) *****************************
+    // ************************************************************************************************
+
+    changeOverlayUncertActions: function()//TODO : simplifier tout ça, en particulier la differentiation stippling/masking (besoin de dedoubler les fonctions ?)
     {
+        $('.uncertaintyRepresentationRightMenuClass').change(
+            jQuery.proxy( function()// jQuery.proxy ici pour associer fonction a objet BCInterface et pas a element associe a l'event.
+            {
+                if ( $('#uncertaintyWithMaskingInput').is(':checked') )
+                { var uncertaintyRepresentation= 'maskingMode' }
+                else if  ( $('#uncertaintyWithStipplingInput').is(':checked') )
+                { var uncertaintyRepresentation= 'stipplingMode' }
 
+                switch ( uncertaintyRepresentation )
+                    {
+                    case 'maskingMode':
+                        this.addMaskingUncertainty(); // On associe donc la fonction addMaskingUncertainty a l'object BCInterface.
+                    break;
+                    case 'stipplingMode':
+                        this.addStipplingUncertainty();
+                    break;
+                    }
+            }, this)
+        );
     },
 
+    addMaskingUncertainty: function()// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
+    {
+        console.log('Changed');// OK : l'affiche bien a chq fois que $('.uncertaintyRepresentationRightMenuClass').change()
+        //this.selectedBobcat.map.layers[3].setVisibility(true); // OK mais que sur derniere carte, il faut dc boucler.
+        this.hashBobcats.each( jQuery.proxy( function( key )
+        {
+            var map = this.hashBobcats.get( key ).map;
+            if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
+            {
+                // Destroy uncertainty layer before turn to create it.
+                map.layers[8].destroy(); // [8] = uncertainty layer.
+                //Turn to build uncertainty layer:
+                var uncertaintyLayerNewResource = new OpenLayers.Layer.WMS(
+                                         "Uncertainty layer New",
+                                         "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
+                                             {
+                                             VERSION: '1.1.1',
+                                             LAYERS: "uncertainty:LONGTERM_LANDMODEL_masking_1stdDev",
+                                             transparent: true,
+                                              FORMAT: 'image/png',
+                                              }, {
+                                              isBaseLayer: false,
+                                              opacity: 1,
+                                              singleTile: true,
+                                              visibility: true,
+                                             } );
+                map.addLayer(uncertaintyLayerNewResource);//OK !!!!
+            }
+            else console.log('No uncertainty layer');
+        }, this ) );
+    },
+
+    addStipplingUncertainty: function()// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
+        {
+            this.hashBobcats.each( jQuery.proxy( function( key )
+            {
+                var map = this.hashBobcats.get( key ).map;
+                if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
+                {
+                    // Destroy uncertainty layer before turn to create it.
+                    map.layers[8].destroy(); // [8] = uncertainty layer.
+                    //Turn to build uncertainty layer:
+                    var uncertaintyLayerNewResource = new OpenLayers.Layer.WMS(
+                                             "Uncertainty layer New",
+                                             "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
+                                                 {
+                                                 VERSION: '1.1.1',
+                                                 LAYERS: "uncertainty:LONGTERM_LANDMODEL_stippling_1stdDev",
+                                                 transparent: true,
+                                                  FORMAT: 'image/png',
+                                                  }, {
+                                                  isBaseLayer: false,
+                                                  opacity: 1,
+                                                  singleTile: true,
+                                                  visibility: true,
+                                                 } );
+                    map.addLayer(uncertaintyLayerNewResource);//OK !!!!
+                }
+                else console.log('No uncertainty layer');
+            }, this ) );
+        },
+
+    updateUncertaintyMapsThreshold: function() // Active when uncertainty threshold slider (right) is sliding : call / slide de slider.
+    {
+        console.log('Slider moved');
+    },
+
+//http://localhost:8080/geoserver/uncertainty/wms?VERSION=1.1.1&LAYERS=uncertainty%3ALONGTERM_LANDMODEL_stippling_1stdDev&TRANSPARENT=TRUE&FORMAT=image%2Fpng&SERVICE=WMS&REQUEST=GetMap&STYLES=&SRS=EPSG%3A4087&BBOX=-16629225.549692,-20431663.526658,13419308.463011,19864904.462599&WIDTH=972&HEIGHT=1303
+
+    // End Pascal part.
 
 // **************************************************************
 // ************************ SLIDERS *****************************
@@ -1091,7 +1125,7 @@ var BCInterfaceW = Class.create( {
         $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
 
         //Pascal part:
-        // Slider uncertainty (st dev) threshold part: only for the right menu part (to apply to all maps):
+        // Slider uncertainty (st dev) threshold part: only for the right menu part (= to apply to all maps):
         var valueArray= ["0.5 σ", "1 σ", "1.5 σ", "2 σ", "2.5 σ", "3 σ"];// --> To write σ symbols, use this method in js (be in utf8). For html, we could use  <?php echo('&#931'); ?> (cf http://www.webstandards.org/learn/reference/charts/entities/symbol_entities/)
         $( "#uncertaintyLevelSlider" ).slider({
             value: 1,
@@ -1104,7 +1138,6 @@ var BCInterfaceW = Class.create( {
             }, this)
         });
         $("#uncertaintySliderValueInput").val(valueArray[1]);// --> Set default value f(array's values).
-
 
         // End Pascal part:
     },

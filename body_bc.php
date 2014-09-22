@@ -253,14 +253,14 @@
             <h2>UNCERTAINTY</h2>
 
                  <div id= "uncertaintyWithMasking">
-                  <input id= "uncertaintyWithMaskingInput" type= "radio" name= "displayOverlayUncertaintyMode" checked= "checked">
+                  <input id= "uncertaintyWithMaskingInput" class= "uncertaintyRepresentationRightMenuClass" type= "radio" name= "displayOverlayUncertaintyMode">
                   <label for= "uncertaintyWithMasking">
                     <span class="variable2">Mask areas > threshold</span>
                   </label>
                  </div>
                  <br>
                  <div id= "uncertaintyWithStippling">
-                  <input id= "uncertaintyWithStipplingInput" type= "radio" name= "displayOverlayUncertaintyMode">
+                  <input id= "uncertaintyWithStipplingInput" class= "uncertaintyRepresentationRightMenuClass" type= "radio" name= "displayOverlayUncertaintyMode">
                   <label  for= "uncertaintyWithStipplingInput">
                     <span class="variable2">Stipple areas <  threshold</span>
                   </label>

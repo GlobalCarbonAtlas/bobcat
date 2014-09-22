@@ -260,7 +260,7 @@ var Bobcat = Class.create( {
                  //jjj = $('#resourceSelect ul')[0];//OK
 
 
-                 if ( $("#uncertaintyWithMaskingLeft").is(":checked") )
+                 if ( $("#uncertaintyWithMaskingInputLeft").is(":checked") )
                        {
                          overlayMode = "masking";
                        }
