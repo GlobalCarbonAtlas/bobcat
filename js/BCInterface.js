@@ -92,7 +92,9 @@ var BCInterfaceW = Class.create( {
         this.resizePrintable();
         this.updateLegendButtons();
         //Pascal part :
+        this.retrieveUncertOverlayMode();
         this.changeOverlayUncertActions();
+        this.overlayMode = "stippling";
         // End Pascal part :
     },
 
@@ -996,35 +998,34 @@ var BCInterfaceW = Class.create( {
     // ************************* UPDATE ALL UNCERTAINTY MAPS (RIGHT PART) *****************************
     // ************************************************************************************************
 
-    changeOverlayUncertActions: function()//TODO : simplifier tout ça, en particulier la differentiation stippling/masking (besoin de dedoubler les fonctions ?)
+    // Retrieve uncertainty overlay mode to pass the good parameter (masking or stippling mode) in the addMaskingUncertainty() function. Pass like parameter in BCInterface object via initialise().
+    retrieveUncertOverlayMode: function() {
+            if ( $('#uncertaintyWithMaskingInput').is(':checked') )
+                { this.overlayMode = 'masking' }
+            else if  ( $('#uncertaintyWithStipplingInput').is(':checked') )
+                { this.overlayMode = 'stippling' }
+    },
+
+    // Action to do when user switch to mask area or to stipple area (radio buttons).
+    changeOverlayUncertActions: function()
     {
         $('.uncertaintyRepresentationRightMenuClass').change(
             jQuery.proxy( function()// jQuery.proxy ici pour associer fonction a objet BCInterface et pas a element associe a l'event.
             {
-                if ( $('#uncertaintyWithMaskingInput').is(':checked') )
-                { var uncertaintyRepresentation= 'maskingMode' }
-                else if  ( $('#uncertaintyWithStipplingInput').is(':checked') )
-                { var uncertaintyRepresentation= 'stipplingMode' }
-
-                switch ( uncertaintyRepresentation )
-                    {
-                    case 'maskingMode':
-                        this.addMaskingUncertainty(); // On associe donc la fonction addMaskingUncertainty a l'object BCInterface.
-                    break;
-                    case 'stipplingMode':
-                        this.addStipplingUncertainty();
-                    break;
-                    }
+                this.retrieveUncertOverlayMode();
+                this.addMaskingUncertainty(this.overlayMode);// this.overlayMode defini comme parametre de BCI et passe a addMaskingUncertainty: function(overlayMode)
             }, this)
         );
     },
 
-    addMaskingUncertainty: function()// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
+    // Destroy uncertainty map done by right menu and actualise every map with a new one f(parameters).
+    addMaskingUncertainty: function(overlayMode)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
     {
-        console.log('Changed');// OK : l'affiche bien a chq fois que $('.uncertaintyRepresentationRightMenuClass').change()
-        //this.selectedBobcat.map.layers[3].setVisibility(true); // OK mais que sur derniere carte, il faut dc boucler.
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
+            //console.log(this.hashBobcats.get(key) );// Ici on a pls infos a la fois, object hashBobcats compose de pls choses. Et on a bien une boucle : les infos correspondent bien aux cartes affichees.
+            //console.log(this.variable); // = Terrestrial_flux, Ocean_flux.
+            console.log(this.time); // 1900-01-01T00:00:00.000Z : ex de long term, 2010-12-16T00:00:00.000Z: ex de monthly mean. Pour ttes les cartes, memes si on instancie des cartes sans incertitude donc attention !!!
             var map = this.hashBobcats.get( key ).map;
             if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
             {
@@ -1036,7 +1037,8 @@ var BCInterfaceW = Class.create( {
                                          "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
                                              {
                                              VERSION: '1.1.1',
-                                             LAYERS: "uncertainty:LONGTERM_LANDMODEL_masking_1stdDev",
+                                             //LAYERS: "uncertainty:LONGTERM_LANDMODEL_masking_1stdDev",
+                                             LAYERS: "uncertainty:LONGTERM_LANDMODEL_"+ overlayMode + "_1stdDev",
                                              transparent: true,
                                               FORMAT: 'image/png',
                                               }, {
@@ -1045,7 +1047,7 @@ var BCInterfaceW = Class.create( {
                                               singleTile: true,
                                               visibility: true,
                                              } );
-                map.addLayer(uncertaintyLayerNewResource);//OK !!!!
+                map.addLayer(uncertaintyLayerNewResource);
             }
             else console.log('No uncertainty layer');
         }, this ) );
@@ -1053,7 +1055,7 @@ var BCInterfaceW = Class.create( {
 
     addStipplingUncertainty: function()// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
         {
-            this.hashBobcats.each( jQuery.proxy( function( key )
+            /*this.hashBobcats.each( jQuery.proxy( function( key )
             {
                 var map = this.hashBobcats.get( key ).map;
                 if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
@@ -1078,7 +1080,8 @@ var BCInterfaceW = Class.create( {
                     map.addLayer(uncertaintyLayerNewResource);//OK !!!!
                 }
                 else console.log('No uncertainty layer');
-            }, this ) );
+            }, this ) );*/
+            console.log('stippling case');
         },
 
     updateUncertaintyMapsThreshold: function() // Active when uncertainty threshold slider (right) is sliding : call / slide de slider.
