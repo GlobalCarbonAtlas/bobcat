@@ -20,7 +20,8 @@ var BCInterfaceW = Class.create( {
         this.timeMonthSelect = $( "#timeMonthSelect" );
         this.rangeDiv = $( "#getRange" );
         this.submitButton = $( "#submitCreateMap" );
-
+this.variablesToDisplay = variablesToKeepArray;
+        this.variableNamesToDisplay = variableNamesToKeepArray;
         this.threddsPath = jQuery.i18n.prop( "threddsPath" );
         this.hostName = jQuery.i18n.prop( "hostname" ) ? jQuery.i18n.prop( "hostname" ) : location.hostname;
         this.imgPath = "img";
@@ -37,8 +38,7 @@ var BCInterfaceW = Class.create( {
          *   - key : the variable name
          *   - values : [the name to display, [the files array contains this variable], [[the times array's array]] ] */
         this.hashVariables = new Hashtable();
-        this.variablesToDisplay = variablesToKeepArray;
-        this.variableNamesToDisplay = variableNamesToKeepArray;
+
         this.variable = false;
 
         $( "#periodSelect" ).select2( "val", "longterm" );
@@ -92,9 +92,10 @@ var BCInterfaceW = Class.create( {
         this.resizePrintable();
         this.updateLegendButtons();
         //Pascal part :
-        this.retrieveUncertOverlayMode();
+        this.retrieveUncertaintyParameters();
+        this.overlayMode = '';
+        this.thresholdValue = '';
         this.changeOverlayUncertActions();
-        this.overlayMode = "stippling";
         // End Pascal part :
     },
 
@@ -998,34 +999,71 @@ var BCInterfaceW = Class.create( {
     // ************************* UPDATE ALL UNCERTAINTY MAPS (RIGHT PART) *****************************
     // ************************************************************************************************
 
-    // Retrieve uncertainty overlay mode to pass the good parameter (masking or stippling mode) in the addMaskingUncertainty() function. Pass like parameter in BCInterface object via initialise().
-    retrieveUncertOverlayMode: function() {
-            if ( $('#uncertaintyWithMaskingInput').is(':checked') )
-                { this.overlayMode = 'masking' }
-            else if  ( $('#uncertaintyWithStipplingInput').is(':checked') )
-                { this.overlayMode = 'stippling' }
+    //************** Retrieve parameters to actualise uncertainty maps : ******************** //
+    retrieveUncertaintyParameters: function() {
+    // Retrieve uncertainty overlay mode to pass the good parameter (masking or stippling mode) in the adaptOverlayMaps() function. Pass like parameter in BCInterface object via initialise().
+        if ( $('#uncertaintyWithMaskingInput').is(':checked') )
+            { this.overlayMode = 'masking' }
+        else if  ( $('#uncertaintyWithStipplingInput').is(':checked') )
+            { this.overlayMode = 'stippling' }
+    // Retrieve threshold value f(slider nivel).
+         this.thresholdValue = $("#uncertaintySliderValueInput").val();// Note : on a besoin de declarer ds initialise this.(...).
+         this.thresholdValueForPy = this.thresholdValue.replace(' σ', 'stdDev');
+    },
+    // ******************************** Update all uncertainty maps : slide or uncertainty overlay modality actions:  **********************************//
+
+    // Something to do when user change slider, threshold (call in createSliders: function()) :
+    adaptUncertMapToThreshold: function(overlayMode, thresholdValueForPy)
+    {
+        this.hashBobcats.each( jQuery.proxy( function( key )
+                {
+                    var map = this.hashBobcats.get( key ).map;
+                    if (map.layers[8])
+                    {
+                        map.layers[8].destroy();
+                        var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
+                                                 "Uncertainty layer New",
+                                                 "http://localhost:8080/geoserver/uncertainty/wms",
+                                                     {
+                                                     VERSION: '1.1.1',
+                                                     LAYERS: "uncertainty:LONGTERM_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
+                                                     transparent: true,
+                                                      FORMAT: 'image/png',
+                                                      }, {
+                                                      isBaseLayer: false,
+                                                      opacity: 1,
+                                                      singleTile: true,
+                                                      visibility: true,
+                                                     } );
+                        map.addLayer(uncertaintyLayerNewThreshold);
+                    }
+                    else console.log('No uncertainty layer');
+                }, this ) );
     },
 
-    // Action to do when user switch to mask area or to stipple area (radio buttons).
+    // Action to do when user switch to mask area or to stipple area (radio buttons) f(parameters to set).
     changeOverlayUncertActions: function()
     {
         $('.uncertaintyRepresentationRightMenuClass').change(
             jQuery.proxy( function()// jQuery.proxy ici pour associer fonction a objet BCInterface et pas a element associe a l'event.
             {
-                this.retrieveUncertOverlayMode();
-                this.addMaskingUncertainty(this.overlayMode);// this.overlayMode defini comme parametre de BCI et passe a addMaskingUncertainty: function(overlayMode)
+                this.retrieveUncertaintyParameters(); // Il faut la lier a slide() / slider creation.
+                this.adaptOverlayMaps(this.overlayMode, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
             }, this)
         );
     },
 
     // Destroy uncertainty map done by right menu and actualise every map with a new one f(parameters).
-    addMaskingUncertainty: function(overlayMode)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
+    adaptOverlayMaps: function(overlayMode, thresholdValueForPy)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
             //console.log(this.hashBobcats.get(key) );// Ici on a pls infos a la fois, object hashBobcats compose de pls choses. Et on a bien une boucle : les infos correspondent bien aux cartes affichees.
             //console.log(this.variable); // = Terrestrial_flux, Ocean_flux.
-            console.log(this.time); // 1900-01-01T00:00:00.000Z : ex de long term, 2010-12-16T00:00:00.000Z: ex de monthly mean. Pour ttes les cartes, memes si on instancie des cartes sans incertitude donc attention !!!
+            //console.log(this.time); // 1900-01-01T00:00:00.000Z : ex de long term, 2010-12-16T00:00:00.000Z: ex de monthly mean. Pour ttes les cartes, memes si on instancie des cartes sans incertitude donc attention !!!
+             //console.log(this.selectedPeriod);//= longterm, monthlymean, yearlymean --> OK.
+            // voir createMap.
+
             var map = this.hashBobcats.get( key ).map;
             if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
             {
@@ -1038,7 +1076,7 @@ var BCInterfaceW = Class.create( {
                                              {
                                              VERSION: '1.1.1',
                                              //LAYERS: "uncertainty:LONGTERM_LANDMODEL_masking_1stdDev",
-                                             LAYERS: "uncertainty:LONGTERM_LANDMODEL_"+ overlayMode + "_1stdDev",
+                                             LAYERS: "uncertainty:LONGTERM_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
                                              transparent: true,
                                               FORMAT: 'image/png',
                                               }, {
@@ -1051,42 +1089,6 @@ var BCInterfaceW = Class.create( {
             }
             else console.log('No uncertainty layer');
         }, this ) );
-    },
-
-    addStipplingUncertainty: function()// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
-        {
-            /*this.hashBobcats.each( jQuery.proxy( function( key )
-            {
-                var map = this.hashBobcats.get( key ).map;
-                if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
-                {
-                    // Destroy uncertainty layer before turn to create it.
-                    map.layers[8].destroy(); // [8] = uncertainty layer.
-                    //Turn to build uncertainty layer:
-                    var uncertaintyLayerNewResource = new OpenLayers.Layer.WMS(
-                                             "Uncertainty layer New",
-                                             "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
-                                                 {
-                                                 VERSION: '1.1.1',
-                                                 LAYERS: "uncertainty:LONGTERM_LANDMODEL_stippling_1stdDev",
-                                                 transparent: true,
-                                                  FORMAT: 'image/png',
-                                                  }, {
-                                                  isBaseLayer: false,
-                                                  opacity: 1,
-                                                  singleTile: true,
-                                                  visibility: true,
-                                                 } );
-                    map.addLayer(uncertaintyLayerNewResource);//OK !!!!
-                }
-                else console.log('No uncertainty layer');
-            }, this ) );*/
-            console.log('stippling case');
-        },
-
-    updateUncertaintyMapsThreshold: function() // Active when uncertainty threshold slider (right) is sliding : call / slide de slider.
-    {
-        console.log('Slider moved');
     },
 
 //http://localhost:8080/geoserver/uncertainty/wms?VERSION=1.1.1&LAYERS=uncertainty%3ALONGTERM_LANDMODEL_stippling_1stdDev&TRANSPARENT=TRUE&FORMAT=image%2Fpng&SERVICE=WMS&REQUEST=GetMap&STYLES=&SRS=EPSG%3A4087&BBOX=-16629225.549692,-20431663.526658,13419308.463011,19864904.462599&WIDTH=972&HEIGHT=1303
@@ -1137,7 +1139,8 @@ var BCInterfaceW = Class.create( {
             step: 1,
             slide: jQuery.proxy( function(event, ui) {
                 $("#uncertaintySliderValueInput").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array.
-                this.updateUncertaintyMapsThreshold();
+                this.retrieveUncertaintyParameters();
+                this.adaptUncertMapToThreshold(this.overlayMode, this.thresholdValueForPy);
             }, this)
         });
         $("#uncertaintySliderValueInput").val(valueArray[1]);// --> Set default value f(array's values).
