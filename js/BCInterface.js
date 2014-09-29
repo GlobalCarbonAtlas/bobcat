@@ -96,7 +96,6 @@ var BCInterfaceW = Class.create( {
         this.overlayMode = '';
         this.thresholdValue = '';
         this.changeOverlayUncertActions();
-        //this.checkTreeFolderAction();
         // End Pascal part :
     },
 
@@ -450,7 +449,6 @@ var BCInterfaceW = Class.create( {
             $('#displayOverlayStdDevLeft').prop('checked', false);
             $("#overlayStdDevCaseLeft").hide();
             }
-
             // End Pascal part :
         }
         else
@@ -466,37 +464,28 @@ var BCInterfaceW = Class.create( {
                 return;
             }
 
-            // Display variable
-            jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, key )
-            {
-                if( "" != this.hashVariables.get( key )[0] )
-                    var divVariable = $( '<input type="radio" name="variableRadio" id="' + key + '"><label for="' + key + '"><span class="variable">' + this.hashVariables.get( key )[0] + '</span></label><BR/>' );
-                else
-                    var divVariable = $( '<input type="radio" name="variableRadio" id="' + key + '"><label for="' + key + '"><span class="variable">' + key + '</span></label><BR/>' );
-                this.variableDiv.append( divVariable );
-
-                // Bind variable
-                divVariable.on( "click", jQuery.proxy( function( element )
-                {
-                    if( "label" != element.currentTarget.localName )
-                        this.onSelectVariable( element.currentTarget.id );
-                }, this ) );
-            }, this ) );
-
-            // Select variable
-            // Pascal part (changes) :
-            var tt = this.hashResources.get( this.selectedResourceKeys[0] )[0];
-            if ( -1 != this.hashVariables.keys().indexOf(this.previousVariable) )
-               {
-               $( "#" + this.previousVariable ).click();
-               //console.log('Click dr');// Ne va pas : montre la couche antéieure qd click.
-               //console.log('if llll= : ' + tt);
-               }
-           // End Pascal changes.
-            else $( "#" + this.hashVariables.keys()[0] ).click(); // Montre la derniere couche cliquée + celle au démarrage page
+                            // Display variable
+                                              jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, key )
+                                              {
+                                                      if( "" != this.hashVariables.get( key )[0] )
+                                                              var divVariable = $( '<input type="radio" name="variableRadio" id="' + key + '"><label for="' + key + '"><span clas     s="variable">' + this.hashVariables.get( key )[0] + '</span></label><BR/>' );
+                                                              else
+                                                                      var divVariable = $( '<input type="radio" name="variableRadio" id="' + key + '"><label for="' + key + '"><s     pan class="variable">' + key + '</span></label><BR/>' );
+                                                                      this.variableDiv.append( divVariable );
+                                                                      // Bind variable
+                                                                     divVariable.on( "click", jQuery.proxy( function( element )
+                                                                     {
+                                                                              if( "label" != element.currentTarget.localName )
+                                                                                      this.onSelectVariable( element.currentTarget.id );
+                                                                      }, this ) );
+                                              }, this ) );
+                                             // Select variable
+                                              if( -1 != this.hashVariables.keys().indexOf( this.previousVariable ) )
+                                                      $( "#" + this.previousVariable ).click();
+                                                    else
+                                                             $( "#" + this.hashVariables.keys()[0] ).click();
         }
     },
-
 
     onSelectVariable: function( variableId )
     {
@@ -1006,27 +995,6 @@ var BCInterfaceW = Class.create( {
     // ************************* UPDATE ALL UNCERTAINTY MAPS (RIGHT PART) *****************************
     // ************************************************************************************************
 
-    //************** When model select, set if uncertainty layer exist: ******************** //
-    // OK mais prb : var tt décaléé dc introduire ds fonction createResourceSelect.
-    checkTreeFolderAction: function(numModelesChoose)
-    {
-        $('.fancytree-checkbox').click( jQuery.proxy( function(numModelesChoose)
-        // jQuery.proxy ici pour associer fonction a objet BCInterface et pas a element associe a l'event.
-        {
-            //numMean = $( 'fancytree-selected');
-            //console.log('CHECK');//OK si on ne fait pas appel a fonction exterieure, avec JQ proxy.
-            var tt = this.hashResources.get( this.selectedResourceKeys[numModelesChoose] )[0];
-            //if (tt == 'MEAN') {console.log('= MEAN !!!!!!');}
-            console.log('Modele name : ' + tt);
-            //numMean = $( 'fancytree-selected:contains("MEAN")' );
-            /*if ( numMean.length > 1 )
-            {
-                console.log('MEAN FIND');
-            }*/
-        }, this)
-        );
-    },
-
     //************** Retrieve parameters to actualise uncertainty maps : ******************** //
     retrieveUncertaintyParameters: function()
     {
@@ -1057,7 +1025,7 @@ var BCInterfaceW = Class.create( {
                                                  "http://localhost:8080/geoserver/uncertainty/wms",
                                                      {
                                                      VERSION: '1.1.1',
-                                                     LAYERS: "uncertainty:" + selectedPeriod + "_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
+                                                     LAYERS: selectedPeriod + "_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
                                                      transparent: true,
                                                       FORMAT: 'image/png',
                                                       }, {
@@ -1089,24 +1057,6 @@ var BCInterfaceW = Class.create( {
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
-            //console.log(this.variable); // = Terrestrial_flux, Ocean_flux.
-            //console.log(this.time); // 1900-01-01T00:00:00.000Z : ex de long term, 2010-12-16T00:00:00.000Z: ex de monthly mean. Pour ttes les cartes, memes si on instancie des cartes sans incertitude donc attention !!!
-             //console.log(this.selectedPeriod);//= longterm, monthlymean, yearlymean --> OK.
-            // voir createMap.
-            // TODO : retrieve resource. Piste :
-             //console.log(this.hashBobcats.get(key) );// Ici on a pls infos a la fois, object hashBobcats compose de pls choses. Et on a bien une boucle : les infos correspondent bien aux cartes affichees.
-              //console.log(this.hashBobcats.get(key).mapTitle )[1];
-            //console.log(this.selectedResourceKeys);
-            //var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" +
-                       //this.selectedResourceKeys[0] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
-            //console.log(url);
-                //console.log('this.hostName = : ' + this.hostName)// = webportals.ipsl.jussieu.fr
-                //console.log('this.threddsPath = : ' + this.threddsPath);// = ATLAS/Flux
-                //console.log('this.hashResources.get( this.selectedResourceKeys[0] )[1] = : ' + this.hashResources.get( this.selectedResourceKeys[0] )[1]);// = LandModels
-                //console.log('this.selectedResourceKeys[0] = : ' + this.selectedResourceKeys[0]);// = fco2_CLM4CN_Sep2013-ext3_1980-2010
-
-                //console.log('var resource = : ' + this.hashResources.get( this.selectedResourceKeys[0] )[1]);// = LandModel pour 1, 0 : = CLM4CN
-
             var map = this.hashBobcats.get( key ).map;
             if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
             {
@@ -1119,7 +1069,7 @@ var BCInterfaceW = Class.create( {
                                              {
                                              VERSION: '1.1.1',
                                              //LAYERS: "uncertainty:LONGTERM_LANDMODEL_masking_1stdDev",
-                                             LAYERS: "uncertainty:" + selectedPeriod + "_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
+                                             LAYERS: selectedPeriod + "_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
                                              transparent: true,
                                               FORMAT: 'image/png',
                                               }, {
@@ -1132,12 +1082,9 @@ var BCInterfaceW = Class.create( {
             }
             else {console.log('No uncertainty layer');
                 console.log( 'this.selectedResourceKeys = : ' + this.selectedResourceKeys );
-                //console.log('resourcesTreeData = : ' + this.resourcesTreeData); // Not def.
                 }
         }, this ) );
     },
-
-//http://localhost:8080/geoserver/uncertainty/wms?VERSION=1.1.1&LAYERS=uncertainty%3ALONGTERM_LANDMODEL_stippling_1stdDev&TRANSPARENT=TRUE&FORMAT=image%2Fpng&SERVICE=WMS&REQUEST=GetMap&STYLES=&SRS=EPSG%3A4087&BBOX=-16629225.549692,-20431663.526658,13419308.463011,19864904.462599&WIDTH=972&HEIGHT=1303
     // End Pascal part.
 
 // **************************************************************

@@ -192,6 +192,7 @@ var Bobcat = Class.create( {
         // Pascal part :
         // Objectif : lancer fonction createUncertaintyResource() lors de la création map (de this.map !).
         this.createUncertaintyResource();
+        //End Pascal part.
 
     },
 
@@ -222,26 +223,6 @@ var Bobcat = Class.create( {
 
              get_uncertaintyLayer: function()
              {
-                 //completeUrlToNcData = this.resource;
-                 /*switch(this.resource)
-                 {
-                       case "inversion":
-
-                        break;
-                       case "";
-
-                        break;
-                 }*/
-                 //alert(this.resource);
-                    //Inversion (variable ocean et terrestrial : pas de diff : la distinction se fait avec this.variable) :
-                    //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/Inversions/longterm-2001-2004/fco2_CCAM_Sep2013-ext3_1992-2008_longterm-2001-2004_XYT.nc
-                    //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/Inversions/longterm-2001-2004/fco2_CCAM_Sep2013-ext3_1992-2008_longterm-2001-2004_XYT.nc
-                   // Land model :
-                   //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/LandModels/longterm-2000-2009/fco2_CLM4CN_Sep2013-ext3_1980-2010_longterm-2000-2009_XYT.nc
-                   // Ocean model :
-                   //http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/OceanModels/longterm-2000-2009/fco2_CCSM-BEC_Sep2013-ext3_1980-2009_longterm-2000-2009_XYT.nc
-
-
                  switch(this.variable)
                  {
                        case "Terrestrial_flux":
@@ -251,19 +232,13 @@ var Bobcat = Class.create( {
                          uncertaintyVariable = "oceanFlux";
                          break;
                  }
-
                    //alert(this.variable);
                  // Pour recuperer l'id d'un element :
                  //huhu = $('#variableSelect').attr('id');//OK
                  //inputT = $( 'input' ).attr('id')[5];//OK
                  //inputT = $( 'input[name="variableRadio"]' ).attr('id');//OK
                  //jjj = $('#resourceSelect ul')[0];//OK
-
-
-                 if ( $("#uncertaintyWithMaskingInputLeft").is(":checked") )
-                       {
-                         overlayMode = "masking";
-                       }
+                 if ( $("#uncertaintyWithMaskingInputLeft").is(":checked") ) { overlayMode = "masking"; }
                  else {overlayMode = "stippling";}
 
                  thresholdValue = $("#uncertaintySliderValueInputLeft").val();
@@ -284,7 +259,6 @@ var Bobcat = Class.create( {
                       visibility: true,
                      } );
              },
-
         // End pascal part:
 
     createZoomToMaxExtent: function()
