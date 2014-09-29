@@ -37,8 +37,8 @@ commonPathName  = "/home/pascal/workSpace/bobcat25_08_14/uncertaintyLayer/layers
 netCdfFileName = "stdDevTestLongTermLandModel.nc"
 varName = "Terrestrial_flux"
 #Nom de fichiers de sortie pour le mask raster et sa version vectorisee :
-binaryFileNameRaster = "LONGTERM_LANDMODEL_UncertRef_Binary" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
-binaryFileNameVector = "LONGTERM_LANDMODEL" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
+binaryFileNameRaster = "longterm_landmodel_UncertRef_Binary" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
+binaryFileNameVector = "longterm_landmodel" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
         
 #1) # Set mean, min and max for each file :
 netCdfData= cdo.readArray(folderWithNetCdfFiles+netCdfFileName, varName)#readArray : Direcly return a numpy array for a given variable name. CF http://gis.stackexchange.com/questions/32995/how-to-fully-load-a-raster-into-a-numpy-array

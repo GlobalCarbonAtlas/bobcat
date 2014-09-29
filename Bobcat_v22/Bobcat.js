@@ -274,7 +274,7 @@ var Bobcat = Class.create( {
                  "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
                      {
                      VERSION: '1.1.1',
-                     LAYERS: "uncertainty:LONGTERM_" + uncertaintyVariable + "_" + overlayMode + "_" + thresholdValueForPy,
+                     LAYERS: "uncertainty:longterm_" + uncertaintyVariable + "_" + overlayMode + "_" + thresholdValueForPy,
                      transparent: true,
                       FORMAT: 'image/png',
                       }, {
