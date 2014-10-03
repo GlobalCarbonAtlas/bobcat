@@ -19,26 +19,33 @@ cdo = Cdo()# --> Librairie cdo/python.
 from osgeo import gdal, osr, ogr
 from gdalconst import *  
 
+# For layer integration in GS.
+from geoserver.catalog import Catalog
+import geoserver.util
+
 # supply path to where is your qgis installed
 #Generalement, pour savoir paths : CF p103 pdf "The PyQGis Programmer"
 QgsApplication.setPrefixPath("/usr", True)#To know how to set the good Prefix Path : creating qgis layers in python console vs stand alone application
 # QGis initialisation
 QgsApplication.initQgis()
-
 #NOW WE CAN DO STUFF!!!
+
 folderWithNetCdfFiles = "/home/pascal/workSpace/bobcat25_08_14/uncertaintyLayer/layers/layersForPythonScript/"
+modeleType = 'fco2_LandModel' #TODO : recuperer dynamiquement (CF ReadMe part 2).
+
 # Creation dossier pour recevoir fichiers crees : CF http://www.developpez.net/forums/d560315/autres-langages/python-zope/general-python/creer-dossier/
 try:
-    subprocess.call("mkdir " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles", shell=True)# CF subprocess/python
+    subprocess.call("mkdir " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles" + '/' + modeleType, shell=True)# CF subprocess/python
+    #TODO : remplacer dynamiquement modeleType.
 except OSError:
     pass
 
-commonPathName  = "/home/pascal/workSpace/bobcat25_08_14/uncertaintyLayer/layers/layersForPythonScript/GCA_MapUncertaintyFiles/" #TODO : Adapter les chemins dynamiquement : cf chap 7 Python Uni de Pau.
+commonPathName  = "/home/pascal/workSpace/bobcat25_08_14/uncertaintyLayer/layers/layersForPythonScript/GCA_MapUncertaintyFiles/" + modeleType + '/' #TODO : Adapter les chemins dynamiquement : cf chap 7 Python Uni de Pau.
 netCdfFileName = "stdDevTestLongTermLandModel.nc"
-varName = "Terrestrial_flux"
+varName = "Terrestrial_flux" #TODO : mettre aussi Ocean_flux : comment extraire nom variable pour le choisir f(file) ?
 #Nom de fichiers de sortie pour le mask raster et sa version vectorisee :
-binaryFileNameRaster = "longterm_landmodel_UncertRef_Binary" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
-binaryFileNameVector = "longterm_landmodel" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
+binaryFileNameRaster = "fco2_Land_MEAN_Terrestrial_flux_LT_lt_UncertRef_Binary" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
+binaryFileNameVector = "Land_MEAN_Terrestrial_flux_LT_lt" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
         
 #1) # Set mean, min and max for each file :
 netCdfData= cdo.readArray(folderWithNetCdfFiles+netCdfFileName, varName)#readArray : Direcly return a numpy array for a given variable name. CF http://gis.stackexchange.com/questions/32995/how-to-fully-load-a-raster-into-a-numpy-array
@@ -77,12 +84,12 @@ while len(list(iOnlyValue)) <= len(meanSNetCdfDataTuple) :
 
 
 iOutShapefile = 0
-thresholdComponentName = ["_0.5stdDev", "_1stdDev", "_1.5stdDev", "_2stdDev", "_2.5stdDev","_3stdDev"]# Noms fichiers .shp de sortie doivent tenir compte threshold.
+thresholdComponentName = ["_05", "_10", "_15", "_20", "_25","_30"]# Noms fichiers .shp de sortie doivent tenir compte threshold.
 for onlyValue in  onlyValueS :    
     rasterBand=  onlyValue.GetRasterBand(1)#Necessaire dc de recuperer la band (ici unique)
     
-    outShapefileMasking = commonPathName + binaryFileNameVector + "_masking" + thresholdComponentName[iOutShapefile]# 2 noms differents pour tenir compte modalites representation uncertainty si overlay (masking ou stippling).
-    outShapefileStippling = commonPathName + binaryFileNameVector + "_stippling" + thresholdComponentName[iOutShapefile]
+    outShapefileMasking = commonPathName + binaryFileNameVector + "_mk" + thresholdComponentName[iOutShapefile] + '_fco2' # 2 noms differents pour tenir compte modalites representation uncertainty si overlay (masking ou stippling).
+    outShapefileStippling = commonPathName + binaryFileNameVector + "_st" + thresholdComponentName[iOutShapefile] + '_fco2'
     driver = ogr.GetDriverByName("ESRI Shapefile")
     if os.path.exists(outShapefileMasking+".shp"):
         driver.DeleteDataSource(outShapefileMasking+".shp")
@@ -90,8 +97,8 @@ for onlyValue in  onlyValueS :
         driver.DeleteDataSource(outShapefileStippling+".shp")        
     outDatasourceMasking = driver.CreateDataSource(outShapefileMasking+ ".shp")# Pourquoi ???
     outDatasourceStippling = driver.CreateDataSource(outShapefileStippling+ ".shp")# Pourquoi ???   
-    outLayerMasking = outDatasourceMasking.CreateLayer(binaryFileNameVector + "_masking" + thresholdComponentName[iOutShapefile], srs=None)
-    outLayerStippling = outDatasourceStippling.CreateLayer(binaryFileNameVector + "_stippling" + thresholdComponentName[iOutShapefile], srs=None)
+    outLayerMasking = outDatasourceMasking.CreateLayer(binaryFileNameVector + "_mk" + thresholdComponentName[iOutShapefile] + '_fco2', srs=None)
+    outLayerStippling = outDatasourceStippling.CreateLayer(binaryFileNameVector + "_st" + thresholdComponentName[iOutShapefile] + '_fco2', srs=None)
     newField = ogr.FieldDefn('MYFLD', ogr.OFTInteger)# Pour recevoir shp cree.
     outLayerMasking.CreateField(newField)
     outLayerStippling.CreateField(newField)
@@ -100,14 +107,48 @@ for onlyValue in  onlyValueS :
     gdal.Polygonize(rasterBand, None, outLayerStippling, 0, [], callback=None )# 0 : = index. On lit donc la band !!!    
     outDatasourceMasking.Destroy()# Sinon, bloque qd on refait cette operation.
     outDatasourceStippling.Destroy()
+    
+    ###########################################################################################################
+    # //////////////////////// INTEGRATION DES COUCHES SHP DANS GEOSERVER (WITH gsconfig) : ::::::::::::::::::# #To integrate in the bucle.
+    ###########################################################################################################
+    
+    # Workspace creation: necessary to import layer in GS: CF layerUncertaintyReadMe2.
+    try:
+        subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertaintyLandModel2</name></workspace>" http://localhost:8080/geoserver/rest/workspaces', shell= True)
+    except OSError: #Important parce que si non, a la deuxieme fois, qd existe, erreur.
+        pass
+    #Workspace variable definition:
+    cat = Catalog("http://localhost:8080/geoserver/rest", "admin", "geoserver")# Connection to GS.
+    workspace = cat.get_workspace("GCAUncertaintyLandModel2")
+
+    # We need to create .prj file (epsg4326) because not present.
+    prjFileMasking = open(outShapefileMasking +'.prj', 'w' )
+    prjFileStippling = open(outShapefileStippling +'.prj', 'w' )
+    prjFileMasking.write('GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.017453292519943295]]')
+    prjFileStippling.write('GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.017453292519943295]]')    
+    prjFileMasking.close()
+    prjFileStippling.close()
+
+    # Retrieve .shp layers from folder :
+    shapefileMasking = geoserver.util.shapefile_and_friends(outShapefileMasking)# Ne doit pas intégrer extensions des fichiers vect arcGis. la fonction shapefile_and_friends() permet justement de parcourir les chemins jusqu'à arriver à nom de ts les elements (.prj, .dbf, ...) composant la couche shape. 
+    shapefileStippling = geoserver.util.shapefile_and_friends(outShapefileStippling)
+
+    #Keep layers in GS:
+    dataStoreAndLayersNamesMk = binaryFileNameVector + "_mk" + thresholdComponentName[iOutShapefile] + '_fco2'
+    dataStoreAndLayersNamesSt = binaryFileNameVector + "_st" + thresholdComponentName[iOutShapefile] + '_fco2'
+    ftMasking = cat.create_featurestore(dataStoreAndLayersNamesMk, shapefileMasking, workspace)# Data stores and layers names (must be unique for each layer), url to shp files , workspace.
+    ftStippling = cat.create_featurestore(dataStoreAndLayersNamesSt, shapefileStippling, workspace)
+     ###########################################################################################################
 
     iOutShapefile = iOutShapefile + 1
     
 # Eliminate binaries .nc files (necessary to build binaries vectors).
 try:
-    subprocess.call("rm " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles/*.nc", shell=True)
+    subprocess.call("rm " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles/" + modeleType + "/" + "*.nc", shell=True)
 except OSError:
     pass
+
+
 
 print("huhuhuhu")
 

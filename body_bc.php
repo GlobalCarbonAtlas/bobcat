@@ -82,12 +82,12 @@
             </h2>
             <div id= "uncertaintySelectLeft">
                 <input id= "displayStdDevLeft" class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
-                <label class= "uncertaintySelectElementClass" for= "displayStdDevLeft">
+                <label class= "uncertaintySelectLabelClass" for= "displayStdDevLeft">
                     <span class= "variable">Display st dev</span>
                 </label>
                 <br>
                 <input id= "displayOverlayStdDevLeft"  class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
-                <label  class= "uncertaintySelectElementClass" for= "displayOverlayStdDevLeft">
+                <label  class= "uncertaintySelectLabelClass" for= "displayOverlayStdDevLeft">
                     <span id= "uncertaintySelectElementTextLeft" class= "variable" title= "Explain what is done with this option">Overlay st dev</span>
                 </label>
                 <br>

@@ -92,6 +92,7 @@ var BCInterfaceW = Class.create( {
         this.resizePrintable();
         this.updateLegendButtons();
         //Pascal part :
+         // Right menu part :
         this.retrieveUncertaintyParameters();
         this.overlayMode = '';
         this.thresholdValue = '';
@@ -189,8 +190,63 @@ var BCInterfaceW = Class.create( {
                 break;
         };
 
+        // Pascal part :
+         // Apply visualisations modality f(user choices) about uncertainty information:
+         this.retrieveUncertaintyParametersLeftMenu();
+         if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
+                            {
+                                this.get_uncertaintyLayerLeft(this.selectedPeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
+                            }
+                            else if ( $("#displayStdDevLeft").is(":checked") )
+                            {
+                                //alert("Display checked");//OK
+                            }
+                            else if ( $("#displayOverlayStdDevLeft").is(":checked") )
+                            {
+                                this.get_uncertaintyLayerLeft(this.selectedPeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
+                            }
+                            else return false;// If nothing is clicked, nothing to show.
+         // End Pascal part.
+
         this.resizeAllMaps();
     },
+
+    // Pascal part :
+    // ************************************************************************************************************************** //
+    // ************************* RETRIEVE PARAMETERS AND CREATE UNCERTAINTY MAPS (LEFT MENU) : ********************************** //
+    // ************************************************************************************************************************** //
+        retrieveUncertaintyParametersLeftMenu: function()
+            {
+                if ( $('#uncertaintyWithMaskingInputLeft').is(':checked') )
+                    { this.overlayModeLeft = 'masking' }
+                else if  ( $('#uncertaintyWithStipplingInputLeft').is(':checked') )
+                    { this.overlayModeLeft = 'stippling' }
+            // Retrieve threshold value f(slider nivel).
+                 this.thresholdValueLeft = $("#uncertaintySliderValueInputLeft").val();// Note : on a besoin de declarer ds initialise this.(...).
+                 this.thresholdValueForPyLeft = this.thresholdValueLeft.replace(' σ', 'stdDev');
+            // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
+            // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
+            },
+
+    get_uncertaintyLayerLeft: function(selectedPeriod, overlayModeLeft, thresholdValueForPyLeft) // --> If one parameter/WMS request is not good, no error but just no layer showed so OK.
+    {
+        var uncertaintyLayer = new OpenLayers.Layer.WMS(
+                           "Uncertainty layer",
+                           "http://localhost:8080/geoserver/uncertainty/wms", // TODO : "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms"
+                           {
+                           VERSION: '1.1.1',
+                           LAYERS: 'fco2_' + modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + overlayModeLeft + "_" + thresholdValueForPyLeft,
+                           transparent: true,
+                           FORMAT: 'image/png',
+                           }, {
+                           isBaseLayer: false,
+                           opacity: 1,
+                           singleTile: true,
+                           visibility: true,
+                           } );
+        this.selectedBobcat.map.addLayer(uncertaintyLayer);
+    },
+    // End Pascal part.
 
     selectBobcat: function( id )
     {
@@ -439,9 +495,10 @@ var BCInterfaceW = Class.create( {
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
                     this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
             this.getVariables( url, i, this.selectedResourceKeys[i] );
+
             // Pascal part : if title model = mean, activate possibility to add uncertainty information.
-            var modeleName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
-            if (modeleName == 'MEAN')
+            var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
+            if (modelName == 'MEAN')
             { $('#uncertaintyLeft').children().css({'color':'#3333', 'pointer-events':'auto'}); }
             else {
             $('#uncertaintyLeft').children().css({'color':'rgb(170,170,170)', 'pointer-events':'none'});// CF http://css-tricks.com/almanac/properties/p/pointer-events/
@@ -463,7 +520,6 @@ var BCInterfaceW = Class.create( {
                 this.disableVariableZone( "variableSelect", false, "variable" );
                 return;
             }
-
                             // Display variable
                                               jQuery.each( this.hashVariables.keys(), jQuery.proxy( function( i, key )
                                               {
@@ -990,7 +1046,7 @@ var BCInterfaceW = Class.create( {
 
     },
 
-    // Pascal part :
+    // Pascal part:
     // ************************************************************************************************
     // ************************* UPDATE ALL UNCERTAINTY MAPS (RIGHT PART) *****************************
     // ************************************************************************************************
@@ -1009,7 +1065,10 @@ var BCInterfaceW = Class.create( {
     // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
     // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
     },
+
     // ******************************** Update all uncertainty maps : slide or uncertainty overlay modality actions:  **********************************//
+
+    // TODO : Mettre seulement une fonction qui reactulise la carte et la passer a chgment / slider et radio button pour ne pas avoir 2 appels de fonctions differentes ....
 
     // Something to do when user change slider, threshold (call in createSliders: function()) :
     adaptUncertMapToThreshold: function(selectedPeriod, overlayMode, thresholdValueForPy)
@@ -1044,9 +1103,9 @@ var BCInterfaceW = Class.create( {
     changeOverlayUncertActions: function()
     {
         $('.uncertaintyRepresentationRightMenuClass').change(
-            jQuery.proxy( function()// jQuery.proxy ici pour associer fonction a objet BCInterface et pas a element associe a l'event.
+            jQuery.proxy( function()
             {
-                this.retrieveUncertaintyParameters(); // Il faut la lier a slide() / slider creation.
+                this.retrieveUncertaintyParameters(); // Link to slide() in slider creation.
                 this.adaptOverlayMaps(this.selectedPeriod, this.overlayMode, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
             }, this)
         );
@@ -1068,7 +1127,6 @@ var BCInterfaceW = Class.create( {
                                          "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
                                              {
                                              VERSION: '1.1.1',
-                                             //LAYERS: "uncertainty:LONGTERM_LANDMODEL_masking_1stdDev",
                                              LAYERS: selectedPeriod + "_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
                                              transparent: true,
                                               FORMAT: 'image/png',

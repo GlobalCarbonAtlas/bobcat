@@ -197,7 +197,9 @@ var Bobcat = Class.create( {
     },
 
     //Pascal part:
-           createUncertaintyResource: function()//TODO: optimiser le code avec booleens.
+
+            // Creation overlay map or std dev map f(user choices).
+           /*createUncertaintyResource: function()//TODO: optimiser le code avec booleens.
            {
                 if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
                     {
@@ -213,15 +215,16 @@ var Bobcat = Class.create( {
                         this.overlayUncertaintyLayer();
                     }
                 else return false;// Si rien de coché, rien a creer.
-           },
+           },*/
 
-            overlayUncertaintyLayer: function()
+            /*overlayUncertaintyLayer: function()
             {
                 this.get_uncertaintyLayer();
                 this.map.addLayer(this.uncertaintyLayer);
-            },
+            },*/
 
-             get_uncertaintyLayer: function()
+             // Layer creation f(parameters).
+             /*get_uncertaintyLayer: function()
              {
                  switch(this.variable)
                  {
@@ -232,12 +235,7 @@ var Bobcat = Class.create( {
                          uncertaintyVariable = "oceanFlux";
                          break;
                  }
-                   //alert(this.variable);
-                 // Pour recuperer l'id d'un element :
-                 //huhu = $('#variableSelect').attr('id');//OK
-                 //inputT = $( 'input' ).attr('id')[5];//OK
-                 //inputT = $( 'input[name="variableRadio"]' ).attr('id');//OK
-                 //jjj = $('#resourceSelect ul')[0];//OK
+
                  if ( $("#uncertaintyWithMaskingInputLeft").is(":checked") ) { overlayMode = "masking"; }
                  else {overlayMode = "stippling";}
 
@@ -249,7 +247,7 @@ var Bobcat = Class.create( {
                  "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
                      {
                      VERSION: '1.1.1',
-                     LAYERS: "uncertainty:longterm_" + uncertaintyVariable + "_" + overlayMode + "_" + thresholdValueForPy,
+                     LAYERS: "longterm_" + uncertaintyVariable + "_" + overlayMode + "_" + thresholdValueForPy,
                      transparent: true,
                       FORMAT: 'image/png',
                       }, {
@@ -258,7 +256,7 @@ var Bobcat = Class.create( {
                       singleTile: true,
                       visibility: true,
                      } );
-             },
+             },*/
         // End pascal part:
 
     createZoomToMaxExtent: function()
