@@ -30,22 +30,28 @@ QgsApplication.setPrefixPath("/usr", True)#To know how to set the good Prefix Pa
 QgsApplication.initQgis()
 #NOW WE CAN DO STUFF!!!
 
+#Set parameters to call a specific layer f(user choices):
 folderWithNetCdfFiles = "/home/pascal/workSpace/bobcat25_08_14/uncertaintyLayer/layers/layersForPythonScript/"
-modeleType = 'fco2_LandModel' #TODO : recuperer dynamiquement (CF ReadMe part 2).
+modeleType = 'Land' #TODO : recuperer dynamiquement (CF ReadMe part 2).
+modeleName = 'MEAN'
+varName = "Terrestrial_flux" #TODO : mettre aussi Ocean_flux : comment extraire nom variable pour le choisir f(file) ?
+averagingPeriod = 'LT'
+timePeriod = 'lt'
+
 
 # Creation dossier pour recevoir fichiers crees : CF http://www.developpez.net/forums/d560315/autres-langages/python-zope/general-python/creer-dossier/
 try:
-    subprocess.call("mkdir " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles" + '/' + modeleType, shell=True)# CF subprocess/python
+    subprocess.call("mkdir " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles" + '/', shell=True)# CF subprocess/python
     #TODO : remplacer dynamiquement modeleType.
 except OSError:
     pass
 
-commonPathName  = "/home/pascal/workSpace/bobcat25_08_14/uncertaintyLayer/layers/layersForPythonScript/GCA_MapUncertaintyFiles/" + modeleType + '/' #TODO : Adapter les chemins dynamiquement : cf chap 7 Python Uni de Pau.
+commonPathName  = "/home/pascal/workSpace/bobcat25_08_14/uncertaintyLayer/layers/layersForPythonScript/GCA_MapUncertaintyFiles/" #TODO : Adapter les chemins dynamiquement : cf chap 7 Python Uni de Pau.
 netCdfFileName = "stdDevTestLongTermLandModel.nc"
-varName = "Terrestrial_flux" #TODO : mettre aussi Ocean_flux : comment extraire nom variable pour le choisir f(file) ?
+
 #Nom de fichiers de sortie pour le mask raster et sa version vectorisee :
-binaryFileNameRaster = "fco2_Land_MEAN_Terrestrial_flux_LT_lt_UncertRef_Binary" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
-binaryFileNameVector = "Land_MEAN_Terrestrial_flux_LT_lt" #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
+binaryFileNameRaster = 'fco2_'+ modeleType +'_'+ modeleName +'_'+ varName +'_'+ averagingPeriod +'_'+ timePeriod +'_UncertRef_Binary' #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
+binaryFileNameVector = modeleType +'_'+ modeleName +'_'+ varName +'_'+ averagingPeriod + timePeriod #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
         
 #1) # Set mean, min and max for each file :
 netCdfData= cdo.readArray(folderWithNetCdfFiles+netCdfFileName, varName)#readArray : Direcly return a numpy array for a given variable name. CF http://gis.stackexchange.com/questions/32995/how-to-fully-load-a-raster-into-a-numpy-array
@@ -81,10 +87,26 @@ while len(list(iOnlyValue)) <= len(meanSNetCdfDataTuple) :
     onlyValueGdal = gdal.Open('netCDF:"'+commonPathName+binaryFileNameRaster + iOnlyValue +'.nc":'+varName+'')#CF http://www.gdal.org/frmt_netcdf.html et "testRastToPol2.py"
     onlyValueS.append(onlyValueGdal)
     iOnlyValue= iOnlyValue + "1"
-
+    
+###########################################################################################################
+# //////////////////////// INTEGRATION DES COUCHES SHP DANS GEOSERVER ::::::::::::::::::::::::::::::::::::#
+###########################################################################################################
+    
+# Workspace creation: necessary to import layer in GS: CF layerUncertaintyReadMe2.
+try:
+    subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertaintyLandModel2</name></workspace>" http://localhost:8080/geoserver/rest/workspaces', shell= True)
+except OSError: #Important parce que si non, a la deuxieme fois, qd existe, erreur.
+    pass
+#Workspace variable definition:
+cat = Catalog("http://localhost:8080/geoserver/rest", "admin", "geoserver")# Connection to GS.
+workspace = cat.get_workspace("GCAUncertaintyLandModel2")
+# Clear workspace si il existe pour ne pas que donne erreur si meme nom de couches quand on relance script.
+workspace.clear()
+# TODO: Ne rgle pas le prb, trouver autre chose.
+############################################################################################################
 
 iOutShapefile = 0
-thresholdComponentName = ["_05", "_10", "_15", "_20", "_25","_30"]# Noms fichiers .shp de sortie doivent tenir compte threshold.
+thresholdComponentName = ["_0.5stdDev", "_1stdDev", "_1.5stdDev", "_2stdDev", "_2.5stdDev","_3stdDev"]# Noms fichiers .shp de sortie doivent tenir compte threshold.
 for onlyValue in  onlyValueS :    
     rasterBand=  onlyValue.GetRasterBand(1)#Necessaire dc de recuperer la band (ici unique)
     
@@ -109,18 +131,9 @@ for onlyValue in  onlyValueS :
     outDatasourceStippling.Destroy()
     
     ###########################################################################################################
-    # //////////////////////// INTEGRATION DES COUCHES SHP DANS GEOSERVER (WITH gsconfig) : ::::::::::::::::::# #To integrate in the bucle.
+    # //////////////////////// INTEGRATION DES COUCHES SHP DANS GEOSERVER (WITH gsconfig) : ::::::::::::::::::#
     ###########################################################################################################
     
-    # Workspace creation: necessary to import layer in GS: CF layerUncertaintyReadMe2.
-    try:
-        subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertaintyLandModel2</name></workspace>" http://localhost:8080/geoserver/rest/workspaces', shell= True)
-    except OSError: #Important parce que si non, a la deuxieme fois, qd existe, erreur.
-        pass
-    #Workspace variable definition:
-    cat = Catalog("http://localhost:8080/geoserver/rest", "admin", "geoserver")# Connection to GS.
-    workspace = cat.get_workspace("GCAUncertaintyLandModel2")
-
     # We need to create .prj file (epsg4326) because not present.
     prjFileMasking = open(outShapefileMasking +'.prj', 'w' )
     prjFileStippling = open(outShapefileStippling +'.prj', 'w' )
@@ -144,10 +157,9 @@ for onlyValue in  onlyValueS :
     
 # Eliminate binaries .nc files (necessary to build binaries vectors).
 try:
-    subprocess.call("rm " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles/" + modeleType + "/" + "*.nc", shell=True)
+    subprocess.call("rm " + folderWithNetCdfFiles + "GCA_MapUncertaintyFiles/*.nc", shell=True)
 except OSError:
     pass
-
 
 
 print("huhuhuhu")

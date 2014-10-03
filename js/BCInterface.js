@@ -218,9 +218,9 @@ var BCInterfaceW = Class.create( {
         retrieveUncertaintyParametersLeftMenu: function()
             {
                 if ( $('#uncertaintyWithMaskingInputLeft').is(':checked') )
-                    { this.overlayModeLeft = 'masking' }
+                    { this.overlayModeLeft = 'mk' }
                 else if  ( $('#uncertaintyWithStipplingInputLeft').is(':checked') )
-                    { this.overlayModeLeft = 'stippling' }
+                    { this.overlayModeLeft = 'st' }
             // Retrieve threshold value f(slider nivel).
                  this.thresholdValueLeft = $("#uncertaintySliderValueInputLeft").val();// Note : on a besoin de declarer ds initialise this.(...).
                  this.thresholdValueForPyLeft = this.thresholdValueLeft.replace(' σ', 'stdDev');
@@ -235,7 +235,7 @@ var BCInterfaceW = Class.create( {
                            "http://localhost:8080/geoserver/uncertainty/wms", // TODO : "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms"
                            {
                            VERSION: '1.1.1',
-                           LAYERS: 'fco2_' + modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + overlayModeLeft + "_" + thresholdValueForPyLeft,
+                           LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + overlayModeLeft + "_" + thresholdValueForPyLeft + '_fco2',
                            transparent: true,
                            FORMAT: 'image/png',
                            }, {
