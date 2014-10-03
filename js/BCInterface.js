@@ -325,6 +325,7 @@ var BCInterfaceW = Class.create( {
         }, this ) );
     },
 
+
     onClickDeleteMap:function( id )
     {
         this.hashBobcats.remove( id );
