@@ -195,7 +195,7 @@ var BCInterfaceW = Class.create( {
          this.retrieveUncertaintyParametersLeftMenu();
          if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
                             {
-                                this.get_uncertaintyLayerLeft(this.selectedPeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
+                                this.get_uncertaintyLayerLeft(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
                             }
                             else if ( $("#displayStdDevLeft").is(":checked") )
                             {
@@ -203,7 +203,7 @@ var BCInterfaceW = Class.create( {
                             }
                             else if ( $("#displayOverlayStdDevLeft").is(":checked") )
                             {
-                                this.get_uncertaintyLayerLeft(this.selectedPeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
+                                this.get_uncertaintyLayerLeft(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
                             }
                             else return false;// If nothing is clicked, nothing to show.
          // End Pascal part.
@@ -217,6 +217,11 @@ var BCInterfaceW = Class.create( {
     // ************************************************************************************************************************** //
         retrieveUncertaintyParametersLeftMenu: function()
             {
+                this.modelType = 'Land';
+                this.modelName = 'MEAN';
+                this.variable = 'Terrestrial_flux';
+                this.averagingPeriod = 'LT';
+                this.timePeriod = 'lt';
                 if ( $('#uncertaintyWithMaskingInputLeft').is(':checked') )
                     { this.overlayModeLeft = 'mk' }
                 else if  ( $('#uncertaintyWithStipplingInputLeft').is(':checked') )
@@ -224,18 +229,20 @@ var BCInterfaceW = Class.create( {
             // Retrieve threshold value f(slider nivel).
                  this.thresholdValueLeft = $("#uncertaintySliderValueInputLeft").val();// Note : on a besoin de declarer ds initialise this.(...).
                  this.thresholdValueForPyLeft = this.thresholdValueLeft.replace(' σ', 'stdDev');
+                 console.log(this.thresholdValueForPyLeft);
             // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
             // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
+               //var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
             },
 
-    get_uncertaintyLayerLeft: function(selectedPeriod, overlayModeLeft, thresholdValueForPyLeft) // --> If one parameter/WMS request is not good, no error but just no layer showed so OK.
+    get_uncertaintyLayerLeft: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayModeLeft, thresholdValueForPyLeft) // --> If one parameter/WMS request is not good, no error but just no layer showed so OK.
     {
         var uncertaintyLayer = new OpenLayers.Layer.WMS(
-                           "Uncertainty layer",
-                           "http://localhost:8080/geoserver/uncertainty/wms", // TODO : "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms"
+                           "Uncertainty layer (" + thresholdValueForPyLeft + ")",
+                           "http://localhost:8080/geoserver/GCAUncertaintyLandModel2/wms", // TODO : "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms"
                            {
                            VERSION: '1.1.1',
-                           LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + overlayModeLeft + "_" + thresholdValueForPyLeft + '_fco2',
+                           LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayModeLeft + "_" + thresholdValueForPyLeft + '_fco2',
                            transparent: true,
                            FORMAT: 'image/png',
                            }, {
@@ -246,6 +253,10 @@ var BCInterfaceW = Class.create( {
                            } );
         this.selectedBobcat.map.addLayer(uncertaintyLayer);
     },
+
+    //localhost:8080/geoserver/uncertainty/wms?VERSION=1.1.1&LAYERS=Land_MEAN_Terrestrial_flux_LT_lt_mk_1stdDev_fco2&TRANSPARENT=TRUE&FORMAT=image%2Fpng&SERVICE=WMS&REQUEST=GetMap&STYLES=&SRS=EPSG%3A4087&BBOX=-31948633.623298,-21480142.558845,28163891.405102,8576119.9553552&WIDTH=1086&HEIGHT=543
+    // Land_MEAN_Terrestrial_flux_LT_lt_st_1stdDev_fco2
+
     // End Pascal part.
 
     selectBobcat: function( id )
@@ -499,14 +510,15 @@ var BCInterfaceW = Class.create( {
 
             // Pascal part : if title model = mean, activate possibility to add uncertainty information.
             var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
-            if (modelName == 'MEAN')
-            { $('#uncertaintyLeft').children().css({'color':'#3333', 'pointer-events':'auto'}); }
+            //$('.fancytree.checkbox').change( function() {
+            if (modelName == 'MEAN') { $('#uncertaintyLeft').children().css({'color':'#3333', 'pointer-events':'auto'}); }
             else {
             $('#uncertaintyLeft').children().css({'color':'rgb(170,170,170)', 'pointer-events':'none'});// CF http://css-tricks.com/almanac/properties/p/pointer-events/
             $('#displayStdDevLeft').prop('checked', false);
             $('#displayOverlayStdDevLeft').prop('checked', false);
             $("#overlayStdDevCaseLeft").hide();
             }
+            //});
             // End Pascal part :
         }
         else
@@ -1056,10 +1068,15 @@ var BCInterfaceW = Class.create( {
     retrieveUncertaintyParameters: function()
     {
     // Retrieve uncertainty overlay mode to pass the good parameter (masking or stippling mode) in the adaptOverlayMaps() function. Pass like parameter in BCInterface object via initialise().
+         this.modelType = 'Land';
+         this.modelName = 'MEAN';
+         this.variable = 'Terrestrial_flux';
+         this.averagingPeriod = 'LT';
+         this.timePeriod = 'lt';
         if ( $('#uncertaintyWithMaskingInput').is(':checked') )
-            { this.overlayMode = 'masking' }
+            { this.overlayMode = 'mk' }
         else if  ( $('#uncertaintyWithStipplingInput').is(':checked') )
-            { this.overlayMode = 'stippling' }
+            { this.overlayMode = 'st' }
     // Retrieve threshold value f(slider nivel).
          this.thresholdValue = $("#uncertaintySliderValueInput").val();// Note : on a besoin de declarer ds initialise this.(...).
          this.thresholdValueForPy = this.thresholdValue.replace(' σ', 'stdDev');
@@ -1067,12 +1084,13 @@ var BCInterfaceW = Class.create( {
     // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
     },
 
-    // ******************************** Update all uncertainty maps : slide or uncertainty overlay modality actions:  **********************************//
-
+    // ************************************************************************************************************************************************ //
+    // ******************************** Update all uncertainty maps : slide or uncertainty overlay modality actions:  ********************************* //
+    // ************************************************************************************************************************************************ //
     // TODO : Mettre seulement une fonction qui reactulise la carte et la passer a chgment / slider et radio button pour ne pas avoir 2 appels de fonctions differentes ....
 
-    // Something to do when user change slider, threshold (call in createSliders: function()) :
-    adaptUncertMapToThreshold: function(selectedPeriod, overlayMode, thresholdValueForPy)
+    // Something to do when user change slider, threshold (call in createSliders: function()) : need to destroy old map and to turn to create it with new parameters.
+    adaptUncertMapToThreshold: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForPy)
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
                 {
@@ -1081,11 +1099,11 @@ var BCInterfaceW = Class.create( {
                     {
                         map.layers[8].destroy();
                         var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
-                                                 "Uncertainty layer New",
-                                                 "http://localhost:8080/geoserver/uncertainty/wms",
+                                                 "Uncertainty layer (" + thresholdValueForPy + ")",
+                                                 "http://localhost:8080/geoserver/GCAUncertaintyLandModel2/wms",
                                                      {
                                                      VERSION: '1.1.1',
-                                                     LAYERS: selectedPeriod + "_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
+                                                     LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayMode + "_" + thresholdValueForPy + '_fco2',
                                                      transparent: true,
                                                       FORMAT: 'image/png',
                                                       }, {
@@ -1099,21 +1117,20 @@ var BCInterfaceW = Class.create( {
                     else console.log('No uncertainty layer');
                 }, this ) );
     },
-
     // Action to do when user switch to mask area or to stipple area (radio buttons) f(parameters to set).
     changeOverlayUncertActions: function()
     {
         $('.uncertaintyRepresentationRightMenuClass').change(
             jQuery.proxy( function()
             {
-                this.retrieveUncertaintyParameters(); // Link to slide() in slider creation.
-                this.adaptOverlayMaps(this.selectedPeriod, this.overlayMode, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+                this.retrieveUncertaintyParameters();
+                this.adaptOverlayMaps(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
             }, this)
         );
     },
 
     // Destroy uncertainty map done by right menu and actualise every map with a new one f(parameters).
-    adaptOverlayMaps: function(selectedPeriod, overlayMode, thresholdValueForPy)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
+    adaptOverlayMaps: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForPy)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
@@ -1124,11 +1141,11 @@ var BCInterfaceW = Class.create( {
                 map.layers[8].destroy(); // [8] = uncertainty layer.
                 //Turn to build uncertainty layer:
                 var uncertaintyLayerNewResource = new OpenLayers.Layer.WMS(
-                                         "Uncertainty layer New",
-                                         "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
+                                         "Uncertainty layer (" + thresholdValueForPy + ")",
+                                         "http://localhost:8080/geoserver/GCAUncertaintyLandModel2/wms", // Layers are not in GS prod. TODO.
                                              {
                                              VERSION: '1.1.1',
-                                             LAYERS: selectedPeriod + "_LANDMODEL_" + overlayMode + "_" + thresholdValueForPy,
+                                             LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayMode + "_" + thresholdValueForPy + '_fco2',
                                              transparent: true,
                                               FORMAT: 'image/png',
                                               }, {
@@ -1191,7 +1208,7 @@ var BCInterfaceW = Class.create( {
             slide: jQuery.proxy( function(event, ui) {
                 $("#uncertaintySliderValueInput").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array.
                 this.retrieveUncertaintyParameters();
-                this.adaptUncertMapToThreshold(this.selectedPeriod, this.overlayMode, this.thresholdValueForPy);
+                this.adaptUncertMapToThreshold(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForPy);
             }, this)
         });
         $("#uncertaintySliderValueInput").val(valueArray[1]);// --> Set default value f(array's values).

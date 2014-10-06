@@ -51,7 +51,7 @@ netCdfFileName = "stdDevTestLongTermLandModel.nc"
 
 #Nom de fichiers de sortie pour le mask raster et sa version vectorisee :
 binaryFileNameRaster = 'fco2_'+ modeleType +'_'+ modeleName +'_'+ varName +'_'+ averagingPeriod +'_'+ timePeriod +'_UncertRef_Binary' #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
-binaryFileNameVector = modeleType +'_'+ modeleName +'_'+ varName +'_'+ averagingPeriod + timePeriod #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
+binaryFileNameVector = modeleType +'_'+ modeleName +'_'+ varName +'_'+ averagingPeriod + '_' + timePeriod #TODO : remplacer par nom du bon fichier : a faire ds la cas du long term pour ocean, land et inversion model.
         
 #1) # Set mean, min and max for each file :
 netCdfData= cdo.readArray(folderWithNetCdfFiles+netCdfFileName, varName)#readArray : Direcly return a numpy array for a given variable name. CF http://gis.stackexchange.com/questions/32995/how-to-fully-load-a-raster-into-a-numpy-array
@@ -100,9 +100,6 @@ except OSError: #Important parce que si non, a la deuxieme fois, qd existe, erre
 #Workspace variable definition:
 cat = Catalog("http://localhost:8080/geoserver/rest", "admin", "geoserver")# Connection to GS.
 workspace = cat.get_workspace("GCAUncertaintyLandModel2")
-# Clear workspace si il existe pour ne pas que donne erreur si meme nom de couches quand on relance script.
-workspace.clear()
-# TODO: Ne rgle pas le prb, trouver autre chose.
 ############################################################################################################
 
 iOutShapefile = 0
@@ -119,8 +116,8 @@ for onlyValue in  onlyValueS :
         driver.DeleteDataSource(outShapefileStippling+".shp")        
     outDatasourceMasking = driver.CreateDataSource(outShapefileMasking+ ".shp")# Pourquoi ???
     outDatasourceStippling = driver.CreateDataSource(outShapefileStippling+ ".shp")# Pourquoi ???   
-    outLayerMasking = outDatasourceMasking.CreateLayer(binaryFileNameVector + "_mk" + thresholdComponentName[iOutShapefile] + '_fco2', srs=None)
-    outLayerStippling = outDatasourceStippling.CreateLayer(binaryFileNameVector + "_st" + thresholdComponentName[iOutShapefile] + '_fco2', srs=None)
+    outLayerMasking = outDatasourceMasking.CreateLayer(binaryFileNameVector + "_mk" + '_' + thresholdComponentName[iOutShapefile] + '_fco2', srs=None)
+    outLayerStippling = outDatasourceStippling.CreateLayer(binaryFileNameVector + "_st" +  '' + thresholdComponentName[iOutShapefile] + '_fco2', srs=None)
     newField = ogr.FieldDefn('MYFLD', ogr.OFTInteger)# Pour recevoir shp cree.
     outLayerMasking.CreateField(newField)
     outLayerStippling.CreateField(newField)
@@ -133,7 +130,7 @@ for onlyValue in  onlyValueS :
     ###########################################################################################################
     # //////////////////////// INTEGRATION DES COUCHES SHP DANS GEOSERVER (WITH gsconfig) : ::::::::::::::::::#
     ###########################################################################################################
-    
+  
     # We need to create .prj file (epsg4326) because not present.
     prjFileMasking = open(outShapefileMasking +'.prj', 'w' )
     prjFileStippling = open(outShapefileStippling +'.prj', 'w' )
@@ -149,6 +146,18 @@ for onlyValue in  onlyValueS :
     #Keep layers in GS:
     dataStoreAndLayersNamesMk = binaryFileNameVector + "_mk" + thresholdComponentName[iOutShapefile] + '_fco2'
     dataStoreAndLayersNamesSt = binaryFileNameVector + "_st" + thresholdComponentName[iOutShapefile] + '_fco2'
+
+    # Remove datastore pour ne pas avoir d'erreur qd on re run script.
+    #if 'ftmasking' in locals():
+    '''dataStoreMk = cat.get_store(dataStoreAndLayersNamesMk)
+    dataStoreSt = cat.get_store(dataStoreAndLayersNamesSt)    
+    cat.delete(dataStoreAndLayersNamesMk)
+    cat.delete(dataStoreAndLayersNamesSt)    
+    cat.reload()
+    cat.delete(dataStoreMk)
+    cat.delete(dataStoreSt)
+    cat.reload()'''
+    
     ftMasking = cat.create_featurestore(dataStoreAndLayersNamesMk, shapefileMasking, workspace)# Data stores and layers names (must be unique for each layer), url to shp files , workspace.
     ftStippling = cat.create_featurestore(dataStoreAndLayersNamesSt, shapefileStippling, workspace)
      ###########################################################################################################
