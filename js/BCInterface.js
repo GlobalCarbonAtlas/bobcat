@@ -192,8 +192,7 @@ var BCInterfaceW = Class.create( {
         };
 
     // Pascal part :
-
-        // ******** Retrieve parameters to build uncertainty maps : **************************
+        // ******** Retrieve parameters to build uncertainty maps (LEFT PART) : **************************
         this.modelType = 'Land';
         //iSelectedResourceKeys = this.selectedResourceKeys.length - 1;
         this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
@@ -207,14 +206,15 @@ var BCInterfaceW = Class.create( {
             { this.overlayModeLeft = 'st' }
         // Retrieve threshold value f(slider nivel).
         this.thresholdValueLeft = $("#uncertaintySliderValueInputLeft").val();// Note : on a besoin de declarer ds initialise this.(...).
-        this.thresholdValueForPyLeft = this.thresholdValueLeft.replace(' σ', 'stdDev');
+        this.thresholdValueForTitleLayer = this.thresholdValueLeft.replace(' σ', 'stdDev');
+        this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace('.', '');
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
 
-        // ******** Build uncertainty maps: **************************
+        // ******** Build uncertainty maps (LEFT PART): **************************
         var uncertaintyLayer = new OpenLayers.Layer.WMS(
-                                   "Uncertainty layer (" + this.thresholdValueForPyLeft + ")",
-                                   "http://localhost:8080/geoserver/GCAUncertaintyLandModel2/wms", // TODO : "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms"
+                                   "Uncertainty layer (" + this.thresholdValueForTitleLayer + ")",
+                                   "http://localhost:8080/geoserver/GCAUncertaintyLandModel/wms", // TODO : "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms"
                                    {
                                    VERSION: '1.1.1',
                                    LAYERS: this.modelType + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
@@ -243,7 +243,7 @@ var BCInterfaceW = Class.create( {
                                 //console.log('zzzzzz' + this.hashResources.get( resource )[0]);
                                 this.selectedBobcat.map.addLayer(uncertaintyLayer);
                             }
-         else return false;// If nothing is clicked, nothing to show.
+         // If nothing is clicked, nothing to show.
          // End Pascal part.
 
         this.resizeAllMaps();
@@ -313,7 +313,7 @@ var BCInterfaceW = Class.create( {
         if( 1 > this.hashBobcats.keys().length )
             return;
 
-        var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber;
+        var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber - 1;
         var newWidth = Math.round( newWidth / 4 ) * 4;                  // Prepare map width to host 4 tiles
 
         var linesNumber = Math.ceil( this.hashBobcats.keys().length / this.mapsNumber );
@@ -1070,7 +1070,8 @@ var BCInterfaceW = Class.create( {
             { this.overlayMode = 'st' }
     // Retrieve threshold value f(slider nivel).
          this.thresholdValue = $("#uncertaintySliderValueInput").val();// Note : on a besoin de declarer ds initialise this.(...).
-         this.thresholdValueForPy = this.thresholdValue.replace(' σ', 'stdDev');
+         this.thresholdValueForTitleLayer = this.thresholdValue.replace(' σ', 'stdDev');
+         this.thresholdValueForPy = this.thresholdValueForTitleLayer.replace('.', '');// We quit the '.' to do the .py script.
     // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
     // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
     },
@@ -1081,7 +1082,7 @@ var BCInterfaceW = Class.create( {
     // TODO : Mettre seulement une fonction qui reactulise la carte et la passer a chgment / slider et radio button pour ne pas avoir 2 appels de fonctions differentes ....
 
     // Something to do when user change slider, threshold (call in createSliders: function()) : need to destroy old map and to turn to create it with new parameters.
-    adaptUncertMapToThreshold: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForPy)
+    adaptUncertMapToThreshold: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForTitleLayer, thresholdValueForPy)
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
                 {
@@ -1090,8 +1091,8 @@ var BCInterfaceW = Class.create( {
                     {
                         map.layers[8].destroy();
                         var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
-                                                 "Uncertainty layer (" + thresholdValueForPy + ")",
-                                                 "http://localhost:8080/geoserver/GCAUncertaintyLandModel2/wms",
+                                                 "Uncertainty layer (" + thresholdValueForTitleLayer + ")",
+                                                 "http://localhost:8080/geoserver/GCAUncertaintyLandModel/wms",
                                                      {
                                                      VERSION: '1.1.1',
                                                      LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayMode + "_" + thresholdValueForPy + '_fco2',
@@ -1115,13 +1116,13 @@ var BCInterfaceW = Class.create( {
             jQuery.proxy( function()
             {
                 this.retrieveUncertaintyParameters();
-                this.adaptOverlayMaps(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+                this.adaptOverlayMaps(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
             }, this)
         );
     },
 
     // Destroy uncertainty map done by right menu and actualise every map with a new one f(parameters).
-    adaptOverlayMaps: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForPy)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
+    adaptOverlayMaps: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForTitleLayer, thresholdValueForPy)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
@@ -1132,8 +1133,8 @@ var BCInterfaceW = Class.create( {
                 map.layers[8].destroy(); // [8] = uncertainty layer.
                 //Turn to build uncertainty layer:
                 var uncertaintyLayerNewResource = new OpenLayers.Layer.WMS(
-                                         "Uncertainty layer (" + thresholdValueForPy + ")",
-                                         "http://localhost:8080/geoserver/GCAUncertaintyLandModel2/wms", // Layers are not in GS prod. TODO.
+                                         "Uncertainty layer (" + thresholdValueForTitleLayer + ")",
+                                         "http://localhost:8080/geoserver/GCAUncertaintyLandModel/wms", // Layers are not in GS prod. TODO.
                                              {
                                              VERSION: '1.1.1',
                                              LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayMode + "_" + thresholdValueForPy + '_fco2',
@@ -1147,9 +1148,7 @@ var BCInterfaceW = Class.create( {
                                              } );
                 map.addLayer(uncertaintyLayerNewResource);
             }
-            else {console.log('No uncertainty layer');
-                console.log( 'this.selectedResourceKeys = : ' + this.selectedResourceKeys );
-                }
+            else {console.log('No uncertainty layer');}
         }, this ) );
     },
     // End Pascal part.
@@ -1199,7 +1198,7 @@ var BCInterfaceW = Class.create( {
             slide: jQuery.proxy( function(event, ui) {
                 $("#uncertaintySliderValueInput").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array.
                 this.retrieveUncertaintyParameters();
-                this.adaptUncertMapToThreshold(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForPy);
+                this.adaptUncertMapToThreshold(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);
             }, this)
         });
         $("#uncertaintySliderValueInput").val(valueArray[1]);// --> Set default value f(array's values).

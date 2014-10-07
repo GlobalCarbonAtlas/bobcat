@@ -287,7 +287,6 @@
                             $("#overlayStdDevCase").hide();
                  });
 </script>
-
  <!--End Pascal part : -->
        
           </div>
