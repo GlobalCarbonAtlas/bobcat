@@ -189,75 +189,7 @@ var Bobcat = Class.create( {
         // Styles
         $( this.map.viewPortDiv ).addClass( "BCmapWMS" );
 
-        // Pascal part :
-        // Objectif : lancer fonction createUncertaintyResource() lors de la création map (de this.map !).
-        this.createUncertaintyResource();
-        //End Pascal part.
-
     },
-
-    //Pascal part:
-
-            // Creation overlay map or std dev map f(user choices).
-           /*createUncertaintyResource: function()//TODO: optimiser le code avec booleens.
-           {
-                if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
-                    {
-                        //alert("Les 2 checked");//OK
-                    }
-                else if ( $("#displayStdDevLeft").is(":checked") )
-                    {
-                        //alert("Display checked");//OK
-                    }
-                else if ( $("#displayOverlayStdDevLeft").is(":checked") )
-                    {
-                        //alert("Overlay checked");//OK
-                        this.overlayUncertaintyLayer();
-                    }
-                else return false;// Si rien de coché, rien a creer.
-           },*/
-
-            /*overlayUncertaintyLayer: function()
-            {
-                this.get_uncertaintyLayer();
-                this.map.addLayer(this.uncertaintyLayer);
-            },*/
-
-             // Layer creation f(parameters).
-             /*get_uncertaintyLayer: function()
-             {
-                 switch(this.variable)
-                 {
-                       case "Terrestrial_flux":
-                         uncertaintyVariable = 'LANDMODEL';//TODO. Pas correct, adapter : offrir choix /terrestrial or ocean et adpater script python.
-                         break;
-                       case "Ocean_flux"://TODO
-                         uncertaintyVariable = "oceanFlux";
-                         break;
-                 }
-
-                 if ( $("#uncertaintyWithMaskingInputLeft").is(":checked") ) { overlayMode = "masking"; }
-                 else {overlayMode = "stippling";}
-
-                 thresholdValue = $("#uncertaintySliderValueInputLeft").val();
-                 thresholdValueForPy = thresholdValue.replace(' σ', 'stdDev');// On a besoin de chger symbole sigma parce que ne passe pas ds code .py et donc dans noms couches .shp
-
-                 this.uncertaintyLayer = new OpenLayers.Layer.WMS(
-                 "Uncertainty layer (" +  thresholdValue + ")",
-                 "http://localhost:8080/geoserver/uncertainty/wms", // Layers are not in GS prod. TODO.
-                     {
-                     VERSION: '1.1.1',
-                     LAYERS: "longterm_" + uncertaintyVariable + "_" + overlayMode + "_" + thresholdValueForPy,
-                     transparent: true,
-                      FORMAT: 'image/png',
-                      }, {
-                      isBaseLayer: false,
-                      opacity: 1,
-                      singleTile: true,
-                      visibility: true,
-                     } );
-             },*/
-        // End pascal part:
 
     createZoomToMaxExtent: function()
     {

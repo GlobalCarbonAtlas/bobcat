@@ -619,7 +619,7 @@ span.fancytree-title:hover div.complexToolTip {
 
 #uncertaintyWithStippling {
     margin-bottom: -4px;
-    margin-left: -13px;
+    margin-left: 2px;
 }
 
 #uncertaintyWithStipplingLeft {
@@ -629,7 +629,7 @@ span.fancytree-title:hover div.complexToolTip {
 
 #uncertaintyWithMasking {
     margin-left: -23px;
-    margin-bottom: -13px;
+    margin-bottom: 2px;
 }
 
 #uncertaintyWithMaskingLeft {
