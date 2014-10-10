@@ -129,10 +129,10 @@
                         if ($(this).is(':checked')) {
                             $("#overlayStdDevCaseLeft").show();
                         }
-                        else 
+                        else
                             $("#overlayStdDevCaseLeft").hide();
                  });
-                
+
                 // Slider uncertainty (st dev) threshold part:
                  $(function() {
                     //var tt = σ;
@@ -283,7 +283,7 @@
                         if ($(this).is(':checked')) {
                             $("#overlayStdDevCase").show();
                         }
-                        else 
+                        //else
                             $("#overlayStdDevCase").hide();
                  });
 </script>

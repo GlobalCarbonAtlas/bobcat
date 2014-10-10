@@ -95,7 +95,7 @@ var BCInterfaceW = Class.create( {
         this.changeOverlayUncertActions();// Right menu part :
         this.geoserverUrl = "http://localhost:8080/geoserver/GCAUncertainty";// TODO : put real url.
         this.onChangeModelsChoices();
-
+        this.hideOrShowRightMenuUncertainty();
         // End Pascal part :
     },
 
@@ -191,17 +191,7 @@ var BCInterfaceW = Class.create( {
             displayIconesMenu: true
         };
     // End Pascal part.
-    // Pascal part:
-        if ( $("#displayStdDevLeft").is(":checked") )
-        {
-            //alert("Display checked");//OK mais me le fait autant de fois que de cartes.
-            //this.selectedUncertaintyBobcat = new Bobcat( options4UncertaintyMap );
-            //this.hashBobcats.put( id_uncertainty, this.selectedBobcat, this.selectedUncertaintyBobcat );
-            //this.selectUncertaintyBobcat( this.selectedUncertaintyBobcat.id_uncertainty );
-            this.zIndex++;
-            $( "#" + id_uncertainty ).css( "z-index", this.zIndex );// Pourquoi incrementation de 1 de z-index a chq creation carte ????
-        }
-    // End Pascal part.
+
         this.selectedBobcat = new Bobcat( options );
         this.hashBobcats.put( id, this.selectedBobcat);
         this.selectBobcat( this.selectedBobcat.id );
@@ -290,11 +280,18 @@ var BCInterfaceW = Class.create( {
         this.resizeAllMaps();
     },
 
-     // Pascal part:
-
-                //var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
-
-     // End Pascal part.
+    // Pascal part:
+        hideOrShowRightMenuUncertainty: function()
+        {
+            $('#displayOverlayStdDevLeft').on('change', jQuery.proxy( function() {
+                if ( $('#displayOverlayStdDevLeft').is(':checked') )
+                {
+                    $("#overlayStdDevCase").show();
+                }
+                else $("#overlayStdDevCase").hide();
+            }, this) );
+        },
+    // End Pascal part.
 
     selectBobcat: function( id )
     {
@@ -303,16 +300,6 @@ var BCInterfaceW = Class.create( {
         if( this.selectedBobcat )
             $( "#" + this.selectedBobcat.id ).addClass( "selected" );
     },
-
-    // Pascal part:
-    /*selectUncertaintyBobcat: function( id_uncertainty )
-    {
-        this.selectedUncertaintyBobcat = this.hashBobcats.get( id_uncertainty );
-        $( ".BCmap" ).removeClass( "selected" );
-        if( this.selectedUncertaintyBobcat )
-            $( "#" + this.selectedUncertaintyBobcat.id ).addClass( "selected" );
-    },*/
-    // End Pascal part.
 
     /* Disable + or - when zoom levels are reached */
     handleZoom: function()
@@ -545,6 +532,7 @@ var BCInterfaceW = Class.create( {
                     $('#displayStdDevLeft').prop('checked', false);
                     $('#displayOverlayStdDevLeft').prop('checked', false);
                     $("#overlayStdDevCaseLeft").hide();
+                    $('#overlayStdDevCase').hide();
                 }
             }, this));
         },
@@ -577,10 +565,11 @@ var BCInterfaceW = Class.create( {
             var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
             if (modelName == 'MEAN') { $('#uncertaintyLeft').children().css({'color':'#3333', 'pointer-events':'auto'}); }
             else {
-            $('#uncertaintyLeft').children().css({'color':'rgb(170,170,170)', 'pointer-events':'none'});// CF http://css-tricks.com/almanac/properties/p/pointer-events/
-            $('#displayStdDevLeft').prop('checked', false);
-            $('#displayOverlayStdDevLeft').prop('checked', false);
-            $("#overlayStdDevCaseLeft").hide();
+                $('#uncertaintyLeft').children().css({'color':'rgb(170,170,170)', 'pointer-events':'none'});// CF http://css-tricks.com/almanac/properties/p/pointer-events/
+                $('#displayStdDevLeft').prop('checked', false);
+                $('#displayOverlayStdDevLeft').prop('checked', false);
+                $("#overlayStdDevCaseLeft").hide();
+                //$('#overlayStdDevCase').hide();
             }
             // End Pascal part :
         }
@@ -1449,7 +1438,7 @@ var BCInterfaceW = Class.create( {
                 width: "10px"
             }, 200, jQuery.proxy( function()
             {
-                var newWidth = $( "#pageWrapper" ).width() - $( "#leftMenu" ).width() - $( "#rightMenu" ).width() - 20;
+                var newWidth = $( "#pageWrapper" ).width() - $( "#leftMenu" ).width() - $( "#rightMenu" ).width() - 1;
                 $( "#printable" ).animate( {width: newWidth}, 200, jQuery.proxy( function()
                 {
                     this.resizeMaps( newWidth );
