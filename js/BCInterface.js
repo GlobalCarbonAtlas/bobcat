@@ -92,11 +92,10 @@ var BCInterfaceW = Class.create( {
         this.resizePrintable();
         this.updateLegendButtons();
         //Pascal part :
-         // Right menu part :
-        this.retrieveUncertaintyParameters();
-        this.overlayMode = '';
-        this.thresholdValue = '';
-        this.changeOverlayUncertActions();
+        this.changeOverlayUncertActions();// Right menu part :
+        this.geoserverUrl = "http://localhost:8080/geoserver/GCAUncertainty";// TODO : put real url.
+        this.onChangeModelsChoices();
+
         // End Pascal part :
     },
 
@@ -106,7 +105,6 @@ var BCInterfaceW = Class.create( {
         this.onClickDeleteAllMaps();
     },
 
-
 // **************************************************************
 // ************************** MAP *******************************
 // **************************************************************
@@ -115,19 +113,23 @@ var BCInterfaceW = Class.create( {
         jQuery.each( this.selectedResourceKeys, jQuery.proxy( function( i, element )
         {
             var id = 'id' + this.n;
-            this.createMap( id, element );
-            console.log('id = ' + id);
+            // pascal part:
+            var id_uncertainty = 'id_uncertainty' + this.n; // Les cartes s'affichent dans l'ordre des clicks / choix cartes.
+            // End Pascal part.
+            this.createMap( id, id_uncertainty, element );
             this.n++;
         }, this ) );
     },
 
-    createMap: function( id, resource )
+    createMap: function( id, id_uncertainty, resource )
     {
         if( this.hashBobcats.size() )
         {
             var firstOpenLayerMap = this.hashBobcats.get( this.hashBobcats.keys( 0 )[0] ).map;
             this.centerMap = firstOpenLayerMap.getCenter();
+            this.centerUncertaintyMap = firstOpenLayerMap.getCenter();
             this.zoomMap = firstOpenLayerMap.getZoom();
+            this.zoomUncertaintyMap = firstOpenLayerMap.getZoom();
         }
 
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( resource )[1] );
@@ -162,8 +164,46 @@ var BCInterfaceW = Class.create( {
             displayIconesMenu: true
         };
 
+    // Pascal part:
+        var mapTitleUncertainty = 'Uncertainty data: ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
+            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+        var mapShortTitleUncertainty = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
+
+        var options4UncertaintyMap = {container: $( '#printable' ),
+            id: id_uncertainty, // def in createMaps()
+            mapTitle: mapTitleUncertainty,
+            mapShortTitle: mapShortTitleUncertainty,
+            resource: this.urlResourceUncertainty,
+            variable: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2', // = parameters to build layer parameter/ OL nem WMS layer.
+            //time: this.time, // console.log(this.time) = 1900-01-01T00:00:00.000Z
+            range: $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' ),// TODO : adapt
+            numberColorsBands: $( "#slider-nbcolorbands-text" ).html(),// TODO : adapt.
+            palette: this.palette4UncertaintyMaps,// TODO : adapt to uncertainty values (/actualisation get range, ...).
+            centerMap: this.centerUncertaintyMap,
+            zoomMap: this.zoomUncertaintyMap,
+            minx: this.minx4UncertaintyMaps,
+            maxx: this.maxx4UncertaintyMaps,
+            miny: this.miny4UncertaintyMaps,
+            maxy: this.maxy4UncertaintyMaps,
+            //timeArray: this.timeArray, // console.log(this.timeArray); = 1900-01-01T00:00:00.000Z
+            //callback:jQuery.proxy( this.eventFilter, this ), // appelle un truc à faire (qui peut être différent) une fois que la carte a été créée.
+            displayContextuelMenu: true,
+            displayIconesMenu: true
+        };
+    // End Pascal part.
+    // Pascal part:
+        if ( $("#displayStdDevLeft").is(":checked") )
+        {
+            //alert("Display checked");//OK mais me le fait autant de fois que de cartes.
+            //this.selectedUncertaintyBobcat = new Bobcat( options4UncertaintyMap );
+            //this.hashBobcats.put( id_uncertainty, this.selectedBobcat, this.selectedUncertaintyBobcat );
+            //this.selectUncertaintyBobcat( this.selectedUncertaintyBobcat.id_uncertainty );
+            this.zIndex++;
+            $( "#" + id_uncertainty ).css( "z-index", this.zIndex );// Pourquoi incrementation de 1 de z-index a chq creation carte ????
+        }
+    // End Pascal part.
         this.selectedBobcat = new Bobcat( options );
-        this.hashBobcats.put( id, this.selectedBobcat );
+        this.hashBobcats.put( id, this.selectedBobcat);
         this.selectBobcat( this.selectedBobcat.id );
         this.zIndex++;
         $( "#" + id ).css( "z-index", this.zIndex );
@@ -191,12 +231,16 @@ var BCInterfaceW = Class.create( {
                 break;
         };
 
-    // Pascal part :
-        // ******** Retrieve parameters to build uncertainty maps (LEFT PART) : **************************
-        this.modelType = 'Land';
-        //iSelectedResourceKeys = this.selectedResourceKeys.length - 1;
+
+    // ********************************************************************************************************************************* //
+    // ******************************* OVERLAYS UNCERTAINTY MAPS, LEFT MENU PART : ***************************************************** //
+    // ********************************************************************************************************************************* //
+
+        // ******** Retrieve parameters to build overlay uncertainty maps (LEFT PART) : **************************
+        this.urlResourceUncertainty = this.geoserverUrl + '/wms' // = Where are the data.
+        this.modelType = this.hashResources.get( resource )[1];
+        this.modelTypeForPy = this.modelType.replace('Models', '');// To replace LandModels by Land for ex.
         this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
-        //console.log('Model name = ' + this.modelName);
         this.variable = 'Terrestrial_flux';
         this.averagingPeriod = 'LT';
         this.timePeriod = 'lt';
@@ -211,13 +255,13 @@ var BCInterfaceW = Class.create( {
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
 
-        // ******** Build uncertainty maps (LEFT PART): **************************
+        // ******** Build overlay uncertainty maps (LEFT PART): **************************
         var uncertaintyLayer = new OpenLayers.Layer.WMS(
                                    "Uncertainty layer (" + this.thresholdValueForTitleLayer + ")",
-                                   "http://localhost:8080/geoserver/GCAUncertaintyLandModel/wms", // TODO : "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms"
+                                   this.geoserverUrl + '/wms',
                                    {
                                    VERSION: '1.1.1',
-                                   LAYERS: this.modelType + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
+                                   LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
                                    transparent: true,
                                    FORMAT: 'image/png',
                                    }, {
@@ -227,8 +271,7 @@ var BCInterfaceW = Class.create( {
                                    visibility: true,
                                    } );
 
-         // ***************** Apply visualisations modality f(user choices) about uncertainty information: **************************
-         //this.retrieveUncertaintyParametersLeftMenu();
+         // ***************** Apply visualisations modality to overlay maps f(user choices) about uncertainty information: **************************
          if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
                             {
                                 //this.get_uncertaintyLayerLeft(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
@@ -240,14 +283,18 @@ var BCInterfaceW = Class.create( {
          else if ( $("#displayOverlayStdDevLeft").is(":checked") && this.modelName == 'MEAN')
                             {
                                 //this.get_uncertaintyLayerLeft(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
-                                //console.log('zzzzzz' + this.hashResources.get( resource )[0]);
                                 this.selectedBobcat.map.addLayer(uncertaintyLayer);
                             }
          // If nothing is clicked, nothing to show.
          // End Pascal part.
-
         this.resizeAllMaps();
     },
+
+     // Pascal part:
+
+                //var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
+
+     // End Pascal part.
 
     selectBobcat: function( id )
     {
@@ -256,6 +303,16 @@ var BCInterfaceW = Class.create( {
         if( this.selectedBobcat )
             $( "#" + this.selectedBobcat.id ).addClass( "selected" );
     },
+
+    // Pascal part:
+    /*selectUncertaintyBobcat: function( id_uncertainty )
+    {
+        this.selectedUncertaintyBobcat = this.hashBobcats.get( id_uncertainty );
+        $( ".BCmap" ).removeClass( "selected" );
+        if( this.selectedUncertaintyBobcat )
+            $( "#" + this.selectedUncertaintyBobcat.id ).addClass( "selected" );
+    },*/
+    // End Pascal part.
 
     /* Disable + or - when zoom levels are reached */
     handleZoom: function()
@@ -313,7 +370,7 @@ var BCInterfaceW = Class.create( {
         if( 1 > this.hashBobcats.keys().length )
             return;
 
-        var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber - 1;
+        var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber - 10; // Add -2/ script without uncertainty maps because if not, next map below, not at the right.
         var newWidth = Math.round( newWidth / 4 ) * 4;                  // Prepare map width to host 4 tiles
 
         var linesNumber = Math.ceil( this.hashBobcats.keys().length / this.mapsNumber );
@@ -334,6 +391,7 @@ var BCInterfaceW = Class.create( {
         this.updateLegendButtons();
         if( 0 == this.hashBobcats.size() )
             this.centerMap = false;
+            this.centerUncertaintyMap = false;
     },
 
     onClickDeleteAllMaps:function()
@@ -355,6 +413,7 @@ var BCInterfaceW = Class.create( {
         this.n = 0;
         this.zIndex = 0;
         this.centerMap = false;
+        this.centerUncertaintyMap = false;
     },
 
 
@@ -474,6 +533,22 @@ var BCInterfaceW = Class.create( {
             this.disableVariableZone( "variableSelect", false, "variable" );
     },
 
+    // Pascal part:
+        // Complement to visualize or not uncertainty visualisation part.
+        onChangeModelsChoices: function()
+        {
+            $('#resourceSelect').on("click", jQuery.proxy( function ()
+            {
+                if (this.selectedResourceKeys.length == 0 ) // = Si aucun modèle selectionné.
+                {
+                    $('#uncertaintyLeft').children().css({'color':'rgb(170,170,170)', 'pointer-events':'none'});// CF http://css-tricks.com/almanac/properties/p/pointer-events/
+                    $('#displayStdDevLeft').prop('checked', false);
+                    $('#displayOverlayStdDevLeft').prop('checked', false);
+                    $("#overlayStdDevCaseLeft").hide();
+                }
+            }, this));
+        },
+    // End Pascal part.
 
 // **************************************************************
 // *********************** VARIABLES ****************************
@@ -492,16 +567,14 @@ var BCInterfaceW = Class.create( {
         if( i < this.selectedResourceKeys.length )
         {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
-
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
                     this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
             this.getVariables( url, i, this.selectedResourceKeys[i] );
 
             // Pascal part : if title model = mean, activate possibility to add uncertainty information.
+                // Prb : si il ne reste que MEAN et que on l'enlève, ne se met pas en gris. Complément donc fait par onChangeModelsChoices()
             var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
-            //console.log('ifdorjfoja = ' + modelName );
-            //$('.fancytree.checkbox').change( function() {
             if (modelName == 'MEAN') { $('#uncertaintyLeft').children().css({'color':'#3333', 'pointer-events':'auto'}); }
             else {
             $('#uncertaintyLeft').children().css({'color':'rgb(170,170,170)', 'pointer-events':'none'});// CF http://css-tricks.com/almanac/properties/p/pointer-events/
@@ -509,7 +582,6 @@ var BCInterfaceW = Class.create( {
             $('#displayOverlayStdDevLeft').prop('checked', false);
             $("#overlayStdDevCaseLeft").hide();
             }
-            //});
             // End Pascal part :
         }
         else
@@ -827,6 +899,10 @@ var BCInterfaceW = Class.create( {
                     this.maxx = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'maxx' ) );
                     this.miny = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'miny' ) );
                     this.maxy = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'maxy' ) );
+                    this.minx4UncertaintyMaps = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'minx' ) );
+                    this.maxx4UncertaintyMaps = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'maxx' ) );
+                    this.miny4UncertaintyMaps = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'miny' ) );
+                    this.maxy4UncertaintyMaps = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'maxy' ) );
                 }
             }
         }, this ) );
@@ -1079,10 +1155,9 @@ var BCInterfaceW = Class.create( {
     // ************************************************************************************************************************************************ //
     // ******************************** Update all uncertainty maps : slide or uncertainty overlay modality actions:  ********************************* //
     // ************************************************************************************************************************************************ //
-    // TODO : Mettre seulement une fonction qui reactulise la carte et la passer a chgment / slider et radio button pour ne pas avoir 2 appels de fonctions differentes ....
 
-    // Something to do when user change slider, threshold (call in createSliders: function()) : need to destroy old map and to turn to create it with new parameters.
-    adaptUncertMapToThreshold: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForTitleLayer, thresholdValueForPy)
+    // Destroy and turn to create map (to apply to stippling/masking event or to change slide  event.
+    adaptUncertMapRightPart: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForTitleLayer, thresholdValueForPy)
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
                 {
@@ -1092,7 +1167,7 @@ var BCInterfaceW = Class.create( {
                         map.layers[8].destroy();
                         var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
                                                  "Uncertainty layer (" + thresholdValueForTitleLayer + ")",
-                                                 "http://localhost:8080/geoserver/GCAUncertaintyLandModel/wms",
+                                                 this.geoserverUrl + '/wms',
                                                      {
                                                      VERSION: '1.1.1',
                                                      LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayMode + "_" + thresholdValueForPy + '_fco2',
@@ -1109,6 +1184,7 @@ var BCInterfaceW = Class.create( {
                     else console.log('No uncertainty layer');
                 }, this ) );
     },
+
     // Action to do when user switch to mask area or to stipple area (radio buttons) f(parameters to set).
     changeOverlayUncertActions: function()
     {
@@ -1116,40 +1192,9 @@ var BCInterfaceW = Class.create( {
             jQuery.proxy( function()
             {
                 this.retrieveUncertaintyParameters();
-                this.adaptOverlayMaps(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+                this.adaptUncertMapRightPart(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
             }, this)
         );
-    },
-
-    // Destroy uncertainty map done by right menu and actualise every map with a new one f(parameters).
-    adaptOverlayMaps: function(modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForTitleLayer, thresholdValueForPy)// Associee a BCInterface object, on a donc acces a ttes ses carateristiques.
-    {
-        this.hashBobcats.each( jQuery.proxy( function( key )
-        {
-            var map = this.hashBobcats.get( key ).map;
-            if (map.layers[8])// Necessary to apply only to maps with uncertainty information.
-            {
-                // Destroy uncertainty layer before turn to create it.
-                map.layers[8].destroy(); // [8] = uncertainty layer.
-                //Turn to build uncertainty layer:
-                var uncertaintyLayerNewResource = new OpenLayers.Layer.WMS(
-                                         "Uncertainty layer (" + thresholdValueForTitleLayer + ")",
-                                         "http://localhost:8080/geoserver/GCAUncertaintyLandModel/wms", // Layers are not in GS prod. TODO.
-                                             {
-                                             VERSION: '1.1.1',
-                                             LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayMode + "_" + thresholdValueForPy + '_fco2',
-                                             transparent: true,
-                                              FORMAT: 'image/png',
-                                              }, {
-                                              isBaseLayer: false,
-                                              opacity: 1,
-                                              singleTile: true,
-                                              visibility: true,
-                                             } );
-                map.addLayer(uncertaintyLayerNewResource);
-            }
-            else {console.log('No uncertainty layer');}
-        }, this ) );
     },
     // End Pascal part.
 
@@ -1198,7 +1243,7 @@ var BCInterfaceW = Class.create( {
             slide: jQuery.proxy( function(event, ui) {
                 $("#uncertaintySliderValueInput").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array.
                 this.retrieveUncertaintyParameters();
-                this.adaptUncertMapToThreshold(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);
+                this.adaptUncertMapRightPart(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);
             }, this)
         });
         $("#uncertaintySliderValueInput").val(valueArray[1]);// --> Set default value f(array's values).
@@ -1226,6 +1271,7 @@ var BCInterfaceW = Class.create( {
         $( "#paletteSelect" ).on( 'click', jQuery.proxy( function( event )
         {
             this.palette = $( "#paletteSelect" ).select2( "val" );
+            this.palette4UncertaintyMaps = $( "#paletteSelect" ).select2( "val" );
             this.updateLegend();
         }, this ) );
     },

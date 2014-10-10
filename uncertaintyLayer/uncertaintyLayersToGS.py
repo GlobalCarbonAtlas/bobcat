@@ -24,16 +24,17 @@ binaryFileNameVector = modeleType +'_'+ modeleName +'_'+ varName +'_'+ averaging
       
 # Workspace creation: necessary to import layer in GS: CF layerUncertaintyReadMe2.
 try:
-    subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertaintyLandModel</name></workspace>" http://localhost:8080/geoserver/rest/workspaces', shell= True)
+    subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertainty</name></workspace>" http://localhost:8080/geoserver/rest/workspaces', shell= True)
 except OSError: #Important parce que si non, a la deuxieme fois, qd existe, erreur.
     pass
 
 #Workspace variable definition:
 cat = Catalog("http://localhost:8080/geoserver/rest", "admin", "geoserver")# Connection to GS.
-workspace = cat.get_workspace("GCAUncertaintyLandModel")
+workspace = cat.get_workspace("GCAUncertainty")
 
 # Bucle to pass all layers to GS:
 thresholdComponentName = ["_05stdDev", "_1stdDev", "_15stdDev", "_2stdDev", "_25stdDev","_3stdDev"]# Noms fichiers .shp de sortie doivent tenir compte threshold. Note : ne pas mettre de points, problème pour appels / curl et API rest.
+
 #iOutShapefileS = list(len(thresholdComponentName))
 nThreshold = len(thresholdComponentName)
 nThresholdS = list(range(nThreshold))
@@ -64,8 +65,8 @@ for nThreshold in  nThresholdS :
     
 # Create a style for each layer: CF geoserver.geo-solutions.it/edu/en/rest/using_rest.html et http://gis.stackexchange.com/questions/75207/layer-sets-not-enabled-after-change-style-via-rest
     try:   
-        subprocess.call('curl -v -u admin:geoserver -XPUT -H "Content-type: text/xml" -d "<layer><defaultStyle><name>GCA_uncertainty_maskingOverlay</name></defaultStyle><enabled>true</enabled></layer>" http://localhost:8080/geoserver/rest/layers/GCAUncertaintyLandModel:'+ dataStoreAndLayersNamesMk, shell=True)# Apply style for masking layers.
-        subprocess.call('curl -v -u admin:geoserver -XPUT -H "Content-type: text/xml" -d "<layer><defaultStyle><name>GCA_uncertainty_stipplingOverlay</name></defaultStyle><enabled>true</enabled></layer>" http://localhost:8080/geoserver/rest/layers/GCAUncertaintyLandModel:'+ dataStoreAndLayersNamesSt, shell=True)# Apply style for stippling layers.       
+        subprocess.call('curl -v -u admin:geoserver -XPUT -H "Content-type: text/xml" -d "<layer><defaultStyle><name>GCA_uncertainty_maskingOverlay</name></defaultStyle><enabled>true</enabled></layer>" http://localhost:8080/geoserver/rest/layers/GCAUncertainty:'+ dataStoreAndLayersNamesMk, shell=True)# Apply style for masking layers.
+        subprocess.call('curl -v -u admin:geoserver -XPUT -H "Content-type: text/xml" -d "<layer><defaultStyle><name>GCA_uncertainty_stipplingOverlay</name></defaultStyle><enabled>true</enabled></layer>" http://localhost:8080/geoserver/rest/layers/GCAUncertainty:'+ dataStoreAndLayersNamesSt, shell=True)# Apply style for stippling layers.       
     except OSError:
         pass
 
