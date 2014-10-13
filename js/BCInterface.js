@@ -51,12 +51,16 @@ var BCInterfaceW = Class.create( {
 
         this.hashBobcats = new Hashtable();
         this.selectedBobcat = false;
+        // Pascal part:
+        this.selectedUncertaintyBobcat = false;
+        // End Pascal part.
         this.n = 0;
         // The leftMenuInitWidth && rightMenuInitWidth init is done after the updateLegend because the loading of the legend image can change the size of the menus (scrollbar or not)
         this.leftMenuInitWidth = false;
         this.rightMenuInitWidth = false;
         this.printableInitHeight = $( "#printable" ).height();
         this.zIndex = 0;
+        this.zIndexUncertainty = 0;
 
         this.timeArray = new Array();
 
@@ -108,27 +112,36 @@ var BCInterfaceW = Class.create( {
 // **************************************************************
 // ************************** MAP *******************************
 // **************************************************************
+
+    // Pascal part:
+    // This method allows construction of uncertainty maps too.
     createMaps: function()
     {
         jQuery.each( this.selectedResourceKeys, jQuery.proxy( function( i, element )
         {
             var id = 'id' + this.n;
-            // pascal part:
-            var id_uncertainty = 'id_uncertainty' + this.n; // Les cartes s'affichent dans l'ordre des clicks / choix cartes.
-            // End Pascal part.
-            this.createMap( id, id_uncertainty, element );
-            this.n++;
+            if ( $('#displayStdDevLeft').is(':checked') )
+                            {
+                                var id_uncertainty = 'id_uncertainty' + this.n; // Les cartes s'affichent dans l'ordre des clicks / choix cartes.
+                                this.createMapAndUncertaintyMap( id, element, id_uncertainty);
+                            }
+                            else {this.createMap( id, element);}
+                            this.n++;
         }, this ) );
     },
 
-    createMap: function( id, id_uncertainty, resource )
+    // ************************************************************************************************************************************* // --> Integrate to createMap() to apply to uncertainty maps resizeAllMaps()
+    // ******************************** DISPLAY UNCERTAINTY MAPS WITH DATA MODELS MAPS: **************************************************** //
+    // ************************************************************************************************************************************ //
+
+    createMapAndUncertaintyMap: function( id, resource, id_uncertainty )
     {
         if( this.hashBobcats.size() )
         {
             var firstOpenLayerMap = this.hashBobcats.get( this.hashBobcats.keys( 0 )[0] ).map;
             this.centerMap = firstOpenLayerMap.getCenter();
-            this.centerUncertaintyMap = firstOpenLayerMap.getCenter();
             this.zoomMap = firstOpenLayerMap.getZoom();
+            this.centerUncertaintyMap = firstOpenLayerMap.getCenter();
             this.zoomUncertaintyMap = firstOpenLayerMap.getZoom();
         }
 
@@ -136,10 +149,14 @@ var BCInterfaceW = Class.create( {
 
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
-                + "_" + selectedPeriod + "_XYT.nc";
+                + "_" + selectedPeriod + "_XYT.nc"; // TODO: adapter dynamiquement à nom uncertainty.nc f(paramètres rentrés).
+        var urlResourceUncertainty = 'http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/LandModels/longterm-2000-2009/fco2_LPJ-GUESS_Sep2013-ext3_1980-2010_longterm-2000-2009_XYT.nc';
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
+        var mapUncertaintyTitle = 'Uncertainty data : ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
+            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+        var mapUncertaintyShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
 
         var options = {container: $( '#printable' ),
             id: id,
@@ -164,39 +181,41 @@ var BCInterfaceW = Class.create( {
             displayIconesMenu: true
         };
 
-    // Pascal part:
-        var mapTitleUncertainty = 'Uncertainty data: ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
-            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
-        var mapShortTitleUncertainty = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
-
-        var options4UncertaintyMap = {container: $( '#printable' ),
-            id: id_uncertainty, // def in createMaps()
-            mapTitle: mapTitleUncertainty,
-            mapShortTitle: mapShortTitleUncertainty,
-            resource: this.urlResourceUncertainty,
-            variable: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2', // = parameters to build layer parameter/ OL nem WMS layer.
-            //time: this.time, // console.log(this.time) = 1900-01-01T00:00:00.000Z
-            range: $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' ),// TODO : adapt
-            numberColorsBands: $( "#slider-nbcolorbands-text" ).html(),// TODO : adapt.
-            palette: this.palette4UncertaintyMaps,// TODO : adapt to uncertainty values (/actualisation get range, ...).
-            centerMap: this.centerUncertaintyMap,
-            zoomMap: this.zoomUncertaintyMap,
-            minx: this.minx4UncertaintyMaps,
-            maxx: this.maxx4UncertaintyMaps,
-            miny: this.miny4UncertaintyMaps,
-            maxy: this.maxy4UncertaintyMaps,
-            //timeArray: this.timeArray, // console.log(this.timeArray); = 1900-01-01T00:00:00.000Z
-            //callback:jQuery.proxy( this.eventFilter, this ), // appelle un truc à faire (qui peut être différent) une fois que la carte a été créée.
-            displayContextuelMenu: true,
-            displayIconesMenu: true
-        };
-    // End Pascal part.
+        var options4Uncertainty = {
+                            container: $( '#printable' ),
+                            id: id_uncertainty,
+                            mapTitle: mapUncertaintyTitle,
+                            mapShortTitle: mapUncertaintyShortTitle,
+                            projection: this.projection,
+                            resource: urlResourceUncertainty,
+                            variable: this.variable,
+                            time: this.time,
+                            range: $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' ),
+                            numberColorsBands: $( "#slider-nbcolorbands-text" ).html(),
+                            palette: this.palette,
+                            centerMap: this.centerUncertaintyMap,
+                            zoomMap: this.zoomUncertaintyMap,
+                            minx: this.minx,
+                            maxx: this.maxx,
+                            miny: this.miny,
+                            maxy: this.maxy,
+                            timeArray: this.timeArray,
+                            callback:jQuery.proxy( this.eventFilter, this ),
+                            displayContextuelMenu: true,
+                            displayIconesMenu: true
+                        };
 
         this.selectedBobcat = new Bobcat( options );
         this.hashBobcats.put( id, this.selectedBobcat);
+        this.selectedUncertaintyBobcat = new Bobcat( options4Uncertainty );
+        this.hashBobcats.put( id_uncertainty, this.selectedUncertaintyBobcat);
+
         this.selectBobcat( this.selectedBobcat.id );
         this.zIndex++;
         $( "#" + id ).css( "z-index", this.zIndex );
+        this.selectUncertaintyBobcat( this.selectedUncertaintyBobcat.id );// Attention, paramètre = id, no id_uncertainty (dérive new Bobcat( options4Uncertainty ); ).
+        this.zIndexUncertainty++;
+        $( "#" + id_uncertainty ).css( "z-index", this.zIndexUncertainty );
 
         // Bind events
         this.selectedBobcat.map.events.register( "zoomend", this.selectedBobcat.map, jQuery.proxy( this.handleZoom, this.selectedBobcat.map ), true );
@@ -210,24 +229,39 @@ var BCInterfaceW = Class.create( {
             this.selectBobcat( arguments.object.div.id );
         }, this ), true );
 
+        // Bind events for uncertainty part:
+        // Logique : element sur lequel event a register(event, element(s) sur lequel event, fonction a appliquer a ces elements)
+        this.selectedUncertaintyBobcat.map.events.register( "zoomend", this.selectedUncertaintyBobcat.map, jQuery.proxy( this.handleZoom, this.selectedUncertaintyBobcat.map ), true );//OK.
+        this.selectedUncertaintyBobcat.map.events.register( "moveend", this.selectedUncertaintyBobcat.map, jQuery.proxy( this.synchronizeMapsAndUncertaintyMaps, [this, this.selectedUncertaintyBobcat.map] ), false );// OK. TODO: see if it's the simplest way to do it.
+
+        this.selectedUncertaintyBobcat.map.events.register( "touchend", this.selectedUncertaintyBobcat.map, jQuery.proxy( function( arguments )
+        {
+            this.selectUncertaintyBobcat( arguments.object.div.id );// Attention, paramètre = id, no id_uncertainty (dérive new Bobcat( options4Uncertainty ); ).
+        }, this ), true );
+        this.selectedUncertaintyBobcat.map.events.register( "mouseover", this.selectedUncertaintyBobcat.map, jQuery.proxy( function( arguments )
+        {
+            this.selectUncertaintyBobcat( arguments.object.div.id );
+        }, this ), true );
+
         // Select layer accordingly to variable displayed
         switch( this.variable )
         {
             case "Terrestrial_flux":
                 this.selectedBobcat.map.layers[1].setVisibility( false );
+                this.selectedUncertaintyBobcat.map.layers[1].setVisibility( false );
                 break;
             case "Ocean_flux":
                 this.selectedBobcat.map.layers[2].setVisibility( false );
+                this.selectedUncertaintyBobcat.map.layers[2].setVisibility( false );
                 break;
         };
-
 
     // ********************************************************************************************************************************* //
     // ******************************* OVERLAYS UNCERTAINTY MAPS, LEFT MENU PART : ***************************************************** //
     // ********************************************************************************************************************************* //
 
         // ******** Retrieve parameters to build overlay uncertainty maps (LEFT PART) : **************************
-        this.urlResourceUncertainty = this.geoserverUrl + '/wms' // = Where are the data.
+        this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
         this.modelType = this.hashResources.get( resource )[1];
         this.modelTypeForPy = this.modelType.replace('Models', '');// To replace LandModels by Land for ex.
         this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
@@ -264,23 +298,87 @@ var BCInterfaceW = Class.create( {
          // ***************** Apply visualisations modality to overlay maps f(user choices) about uncertainty information: **************************
          if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
                             {
-                                //this.get_uncertaintyLayerLeft(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
                             }
          else if ( $("#displayStdDevLeft").is(":checked") )
                             {
-                                //alert("Display checked");//OK
+
                             }
          else if ( $("#displayOverlayStdDevLeft").is(":checked") && this.modelName == 'MEAN')
                             {
-                                //this.get_uncertaintyLayerLeft(this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayModeLeft, this.thresholdValueForPyLeft);
                                 this.selectedBobcat.map.addLayer(uncertaintyLayer);
                             }
          // If nothing is clicked, nothing to show.
-         // End Pascal part.
         this.resizeAllMaps();
     },
+    // End Pascal part.
 
-    // Pascal part:
+     createMap: function( id, resource )
+    {
+    if( this.hashBobcats.size() )
+    {
+    var firstOpenLayerMap = this.hashBobcats.get( this.hashBobcats.keys( 0 )[0] ).map;
+    this.centerMap = firstOpenLayerMap.getCenter();
+    this.zoomMap = firstOpenLayerMap.getZoom();
+    }
+    var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( resource )[1] );
+    // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
+    var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
+    + "_" + selectedPeriod + "_XYT.nc";
+    var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
+    this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+    var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
+    var options = {container: $( '#printable' ),
+    id: id,
+    mapTitle: mapTitle,
+    mapShortTitle: mapShortTitle,
+    projection: this.projection,
+    resource: urlResource,
+    variable: this.variable,
+    time: this.time,
+    range: $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' ),
+    numberColorsBands: $( "#slider-nbcolorbands-text" ).html(),
+    palette: this.palette,
+    centerMap: this.centerMap,
+    zoomMap: this.zoomMap,
+    minx: this.minx,
+    maxx: this.maxx,
+    miny: this.miny,
+    maxy: this.maxy,
+    timeArray: this.timeArray,
+    callback:jQuery.proxy( this.eventFilter, this ),
+    displayContextuelMenu: true,
+    displayIconesMenu: true
+    };
+    this.selectedBobcat = new Bobcat( options );
+    this.hashBobcats.put( id, this.selectedBobcat );
+    this.selectBobcat( this.selectedBobcat.id );
+    this.zIndex++;
+    $( "#" + id ).css( "z-index", this.zIndex );
+    // Bind events
+    this.selectedBobcat.map.events.register( "zoomend", this.selectedBobcat.map, jQuery.proxy( this.handleZoom, this.selectedBobcat.map ), true );
+    this.selectedBobcat.map.events.register( "moveend", this.selectedBobcat.map, jQuery.proxy( this.synchronizeMaps, [this, this.selectedBobcat.map] ), false );
+    this.selectedBobcat.map.events.register( "touchend", this.selectedBobcat.map, jQuery.proxy( function( arguments )
+    {
+    this.selectBobcat( arguments.object.div.id );
+    }, this ), true );
+    this.selectedBobcat.map.events.register( "mouseover", this.selectedBobcat.map, jQuery.proxy( function( arguments )
+    {
+    this.selectBobcat( arguments.object.div.id );
+    }, this ), true );
+    // Select layer accordingly to variable displayed
+    switch( this.variable )
+    {
+    case "Terrestrial_flux":
+    this.selectedBobcat.map.layers[1].setVisibility( false );
+    break;
+    case "Ocean_flux":
+    this.selectedBobcat.map.layers[2].setVisibility( false );
+    break;
+    };
+
+    this.resizeAllMaps();
+    },
+
         hideOrShowRightMenuUncertainty: function()
         {
             $('#displayOverlayStdDevLeft').on('change', jQuery.proxy( function() {
@@ -291,7 +389,6 @@ var BCInterfaceW = Class.create( {
                 else $("#overlayStdDevCase").hide();
             }, this) );
         },
-    // End Pascal part.
 
     selectBobcat: function( id )
     {
@@ -300,6 +397,17 @@ var BCInterfaceW = Class.create( {
         if( this.selectedBobcat )
             $( "#" + this.selectedBobcat.id ).addClass( "selected" );
     },
+
+    // --> Pascal : Sens de cette fonction : Qd on psse sur une carte, elle est selected dc on pet appliquer fonction à cette carte (ajouter couches info, synchro/autres cartes, ... dc important !)
+    selectUncertaintyBobcat: function( id_uncertainty )
+    {
+        this.selectedUncertaintyBobcat = this.hashBobcats.get( id_uncertainty );
+        //this.selectedUncertaintyBobcat = this.hashBobcats.get( id );
+        $( ".BCmap" ).removeClass( "selected" );
+        if( this.selectedUncertaintyBobcat )
+            $( "#" + this.selectedUncertaintyBobcat.id ).addClass( "selected" );// Attention, paramètre = id, no id_uncertainty (dérive new Bobcat( options4Uncertainty ); ).
+    },
+
 
     /* Disable + or - when zoom levels are reached */
     handleZoom: function()
@@ -329,8 +437,25 @@ var BCInterfaceW = Class.create( {
     /**
      *This method synchronize all maps. We have to keep in memory (context and argument) the moved map and the selected Bobcat to allow synchronize only when selectedBobcat and movedMap are similar.
      * Otherwise each synchronize start the "moveend" event (n*n synchronize instead of only n)
+     // Pascal : ????? TODO: understand this point!
      */
     synchronizeMaps: function()
+        {
+            var context = this[0];
+            var movedMap = this[1];
+
+            if( context.selectedBobcat.id == movedMap.div.id && context.selectedBobcat.synchronization )
+            {
+                context.hashBobcats.each( jQuery.proxy( function( key )
+                {
+                    if( context.hashBobcats.get( key ).synchronization )
+                        context.hashBobcats.get( key ).map.setCenter( context.selectedBobcat.map.getCenter(), context.selectedBobcat.map.getZoom() );
+                }, this ) );
+            }
+        },
+
+    // Pascal part:
+    synchronizeMapsAndUncertaintyMaps: function()
     {
         var context = this[0];
         var movedMap = this[1];
@@ -343,7 +468,15 @@ var BCInterfaceW = Class.create( {
                     context.hashBobcats.get( key ).map.setCenter( context.selectedBobcat.map.getCenter(), context.selectedBobcat.map.getZoom() );
             }, this ) );
         }
+        else if ( context.selectedUncertaintyBobcat.id == movedMap.div.id && context.selectedUncertaintyBobcat.synchronization )
+        {
+            context.hashBobcats.each( jQuery.proxy( function( key )
+            {
+                if( context.hashBobcats.get( key ).synchronization ) context.hashBobcats.get( key ).map.setCenter( context.selectedUncertaintyBobcat.map.getCenter(), context.selectedUncertaintyBobcat.map.getZoom() );
+            }, this ) );
+        }
     },
+    // End Pascal part.
 
     resizeAllMaps: function()
     {
@@ -357,7 +490,7 @@ var BCInterfaceW = Class.create( {
         if( 1 > this.hashBobcats.keys().length )
             return;
 
-        var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber - 10; // Add -2/ script without uncertainty maps because if not, next map below, not at the right.
+        var newWidth = Math.round( Math.max( widthForMaps / this.hashBobcats.keys().length, widthForMaps / this.mapsNumber ) ) - 3 * this.mapsNumber - 1; // Add -2/ script without uncertainty maps because if not, next map below, not at the right.
         var newWidth = Math.round( newWidth / 4 ) * 4;                  // Prepare map width to host 4 tiles
 
         var linesNumber = Math.ceil( this.hashBobcats.keys().length / this.mapsNumber );
@@ -399,6 +532,7 @@ var BCInterfaceW = Class.create( {
 
         this.n = 0;
         this.zIndex = 0;
+        this.zIndexUncertainty = 0;
         this.centerMap = false;
         this.centerUncertaintyMap = false;
     },
@@ -1371,6 +1505,8 @@ var BCInterfaceW = Class.create( {
         this.updateLegend();
         this.createMaps();
         this.updateLegendButtons();
+        // Pascal part :
+        // End Pascal part.
     },
 
     onClickShowAllLegends: function()
