@@ -130,7 +130,7 @@ var BCInterfaceW = Class.create( {
         }, this ) );
     },
 
-    // ************************************************************************************************************************************* // --> Integrate to createMap() to apply to uncertainty maps resizeAllMaps()
+    // ************************************************************************************************************************************* // --> Integrate to the same function than normal maps to apply to uncertainty maps resizeAllMaps()
     // ******************************** DISPLAY UNCERTAINTY MAPS WITH DATA MODELS MAPS: **************************************************** //
     // ************************************************************************************************************************************ //
 
@@ -150,7 +150,7 @@ var BCInterfaceW = Class.create( {
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
                 + "_" + selectedPeriod + "_XYT.nc"; // TODO: adapter dynamiquement à nom uncertainty.nc f(paramètres rentrés).
-        var urlResourceUncertainty = 'http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/LandModels/longterm-2000-2009/fco2_LPJ-GUESS_Sep2013-ext3_1980-2010_longterm-2000-2009_XYT.nc';
+        //var urlResourceUncertainty = 'http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/LandModels/longterm-2000-2009/fco2_LPJ-GUESS_Sep2013-ext3_1980-2010_longterm-2000-2009_XYT.nc';
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
@@ -187,7 +187,7 @@ var BCInterfaceW = Class.create( {
                             mapTitle: mapUncertaintyTitle,
                             mapShortTitle: mapUncertaintyShortTitle,
                             projection: this.projection,
-                            resource: urlResourceUncertainty,
+                            resource: urlResource, // La même puisque le fichier est la même, seul variable doit être changée.
                             variable: this.variable,
                             time: this.time,
                             range: $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' ),
@@ -256,59 +256,55 @@ var BCInterfaceW = Class.create( {
                 break;
         };
 
+        this.overlayUncertaintyLayers(resource);
+        this.resizeAllMaps();
+    },
+
     // ********************************************************************************************************************************* //
     // ******************************* OVERLAYS UNCERTAINTY MAPS, LEFT MENU PART : ***************************************************** //
     // ********************************************************************************************************************************* //
-
+    overlayUncertaintyLayers: function( resource )
+    {
         // ******** Retrieve parameters to build overlay uncertainty maps (LEFT PART) : **************************
-        this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
-        this.modelType = this.hashResources.get( resource )[1];
-        this.modelTypeForPy = this.modelType.replace('Models', '');// To replace LandModels by Land for ex.
-        this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
-        this.variable = 'Terrestrial_flux';
-        this.averagingPeriod = 'LT';
-        this.timePeriod = 'lt';
-        if ( $('#uncertaintyWithMaskingInputLeft').is(':checked') )
-            { this.overlayModeLeft = 'mk' }
-        else if  ( $('#uncertaintyWithStipplingInputLeft').is(':checked') )
-            { this.overlayModeLeft = 'st' }
-        // Retrieve threshold value f(slider nivel).
-        this.thresholdValueLeft = $("#uncertaintySliderValueInputLeft").val();// Note : on a besoin de declarer ds initialise this.(...).
-        this.thresholdValueForTitleLayer = this.thresholdValueLeft.replace(' σ', 'stdDev');
-        this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace('.', '');
-        // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
-        // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
+                this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
+                this.modelType = this.hashResources.get( resource )[1];
+                this.modelTypeForPy = this.modelType.replace('Models', '');// To replace LandModels by Land for ex.
+                this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
+                this.variable = 'Terrestrial_flux';
+                this.averagingPeriod = 'LT';
+                this.timePeriod = 'lt';
+                if ( $('#uncertaintyWithMaskingInputLeft').is(':checked') )
+                    { this.overlayModeLeft = 'mk' }
+                else if  ( $('#uncertaintyWithStipplingInputLeft').is(':checked') )
+                    { this.overlayModeLeft = 'st' }
+                // Retrieve threshold value f(slider nivel).
+                this.thresholdValueLeft = $("#uncertaintySliderValueInputLeft").val();// Note : on a besoin de declarer ds initialise this.(...).
+                this.thresholdValueForTitleLayer = this.thresholdValueLeft.replace(' σ', 'stdDev');
+                this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace('.', '');
+                // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
+                // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
 
-        // ******** Build overlay uncertainty maps (LEFT PART): **************************
-        var uncertaintyLayer = new OpenLayers.Layer.WMS(
-                                   "Uncertainty layer (" + this.thresholdValueForTitleLayer + ")",
-                                   this.geoserverUrl + '/wms',
-                                   {
-                                   VERSION: '1.1.1',
-                                   LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
-                                   transparent: true,
-                                   FORMAT: 'image/png',
-                                   }, {
-                                   isBaseLayer: false,
-                                   opacity: 1,
-                                   singleTile: true,
-                                   visibility: true,
-                                   } );
+                // ******** Build overlay uncertainty maps (LEFT PART): **************************
+                var uncertaintyLayer = new OpenLayers.Layer.WMS(
+                                           "Uncertainty layer (" + this.thresholdValueForTitleLayer + ")",
+                                           this.geoserverUrl + '/wms',
+                                           {
+                                           VERSION: '1.1.1',
+                                           LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
+                                           transparent: true,
+                                           FORMAT: 'image/png',
+                                           }, {
+                                           isBaseLayer: false,
+                                           opacity: 1,
+                                           singleTile: true,
+                                           visibility: true,
+                                           } );
 
-         // ***************** Apply visualisations modality to overlay maps f(user choices) about uncertainty information: **************************
-         if ( $("#displayOverlayStdDevLeft").is(":checked") && $("#displayStdDevLeft").is(":checked"))//TODO: ici on doit avoir les 2 actions.
-                            {
-                            }
-         else if ( $("#displayStdDevLeft").is(":checked") )
-                            {
-
-                            }
-         else if ( $("#displayOverlayStdDevLeft").is(":checked") && this.modelName == 'MEAN')
-                            {
-                                this.selectedBobcat.map.addLayer(uncertaintyLayer);
-                            }
-         // If nothing is clicked, nothing to show.
-        this.resizeAllMaps();
+                 // ***************** Apply visualisations modality to overlay maps f(user choices) about uncertainty information: **************************
+                 if ( $("#displayOverlayStdDevLeft").is(":checked") && this.modelName == 'MEAN')
+                 {
+                    this.selectedBobcat.map.addLayer(uncertaintyLayer);
+                 }
     },
     // End Pascal part.
 
@@ -376,6 +372,9 @@ var BCInterfaceW = Class.create( {
     break;
     };
 
+    // Pascal part:
+    this.overlayUncertaintyLayers( resource );
+    // End Pascal part.
     this.resizeAllMaps();
     },
 
@@ -1505,8 +1504,6 @@ var BCInterfaceW = Class.create( {
         this.updateLegend();
         this.createMaps();
         this.updateLegendButtons();
-        // Pascal part :
-        // End Pascal part.
     },
 
     onClickShowAllLegends: function()
