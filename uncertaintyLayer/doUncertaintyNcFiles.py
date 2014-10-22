@@ -69,6 +69,7 @@ for modelDico in modelsTypeList: # Ici, il y a un ordre, contrairement aux dico.
         except OSError:
             pass
           
+          
             
             
             
