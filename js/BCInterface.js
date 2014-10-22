@@ -120,13 +120,14 @@ var BCInterfaceW = Class.create( {
         jQuery.each( this.selectedResourceKeys, jQuery.proxy( function( i, element )
         {
             var id = 'id' + this.n;
-            if ( $('#displayStdDevLeft').is(':checked') )
-                            {
-                                var id_uncertainty = 'id_uncertainty' + this.n; // Les cartes s'affichent dans l'ordre des clicks / choix cartes.
-                                this.createMapAndUncertaintyMap( id, element, id_uncertainty);
-                            }
-                            else {this.createMap( id, element);}
-                            this.n++;
+            var modelName = this.hashResources.get( this.selectedResourceKeys[i] )[0];
+            if ( $('#displayStdDevLeft').is(':checked') && modelName == 'MEAN') // If not condition modelName == 'MEAN', display map which doesn't have uncertainty data related.
+            {
+                var id_uncertainty = 'id_uncertainty' + this.n; // Les cartes s'affichent dans l'ordre des clicks / choix cartes.
+                this.createMapAndUncertaintyMap( id, element, id_uncertainty);
+            }
+            else {this.createMap( id, element);}
+            this.n++;
         }, this ) );
     },
 
@@ -136,7 +137,7 @@ var BCInterfaceW = Class.create( {
 
     createMapAndUncertaintyMap: function( id, resource, id_uncertainty )
     {
-        if( this.hashBobcats.size() )
+        if( this.hashBobcats.size() ) // Pascal : aprèes avoir instancié   1er carte.
         {
             var firstOpenLayerMap = this.hashBobcats.get( this.hashBobcats.keys( 0 )[0] ).map;
             this.centerMap = firstOpenLayerMap.getCenter();
@@ -149,12 +150,12 @@ var BCInterfaceW = Class.create( {
 
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
-                + "_" + selectedPeriod + "_XYT.nc"; // TODO: adapter dynamiquement à nom uncertainty.nc f(paramètres rentrés).
+                + "_" + selectedPeriod + "_XYT.nc";
         //var urlResourceUncertainty = 'http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/LandModels/longterm-2000-2009/fco2_LPJ-GUESS_Sep2013-ext3_1980-2010_longterm-2000-2009_XYT.nc';
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
-        var mapUncertaintyTitle = 'Uncertainty data : ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
+        var mapUncertaintyTitle = 'Uncertainty data for: ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
             this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapUncertaintyShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
 
@@ -181,6 +182,17 @@ var BCInterfaceW = Class.create( {
             displayIconesMenu: true
         };
 
+         // We need to adapt uncertainty variable name to ocean or terrestrial flux for inversion models:
+         // The same name for all uncertainty variable but can be different f( models ) (= std dev all models for mean models, difference between them, ...)
+         switch( this.variable )
+                {
+                    case "Terrestrial_flux":
+                        this.uncertaintyVariable = 'Terrestrial_flux_Uncertainty';
+                        break;
+                    case "Ocean_flux":
+                        this.uncertaintyVariable = 'Ocean_flux_Uncertainty';
+                        break;
+                };
         var options4Uncertainty = {
                             container: $( '#printable' ),
                             id: id_uncertainty,
@@ -188,7 +200,7 @@ var BCInterfaceW = Class.create( {
                             mapShortTitle: mapUncertaintyShortTitle,
                             projection: this.projection,
                             resource: urlResource, // La même puisque le fichier est la même, seul variable doit être changée.
-                            variable: this.variable,
+                            variable: this.uncertaintyVariable,
                             time: this.time,
                             range: $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' ),
                             numberColorsBands: $( "#slider-nbcolorbands-text" ).html(),
@@ -436,7 +448,6 @@ var BCInterfaceW = Class.create( {
     /**
      *This method synchronize all maps. We have to keep in memory (context and argument) the moved map and the selected Bobcat to allow synchronize only when selectedBobcat and movedMap are similar.
      * Otherwise each synchronize start the "moveend" event (n*n synchronize instead of only n)
-     // Pascal : ????? TODO: understand this point!
      */
     synchronizeMaps: function()
         {
@@ -685,7 +696,7 @@ var BCInterfaceW = Class.create( {
 
     createAllVariables: function( i )
     {
-        if( i < this.selectedResourceKeys.length )
+        if( i < this.selectedResourceKeys.length )// Pascal : i =  this.selectedResourceKeys.length et dc nb cartes - 1 parce que compteur/array.
         {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)

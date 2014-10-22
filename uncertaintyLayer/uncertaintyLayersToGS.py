@@ -2,7 +2,7 @@
 # -*- coding: latin-1 -*-
 
 ###############################################################################################################################################################################################################################
-##################### THIS FILE USE THE .SHP FILES CREATED BY THE AUTOMATISATION SCRIPT TO PASS THESE .SHP FILES TO GEOSERVER AND TO ASSOCIATE TEH GOOD STYLE (MASKING OR STIPPLING) ##########################################
+##################### THIS FILE USE THE .SHP FILES CREATED BY THE AUTOMATISATION SCRIPT TO PASS THESE .SHP FILES TO GEOSERVER AND TO ASSOCIATE THE GOOD STYLE (MASKING OR STIPPLING) ##########################################
 ###############################################################################################################################################################################################################################
 
 import os # CF chp 7.1 python Universite de Pau.
@@ -24,13 +24,19 @@ binaryFileNameVector = modeleType +'_'+ modeleName +'_'+ varName +'_'+ averaging
       
 # Workspace creation: necessary to import layer in GS: CF layerUncertaintyReadMe2.
 try:
-    subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertainty</name></workspace>" http://localhost:8080/geoserver/rest/workspaces', shell= True)
+    #subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertainty</name></workspace>" http://localhost:8080/geoserver/rest/workspaces', shell= True)
+    # For webportals:
+    subprocess.call('curl -u admin:geoserver -v -XPOST -H "Content-type: text/xml" -d "<workspace><name>GCAUncertainty</name></workspace>" http://webportals.ipsl.jussieu.fr:8080/geoserver/rest/workspaces', shell= True)
 except OSError: #Important parce que si non, a la deuxieme fois, qd existe, erreur.
     pass
 
+'''
 #Workspace variable definition:
-cat = Catalog("http://localhost:8080/geoserver/rest", "admin", "geoserver")# Connection to GS.
-workspace = cat.get_workspace("GCAUncertainty")
+#cat = Catalog("http://localhost:8080/geoserver/rest", "admin", "geoserver")# Connection to GS.
+# For webportals:
+cat = Catalog("http://webportals.ipsl.jussieu.fr:8080/geoserver/rest", "admin", "geoserver")
+# For webportals:
+workspace = cat.get_workspace("GCAUncertainty")# créé dc juste avant.
 
 # Bucle to pass all layers to GS:
 thresholdComponentName = ["_05stdDev", "_1stdDev", "_15stdDev", "_2stdDev", "_25stdDev","_3stdDev"]# Noms fichiers .shp de sortie doivent tenir compte threshold. Note : ne pas mettre de points, problème pour appels / curl et API rest.
@@ -69,6 +75,5 @@ for nThreshold in  nThresholdS :
         subprocess.call('curl -v -u admin:geoserver -XPUT -H "Content-type: text/xml" -d "<layer><defaultStyle><name>GCA_uncertainty_stipplingOverlay</name></defaultStyle><enabled>true</enabled></layer>" http://localhost:8080/geoserver/rest/layers/GCAUncertainty:'+ dataStoreAndLayersNamesSt, shell=True)# Apply style for stippling layers.       
     except OSError:
         pass
-
-
+'''
 print('C est fini !')
