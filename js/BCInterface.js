@@ -12,7 +12,7 @@
 
 var BCInterfaceW = Class.create( {
 
-    initialize: function( resourcesTreeData, variablesToKeepArray, variableNamesToKeepArray )
+    initialize: function( resourcesTreeData )
     {
         // Parameters
         this.variableDiv = $( "#variableSelect" );
@@ -37,16 +37,34 @@ var BCInterfaceW = Class.create( {
          *   - key : the variable name
          *   - values : [the name to display, [the files array contains this variable], [[the times array's array]] ] */
         this.hashVariables = new Hashtable();
-        this.variablesToDisplay = variablesToKeepArray;
-        this.variableNamesToDisplay = variableNamesToKeepArray;
+        this.variablesToDisplay = JSON.parse( jQuery.i18n.prop( "variablesToKeepArray" ) );
+        this.variableNamesToDisplay = JSON.parse( jQuery.i18n.prop( "variableNamesToKeepArray" ) );
         this.variable = false;
 
+        this.elevation = false;
+        this.time = false;
+
+        // Period
+        $( "#periodSelect" ).select2();
         $( "#periodSelect" ).select2( "val", "longterm" );
         this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
-        this.time = false;
-        this.elevation = false;
+
+        // Projection
+        $( "#projectionSelect" ).select2();
+        $( "#projectionSelect" ).select2( "val", "EPSG:4087" );
         this.projection = $( "#projectionSelect" ).select2( "val" );
+
+        // Palette
+        $( "#paletteSelect" ).select2();
+        $( "#paletteSelect" ).select2( {
+            formatResult: format
+        } );
+        $( "#paletteSelect" ).select2( "val", "blue_yellow_red" );
         this.palette = $( "#paletteSelect" ).select2( "val" );
+
+        // Maps number
+        $( "#mapsNumberSelect" ).select2();
+        $( "#mapsNumberSelect" ).select2( "val", "2" );
         this.mapsNumber = $( "#mapsNumberSelect" ).select2( "val" );
 
         this.hashBobcats = new Hashtable();
@@ -80,6 +98,7 @@ var BCInterfaceW = Class.create( {
             this.isShiftKeyPressed = false;
             this.isCtrlKeyPressed = false;
         }, this ) );
+
 
         this.createResourceSelect( resourcesTreeData );
         this.bindActions();
@@ -1433,5 +1452,9 @@ var BCInterfaceW = Class.create( {
 
 } );
 
+function format( pal )
+{
+    return "<img class='flag' src='palettes/" + pal.text + ".png'/></br>" + pal.text;
+}
 
 

@@ -105,19 +105,22 @@
                 <div id="submitDeleteMaps" class="rightMenuButton" title="Remove all maps">
                     <div class="lonelyToolIcone"><img src="img/fileclose.png"/></div>
                 </div>
-                <div id="submitShowAllLegends"  class="rightMenuButton" title="Show all legends">
+                <div id="submitShowAllLegends" class="rightMenuButton" title="Show all legends">
                     <div class="lonelyToolIcone"><img src="img/legend_display_all.png"/></div>
                 </div>
-                <div id="submitHideAllLegends"  class="rightMenuButton" title="Hide all legends">
+                <div id="submitHideAllLegends" class="rightMenuButton" title="Hide all legends">
                     <div class="lonelyToolIcone"><img src="img/legend_hide_all.png"/></div>
                 </div>
             </div>
         </div>
 
-        <div class="rightMenuTool"><HR width="50%" class="rightMenuHR"/></div>
+        <div class="rightMenuTool">
+            <HR width="50%" class="rightMenuHR"/>
+        </div>
 
         <div class="rightMenuTool">
             <h2>RANGE</h2>
+
             <div class="rightMenuSubTool">
                 <input id="getRange" type="button" title="Get range from variable" value="Get range"/>
                 <input type="text" id="slider-range-text" size="9" style="width: 80%; text-align: center;"/>
@@ -125,7 +128,9 @@
             <div id="slider-range" style="width: 80%;"></div>
         </div>
 
-        <div class="rightMenuTool"><HR width="50%" class="rightMenuHR"/></div>
+        <div class="rightMenuTool">
+            <HR width="50%" class="rightMenuHR"/>
+        </div>
 
         <div class="rightMenuTool">
             <h2>PALETTES</h2>
@@ -144,15 +149,19 @@
             </select>
         </div>
 
-        <div class="rightMenuTool">&nbsp;<HR width="50%" class="rightMenuHR"/></div>
+        <div class="rightMenuTool">&nbsp;
+            <HR width="50%" class="rightMenuHR"/>
+        </div>
 
         <div class="rightMenuTool">
             <h2>LEGEND</h2>
+
             <div class="rightMenuSubTool">
                 Colors number : <span id="slider-nbcolorbands-text"/>
             </div>
             <div id="slider-nbcolorbands"></div>
             <BR/><BR/>
+
             <div id="legend"></div>
         </div>
     </div>
@@ -167,35 +176,43 @@
 
 $properties = parse_ini_file( "bobcat.properties" );
 
-function fancytree_build_children ($dirtoread , $category, $elementToSelect) {
-    $files=glob($dirtoread."*.nc");
-    $len = count($files);
+function fancytree_build_children( $dirtoread, $category, $elementToSelect )
+{
+    $files = glob( $dirtoread . "*.nc" );
+    $len = count( $files );
     $counter = 0;
     echo "\n";
-    foreach ($files as $file) {
-        if (is_file($file)) {
+    foreach( $files as $file )
+    {
+        if( is_file( $file ) )
+        {
             $counter++;
-            $bfile=basename($file);
-            $pfile=explode("_", $bfile);
+            $bfile = basename( $file );
+            $pfile = explode( "_", $bfile );
             // $pfile[1] represent the title, character "-" replaced by " "
-            $sfile=implode("_", array_slice($pfile, 0, 4));
-            $fileInfo = explode('.nc',$file);
-            $fileInfo = $fileInfo[0].'.info';
-            if (file_exists($fileInfo)) {
-                $fileInfoContent = file_get_contents($fileInfo);
-                $fileInfoContent = str_replace("\n", "<br>", $fileInfoContent);
-                $fileInfoContent = str_replace("Ref :", "<b>Ref :</b>", $fileInfoContent);
-                $fileInfoContent = str_replace("Contact :", "<b>Contact :</b>", $fileInfoContent);
-            } else
+            $sfile = implode( "_", array_slice( $pfile, 0, 4 ) );
+            $fileInfo = explode( '.nc', $file );
+            $fileInfo = $fileInfo[0] . '.info';
+            if( file_exists( $fileInfo ) )
+            {
+                $fileInfoContent = file_get_contents( $fileInfo );
+                $fileInfoContent = str_replace( "\n", "<br>", $fileInfoContent );
+                $fileInfoContent = str_replace( "Ref :", "<b>Ref :</b>", $fileInfoContent );
+                $fileInfoContent = str_replace( "Contact :", "<b>Contact :</b>", $fileInfoContent );
+            }
+            else
                 $fileInfoContent = "Not available";
             // If first element to be selected use next line and set true for elementToSelect argument
             //$selectedElement = $elementToSelect && ($counter == 1) ? true : false;
             // To select a specific element
-            $selectedElement = $elementToSelect && strpos($sfile, $elementToSelect) ? true : false;
-            echo '                    {title:"'.str_replace("-", " ", $pfile[1]).'", key:"'.$sfile.'", selected: "'.$selectedElement.'", icon:false, url:"'.$category.'", complexToolTip:"'.$fileInfoContent.'",}';
-            if ( $counter != $len ) {
-                echo ','."\n";
-            } else {
+            $selectedElement = $elementToSelect && strpos( $sfile, $elementToSelect ) ? true : false;
+            echo '                    {title:"' . str_replace( "-", " ", $pfile[1] ) . '", key:"' . $sfile . '", selected: "' . $selectedElement . '", icon:false, url:"' . $category . '", complexToolTip:"' . $fileInfoContent . '",}';
+            if( $counter != $len )
+            {
+                echo ',' . "\n";
+            }
+            else
+            {
                 // last line without ,
                 echo "\n";
             }
@@ -211,60 +228,38 @@ function fancytree_build_children ($dirtoread , $category, $elementToSelect) {
     $( document ).ready( function ()
     {
         // Load properties file
-        jQuery.i18n.properties({
+        jQuery.i18n.properties( {
             name:'bobcat',
             path:'',
             language:null,
             mode:'both'
-        });
+        } );
 
         var resourcesTreeData = [
             {title:"Inversions", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedInversions" )),
                 children: [
 <?php
-                    fancytree_build_children($properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversions"]);
+                    fancytree_build_children( $properties["inversionsResourcesPath"], "Inversions", $properties["selectedInversions"] );
                 ?>
                 ]
             },
             {title:"Land Models", folder:true, expanded: ("false" != jQuery.i18n.prop( "selectedLandModels" )),
                 children: [
 <?php
-                    fancytree_build_children($properties["landModelsResourcesPath"], "LandModels", $properties["selectedLandModels"]);
+                    fancytree_build_children( $properties["landModelsResourcesPath"], "LandModels", $properties["selectedLandModels"] );
                 ?>
                 ]
             },
             {title:"Ocean Models", folder:true, expanded:("false" != jQuery.i18n.prop( "selectedOceanModels" )),
                 children: [
 <?php
-                    fancytree_build_children($properties["oceanModelsResourcesPath"], "OceanModels", $properties["selectedOceanModels"]);
+                    fancytree_build_children( $properties["oceanModelsResourcesPath"], "OceanModels", $properties["selectedOceanModels"] );
                 ?>
                 ]
             }
         ];
 
-        $("#projectionSelect").select2();
-        $("#projectionSelect").select2("val", "EPSG:4087");
-
-        $("#periodSelect").select2();
-        $("#periodSelect").select2("val", "monthlymean");
-
-        $("#mapsNumberSelect").select2();
-        $("#mapsNumberSelect").select2("val", "2");
-
-        $("#paletteSelect").select2();
-
-        function format(pal) {
-            return "<img class='flag' src='palettes/" + pal.text + ".png'/></br>" + pal.text;
-        }
-        $("#paletteSelect").select2({
-            formatResult: format
-        });
-        $("#paletteSelect").select2("val", "blue_yellow_red");
-
-        var variablesToKeepArray = JSON.parse(jQuery.i18n.prop( "variablesToKeepArray" ));
-        var variableNamesToKeepArray = JSON.parse(jQuery.i18n.prop( "variableNamesToKeepArray" ));
-        new BCInterfaceW( resourcesTreeData, variablesToKeepArray, variableNamesToKeepArray );
-
+        new BCInterfaceW( resourcesTreeData );
     } );
 </script>
 

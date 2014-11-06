@@ -20,7 +20,7 @@
     <link type="text/css" href="js/fancytree-master/src/skin-lion/ui.fancytree.css" rel="stylesheet">
     <link type="text/css" href="js/library/jquery-ui-1.10.2.custom/css/ui-lightness/jquery-ui-1.10.2.custom.min.css" rel="Stylesheet"/>
     <link type="text/css" href="css/globalCarbonAtlas.css" rel="stylesheet"/>    
-    <link type="text/css" href="js/select2/select2.css" rel="stylesheet"/> 
+    <link type="text/css" href="js/select2/select2.css" rel="stylesheet"/>
     <link type="text/css" href="css/BCInterface.css" rel="stylesheet"/>
 
     <script type="text/javascript" src="js/OpenLayers-2.12/OpenLayers.js"></script>
