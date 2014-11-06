@@ -1,0 +1,5 @@
+Additional pal files 
+blue_yellow_red.pal
+green_magenta.pal
+have to been copied to webapps/thredds/WEB-INF/palettes/
+then restart tomcat
