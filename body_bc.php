@@ -203,7 +203,15 @@
                     data: {dirtoread: jQuery.i18n.prop( resourcePathList[i] ) , category : resourceValuesList[i] , elementToSelect : selectedResourceList[i]},
                     success: function( data )
                     {
-                        element.children = JSON.parse( data );
+                        // WARNING : JSON.parse is not possible because of some space text in .info --> element.children = JSON.parse( data ); is not working !
+                        var childrenData = data.split( ",_," );
+                        var children = [];
+                        $.each( childrenData, function( i, d )
+                        {
+                            var parseChildren = JSON.parse( d );
+                            children.push( parseChildren );
+                        } );
+                        element.children = children;
                         resourcesTreeData.push( element );
                         i++;
                         if( i >= resourceList.length )
