@@ -133,7 +133,8 @@ var BCInterfaceW = Class.create( {
         var periodNameList = JSON.parse( jQuery.i18n.prop( "periodNamesList" ) );
         $.each( periodList, function( i, d )
         {
-            $( "#periodSelect" ).append( "<option value='" + d + "'>" + periodNameList[i] + "</option>" );
+            var name = periodNameList[i] ? periodNameList[i] : d;
+            $( "#periodSelect" ).append( "<option value='" + d + "'>" + name + "</option>" );
         } );
 
         $( "#periodSelect" ).select2();
