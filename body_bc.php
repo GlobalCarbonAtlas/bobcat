@@ -30,11 +30,7 @@
                 AVERAGING PERIOD
             </h2>
 
-            <select id="periodSelect">
-                <option value="monthlymean">Monthly mean</option>
-                <option value="yearlymean">Yearly mean</option>
-                <option value="longterm">Long term mean</option>
-            </select>
+            <select id="periodSelect"></select>
         </div>
 
         <div class="leftMenu">

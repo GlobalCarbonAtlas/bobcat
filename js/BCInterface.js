@@ -44,10 +44,7 @@ var BCInterfaceW = Class.create( {
         this.elevation = false;
         this.time = false;
 
-        // Period
-        $( "#periodSelect" ).select2();
-        $( "#periodSelect" ).select2( "val", "longterm" );
-        this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
+        this.initAndCreatePeriodSelect();
 
         // Projection
         $( "#projectionSelect" ).select2();
@@ -128,6 +125,20 @@ var BCInterfaceW = Class.create( {
 //        $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
 //
         this.onClickDeleteAllMaps();
+    },
+
+    initAndCreatePeriodSelect: function()
+    {
+        var periodList = JSON.parse( jQuery.i18n.prop( "periodList" ) );
+        var periodNameList = JSON.parse( jQuery.i18n.prop( "periodNamesList" ) );
+        $.each( periodList, function( i, d )
+        {
+            $( "#periodSelect" ).append( "<option value='" + d + "'>" + periodNameList[i] + "</option>" );
+        } );
+
+        $( "#periodSelect" ).select2();
+        $( "#periodSelect" ).select2( "val", jQuery.i18n.prop( "selectedPeriod" ) );
+        this.selectedPeriod = $( "#periodSelect" ).select2( "val" );
     },
 
 
