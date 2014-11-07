@@ -6,7 +6,7 @@
 $files = glob( $_POST["dirtoread"] . "*.nc" );
 $len = count( $files );
 $counter = 0;
-echo "[";
+echo '{"obj" : [';
 foreach( $files as $file )
 {
     if( is_file( $file ) )
@@ -35,7 +35,7 @@ foreach( $files as $file )
         if( $counter != $len )
             echo ',';
         else
-            echo "]";
+            echo ']}';
     }
 }
 
