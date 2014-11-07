@@ -6,6 +6,7 @@
 $files = glob( $_POST["dirtoread"] . "*.nc" );
 $len = count( $files );
 $counter = 0;
+echo "[";
 foreach( $files as $file )
 {
     if( is_file( $file ) )
@@ -32,7 +33,9 @@ foreach( $files as $file )
         $selectedElement = $_POST["elementToSelect"] && strpos( $sfile, $_POST["elementToSelect"] ) ? true : false;
         echo '{"title":"' . str_replace( "-", " ", $pfile[1] ) . '", "key":"' . $sfile . '", "selected": "' . $selectedElement . '", "icon":false, "url":"' . $_POST["category"] . '", "complexToolTip":"' . $fileInfoContent . '"}';
         if( $counter != $len )
-            echo ',_,';
+            echo ',';
+        else
+            echo "]";
     }
 }
 

@@ -200,7 +200,12 @@
                 $.ajax( {
                     url: "fancyTreeBuildChildren.php",
                     method: "post",
+                    dataType: "json",
                     data: {dirtoread: jQuery.i18n.prop( resourcePathList[i] ) , category : resourceValuesList[i] , elementToSelect : selectedResourceList[i]},
+                     error: function( arguments )
+                    {
+                        alert( "error" );
+                    },
                     success: function( data )
                     {
                         // WARNING : JSON.parse is not possible because of some space text in .info --> element.children = JSON.parse( data ); is not working !
