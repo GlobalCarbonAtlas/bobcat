@@ -369,6 +369,7 @@ for numAvPeriod in range( len(avPeriods) ):
          #   subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' +  str(i) + '.nc', shell=True)
    
         
+        
             
         
 print('C est fini !')
