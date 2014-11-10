@@ -103,6 +103,16 @@ if (modelsTypeChoose == 'OceanModels'):
     ncrcatCommandList = [ncrcatCommandYearly, ncrcatCommandMonthly ]
     ncrcatCommand4StdDevList = [ncrcatCommand4StdDevYearly, ncrcatCommand4StdDevMonthly ]
     
+# Set models list: --> TODO : use this, not using (ça va sipmlifier le code !)
+modelNameByAvPeriodListOK = [ [],[],[] ]# Adapt (add [] if we add a new averaging period)
+for numAvPeriod in range( len(avPeriods) ):    
+    modelNameByAvPeriodList = os.listdir( scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] )# --> Return list with name of each models (str)
+    #print(modelNameByAvPeriodList)
+    for modelNameByAvPeriod in modelNameByAvPeriodList:
+        if (modelNameByAvPeriod[-6:] == 'XYT.nc'):# Je ne veux selectionner que les fichiers se terminant bar XYT.nc.
+            modelNameByAvPeriodListOK[numAvPeriod].append(modelNameByAvPeriod)
+#print(modelNameByAvPeriodListOK)# --> OK (only names, not URL)
+            
 
 # TODO: 
 # Preciser que ces listes peuvent s'amplifier manuellement si on ajoute des trucs ds le futur.
@@ -114,7 +124,7 @@ if (modelsTypeChoose == 'OceanModels'):
 ###############################################################################################################################################################
 # For yearlymean :
 avPeriod = 'yearlymean'
-modelsInFolderList = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + '*.nc')# glob.glob: retourne liste avec chemin complet des files correspondant à la recherche
+modelsInFolderList = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + '*_XYT.nc')# glob.glob: retourne liste avec chemin complet des files correspondant à la recherche
 maxTimeStepYearListByAvPeriod = list()
 minTimeStepYearListByAvPeriod = list()
 for modelType in modelsInFolderList:# Boucle sur chq modele présent dans le répertoire pointé.
@@ -134,9 +144,9 @@ allCommunTimeStepsYearListStr.append(timeStepYear)
 
 # For monthlymean :
 avPeriod = 'monthlymean'
-modelsInFolderList = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + '*.nc')
+modelsInFolderList = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + '*_XYT.nc')
 maxTimeStepMonthListByAvPeriod = list()
-minTimeStepMonthListByAvPeriod = list()
+minTimeStepMonthListByAvPeriod = list()    
 for modelType in modelsInFolderList:# Boucle sur chq modele présent dans le répertoire pointé.
     timeStepMonth = cdo.showdate(input = modelType, shell=True)
     timeStepMonth = timeStepMonth[0]
@@ -152,8 +162,6 @@ minMaxTimeStepMonth4AllModelsStr = min(maxTimeStepMonthListByAvPeriod)
 numTimeStepsMonth.append( len(timeStepMonth) )
 # Set all time steps:
 allCommunTimeStepsMonthListStr.append(timeStepMonth)
-
-print( allCommunTimeSteps4AllAvPeriodListStr[0][0] ) # --> ['1980', '1981', '1982', '1983', '1984', '1985', '1986', '1987', '1988', '1989', '1990', '1991', '1992', '1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010']
 
 
 ###########################################################
@@ -186,6 +194,7 @@ for avPeriod in avPeriods:
 #####################################################################################################################################
 # Previous steps: create call to all files to not have to bucle to ncrcat command (we need to fixed the output/ncrcat)        
     # Need to define  ncrcatCommand for each Av period so to adapt if num Av period change.
+#####################################################################################################################################        
 numAvPeriodYearly = 1 # --> = yearlymean
 ncrcatCommandYearlyStr = 'ncrcat '
 for i in range( numTimeSteps4AllAvPeriodList[numAvPeriodYearly][0] ):
@@ -205,22 +214,29 @@ ncrcatCommandMonthly.append(ncrcatCommandMonthlyStr)
     # The same for ncrcat to construct stdDev information:
 ncrcatCommand4StdDevYearlyStr = 'ncrcat '
 for i in range( numTimeSteps4AllAvPeriodList[numAvPeriodYearly][0] ):
-     avPeriod = avPeriods[numAvPeriodYearly]
-     eachTimeStepStr = allCommunTimeSteps4AllAvPeriodListStr[numAvPeriodYearly][0][i]
-     ncrcatCommand4StdDevYearlyStr = ncrcatCommand4StdDevYearlyStr + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + 'withUncertDat_' + sys.argv[1] + avPeriod + '/' + 'stdDev' + str(i) + '.nc' + " " 
+    avPeriod = avPeriods[numAvPeriodYearly]
+    #for numModelName in range( len(modelNameByAvPeriodListOK[numAvPeriodYearly]) ):
+        #ncrcatCommand4StdDevYearlyStr = ncrcatCommand4StdDevYearlyStr + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + 'withUncertDat_' + sys.argv[1] + avPeriod + '/' + modelNameByAvPeriodListOK[numAvPeriodYearly][numModelName] + '_' + str(i) + '.nc' + " " 
+    ncrcatCommand4StdDevYearlyStr = ncrcatCommand4StdDevYearlyStr + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + 'withUncertDat_' + sys.argv[1] + avPeriod + '/' + 'stdDev' + str(i) + '.nc' + " "
 ncrcatCommand4StdDevYearly.append( ncrcatCommand4StdDevYearlyStr )
-     
+#print(ncrcatCommand4StdDevYearly) #--> OK.
+
 ncrcatCommand4StdDevMonthlyStr = 'ncrcat '
 for i in range( numTimeSteps4AllAvPeriodList[numAvPeriodMonthly][0] ):
-     avPeriod = avPeriods[numAvPeriodMonthly]
-     eachTimeStepStr = allCommunTimeSteps4AllAvPeriodListStr[numAvPeriodMonthly][0][i]
-     ncrcatCommand4StdDevMonthlyStr = ncrcatCommand4StdDevMonthlyStr + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + 'withUncertDat_' + sys.argv[1] + avPeriod + '/' + 'stdDev' + str(i) + '.nc' + " "     
-ncrcatCommand4StdDevMonthly.append( ncrcatCommand4StdDevMonthlyStr ) 
+    avPeriod = avPeriods[numAvPeriodMonthly]
+    #for numModelName in range( len(modelNameByAvPeriodListOK[numAvPeriodYearly]) ):
+        #ncrcatCommand4StdDevYearlyStr = ncrcatCommand4StdDevYearlyStr + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + 'withUncertDat_' + sys.argv[1] + avPeriod + '/' + modelNameByAvPeriodListOK[numAvPeriodYearly][numModelName] + '_' + str(i) + '.nc' + " " 
+    ncrcatCommand4StdDevMonthlyStr = ncrcatCommand4StdDevMonthlyStr + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriod + '/' + 'withUncertDat_' + sys.argv[1] + avPeriod + '/' + 'stdDev' + str(i) + '.nc' + " "
+ncrcatCommand4StdDevMonthly.append( ncrcatCommand4StdDevMonthlyStr )
+#print(ncrcatCommand4StdDevMonthly) #--> OK.
+
      
-###########################################################################################     
+###########################################################################################             
+                 
 for numAvPeriod in range( len(avPeriods) ):# avPeriods specific for each model.
     # Boucle sur numTimeSteps4AllAvPeriod f(av period donc) ( = i):
     for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):#[0] : On récupère la valeur de numTimeSteps f(Av period) définie préalablement.
+        #print 'hh' + str(i) + str( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ) # --> hh01 !!!!
     # -------------------------------------------------------------------------------------------------- #
     # --------------------------- Av period = longterm: ------------------------------------------------ #
     # -------------------------------------------------------------------------------------------------- #
@@ -260,8 +276,8 @@ for numAvPeriod in range( len(avPeriods) ):# avPeriods specific for each model.
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/*_XYT.nc'
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2_' + modelName + '_' + eachTimeStepStr + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell=True)
             
-# Concatenation de ts les fichiers mean créés pour avoir un seul fichier mean par Av period :
-numAvPeriod = 1 # Pour ne pas prendre le 1er av period (long term)
+# Concatenation de ts les fichiers mean créés pour avoir un seul fichier mean par Av period : J'ai vérifié avec QGis, mean values OK.
+numAvPeriod = 1 # Pour ne pas modelNameByAvPeriodListOKprendre le 1er av period (long term)
 for ncrcatCommands in ncrcatCommandList:
     allTimeStepsByAvPeriodStr = allCommunTimeSteps4AllAvPeriodListStr[numAvPeriod][0]
     subprocess.call(ncrcatCommands[0]
@@ -279,32 +295,60 @@ for numAvPeriod in range( len(avPeriods) ):
 # Std dev information creation for other av periods than long term:
     # With nco easy way to apply statistic to one time step for n models (like did for mean information) but for stdDev info, nco is not so easy so I used cdo but in a different way.
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #    
-# 1) Split all models in n files (n = number of time steps f(av period)):
+# Difference between data files and mean files: test with QGis, OK.Utile mais ce n'est pas ce que l'on veut !
+'''      
+for numAvPeriod in range( len(avPeriods) ):
+    if ( numAvPeriod != 0 ):
+        modelNameByAvPeriod = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*_XYT.nc')# --> Return complete url.
+        allTimeStepsByAvPeriodStr = allCommunTimeSteps4AllAvPeriodListStr[numAvPeriod][0]
+        for numModelNameByAvPeriod in range( len(modelNameByAvPeriod) ):
+            #print(numAvPeriod, numModelNameByAvPeriod)# --> Ex : (2,1)
+            subprocess.call('ncbo' # --> data files - mean files, output.
+            + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + modelNameByAvPeriodListOK[numAvPeriod][numModelNameByAvPeriod]
+            + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2_' + modelName + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc'
+            + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'Diff' + modelNameByAvPeriodListOK[numAvPeriod][numModelNameByAvPeriod], shell=True)
+            '''
+                     
+# 1) Split all models in n files (n = number of time steps f(av period)): J'ai vérifié avec QGis, OK !
 for numAvPeriod in range( len(avPeriods) ):
     if ( numAvPeriod != 0 ):# Pour ne pas prendre la 1er (long term)
-        onlyModelNameByAvPeriod = os.listdir( scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] )# --> Return list with name of each models (str)
-        modelNameByAvPeriod = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*.nc')
-        for numModelNameByAvPeriod in range( len(modelNameByAvPeriod) ):
-            subprocess.call("cdo splitsel,1"
-            + " " + modelNameByAvPeriod[numModelNameByAvPeriod]
-            + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + onlyModelNameByAvPeriod[numModelNameByAvPeriod], shell=True)
-# 2) Calculate stdDev for commun time steps for each Av period:
+        modelNameByAvPeriod = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*_XYT.nc')# --> Return complete url.
+        for numModelNameByAvPeriod in range( len(modelNameByAvPeriod) ): # Prendre modelNameByAvPeriod parce que on a selectionné que les fichiers terminant par '*_XYT.nc'.
+            for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):            
+                subprocess.call('ncks -d time,' + str(i) + ',' + str(i)
+                + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + modelNameByAvPeriodListOK[numAvPeriod][numModelNameByAvPeriod]
+                + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + modelNameByAvPeriodListOK[numAvPeriod][numModelNameByAvPeriod] + '_' + str(i) + '.nc', shell=True)
+                
+# 2) Calculate and create stdDev for commun time steps for each Av period: test with QGis, OK
+for numAvPeriod in range( len(avPeriods) ):
+    if ( numAvPeriod != 0 ):
+        modelNameByAvPeriod = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*_XYT.nc')
+        #for numModelNameByAvPeriod in range( len(modelNameByAvPeriod) ):
         for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):
-            #print(i)
-            subprocess.call("cdo ensstd"
-            + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + '*' + '_XYT' + '*' + str(i) + '.nc'# Les fichiers créés lors de l'étape précédente avec cdo splitsel se terminent par 0, 1, 2, ..., n, n étant le num de pas de temps.
-            + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' +  str(i) + '.nc', shell=True)
-# 3) Change variable name of stdDev Files:
-            for varName in varNameList:
-                for varUncertaintyName in varUncertaintyNameList:
-                    subprocess.call('ncrename -v ' + varName + ',' + varUncertaintyName
-                    + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + str(i) + '.nc', shell=True )
-# 4) Concatenated stdDev files for each av period:
-numAvPeriod = 1 # Pour ne pas prendre le 1er av period (long term).
-for ncrcatCommandStdDev in ncrcatCommand4StdDevList:
-    subprocess.call(ncrcatCommandStdDev[0]
-    + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + sys.argv[1] + '_' +  avPeriods[numAvPeriod] + '_XYT.nc', shell = True)
-    numAvPeriod = numAvPeriod + 1
+                subprocess.call("cdo ensstd"
+                + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2' + '*' + '_' + str(i) + '.nc'
+                + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + str(i) + '.nc', shell=True)
+                
+# 3) Concatenated stdDev files created:               
+numAvPeriod = 1 # Pour ne pas modelNameByAvPeriodListOKprendre le 1er av period (long term)
+for ncrcatCommand4StdDev in ncrcatCommand4StdDevList:
+    allTimeStepsByAvPeriodStr = allCommunTimeSteps4AllAvPeriodListStr[numAvPeriod][0]
+    #print(ncrcatCommand4StdDev[0])
+    subprocess.call(ncrcatCommand4StdDev[0]
+    + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell = True)
+    numAvPeriod = numAvPeriod + 1# Pour ne pas effectuer boucles/numAvPeriod, output doit etre unique.
+    
+    
+
+                
+# 4) Change variable name of stdDev Files:
+for varName in varNameList:
+    for varUncertaintyName in varUncertaintyNameList:
+        subprocess.call('ncrename -v ' + varName + ',' + varUncertaintyName
+        + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + str(i) + '.nc', shell=True )
+        '''
+                    
+    
 # 5) Add stdDev concatenated files to MEAN files:
 for numAvPeriod in range( len(avPeriods) ):
     if ( numAvPeriod != 0 ):
@@ -313,19 +357,21 @@ for numAvPeriod in range( len(avPeriods) ):
             subprocess.call('ncks -A -v' + " " + varUncertaintyName
             + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + sys.argv[1] + '_' +  avPeriods[numAvPeriod] + '_XYT.nc'
             + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2_' + modelName + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell = True)
-    
+            '''
+
+
 # 6) Remove files (created by cdo splitsel, files to create stdDev info and files to create concatenated mean files:
 for numAvPeriod in range( len(avPeriods) ):
     if ( numAvPeriod != 0 ):
-        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + '*nc00*', shell=True)# nc00 : vient du format donné par cdo splitsel.
-        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'withUncertDat_*', shell=True)# Parce que création de fichiers avec ce nom lors de splitse (avec listdir().
-        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + sys.argv[1] + '_' +  avPeriods[numAvPeriod] + '_XYT.nc', shell=True)
-        for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):
-            subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' +  str(i) + '.nc', shell=True)
+        #subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*nc_*', shell=True)# --> Error.
+        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + '*_XYT.nc_*', shell=True)# Parce que création de fichiers avec ce nom lors de splitse (avec listdir().
+        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '*', shell=True)# std dev files for each time step.
+        #for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):
+         #   subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' +  str(i) + '.nc', shell=True)
+   
+        
             
-            
-
-
+        
 print('C est fini !')
 
 
