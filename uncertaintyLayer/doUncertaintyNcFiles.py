@@ -336,36 +336,35 @@ for ncrcatCommand4StdDev in ncrcatCommand4StdDevList:
     #print(ncrcatCommand4StdDev[0])
     subprocess.call(ncrcatCommand4StdDev[0]
     + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell = True)
+    subprocess.call('ncrename -v ' + varName + ',' + varUncertaintyName
+    + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell=True )
     numAvPeriod = numAvPeriod + 1# Pour ne pas effectuer boucles/numAvPeriod, output doit etre unique.
-    
-    
-
-                
+              
 # 4) Change variable name of stdDev Files:
-for varName in varNameList:
-    for varUncertaintyName in varUncertaintyNameList:
-        subprocess.call('ncrename -v ' + varName + ',' + varUncertaintyName
-        + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + str(i) + '.nc', shell=True )
-        '''
-                    
-    
+for numAvPeriod in range( len(avPeriods) ):              
+    if ( numAvPeriod != 0 ):
+        allTimeStepsByAvPeriodStr = allCommunTimeSteps4AllAvPeriodListStr[numAvPeriod][0]
+        for varName in varNameList:
+            #print(varName)
+            for varUncertaintyName in varUncertaintyNameList:
+                #print(varUncertaintyName)
+                subprocess.call('ncrename -v ' + varName + ',' + varUncertaintyName
+                + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell=True )
 # 5) Add stdDev concatenated files to MEAN files:
 for numAvPeriod in range( len(avPeriods) ):
     if ( numAvPeriod != 0 ):
         allTimeStepsByAvPeriodStr = allCommunTimeSteps4AllAvPeriodListStr[numAvPeriod][0]
         for varUncertaintyName in varUncertaintyNameList:
             subprocess.call('ncks -A -v' + " " + varUncertaintyName
-            + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + sys.argv[1] + '_' +  avPeriods[numAvPeriod] + '_XYT.nc'
+            + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc'
             + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2_' + modelName + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell = True)
-            '''
-
 
 # 6) Remove files (created by cdo splitsel, files to create stdDev info and files to create concatenated mean files:
 for numAvPeriod in range( len(avPeriods) ):
     if ( numAvPeriod != 0 ):
         #subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*nc_*', shell=True)# --> Error.
-        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + '*_XYT.nc_*', shell=True)# Parce que création de fichiers avec ce nom lors de splitse (avec listdir().
-        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '*', shell=True)# std dev files for each time step.
+        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + '*_XYT.nc_*', shell=True)
+        subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '*', shell=True)# std dev files for each time step et stdDev concatenated files.
         #for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):
          #   subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' +  str(i) + '.nc', shell=True)
    
