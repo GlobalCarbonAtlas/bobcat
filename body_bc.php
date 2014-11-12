@@ -184,6 +184,15 @@
         var resourceList = JSON.parse( jQuery.i18n.prop( "resourceList" ) );
         var resourceValuesList = JSON.parse( jQuery.i18n.prop( "resourceValuesList" ) );
         var selectedResourceList = JSON.parse( jQuery.i18n.prop( "selectedResourceList" ) );
+        try
+        {
+            var expandedResourceList = JSON.parse( jQuery.i18n.prop( "expandedResourceList" ) );
+        }
+        catch( e )
+        {
+            var expandedResourceList = false;
+        }
+
         var resourcePathList = JSON.parse( jQuery.i18n.prop( "resourcePathList" ) );
 
         addResource( 0 );
@@ -202,7 +211,7 @@
             var element = new Object();
             element.title = resourceList[i];
             element.folder = true;
-            element.expanded = selectedResourceList[i] ? "false" != selectedResourceList[i] : false;
+            element.expanded = expandedResourceList[i] ? expandedResourceList[i] : false;
 
             var resourcePath = jQuery.i18n.prop( resourcePathList[i] );
 
