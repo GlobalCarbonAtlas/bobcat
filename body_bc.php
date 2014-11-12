@@ -235,7 +235,7 @@
                             elementChildren.title = getParameterValue( "title", d );
                             elementChildren.key = getParameterValue( "key", d );
                             elementChildren.selected = getParameterValue( "selected", d );
-                            elementChildren.icon = getParameterValue( "icon", d );
+                            elementChildren.icon = JSON.parse( getParameterValue( "icon", d ) );
                             elementChildren.url = getParameterValue( "url", d );
                             elementChildren.complexToolTip = getParameterValue( "complexToolTip", d );
                             children.push( elementChildren );
