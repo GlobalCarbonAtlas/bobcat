@@ -24,6 +24,14 @@ var BCInterfaceW = Class.create( {
         this.threddsPath = jQuery.i18n.prop( "threddsPath" );
         this.hostName = jQuery.i18n.prop( "hostname" ) ? jQuery.i18n.prop( "hostname" ) : location.hostname;
         this.imgPath = "img";
+        try
+        {
+            this.useReduceVariablesByRegionByResource = JSON.parse( jQuery.i18n.prop( "useReduceVariablesByRegionByResource" ) );
+        }
+        catch( e )
+        {
+            this.useReduceVariablesByRegionByResource = true;
+        }
 
         /**
          * This hash contains :
@@ -485,7 +493,7 @@ var BCInterfaceW = Class.create( {
         {
             this.variableDiv.empty();
 
-            if( 1 <= this.selectedResourceKeys.length )
+            if( 1 <= this.selectedResourceKeys.length && this.useReduceVariablesByRegionByResource )
                 this.reduceHashVariable();
 
             if( 0 == this.hashVariables.keys().length )
