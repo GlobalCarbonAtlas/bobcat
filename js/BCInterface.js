@@ -241,7 +241,7 @@ var BCInterfaceW = Class.create( {
         if(layerIndex)
             this.selectedBobcat.map.layers[layerIndex].setVisibility( false );
 
-        if ("global" == variableType) {
+        if ("frontiers" == variableType) {
             $.each(this.selectedBobcat.map.layers, function(i, d) {
                 d.setVisibility(false);
             });
