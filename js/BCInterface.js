@@ -226,23 +226,35 @@ var BCInterfaceW = Class.create( {
         }, this ), true );
 
         // Select layer accordingly to variable displayed
-        var layerIndex = this.getLayerNumberByVariableType();
-        if(layerIndex)
-            this.selectedBobcat.map.layers[layerIndex].setVisibility( false );
+        this.setLayerVisibility();
 
         this.resizeAllMaps();
     },
 
-    getLayerNumberByVariableType: function()
+    setLayerVisibility: function()
     {
         var index = this.variablesToDisplay.indexOf(this.variable);
         if(index == -1)
-            return false;
-        var type = this.variableTypesList[index];
+            return;
+        var variableType = this.variableTypesList[index];
+        var layerIndex = this.getLayerNumberByVariableType(variableType);
+        if(layerIndex)
+            this.selectedBobcat.map.layers[layerIndex].setVisibility( false );
+
+        if ("global" == variableType) {
+            $.each(this.selectedBobcat.map.layers, function(i, d) {
+                d.setVisibility(false);
+            });
+            this.selectedBobcat.map.layers[layerIndex].setVisibility(true);
+        }
+    },
+
+    getLayerNumberByVariableType: function(variableType)
+    {
         var layerIndex = false;
         $.each(this.selectedBobcat.map.layers, function(i,d)
         {
-            if(d.params.LAYERS.indexOf(type) != -1)
+            if(d.params.LAYERS.indexOf(variableType) != -1)
             {
                 layerIndex = i;
                 return false;
