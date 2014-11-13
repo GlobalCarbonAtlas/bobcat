@@ -47,6 +47,7 @@ var BCInterfaceW = Class.create( {
         this.hashVariables = new Hashtable();
         this.variablesToDisplay = JSON.parse( jQuery.i18n.prop( "variableList" ) );
         this.variableNamesToDisplay = JSON.parse( jQuery.i18n.prop( "variableNamesList" ) );
+        this.variableTypesList = JSON.parse( jQuery.i18n.prop( "variableTypesList" ) );
         this.variable = false;
 
         this.elevation = false;
@@ -177,10 +178,10 @@ var BCInterfaceW = Class.create( {
 
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
-                + "_" + selectedPeriod + "_XYT.nc";
+            + "_" + selectedPeriod + "_XYT.nc";
 
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
-                this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
 
         var options = {container: $( '#printable' ),
@@ -225,18 +226,29 @@ var BCInterfaceW = Class.create( {
         }, this ), true );
 
         // Select layer accordingly to variable displayed
-        switch( this.variable )
-        {
-            case "Terrestrial_flux":
-                this.selectedBobcat.map.layers[1].setVisibility( false );
-                break;
-            case "Ocean_flux":
-                this.selectedBobcat.map.layers[2].setVisibility( false );
-                break;
-        }
-        ;
+        var layerIndex = this.getLayerNumberByVariableType();
+        if(layerIndex)
+            this.selectedBobcat.map.layers[layerIndex].setVisibility( false );
 
         this.resizeAllMaps();
+    },
+
+    getLayerNumberByVariableType: function()
+    {
+        var index = this.variablesToDisplay.indexOf(this.variable);
+        if(index == -1)
+            return false;
+        var type = this.variableTypesList[index];
+        var layerIndex = false;
+        $.each(this.selectedBobcat.map.layers, function(i,d)
+        {
+            if(d.params.LAYERS.indexOf(type) != -1)
+            {
+                layerIndex = i;
+                return false;
+            }
+        });
+        return layerIndex;
     },
 
     selectBobcat: function( id )
@@ -428,26 +440,26 @@ var BCInterfaceW = Class.create( {
         // Filter
         var tree = $( "#resourceSelect" ).fancytree( "getTree" );
         $( "input[name=searchResource]" ).keyup(
-                function( e )
+            function( e )
+            {
+                tree.options.filter.mode = "hide";
+                var match = $( this ).val();
+                if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
                 {
-                    tree.options.filter.mode = "hide";
-                    var match = $( this ).val();
-                    if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
-                    {
-                        $( "button#btnResetSearchResource" ).click();
-                        return;
-                    }
-                    // Pass text as filter string (will be matched as substring in the node title)
-                    var n = tree.applyFilter( match );
-                    $( "button#btnResetSearchResource" ).attr( "disabled", false );
-                } );
+                    $( "button#btnResetSearchResource" ).click();
+                    return;
+                }
+                // Pass text as filter string (will be matched as substring in the node title)
+                var n = tree.applyFilter( match );
+                $( "button#btnResetSearchResource" ).attr( "disabled", false );
+            } );
 
         $( "button#btnResetSearchResource" ).click(
-                function( e )
-                {
-                    $( "input[name=searchResource]" ).val( "" );
-                    tree.clearFilter();
-                } ).attr( "disabled", true );
+            function( e )
+            {
+                $( "input[name=searchResource]" ).val( "" );
+                tree.clearFilter();
+            } ).attr( "disabled", true );
     },
 
     onSelectResource: function( isInit, data )
@@ -485,7 +497,7 @@ var BCInterfaceW = Class.create( {
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
-                    this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+                this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getVariables( url, i, this.selectedResourceKeys[i] );
         }
@@ -599,8 +611,8 @@ var BCInterfaceW = Class.create( {
     fillVariablesError: function()
     {
         var message = $( '<div></div>' )
-                .html( "<BR/>Unable to read file" )
-                .dialog(
+            .html( "<BR/>Unable to read file" )
+            .dialog(
             {
                 modal: true,
                 resizable: false,
@@ -662,7 +674,7 @@ var BCInterfaceW = Class.create( {
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( fileArray[i] )[1] + "/" + selectedPeriod + "/" +
-                    this.basename( fileArray[i] ) + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+                this.basename( fileArray[i] ) + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getTimes( url, i );
         }
@@ -817,8 +829,8 @@ var BCInterfaceW = Class.create( {
     getTimesError: function()
     {
         var message = $( '<div></div>' )
-                .html( "Unable to get Dimension Time" )
-                .dialog(
+            .html( "Unable to get Dimension Time" )
+            .dialog(
             {
                 modal: true,
                 resizable: false,
@@ -874,13 +886,13 @@ var BCInterfaceW = Class.create( {
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-                    + "_" + selectedPeriod + "_XYT.nc";
+                + "_" + selectedPeriod + "_XYT.nc";
 
             var url = resourceUrl
-                    + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMetadata&item=minmax&SRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=200&HEIGHT=200"
-                    + "&TIME=" + this.time
-                    + "&ELEVATION=" + this.elevation
-                    + "&LAYERS=" + this.variable;
+                + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMetadata&item=minmax&SRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=200&HEIGHT=200"
+                + "&TIME=" + this.time
+                + "&ELEVATION=" + this.elevation
+                + "&LAYERS=" + this.variable;
 
             this.getRange( url, previousRange );
         }, this ) );
@@ -929,8 +941,8 @@ var BCInterfaceW = Class.create( {
         $( "#slider-range-text" ).val( previousRange );
         this.rangeDiv.blur();
         var message = $( '<div></div>' )
-                .html( "Unable to get range" )
-                .dialog(
+            .html( "Unable to get range" )
+            .dialog(
             {
                 modal: true,
                 autoOpen: false,
@@ -988,18 +1000,18 @@ var BCInterfaceW = Class.create( {
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[0] )[1] );
 
         var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-                + "_" + selectedPeriod + "_XYT.nc";
+            + "_" + selectedPeriod + "_XYT.nc";
         var colorscalerange = $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' );
         var numcolorbands = $( "#slider-nbcolorbands-text" ).html();
         // Initial legend size is 110x264 ; here take 80% of the size
         $( "#legend" ).html( "<img id='legendImg' width='88px;' height='211px;' src='"
-                + resourceUrl
-                + "?REQUEST=GetLegendGraphic"
-                + "&LAYER=" + this.variable
-                + "&PALETTE=" + this.palette
-                + "&COLORSCALERANGE=" + colorscalerange
-                + "&NUMCOLORBANDS=" + numcolorbands
-                + "' alt=''/>" );
+            + resourceUrl
+            + "?REQUEST=GetLegendGraphic"
+            + "&LAYER=" + this.variable
+            + "&PALETTE=" + this.palette
+            + "&COLORSCALERANGE=" + colorscalerange
+            + "&NUMCOLORBANDS=" + numcolorbands
+            + "' alt=''/>" );
 
         $( "#legendImg" ).load( jQuery.proxy( function()
         {
@@ -1021,10 +1033,10 @@ var BCInterfaceW = Class.create( {
                 COLORSCALERANGE: colorscalerange } );
             // replace also the inner legend image
             $( "#BClegendImg" + key ).replaceWith( "<img id='BClegendImg" + key + "' width='66px;' height='158px;' src='" +
-                    resourceUrl + "?REQUEST=GetLegendGraphic" + "&LAYER=" + map.variable +
-                    "&PALETTE=" + this.palette + "&COLORSCALERANGE=" + colorscalerange +
-                    "&NUMCOLORBANDS=" + numcolorbands
-                    + "' alt=''/>" );
+                resourceUrl + "?REQUEST=GetLegendGraphic" + "&LAYER=" + map.variable +
+                "&PALETTE=" + this.palette + "&COLORSCALERANGE=" + colorscalerange +
+                "&NUMCOLORBANDS=" + numcolorbands
+                + "' alt=''/>" );
         }, this ) );
 
 
@@ -1377,10 +1389,10 @@ var BCInterfaceW = Class.create( {
         this.help.wrapper.append( divFooter );
 
         var divContentFooter = $( '' +
-                '<div class="helpFooterContentRight">' +
-                '<div class="helpFooterContentFloat">A project realised by</div>' +
-                '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
-                '</div>' );
+            '<div class="helpFooterContentRight">' +
+            '<div class="helpFooterContentFloat">A project realised by</div>' +
+            '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
+            '</div>' );
 
         divFooter.append( divContentFooter );
     },
