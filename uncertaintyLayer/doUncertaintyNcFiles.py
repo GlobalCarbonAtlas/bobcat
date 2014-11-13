@@ -236,7 +236,6 @@ ncrcatCommand4StdDevMonthly.append( ncrcatCommand4StdDevMonthlyStr )
 for numAvPeriod in range( len(avPeriods) ):# avPeriods specific for each model.
     # Boucle sur numTimeSteps4AllAvPeriod f(av period donc) ( = i):
     for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):#[0] : On récupère la valeur de numTimeSteps f(Av period) définie préalablement.
-        #print 'hh' + str(i) + str( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ) # --> hh01 !!!!
     # -------------------------------------------------------------------------------------------------- #
     # --------------------------- Av period = longterm: ------------------------------------------------ #
     # -------------------------------------------------------------------------------------------------- #
@@ -244,10 +243,11 @@ for numAvPeriod in range( len(avPeriods) ):# avPeriods specific for each model.
             eachTimeStepStr = allCommunTimeSteps4AllAvPeriodListStr[0][0]
             #print(eachTimeStepStr)# --> OK
             # Construction du fichier moyenne, 'MEAN':
-            subprocess.call('ncra -y mean'
+            subprocess.call('ncra -y mean -v Terrestrial_flux'
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/*_XYT.nc'
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2_' + modelName + '_' + eachTimeStepStr + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell=True)
             # Construction des fichiers de std dev : avec nco plus compliqué, cdo plus adapté ici. J'ai vérifié avec QGis, OK, correspond à std dev.
+            '''
             subprocess.call("cdo ensstd"            
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/*XYT.nc'
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' +  'fco2_stdDev_' + modelName + '_' + eachTimeStepStr + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '.nc', shell=True)
@@ -263,6 +263,7 @@ for numAvPeriod in range( len(avPeriods) ):# avPeriods specific for each model.
                     + " " +  scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2_'+ modelName + '_' + eachTimeStepStr + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc', shell=True )
             # Remove stdDev file created:
             subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' +  'fco2_stdDev_' + modelName + '_' + eachTimeStepStr + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '.nc', shell=True)
+ 
             
    # -------------------------------------------------------------------------------------------------- #  
    # --------------------------- Others Av period: ---------------------------------------------------- # 
@@ -296,7 +297,7 @@ for numAvPeriod in range( len(avPeriods) ):
     # With nco easy way to apply statistic to one time step for n models (like did for mean information) but for stdDev info, nco is not so easy so I used cdo but in a different way.
 # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- #    
 # Difference between data files and mean files: test with QGis, OK.Utile mais ce n'est pas ce que l'on veut !
-'''      
+    
 for numAvPeriod in range( len(avPeriods) ):
     if ( numAvPeriod != 0 ):
         modelNameByAvPeriod = glob.glob(scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*_XYT.nc')# --> Return complete url.
@@ -307,7 +308,7 @@ for numAvPeriod in range( len(avPeriods) ):
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + modelNameByAvPeriodListOK[numAvPeriod][numModelNameByAvPeriod]
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'fco2_' + modelName + '_' + allTimeStepsByAvPeriodStr[0] + '-' + allTimeStepsByAvPeriodStr[-1] + '_' + sys.argv[1] + '_' + avPeriods[numAvPeriod] + '_XYT.nc'
             + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'Diff' + modelNameByAvPeriodListOK[numAvPeriod][numModelNameByAvPeriod], shell=True)
-            '''
+         
                      
 # 1) Split all models in n files (n = number of time steps f(av period)): J'ai vérifié avec QGis, OK !
 for numAvPeriod in range( len(avPeriods) ):
@@ -362,13 +363,9 @@ for numAvPeriod in range( len(avPeriods) ):
 # 6) Remove files (created by cdo splitsel, files to create stdDev info and files to create concatenated mean files:
 for numAvPeriod in range( len(avPeriods) ):
     if ( numAvPeriod != 0 ):
-        #subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + '*nc_*', shell=True)# --> Error.
         subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + '*_XYT.nc_*', shell=True)
         subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' + '*', shell=True)# std dev files for each time step et stdDev concatenated files.
-        #for i in range( numTimeSteps4AllAvPeriodList[numAvPeriod][0] ):
-         #   subprocess.call('rm' + " " + scriptFolderUrl + '/' + sys.argv[1] + '/' + avPeriods[numAvPeriod] + '/' + 'withUncertDat_' + sys.argv[1] + avPeriods[numAvPeriod] + '/' + 'stdDev' +  str(i) + '.nc', shell=True)
-   
-        
+        '''
         
             
         
