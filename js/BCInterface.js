@@ -137,7 +137,7 @@ var BCInterfaceW = Class.create( {
 
     createMapAndUncertaintyMap: function( id, resource, id_uncertainty )
     {
-        if( this.hashBobcats.size() ) // Pascal : aprèes avoir instancié   1er carte.
+        if( this.hashBobcats.size() ) // Pascal : après avoir instancié   1er carte.
         {
             var firstOpenLayerMap = this.hashBobcats.get( this.hashBobcats.keys( 0 )[0] ).map;
             this.centerMap = firstOpenLayerMap.getCenter();
@@ -151,7 +151,6 @@ var BCInterfaceW = Class.create( {
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
                 + "_" + selectedPeriod + "_XYT.nc";
-        //var urlResourceUncertainty = 'http://webportals.ipsl.jussieu.fr/thredds/wms/ATLAS/Flux/LandModels/longterm-2000-2009/fco2_LPJ-GUESS_Sep2013-ext3_1980-2010_longterm-2000-2009_XYT.nc';
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
@@ -199,8 +198,8 @@ var BCInterfaceW = Class.create( {
                             mapTitle: mapUncertaintyTitle,
                             mapShortTitle: mapUncertaintyShortTitle,
                             projection: this.projection,
-                            resource: urlResource, // La même puisque le fichier est la même, seul variable doit être changée.
-                            variable: this.uncertaintyVariable,
+                            resource: urlResource,
+                            variable: this.uncertaintyVariable, // TODO: Adapter f(temps si on est pas en long term)
                             time: this.time,
                             range: $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' ),
                             numberColorsBands: $( "#slider-nbcolorbands-text" ).html(),
