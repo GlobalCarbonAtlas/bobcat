@@ -600,13 +600,15 @@ span.fancytree-title:hover div.complexToolTip {
 #overlayStdDevCase {
     margin-left: 5px;
     font-size: 11px;
-    margin-top: 0px;
+    margin-top: 0;
+    background-color: blue;
 }
 
 #overlayStdDevCaseLeft {
     margin-left: 3px;
     font-size: 12px;
     margin-top: -9px;
+    background-color: red;
 }
 
 #overlayStdDevCase label{
