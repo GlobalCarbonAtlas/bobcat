@@ -75,81 +75,55 @@
 
     <!--Pascal part : -->
     <!-- Add way to choose uncertainty : -->
-    <div id= "uncertaintyLeft" class="leftMenu">
+    <div id="uncertaintyLeft" class="leftMenu">
         <h2 title="Visualize uncertainty information displaying std dev layer or overlaying std dev information above the layer">
             <img src="img/6step.png">
             UNCERTAINTY
         </h2>
-        <div id= "uncertaintySelectLeft">
-            <input id= "displayStdDevLeft" class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
-            <label class= "uncertaintySelectLabelClass" for= "displayStdDevLeft">
-                <span class= "variable">Display st dev</span>
+
+        <div id="uncertaintySelectLeft">
+            <input id="displayStdDevLeft" class="uncertaintySelectElementClass" type="checkbox" name="displayOrOverlayUncertainty">
+            <label class="uncertaintySelectLabelClass" for="displayStdDevLeft">
+                <span class="variable">Display st dev</span>
             </label>
             <br>
-            <input id= "displayOverlayStdDevLeft"  class= "uncertaintySelectElementClass" type= "checkbox" name= "displayOrOverlayUncertainty">
-            <label  class= "uncertaintySelectLabelClass" for= "displayOverlayStdDevLeft">
-                <span id= "uncertaintySelectElementTextLeft" class= "variable" title= "Explain what is done with this option">Overlay st dev</span>
+            <input id="displayOverlayStdDevLeft" class="uncertaintySelectElementClass" type="checkbox" name="displayOrOverlayUncertainty">
+            <label class="uncertaintySelectLabelClass" for="displayOverlayStdDevLeft">
+                <span id="uncertaintySelectElementTextLeft" class="variable" title="Explain what is done with this option">Overlay st dev</span>
             </label>
             <br>
         </div>
 
         <!-- LEFT MENU : pour appliquer individuellement a chq carte : -->
-        <div id= "overlayStdDevCaseLeft">
-            <div id= "uncertaintyWithMaskingLeft">
-                <input id= "uncertaintyWithMaskingInputLeft" type= "radio" name= "displayOverlayUncertaintyModeLeft" checked= "checked">
-                <label for= "uncertaintyWithMaskingLeft">
+        <div id="overlayStdDevCaseLeft">
+            <div id="uncertaintyWithMaskingLeft">
+                <input id="uncertaintyWithMaskingInputLeft" type="radio" name="displayOverlayUncertaintyModeLeft" checked="checked">
+                <label for="uncertaintyWithMaskingLeft">
                     <span class="variable2">Mask areas > threshold</span>
                 </label>
             </div>
             <br>
-            <div id= "uncertaintyWithStipplingLeft">
-                <input id= "uncertaintyWithStipplingInputLeft" type= "radio" name= "displayOverlayUncertaintyModeLeft">
-                <label  for= "uncertaintyWithStipplingInputLeft">
+
+            <div id="uncertaintyWithStipplingLeft">
+                <input id="uncertaintyWithStipplingInputLeft" type="radio" name="displayOverlayUncertaintyModeLeft">
+                <label for="uncertaintyWithStipplingInputLeft">
                     <span class="variable2">Stipple areas <  threshold</span>
                 </label>
             </div>
             <br>
             <!-- Slider part: -->
             <!-- Way to do it: put in an input element value's slider. To describe input, label associated.-->
-            <div id= "uncertaintySliderLabelDivLeft">
-                <label id= "uncertaintySliderLabelLeft" for= "uncertaintySliderValueInput" title= "Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">St dev threshold: </label>
-                <input id= "uncertaintySliderValueInputLeft" type= "text" readonly>
-                <div id= "uncertaintyLevelSliderLeft">
+            <div id="uncertaintySliderLabelDivLeft">
+                <label id="uncertaintySliderLabelLeft" for="uncertaintySliderValueInput"
+                       title="Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">St dev threshold: </label>
+                <input id="uncertaintySliderValueInputLeft" type="text" readonly>
+
+                <div id="uncertaintyLevelSliderLeft">
                     <!-- End slider part: -->
                 </div>
             </div>
         </div>
     </div>
-
-    <script text="text/javascript">
-        // LEFT MENU :
-//        $("#overlayStdDevCaseLeft").hide();
-//        $("#displayOverlayStdDevLeft").change(
-//                function(){
-//                    if ($(this).is(':checked')) {
-//                        $("#overlayStdDevCaseLeft").show();
-//                    }
-//                    else
-//                        $("#overlayStdDevCaseLeft").hide();
-//                });
-
-        // Slider uncertainty (st dev) threshold part:
-/*        $(function() {
-            //var tt = σ;
-            var valueArray= ["0.5 σ", "1 σ", "1.5 σ", "2 σ", "2.5 σ", "3 σ"];// --> To write σ symbols, use this method in js (be in utf8). For html, we could use  <?php echo('&#931'); ?> (cf http://www.webstandards.org/learn/reference/charts/entities/symbol_entities/)
-            $( "#uncertaintyLevelSliderLeft" ).slider({
-                value: 1,
-                min: 0,
-                max: 5,
-                step: 1,
-                slide: function(event, ui) {
-                    $("#uncertaintySliderValueInputLeft").val(valueArray[ui.value]);// If we want to put in input different value (my case): relation with slider's values done by index array.
-                }
-            });
-            $("#uncertaintySliderValueInputLeft").val(valueArray[1]);// --> Set default value f(array's values).
-        });
-*/
-    </script>
     <!-- End Pascal part -->
 
     <div class="noticeLSCE leftMenu">
@@ -245,48 +219,35 @@
     </div>
 
     <!-- Pascal part : -->
-    <!-- RIGHT MENU : la partie .js est ds ce cas la dans BCInterface.js -->
-    <div id= "overlayStdDevCase" class= "rightMenuTool">
+    <div id="overlayStdDevCase" class="rightMenuTool">
         <div class="rightMenuTool">&nbsp;
             <HR width="50%" class="rightMenuHR"/>
         </div>
         <h2>UNCERTAINTY</h2>
 
-        <div id= "uncertaintyWithMasking">
-            <input id= "uncertaintyWithMaskingInput" class= "uncertaintyRepresentationRightMenuClass" type= "radio" name= "displayOverlayUncertaintyMode">
-            <label for= "uncertaintyWithMasking">
+        <div id="uncertaintyWithMasking">
+            <input id="uncertaintyWithMaskingInput" class="uncertaintyRepresentationRightMenuClass" type="radio" name="displayOverlayUncertaintyMode">
+            <label for="uncertaintyWithMasking">
                 <span class="variable2">Mask areas > threshold</span>
             </label>
         </div>
         <br>
-        <div id= "uncertaintyWithStippling">
-            <input id= "uncertaintyWithStipplingInput" class= "uncertaintyRepresentationRightMenuClass" type= "radio" name= "displayOverlayUncertaintyMode">
-            <label  for= "uncertaintyWithStipplingInput">
+
+        <div id="uncertaintyWithStippling">
+            <input id="uncertaintyWithStipplingInput" class="uncertaintyRepresentationRightMenuClass" type="radio" name="displayOverlayUncertaintyMode">
+            <label for="uncertaintyWithStipplingInput">
                 <span class="variable2">Stipple areas <  threshold</span>
             </label>
         </div>
         <br>
         <!-- Slider part: -->
         <!-- Way to do it: put in an input element value's slider. To describe input, label associated.-->
-        <label id= "uncertaintySliderLabel" for= "uncertaintySliderValueInput" title= "Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">St dev threshold: </label>
-        <input id= "uncertaintySliderValueInput" type= "text" readonly>
-        <div id= "uncertaintyLevelSlider">
-            <!-- End slider part: -->
-        </div>
-    </div>
+        <label id="uncertaintySliderLabel" for="uncertaintySliderValueInput"
+               title="Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">St dev threshold: </label>
+        <input id="uncertaintySliderValueInput" type="text" readonly>
 
-    <script type="text/javascript">
-        // RIGHT MENU :
-//        $("#overlayStdDevCase").hide();
-//        $("#displayOverlayStdDevLeft").change(// Bouton de gauche active ou desactive donc les 2 menus Uncertainty (gauche et droite).
-//                function(){
-//                    if ($(this).is(':checked')) {
-//                        $("#overlayStdDevCase").show();
-//                    }
-//                    //else
-//                    $("#overlayStdDevCase").hide();
-//                });
-    </script>
+        <div id="uncertaintyLevelSlider"></div>
+    </div>
     <!--End Pascal part : -->
 
 </div>
