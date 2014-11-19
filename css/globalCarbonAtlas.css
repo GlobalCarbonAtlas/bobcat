@@ -601,14 +601,14 @@ span.fancytree-title:hover div.complexToolTip {
     margin-left: 5px;
     font-size: 11px;
     margin-top: 0;
-    background-color: blue;
+    /*background-color: blue;*/
 }
 
 #overlayStdDevCaseLeft {
     margin-left: 3px;
     font-size: 12px;
     margin-top: -9px;
-    background-color: red;
+    /*background-color: red;*/
 }
 
 #overlayStdDevCase label{
