@@ -818,6 +818,8 @@ var BCInterfaceW = Class.create( {
         if( $( "#displayOverlayStdDevLeft" ).is( ":checked" ) && this.modelName == 'MEAN' )
         {
             this.selectedBobcat.map.addLayer( uncertaintyLayer );
+            this.selectedBobcat.map.setLayerIndex( uncertaintyLayer, 0 );// We want that uncertainty overlay be at bottom compare with all others overlays layers. See http://gis.stackexchange.com/questions/15238/how-to-define-layer-order-in-openlayers
+            //map.setLayerIndex(dm_wms, 0);
         }
     },
     // End Pascal part.
