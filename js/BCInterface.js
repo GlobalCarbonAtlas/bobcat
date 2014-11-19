@@ -211,10 +211,10 @@ var BCInterfaceW = Class.create( {
         switch( this.variable )
         {
             case "Terrestrial_flux":
-                this.uncertaintyVariable = 'Terrestrial_flux_Uncertainty';
+                this.uncertaintyVariable = 'Terrestrial_fluxUncertainty';
                 break;
             case "Ocean_flux":
-                this.uncertaintyVariable = 'Ocean_flux_Uncertainty';
+                this.uncertaintyVariable = 'Ocean_fluxUncertainty';
                 break;
         }
 
@@ -317,7 +317,7 @@ var BCInterfaceW = Class.create( {
         // Retrieve threshold value f(slider nivel).
         this.thresholdValue = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
         this.thresholdValueForTitleLayer = this.thresholdValue.replace( ' σ', 'stdDev' );
-        this.thresholdValueForPy = this.thresholdValueForTitleLayer.replace( '.', '' );// We quit the '.' to do the .py script.
+        //this.thresholdValueForPy = this.thresholdValueForTitleLayer.replace( '.', '' );// We quit the '.' to do the .py script.
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
     },
@@ -370,6 +370,15 @@ var BCInterfaceW = Class.create( {
     overlayUncertaintyLayers: function( resource )
     {
         // ******** Retrieve parameters to build overlay uncertainty maps (LEFT PART) : **************************
+
+        // Set time step in a good format to call layers vectorized:
+        var format = getFormatDate( this.timeArray );
+        var calendarConverter = new AnyTime.Converter( { format: format } );
+        var newTime = new Date( this.time );
+        var formatedTime = new Date( newTime.getUTCFullYear(), newTime.getUTCMonth(), newTime.getUTCDate(), newTime.getUTCHours(), newTime.getUTCMinutes(), newTime.getUTCSeconds() );
+        var formatedDate4OverlayLayers = calendarConverter.format( formatedTime );
+        //alert(formatedDate4OverlayLayers);// usefull to set timeStep when not long term.
+
         this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
         this.modelType = this.hashResources.get( resource )[1];
         this.modelTypeForPy = this.modelType.replace( 'Models', '' );// To replace LandModels by Land for ex.
@@ -388,7 +397,28 @@ var BCInterfaceW = Class.create( {
         // Retrieve threshold value f(slider nivel).
         this.thresholdValueLeft = $( "#uncertaintySliderValueInputLeft" ).val();// Note : on a besoin de declarer ds initialise this.(...).
         this.thresholdValueForTitleLayer = this.thresholdValueLeft.replace( ' σ', 'stdDev' );
-        this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace( '.', '' );
+        //this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace( '.', '' );
+        switch (this.thresholdValueLeft)
+        {
+            case '0.5 σ':
+                this.thresholdValueForPyLeft = 0;
+                break;
+            case '1 σ':
+                this.thresholdValueForPyLeft = 1;
+                break;
+            case '1.5 σ':
+                this.thresholdValueForPyLeft = 2;
+                break;
+            case '2 σ':
+                this.thresholdValueForPyLeft = 3;
+                break;
+            case '2.5 σ':
+                this.thresholdValueForPyLeft = 4;
+                break;
+            case '2.5 σ':
+                this.thresholdValueForPyLeft = 5;
+                break;
+        }
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
 
@@ -398,7 +428,10 @@ var BCInterfaceW = Class.create( {
                 this.geoserverUrl + '/wms',
         {
             VERSION: '1.1.1',
-            LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
+            //LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
+            LAYERS: 'binary' + this.selectedPeriod + this.hashResources.get( resource )[1] + 'thr-' + this.thresholdValueForPyLeft + '_' + '1' + '_' + this.overlayModeLeft + '_fco2',
+            // binaryyearlymeanOceanModelsthr-1_10_st_fco2
+            // binaryyearlymeanLandModelsthr-1_1_mk_fco2
             transparent: true,
             FORMAT: 'image/png'
         }, {
@@ -407,6 +440,7 @@ var BCInterfaceW = Class.create( {
             singleTile: true,
             visibility: true
         } );
+        alert('binary' + this.selectedPeriod + this.hashResources.get( resource )[1] + 'thr-' + this.thresholdValueForPyLeft + '_' + '1' + '_' + this.overlayModeLeft + '_fco2');
 
         // ***************** Apply visualisations modality to overlay maps f(user choices) about uncertainty information: **************************
         if( $( "#displayOverlayStdDevLeft" ).is( ":checked" ) && this.modelName == 'MEAN' )
@@ -1083,6 +1117,7 @@ var BCInterfaceW = Class.create( {
                     this.maxx = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'maxx' ) );
                     this.miny = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'miny' ) );
                     this.maxy = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'maxy' ) );
+                    // Pascal:
                     this.minx4UncertaintyMaps = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'minx' ) );
                     this.maxx4UncertaintyMaps = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'maxx' ) );
                     this.miny4UncertaintyMaps = parseFloat( $( layer ).children( 'BoundingBox' ).attr( 'miny' ) );
