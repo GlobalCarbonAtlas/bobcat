@@ -127,7 +127,7 @@ var BCInterfaceW = Class.create( {
         $( '.uncertaintyRepresentationRightMenuClass' ).change( jQuery.proxy( function()
         {
             this.getUncertaintyParameters();
-            this.updateUncertMapRightPart( this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy, resource );// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+            this.updateUncertMapRightPart( this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
         }, this ) );
     },
 
@@ -157,7 +157,7 @@ var BCInterfaceW = Class.create( {
     // *********************************************************************************
     // ******************************** UNCERTAINTY MAP ********************************
     // *********************************************************************************
-    // DISPLAY UNCERTAINTY MAPS WITH DATA MODELS MAPS
+    // DISPLAY UNCERTAINTY MAPS ( = stdDev for all modelsType) WITH DATA MODELS MAPS
     // --> Integrate to the same function than normal maps to apply to uncertainty maps resizeAllMaps()
 
     createMapAndUncertaintyMap: function( id, resource, id_uncertainty )
@@ -298,13 +298,22 @@ var BCInterfaceW = Class.create( {
     },
 
     //************** Retrieve parameters to actualise uncertainty maps : ******************** //
-    getUncertaintyParameters: function()
+    getUncertaintyParameters: function() // TODO : actualise to possibility to add all uncertainty maps.
     {
         // Retrieve uncertainty overlay mode to pass the good parameter (masking or stippling mode) in the adaptOverlayMaps() function. Pass like parameter in BCInterface object via initialise().
-        this.modelType = 'Land';
+        //this.modelType = 'Land';
         this.modelName = 'MEAN';
         //this.variable = 'Terrestrial_flux';
-        this.averagingPeriod = 'LT';
+         switch( this.variable )
+                {
+                    case "Terrestrial_flux":
+                        this.uncertaintyVariable = 'Terrestrial_fluxUncertainty';
+                        break;
+                    case "Ocean_flux":
+                        this.uncertaintyVariable = 'Ocean_fluxUncertainty';
+                        break;
+                }
+        //this.averagingPeriod = 'LT';
         //this.timePeriod = 'lt';
         if( $( '#uncertaintyWithMaskingInput' ).is( ':checked' ) )
         {
@@ -318,6 +327,28 @@ var BCInterfaceW = Class.create( {
         this.thresholdValue = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
         this.thresholdValueForTitleLayer = this.thresholdValue.replace( ' σ', 'stdDev' );
         //this.thresholdValueForPy = this.thresholdValueForTitleLayer.replace( '.', '' );// We quit the '.' to do the .py script.
+         switch (this.thresholdValue)
+                {
+                    case '0.5 σ':
+                        this.thresholdValueForPy = 0;
+                        break;
+                    case '1 σ':
+                        this.thresholdValueForPy = 1;
+                        break;
+                    case '1.5 σ':
+                        this.thresholdValueForPy = 2;
+                        break;
+                    case '2 σ':
+                        this.thresholdValueForPy = 3;
+                        break;
+                    case '2.5 σ':
+                        this.thresholdValueForPy = 4;
+                        break;
+                    case '3 σ':
+                        this.thresholdValueForPy = 5;
+                        break;
+                }
+
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
     },
@@ -334,211 +365,22 @@ var BCInterfaceW = Class.create( {
 
     // ******************************** Update all uncertainty maps (right part) : slide or uncertainty overlay modality actions:  ********************************* //
     // Destroy and turn to create map (to apply to stippling/masking event or to change slide  event.
-    updateUncertMapRightPart: function( modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForTitleLayer, thresholdValueForPy, resource )
+    updateUncertMapRightPart: function( modelType, modelName, variable, averagingPeriod, timePeriod, overlayMode, thresholdValueForTitleLayer, thresholdValueForPy)// TODO: actualiser les parametres, certains st a enlever.
     {
-
-
-
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
-             // Set timeSteps to be able to retrieve shp file/GS:
-                                    if (this.hashResources.get( resource )[1] == 'LandModels')
-                                        {
-                                            switch (formatedDate4OverlayLayers)
-                                            {
-                                                case '1980':
-                                                    this.timeSteps = '0';
-                                                    break;
-                                                case '1981':
-                                                    this.timeSteps = '1';
-                                                    break;
-                                                case '1982':
-                                                    this.timeSteps = '2';
-                                                    break;
-                                                case '1983':
-                                                    this.timeSteps = '3';
-                                                    break;
-                                                case '1984':
-                                                    this.timeSteps = '4';
-                                                    break;
-                                                case '1985':
-                                                    this.timeSteps = '5';
-                                                    break;
-                                                case '1986':
-                                                    this.timeSteps = '6';
-                                                    break;
-                                                case '1987':
-                                                    this.timeSteps = '7';
-                                                    break;
-                                                case '1988':
-                                                    this.timeSteps = '8';
-                                                    break;
-                                                case '1989':
-                                                    this.timeSteps = '9';
-                                                    break;
-                                                case '1990':
-                                                    this.timeSteps = '10';
-                                                    break;
-                                                case '1991':
-                                                    this.timeSteps = '11';
-                                                    break;
-                                                case '1992':
-                                                    this.timeSteps = '12';
-                                                    break;
-                                                case '1993':
-                                                    this.timeSteps = '13';
-                                                    break;
-                                                case '1994':
-                                                    this.timeSteps = '14';
-                                                    break;
-                                                case '1995':
-                                                    this.timeSteps = '15';
-                                                    break;
-                                                case '1996':
-                                                    this.timeSteps = '16';
-                                                    break;
-                                                case '1997':
-                                                    this.timeSteps = '17';
-                                                    break;
-                                                case '1998':
-                                                    this.timeSteps = '18';
-                                                    break;
-                                                case '1999':
-                                                    this.timeSteps = '19';
-                                                    break;
-                                                case '2000':
-                                                    this.timeSteps = '20';
-                                                    break;
-                                                case '2001':
-                                                    this.timeSteps = '21';
-                                                    break;
-                                                case '2002':
-                                                    this.timeSteps = '22';
-                                                    break;
-                                                case '2003':
-                                                    this.timeSteps = '23';
-                                                    break;
-                                                case '2004':
-                                                    this.timeSteps = '24';
-                                                    break;
-                                                 case '2005':
-                                                    this.timeSteps = '25';
-                                                    break;
-                                                case '2006':
-                                                    this.timeSteps = '26';
-                                                    break;
-                                                case '2007':
-                                                    this.timeSteps = '27';
-                                                    break;
-                                                case '2008':
-                                                    this.timeSteps = '28';
-                                                    break;
-                                                 case '2009':
-                                                    this.timeSteps = '29';
-                                                    break;
-                                                 case '2010':
-                                                    this.timeSteps = '30';
-                                                    break;
-                                            }
-                                        }
-                                        if (this.hashResources.get( resource )[1] == 'OceanModels')
-                                                    {
-                                                        switch (formatedDate4OverlayLayers)
-                                                        {
-                                                            case '1990':
-                                                                this.timeSteps = '0';
-                                                                break;
-                                                            case '1991':
-                                                                this.timeSteps = '1';
-                                                                break;
-                                                            case '1992':
-                                                                this.timeSteps = '2';
-                                                                break;
-                                                            case '1993':
-                                                                this.timeSteps = '3';
-                                                                break;
-                                                            case '1994':
-                                                                this.timeSteps = '4';
-                                                                break;
-                                                            case '1995':
-                                                                this.timeSteps = '5';
-                                                                break;
-                                                            case '1996':
-                                                                this.timeSteps = '6';
-                                                                break;
-                                                            case '1997':
-                                                                this.timeSteps = '7';
-                                                                break;
-                                                            case '1998':
-                                                                this.timeSteps = '8';
-                                                                break;
-                                                            case '1999':
-                                                                this.timeSteps = '9';
-                                                                break;
-                                                            case '2000':
-                                                                this.timeSteps = '10';
-                                                                break;
-                                                            case '2001':
-                                                                this.timeSteps = '11';
-                                                                break;
-                                                            case '2002':
-                                                                this.timeSteps = '12';
-                                                                break;
-                                                            case '2003':
-                                                                this.timeSteps = '13';
-                                                                break;
-                                                            case '2004':
-                                                                this.timeSteps = '14';
-                                                                break;
-                                                             case '2005':
-                                                                this.timeSteps = '15';
-                                                                break;
-                                                            case '2006':
-                                                                this.timeSteps = '16';
-                                                                break;
-                                                            case '2007':
-                                                                this.timeSteps = '17';
-                                                                break;
-                                                            case '2008':
-                                                                this.timeSteps = '18';
-                                                                break;
-                                                             case '2009':
-                                                                this.timeSteps = '19';
-                                                                break;
-                                                        }
-                                                    }
-                                                    if (this.hashResources.get( resource )[1] == 'Inversions')
-                                                    {
-                                                        switch (formatedDate4OverlayLayers)
-                                                        {
-                                                            case '2001':
-                                                                this.timeSteps = '0';
-                                                                break;
-                                                            case '2002':
-                                                                this.timeSteps = '1';
-                                                                break;
-                                                            case '2003':
-                                                                this.timeSteps = '2';
-                                                                break;
-                                                            case '2004':
-                                                                this.timeSteps = '3';
-                                                                break;
-                                                        }
-                                                    }
-
             var map = this.hashBobcats.get( key ).map;
-            if( map.layers[8] )
+            if ( map.layers[0].name.substr(0,17) ==  "Uncertainty layer") // On veut appliquer cette fonction uniquement aux cartes qui ont des overlay uncertainty.
             {
-
-
-                map.layers[8].destroy();
+                map.layers[0].destroy();
+                console.log('binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.variable + '_' + overlayMode + '_fco2');
                 var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
                         "Uncertainty layer (" + thresholdValueForTitleLayer + ")",
                         this.geoserverUrl + '/wms',
                 {
                     VERSION: '1.1.1',
                     //LAYERS: modelType + '_' + modelName + '_' + variable + '_' + averagingPeriod + '_' + timePeriod + '_' + overlayMode + "_" + thresholdValueForPy + '_fco2',
-                    LAYERS: 'binary' + this.selectedPeriod + this.hashResources.get( resource )[1] + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.variable + '_' + this.overlayModeLeft + '_fco2',
+                    LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.variable + '_' + overlayMode + '_fco2',
                     transparent: true,
                     FORMAT: 'image/png'
                 }, {
@@ -548,6 +390,8 @@ var BCInterfaceW = Class.create( {
                     visibility: true
                 } );
                 map.addLayer( uncertaintyLayerNewThreshold );
+                map.setLayerIndex( uncertaintyLayerNewThreshold, 0 );// We want that uncertainty overlay be at bottom compare with all others overlays layers. See http://gis.stackexchange.com/questions/15238/how-to-define-layer-order-in-openlayers
+
             }
             else console.log( 'No uncertainty layer' );
         }, this ) );
@@ -564,11 +408,11 @@ var BCInterfaceW = Class.create( {
 
         this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
         this.modelType = this.hashResources.get( resource )[1];
-        this.modelTypeForPy = this.modelType.replace( 'Models', '' );// To replace LandModels by Land for ex.
+        //this.modelTypeForPy = this.modelType.replace( 'Models', '' );// To replace LandModels by Land for ex.
         this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
         //this.variable = 'Terrestrial_flux';
-        this.averagingPeriod = 'LT';
-        this.timePeriod = 'lt';
+        //this.averagingPeriod = 'LT';
+        //this.timePeriod = 'lt';
         if( $( '#uncertaintyWithMaskingInputLeft' ).is( ':checked' ) )
         {
             this.overlayModeLeft = 'mk'
@@ -602,7 +446,7 @@ var BCInterfaceW = Class.create( {
                 this.thresholdValueForPyLeft = 5;
                 break;
         }
-        // Set time step in a good format to call layers vectorized:
+        // Set time step in a good format to call layers vectorized: TODO : usefull, use this ????
                 var format = getFormatDate( this.timeArray );
                 var calendarConverter = new AnyTime.Converter( { format: format } );
                 var newTime = new Date( this.time );
@@ -799,13 +643,25 @@ var BCInterfaceW = Class.create( {
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
 
         // ******** Build overlay uncertainty maps (LEFT PART): **************************
-        var uncertaintyLayer = new OpenLayers.Layer.WMS(
+        switch( this.variable )
+                {
+                    case "Terrestrial_flux":
+                        this.uncertaintyVariable = 'Terrestrial_fluxUncertainty';
+                        break;
+                    case "Ocean_flux":
+                        this.uncertaintyVariable = 'Ocean_fluxUncertainty';
+                        break;
+                }
+
+        //var uncertaintyLayer = new OpenLayers.Layer.WMS(
+        this.uncertaintyLayer = new OpenLayers.Layer.WMS(
                 "Uncertainty layer (" + this.thresholdValueForTitleLayer + ")",
                 this.geoserverUrl + '/wms',
         {
             VERSION: '1.1.1',
             //LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
-            LAYERS: 'binary' + this.selectedPeriod + this.hashResources.get( resource )[1] + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.variable + '_' + this.overlayModeLeft + '_fco2',
+            //LAYERS: 'binary' + this.selectedPeriod + this.hashResources.get( resource )[1] + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
+            LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.variable + '_' + this.overlayModeLeft + '_fco2',
             transparent: true,
             FORMAT: 'image/png'
         }, {
@@ -817,9 +673,10 @@ var BCInterfaceW = Class.create( {
         // ***************** Apply visualisations modality to overlay maps f(user choices) about uncertainty information: **************************
         if( $( "#displayOverlayStdDevLeft" ).is( ":checked" ) && this.modelName == 'MEAN' )
         {
-            this.selectedBobcat.map.addLayer( uncertaintyLayer );
-            this.selectedBobcat.map.setLayerIndex( uncertaintyLayer, 0 );// We want that uncertainty overlay be at bottom compare with all others overlays layers. See http://gis.stackexchange.com/questions/15238/how-to-define-layer-order-in-openlayers
-            //map.setLayerIndex(dm_wms, 0);
+            //this.selectedBobcat.map.addLayer( uncertaintyLayer );
+            this.selectedBobcat.map.addLayer( this.uncertaintyLayer );
+            //this.selectedBobcat.map.setLayerIndex( uncertaintyLayer, 0 );// We want that uncertainty overlay be at bottom compare with all others overlays layers. See http://gis.stackexchange.com/questions/15238/how-to-define-layer-order-in-openlayers
+            this.selectedBobcat.map.setLayerIndex( this.uncertaintyLayer, 0 );
         }
     },
     // End Pascal part.
@@ -1753,8 +1610,6 @@ var BCInterfaceW = Class.create( {
             }, this )
         } );
         $( "#slider-nbcolorbands-text" ).html( $( "#slider-nbcolorbands" ).slider( "value" ) );
-
-
         //Pascal part:
         // Slider uncertainty (st dev) threshold part:
         var valueArray = ["0.5 σ", "1 σ", "1.5 σ", "2 σ", "2.5 σ", "3 σ"];// --> To write σ symbols, use this method in js (be in utf8). For html, we could use  <?php echo('&#931'); ?> (cf http://www.webstandards.org/learn/reference/charts/entities/symbol_entities/)
@@ -1769,7 +1624,6 @@ var BCInterfaceW = Class.create( {
             }
         } );
         $( "#uncertaintySliderValueInputLeft" ).val( valueArray[1] );// --> Set default value f(array's values).
-
         // Slider uncertainty (st dev) threshold part: only for the right menu part (= to apply to all maps):
         $( "#uncertaintyLevelSlider" ).slider( {
             value: 1,
@@ -1780,7 +1634,7 @@ var BCInterfaceW = Class.create( {
             {
                 $( "#uncertaintySliderValueInput" ).val( valueArray[ui.value] );// If we want to put in input different value (my case): relation with slider's values done by index array.
                 this.getUncertaintyParameters();
-                this.updateUncertMapRightPart( this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy, resource );
+                this.updateUncertMapRightPart( this.modelType, this.modelName, this.variable, this.averagingPeriod, this.timePeriod, this.overlayMode, this.thresholdValueForTitleLayer, this.thresholdValueForPy);
             }, this )
         } );
         $( "#uncertaintySliderValueInput" ).val( valueArray[1] );// --> Set default value f(array's values).
