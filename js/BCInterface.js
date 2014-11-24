@@ -126,8 +126,16 @@ var BCInterfaceW = Class.create( {
         // Action to do when user switch to mask area or to stipple area (radio buttons) f(parameters to set).
         $( '.uncertaintyRepresentationRightMenuClass' ).change( jQuery.proxy( function()
         {
-            this.getUncertaintyParameters();
-            this.updateUncertMapRightPart( );// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+            //this.getUncertaintyParameters();// Pas la peine de l'appeler, les variables (this. ...) ont déjà été définies lors de création carte donc réutilisables.
+            if( $( '#uncertaintyWithMasking' ).is( ':checked' ) )
+                                    {
+                                        this.overlayMode = 'mk'
+                                    }
+                                    else if( $( '#uncertaintyWithStippling' ).is( ':checked' ) )
+                                    {
+                                        this.overlayMode = 'st'
+                                    }
+            this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayer );// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
         }, this ) );
     },
 
@@ -300,7 +308,7 @@ var BCInterfaceW = Class.create( {
     //************** Retrieve parameters to actualise uncertainty maps : ******************** //
     getUncertaintyParameters: function(resource) // TODO : actualise to possibility to add all uncertainty maps.
     {
-        // ------------------------- Define parameters for left menu (overlay uncertainty information: --------------------------------------------- //
+        // ------------------------- Define parameters for left and right  menu (overlay uncertainty information + update all: --------------------------------------------- //
         // ******** Retrieve parameters to build overlay uncertainty maps (LEFT PART) : **************************
                 this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
                 this.modelType = this.hashResources.get( resource )[1];
@@ -535,11 +543,7 @@ var BCInterfaceW = Class.create( {
                                             break;
                                     }
                                 }
-
-                // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
-                // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
-
-                // ******** Build overlay uncertainty maps (LEFT PART): **************************
+                // Set uncertainty variable:
                 switch( this.variable )
                         {
                             case "Terrestrial_flux":
@@ -549,52 +553,36 @@ var BCInterfaceW = Class.create( {
                                 this.uncertaintyVariable = 'Ocean_fluxUncertainty';
                                 break;
                         }
-
-
-        // ------------------------- Define parameters for right menu (update all overlay uncertainty information): --------------------------------------------- //
-
-
-        // Retrieve uncertainty overlay mode to pass the good parameter (masking or stippling mode) in the adaptOverlayMaps() function. Pass like parameter in BCInterface object via initialise().
-        //this.modelType = 'Land';
-        // Set timeSteps in the AV period longterm case (only one):
-
-        // Set overlayMode:
-        if( $( '#uncertaintyWithMaskingInput' ).is( ':checked' ) )
-        {
-            this.overlayMode = 'mk'
-        }
-        else if( $( '#uncertaintyWithStipplingInput' ).is( ':checked' ) )
-        {
-            this.overlayMode = 'st'
-        }
-        // Retrieve threshold value f(slider nivel).
-        this.thresholdValue = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
-        this.thresholdValueForTitleLayer = this.thresholdValue.replace( ' σ', 'stdDev' );
-        //this.thresholdValueForPy = this.thresholdValueForTitleLayer.replace( '.', '' );// We quit the '.' to do the .py script.
-         switch (this.thresholdValue)
-                {
-                    case '0.5 σ':
-                        this.thresholdValueForPy = 0;
-                        break;
-                    case '1 σ':
-                        this.thresholdValueForPy = 1;
-                        break;
-                    case '1.5 σ':
-                        this.thresholdValueForPy = 2;
-                        break;
-                    case '2 σ':
-                        this.thresholdValueForPy = 3;
-                        break;
-                    case '2.5 σ':
-                        this.thresholdValueForPy = 4;
-                        break;
-                    case '3 σ':
-                        this.thresholdValueForPy = 5;
-                        break;
-                }
-
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
+
+
+        // ------------------------- Define parameters for right  menu only: --------------------------------------------- //
+
+        this.thresholdValue = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
+                                                                this.thresholdValueForTitleLayer = this.thresholdValue.replace( ' σ', 'stdDev' );
+                                                                //this.thresholdValueForPy = this.thresholdValueForTitleLayer.replace( '.', '' );// We quit the '.' to do the .py script.
+                                                                switch (this.thresholdValue)
+                                                                {
+                                                                            case '0.5 σ':
+                                                                                this.thresholdValueForPy = 0;
+                                                                                break;
+                                                                            case '1 σ':
+                                                                                this.thresholdValueForPy = 1;
+                                                                                break;
+                                                                            case '1.5 σ':
+                                                                                this.thresholdValueForPy = 2;
+                                                                                break;
+                                                                            case '2 σ':
+                                                                                this.thresholdValueForPy = 3;
+                                                                                break;
+                                                                            case '2.5 σ':
+                                                                                this.thresholdValueForPy = 4;
+                                                                                break;
+                                                                            case '3 σ':
+                                                                                this.thresholdValueForPy = 5;
+                                                                                break;
+                                                                }
     },
 
     // --> Pascal : Sens de cette fonction : Qd on psse sur une carte, elle est selected dc on pet appliquer fonction à cette carte (ajouter couches info, synchro/autres cartes, ... dc important !)
@@ -609,22 +597,23 @@ var BCInterfaceW = Class.create( {
 
     // ******************************** Update all uncertainty maps (right part) : slide or uncertainty overlay modality actions:  ********************************* //
     // Destroy and turn to create map (to apply to stippling/masking event or to change slide  event.
-    updateUncertMapRightPart: function( )// TODO: actualiser les parametres, certains st a enlever.
+    updateUncertMapRightPart: function( selectedPeriod, modelType, thresholdValueForPy, timeSteps, uncertaintyVariable, overlayMode, thresholdValueForTitleLayer)// TODO: actualiser les parametres, certains st a enlever.
     {
+
+        console.log('Update' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayMode + '_fco2');
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
             var map = this.hashBobcats.get( key ).map;
-            console.log('Update' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.uncertaintyVariable + '_' + overlayMode + '_fco2');
             if ( map.layers[0].name.substr(0,17) ==  "Uncertainty layer") // On veut appliquer cette fonction uniquement aux cartes qui ont des overlay uncertainty.
             {
+
                 map.layers[0].destroy();
                 var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
                         "Uncertainty layer (" + thresholdValueForTitleLayer + ")",
                         this.geoserverUrl + '/wms',
                 {
                     VERSION: '1.1.1',
-                    //LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.variable + '_' + overlayMode + '_fco2',
-                    LAYERS: 'binary' + this.selectedPeriod  + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.uncertaintyVariable + '_' + overlayMode + '_fco2',
+                    LAYERS: 'binary' + this.selectedPeriod  + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayMode + '_fco2',
                     transparent: true,
                     FORMAT: 'image/png'
                 }, {
@@ -689,7 +678,6 @@ var BCInterfaceW = Class.create( {
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
-        console.log(mapShortTitle);
         var options = {container: $( '#printable' ),
             id: id,
             mapTitle: mapTitle,
@@ -1619,6 +1607,7 @@ var BCInterfaceW = Class.create( {
             }
         } );
         $( "#uncertaintySliderValueInputLeft" ).val( valueArray[1] );// --> Set default value f(array's values).
+
         // Slider uncertainty (st dev) threshold part: only for the right menu part (= to apply to all maps):
         $( "#uncertaintyLevelSlider" ).slider( {
             value: 1,
@@ -1628,8 +1617,9 @@ var BCInterfaceW = Class.create( {
             slide: jQuery.proxy( function( event, ui )
             {
                 $( "#uncertaintySliderValueInput" ).val( valueArray[ui.value] );// If we want to put in input different value (my case): relation with slider's values done by index array.
-                this.getUncertaintyParameters();
-                this.updateUncertMapRightPart( );
+
+                this.getUncertaintyParameters(resource);
+                this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayer );
             }, this )
         } );
         $( "#uncertaintySliderValueInput" ).val( valueArray[1] );// --> Set default value f(array's values).
