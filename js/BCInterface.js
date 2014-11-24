@@ -127,14 +127,6 @@ var BCInterfaceW = Class.create( {
         $( '.uncertaintyRepresentationRightMenuClass' ).change( jQuery.proxy( function()
         {
             //this.getUncertaintyParameters();// Pas la peine de l'appeler, les variables (this. ...) ont déjà été définies lors de création carte donc réutilisables.
-            if( $( '#uncertaintyWithMasking' ).is( ':checked' ) )
-                                    {
-                                        this.overlayMode = 'mk'
-                                    }
-                                    else if( $( '#uncertaintyWithStippling' ).is( ':checked' ) )
-                                    {
-                                        this.overlayMode = 'st'
-                                    }
             this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayer );// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
         }, this ) );
     },
@@ -599,10 +591,43 @@ var BCInterfaceW = Class.create( {
     // Destroy and turn to create map (to apply to stippling/masking event or to change slide  event.
     updateUncertMapRightPart: function( selectedPeriod, modelType, thresholdValueForPy, timeSteps, uncertaintyVariable, overlayMode, thresholdValueForTitleLayer)// TODO: actualiser les parametres, certains st a enlever.
     {
-
-        console.log('Update' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayMode + '_fco2');
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
+        // 2 parameters especific to right part: overlayMode and threshold values --> Others values set in getUncertaintyParameters (when map done).
+           // OverlayMode
+           if( $( '#uncertaintyWithMaskingInput' ).is( ':checked' ) )
+                                    {
+                                        this.overlayMode = 'mk'
+                                    }
+                                    else if( $( '#uncertaintyWithStipplingInput' ).is( ':checked' ) )
+                                    {
+                                        this.overlayMode = 'st'
+                                    }
+          // Threshold:
+        this.thresholdValueSliderRight = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
+        this.thresholdValueForTitleLayer = this.thresholdValueSliderRight.replace( ' σ', 'stdDev' );
+        switch (this.thresholdValueSliderRight)
+        {
+                case '0.5 σ':
+                        this.thresholdValueForPy = 0;
+                break;
+                case '1 σ':
+                        this.thresholdValueForPy = 1;
+                break;
+                case '1.5 σ':
+                        this.thresholdValueForPy = 2;
+                break;
+                case '2 σ':
+                        this.thresholdValueForPy = 3;
+                break;
+                case '2.5 σ':
+                        this.thresholdValueForPy = 4;
+                break;
+                case '3 σ':
+                        this.thresholdValueForPy = 5;
+                break;
+        }
+
             var map = this.hashBobcats.get( key ).map;
             if ( map.layers[0].name.substr(0,17) ==  "Uncertainty layer") // On veut appliquer cette fonction uniquement aux cartes qui ont des overlay uncertainty.
             {
@@ -1617,8 +1642,6 @@ var BCInterfaceW = Class.create( {
             slide: jQuery.proxy( function( event, ui )
             {
                 $( "#uncertaintySliderValueInput" ).val( valueArray[ui.value] );// If we want to put in input different value (my case): relation with slider's values done by index array.
-
-                this.getUncertaintyParameters(resource);
                 this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayer );
             }, this )
         } );
