@@ -127,7 +127,7 @@ var BCInterfaceW = Class.create( {
         $( '.uncertaintyRepresentationRightMenuClass' ).change( jQuery.proxy( function()
         {
             //this.getUncertaintyParameters();// Pas la peine de l'appeler, les variables (this. ...) ont déjà été définies lors de création carte donc réutilisables.
-            this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+            this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayerRight);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
         }, this ) );
     },
 
