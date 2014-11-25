@@ -127,7 +127,7 @@ var BCInterfaceW = Class.create( {
         $( '.uncertaintyRepresentationRightMenuClass' ).change( jQuery.proxy( function()
         {
             //this.getUncertaintyParameters();// Pas la peine de l'appeler, les variables (this. ...) ont déjà été définies lors de création carte donc réutilisables.
-            this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayer );// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+            this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
         }, this ) );
     },
 
@@ -316,7 +316,7 @@ var BCInterfaceW = Class.create( {
                 }
                 // Retrieve threshold value f(slider nivel).
                 this.thresholdValueLeft = $( "#uncertaintySliderValueInputLeft" ).val();// Note : on a besoin de declarer ds initialise this.(...).
-                this.thresholdValueForTitleLayer = this.thresholdValueLeft.replace( ' σ', 'stdDev' );
+                this.thresholdValueForTitleLayerLeft = this.thresholdValueLeft.replace( ' σ', 'stdDev' );
                 //this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace( '.', '' );
                 switch (this.thresholdValueLeft)
                 {
@@ -547,34 +547,6 @@ var BCInterfaceW = Class.create( {
                         }
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
-
-
-        // ------------------------- Define parameters for right  menu only: --------------------------------------------- //
-
-        this.thresholdValue = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
-                                                                this.thresholdValueForTitleLayer = this.thresholdValue.replace( ' σ', 'stdDev' );
-                                                                //this.thresholdValueForPy = this.thresholdValueForTitleLayer.replace( '.', '' );// We quit the '.' to do the .py script.
-                                                                switch (this.thresholdValue)
-                                                                {
-                                                                            case '0.5 σ':
-                                                                                this.thresholdValueForPy = 0;
-                                                                                break;
-                                                                            case '1 σ':
-                                                                                this.thresholdValueForPy = 1;
-                                                                                break;
-                                                                            case '1.5 σ':
-                                                                                this.thresholdValueForPy = 2;
-                                                                                break;
-                                                                            case '2 σ':
-                                                                                this.thresholdValueForPy = 3;
-                                                                                break;
-                                                                            case '2.5 σ':
-                                                                                this.thresholdValueForPy = 4;
-                                                                                break;
-                                                                            case '3 σ':
-                                                                                this.thresholdValueForPy = 5;
-                                                                                break;
-                                                                }
     },
 
     // --> Pascal : Sens de cette fonction : Qd on psse sur une carte, elle est selected dc on pet appliquer fonction à cette carte (ajouter couches info, synchro/autres cartes, ... dc important !)
@@ -589,11 +561,11 @@ var BCInterfaceW = Class.create( {
 
     // ******************************** Update all uncertainty maps (right part) : slide or uncertainty overlay modality actions:  ********************************* //
     // Destroy and turn to create map (to apply to stippling/masking event or to change slide  event.
-    updateUncertMapRightPart: function( selectedPeriod, modelType, thresholdValueForPy, timeSteps, uncertaintyVariable, overlayMode, thresholdValueForTitleLayer)// TODO: actualiser les parametres, certains st a enlever.
+    updateUncertMapRightPart: function( selectedPeriod, modelType, thresholdValueForPy, timeSteps, uncertaintyVariable, overlayMode, thresholdValueForTitleLayerRight)// TODO: actualiser les parametres, certains st a enlever.
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
-        // 2 parameters especific to right part: overlayMode and threshold values --> Others values set in getUncertaintyParameters (when map done).
+        // 2 parameters especific to right part: overlayMode and threshold values --> Others values usefull to update, right part: set in getUncertaintyParameters (when map done).
            // OverlayMode
            if( $( '#uncertaintyWithMaskingInput' ).is( ':checked' ) )
                                     {
@@ -603,30 +575,7 @@ var BCInterfaceW = Class.create( {
                                     {
                                         this.overlayMode = 'st'
                                     }
-          // Threshold:
-        this.thresholdValueSliderRight = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
-        this.thresholdValueForTitleLayer = this.thresholdValueSliderRight.replace( ' σ', 'stdDev' );
-        switch (this.thresholdValueSliderRight)
-        {
-                case '0.5 σ':
-                        this.thresholdValueForPy = 0;
-                break;
-                case '1 σ':
-                        this.thresholdValueForPy = 1;
-                break;
-                case '1.5 σ':
-                        this.thresholdValueForPy = 2;
-                break;
-                case '2 σ':
-                        this.thresholdValueForPy = 3;
-                break;
-                case '2.5 σ':
-                        this.thresholdValueForPy = 4;
-                break;
-                case '3 σ':
-                        this.thresholdValueForPy = 5;
-                break;
-        }
+
 
             var map = this.hashBobcats.get( key ).map;
             if ( map.layers[0].name.substr(0,17) ==  "Uncertainty layer") // On veut appliquer cette fonction uniquement aux cartes qui ont des overlay uncertainty.
@@ -634,7 +583,7 @@ var BCInterfaceW = Class.create( {
 
                 map.layers[0].destroy();
                 var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
-                        "Uncertainty layer (" + thresholdValueForTitleLayer + ")",
+                        "Uncertainty layer (" + thresholdValueForTitleLayerRight + ")",
                         this.geoserverUrl + '/wms',
                 {
                     VERSION: '1.1.1',
@@ -662,9 +611,9 @@ var BCInterfaceW = Class.create( {
     // LEFT MENU PART
     overlayUncertaintyLayers: function()
     {
-        console.log( 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2' );
+        //console.log( 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2' );
         this.uncertaintyLayer = new OpenLayers.Layer.WMS(
-                "Uncertainty layer (" + this.thresholdValueForTitleLayer + ")",
+                "Uncertainty layer (" + this.thresholdValueForTitleLayerLeft + ")",
                 this.geoserverUrl + '/wms',
         {
             VERSION: '1.1.1',
@@ -1642,7 +1591,31 @@ var BCInterfaceW = Class.create( {
             slide: jQuery.proxy( function( event, ui )
             {
                 $( "#uncertaintySliderValueInput" ).val( valueArray[ui.value] );// If we want to put in input different value (my case): relation with slider's values done by index array.
-                this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayer );
+                // Threshold: --> Set here and then use in updateUncertMapRightPart (pass like parameters).
+                        this.thresholdValueSliderRight = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
+                        this.thresholdValueForTitleLayerRight = this.thresholdValueSliderRight.replace( ' σ', 'stdDev' );
+                        switch (this.thresholdValueSliderRight)
+                        {
+                                case '0.5 σ':
+                                        this.thresholdValueForPy = 0;
+                                break;
+                                case '1 σ':
+                                        this.thresholdValueForPy = 1;
+                                break;
+                                case '1.5 σ':
+                                        this.thresholdValueForPy = 2;
+                                break;
+                                case '2 σ':
+                                        this.thresholdValueForPy = 3;
+                                break;
+                                case '2.5 σ':
+                                        this.thresholdValueForPy = 4;
+                                break;
+                                case '3 σ':
+                                        this.thresholdValueForPy = 5;
+                                break;
+                        }
+                this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayerRight );
             }, this )
         } );
         $( "#uncertaintySliderValueInput" ).val( valueArray[1] );// --> Set default value f(array's values).
