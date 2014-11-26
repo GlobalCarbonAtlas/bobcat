@@ -127,7 +127,7 @@ var BCInterfaceW = Class.create( {
         $( '.uncertaintyRepresentationRightMenuClass' ).change( jQuery.proxy( function()
         {
             //this.getUncertaintyParameters();// Pas la peine de l'appeler, les variables (this. ...) ont déjà été définies lors de création carte donc réutilisables.
-            this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayerRight);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
+            this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.indexTimeArray, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayerRight);// this.overlayMode defini comme parametre de BCI et passe a adaptOverlayMaps: function(overlayMode)
         }, this ) );
     },
 
@@ -341,198 +341,6 @@ var BCInterfaceW = Class.create( {
                 }
                 // Set time step to call .shp files (uncertainty files) in GS: --> In these files, time steps information  = index of numTimeSTeps.
                 this.indexTimeArray = this.timeArray.indexOf(this.time);
-
-
-                // Set timeSteps to be able to retrieve shp file/GS:
-                if (this.selectedPeriod == 'longterm')
-                    {
-                        this.timeSteps = '0';
-                    }
-                    /*
-                if (this.hashResources.get( resource )[1] == 'LandModels')
-                    {
-                        switch (formatedDate4OverlayLayers)
-                        {
-                            case '1980':
-                                this.timeSteps = '0';
-                                break;
-                            case '1981':
-                                this.timeSteps = '1';
-                                break;
-                            case '1982':
-                                this.timeSteps = '2';
-                                break;
-                            case '1983':
-                                this.timeSteps = '3';
-                                break;
-                            case '1984':
-                                this.timeSteps = '4';
-                                break;
-                            case '1985':
-                                this.timeSteps = '5';
-                                break;
-                            case '1986':
-                                this.timeSteps = '6';
-                                break;
-                            case '1987':
-                                this.timeSteps = '7';
-                                break;
-                            case '1988':
-                                this.timeSteps = '8';
-                                break;
-                            case '1989':
-                                this.timeSteps = '9';
-                                break;
-                            case '1990':
-                                this.timeSteps = '10';
-                                break;
-                            case '1991':
-                                this.timeSteps = '11';
-                                break;
-                            case '1992':
-                                this.timeSteps = '12';
-                                break;
-                            case '1993':
-                                this.timeSteps = '13';
-                                break;
-                            case '1994':
-                                this.timeSteps = '14';
-                                break;
-                            case '1995':
-                                this.timeSteps = '15';
-                                break;
-                            case '1996':
-                                this.timeSteps = '16';
-                                break;
-                            case '1997':
-                                this.timeSteps = '17';
-                                break;
-                            case '1998':
-                                this.timeSteps = '18';
-                                break;
-                            case '1999':
-                                this.timeSteps = '19';
-                                break;
-                            case '2000':
-                                this.timeSteps = '20';
-                                break;
-                            case '2001':
-                                this.timeSteps = '21';
-                                break;
-                            case '2002':
-                                this.timeSteps = '22';
-                                break;
-                            case '2003':
-                                this.timeSteps = '23';
-                                break;
-                            case '2004':
-                                this.timeSteps = '24';
-                                break;
-                             case '2005':
-                                this.timeSteps = '25';
-                                break;
-                            case '2006':
-                                this.timeSteps = '26';
-                                break;
-                            case '2007':
-                                this.timeSteps = '27';
-                                break;
-                            case '2008':
-                                this.timeSteps = '28';
-                                break;
-                             case '2009':
-                                this.timeSteps = '29';
-                                break;
-                             case '2010':
-                                this.timeSteps = '30';
-                                break;
-                        }
-                    }
-                    if (this.hashResources.get( resource )[1] == 'OceanModels')
-                                {
-                                    switch (formatedDate4OverlayLayers)
-                                    {
-                                        case '1990':
-                                            this.timeSteps = '0';
-                                            break;
-                                        case '1991':
-                                            this.timeSteps = '1';
-                                            break;
-                                        case '1992':
-                                            this.timeSteps = '2';
-                                            break;
-                                        case '1993':
-                                            this.timeSteps = '3';
-                                            break;
-                                        case '1994':
-                                            this.timeSteps = '4';
-                                            break;
-                                        case '1995':
-                                            this.timeSteps = '5';
-                                            break;
-                                        case '1996':
-                                            this.timeSteps = '6';
-                                            break;
-                                        case '1997':
-                                            this.timeSteps = '7';
-                                            break;
-                                        case '1998':
-                                            this.timeSteps = '8';
-                                            break;
-                                        case '1999':
-                                            this.timeSteps = '9';
-                                            break;
-                                        case '2000':
-                                            this.timeSteps = '10';
-                                            break;
-                                        case '2001':
-                                            this.timeSteps = '11';
-                                            break;
-                                        case '2002':
-                                            this.timeSteps = '12';
-                                            break;
-                                        case '2003':
-                                            this.timeSteps = '13';
-                                            break;
-                                        case '2004':
-                                            this.timeSteps = '14';
-                                            break;
-                                         case '2005':
-                                            this.timeSteps = '15';
-                                            break;
-                                        case '2006':
-                                            this.timeSteps = '16';
-                                            break;
-                                        case '2007':
-                                            this.timeSteps = '17';
-                                            break;
-                                        case '2008':
-                                            this.timeSteps = '18';
-                                            break;
-                                         case '2009':
-                                            this.timeSteps = '19';
-                                            break;
-                                    }
-                                }
-                                if (this.hashResources.get( resource )[1] == 'Inversions')
-                                {
-                                    switch (formatedDate4OverlayLayers)
-                                    {
-                                        case '2001':
-                                            this.timeSteps = '0';
-                                            break;
-                                        case '2002':
-                                            this.timeSteps = '1';
-                                            break;
-                                        case '2003':
-                                            this.timeSteps = '2';
-                                            break;
-                                        case '2004':
-                                            this.timeSteps = '3';
-                                            break;
-                                    }
-                                }
-                                */
                 // Set uncertainty variable:
                 switch( this.variable )
                         {
@@ -585,7 +393,7 @@ var BCInterfaceW = Class.create( {
                         this.geoserverUrl + '/wms',
                 {
                     VERSION: '1.1.1',
-                    LAYERS: 'binary' + this.selectedPeriod  + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayMode + '_fco2',
+                    LAYERS: 'binary' + this.selectedPeriod  + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.indexTimeArray + this.uncertaintyVariable + '_' + this.overlayMode + '_fco2',
                     transparent: true,
                     FORMAT: 'image/png'
                 }, {
@@ -609,14 +417,11 @@ var BCInterfaceW = Class.create( {
     // LEFT MENU PART
     overlayUncertaintyLayers: function()
     {
-        //console.log( 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2' );
         this.uncertaintyLayer = new OpenLayers.Layer.WMS(
                 "Uncertainty layer (" + this.thresholdValueForTitleLayerLeft + ")",
                 this.geoserverUrl + '/wms',
         {
             VERSION: '1.1.1',
-            //LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
-            //LAYERS: 'binary' + this.selectedPeriod + this.hashResources.get( resource )[1] + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
             LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.indexTimeArray + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
             transparent: true,
             FORMAT: 'image/png'
@@ -1613,7 +1418,7 @@ var BCInterfaceW = Class.create( {
                                         this.thresholdValueForPy = 5;
                                 break;
                         }
-                this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.timeSteps, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayerRight );
+                this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.indexTimeArray, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayerRight );
             }, this )
         } );
         $( "#uncertaintySliderValueInput" ).val( valueArray[1] );// --> Set default value f(array's values).
