@@ -339,19 +339,16 @@ var BCInterfaceW = Class.create( {
                         this.thresholdValueForPyLeft = 5;
                         break;
                 }
-                // Set time step in a good format to call layers vectorized: TODO : usefull, use this ????
-                        var format = getFormatDate( this.timeArray );
-                        var calendarConverter = new AnyTime.Converter( { format: format } );
-                        var newTime = new Date( this.time );
-                        var formatedTime = new Date( newTime.getUTCFullYear(), newTime.getUTCMonth(), newTime.getUTCDate(), newTime.getUTCHours(), newTime.getUTCMinutes(), newTime.getUTCSeconds() );
-                        var formatedDate4OverlayLayers = calendarConverter.format( formatedTime );
-                        //alert(formatedDate4OverlayLayers);// usefull to set timeStep when not long term.
+                // Set time step to call .shp files (uncertainty files) in GS: --> In these files, time steps information  = index of numTimeSTeps.
+                this.indexTimeArray = this.timeArray.indexOf(this.time);
+
 
                 // Set timeSteps to be able to retrieve shp file/GS:
                 if (this.selectedPeriod == 'longterm')
                     {
                         this.timeSteps = '0';
                     }
+                    /*
                 if (this.hashResources.get( resource )[1] == 'LandModels')
                     {
                         switch (formatedDate4OverlayLayers)
@@ -535,6 +532,7 @@ var BCInterfaceW = Class.create( {
                                             break;
                                     }
                                 }
+                                */
                 // Set uncertainty variable:
                 switch( this.variable )
                         {
@@ -619,7 +617,7 @@ var BCInterfaceW = Class.create( {
             VERSION: '1.1.1',
             //LAYERS: this.modelTypeForPy + '_' + this.modelName + '_' + this.variable + '_' + this.averagingPeriod + '_' + this.timePeriod + '_' + this.overlayModeLeft + "_" + this.thresholdValueForPyLeft + '_fco2',
             //LAYERS: 'binary' + this.selectedPeriod + this.hashResources.get( resource )[1] + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
-            LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.timeSteps + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
+            LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.indexTimeArray + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
             transparent: true,
             FORMAT: 'image/png'
         }, {
