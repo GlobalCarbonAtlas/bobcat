@@ -502,7 +502,7 @@ var Bobcat = Class.create( {
     onClickDisplayMetadataInfoGVQ: function()
     {
         $.ajax( {
-            url: "http://webportals.ipsl.jussieu.fr/ScientificApps/gitPascal/bobcat/Bobcat_v22/metadataAccess.html",
+            url: "formAndMetadataRepresentation/metadataAccess.php",
             success: jQuery.proxy( function( data )
             {
                 $( "<div title='Metadata of the file: " + this.mapTitle + "'>" + data + "</div>" ).dialog( { position: { my: "center", at: "center", of: "#" + this.id}, width: 500, height: 300, maxHeight: 300, maxWidth: 500 } );
