@@ -19,16 +19,12 @@
         // Menu click
         $( ".stepMenu" ).click( function( d )
         {
-            $( "#submitFormButon" ).hide();
             $( "#steps li" ).removeClass( "current" );
             $( this ).addClass( "current" );
 
             var divToShowId = d.currentTarget.id.replace( "Desc", "" );
             $( ".fieldset1" ).before().hide();
             $( "#" + divToShowId + " .fieldset1" ).show();
-
-            if( "stepDesc5" == d.currentTarget.id )
-                $( "#submitFormButon" ).show();
 
             hideValidators();
         } );

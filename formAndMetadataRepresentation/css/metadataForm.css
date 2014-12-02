@@ -57,7 +57,6 @@ span {
 li.current {
     color: rgb(250, 80, 0);
     font-style: italic;
-    font-size: 13.5px;
 }
 
 #mandatoryFieldIndication {
