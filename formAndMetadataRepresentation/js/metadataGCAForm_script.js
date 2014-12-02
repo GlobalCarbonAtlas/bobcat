@@ -61,8 +61,8 @@ function createContributorDiv( containerId, index )
             '<option value="Processor">Processor</option>' +
             '</select>' +
             '</div>' +
-	    '<div class="col-md-24 col-sm-24">' +
-	    '<div class="col-md-10 col-sm-10">' +
+            '<div class="col-md-24 col-sm-24">' +
+            '<div class="col-md-10 col-sm-10">' +
             '<div id="dataProducerInfoPositionText' + index + '" class="label2 form-control-l cursorPointer" title= "Eg: PhD student, Professor, ...">Position:</div>' +
             '<input id="dataProducerInfoPositionInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoPosition' + index + '" type="text">' +
             '</div>' +
@@ -143,19 +143,19 @@ function manageContributorsDiv()
 function getProductDetailsStepRules( index )
 {
     return [
-    	{input: '#textAreaProductDetails' + index + '',  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
-    	//{input: '#addDocProductDetailsStepInput' + index + '', message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
+        {input: '#textAreaProductDetails' + index + '',  message: "This field is mandatory", action: "blur, keyup", rule: "required" },
+        //{input: '#addDocProductDetailsStepInput' + index + '', message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
     ];
 }
 
 function createProductDescrStepDiv( containerId, index )
 {
     var containerDiv = $( '<div id="productDetailsDescriptionStepContainer' + index + '" class="row col-md-24 col-sm-24">' +
-		'<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div> (*):</div>' +
-                '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" class= "form-control-l"></textarea>' +
-    '</div>');
+            '<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div> (*):</div>' +
+            '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" class= "form-control-l"></textarea>' +
+            '</div>' );
 
-    $("#" + containerId).append(containerDiv);
+    $( "#" + containerId ).append( containerDiv );
 
     // Placeholder indications:
     $( "#textAreaProductDetails" + index ).jqxInput( {placeHolder: "If you can't fill in this part please indicate why you don't have this information"} );
@@ -170,19 +170,19 @@ function createProductDescrStepDiv( containerId, index )
 
     manageProductDetailsStepDiv();
 
-	// ProductDetailsStep's rules
-	     var productDetailsStepRulesArray = getProductDetailsStepRules( index );
-	     addRulesToRulesForm(productDetailsStepRulesArray);
+    // ProductDetailsStep's rules
+    var productDetailsStepRulesArray = getProductDetailsStepRules( index );
+    addRulesToRulesForm( productDetailsStepRulesArray );
 }
 
 function removeProductDetailsStepDiv( divName, index )
 {
-    	$( "#" + divName + "" + index ).remove();
-    	manageProductDetailsStepDiv();
-    	$( '#metadataForm' ).jqxValidator( 'hide' );
+    $( "#" + divName + "" + index ).remove();
+    manageProductDetailsStepDiv();
+    $( '#metadataForm' ).jqxValidator( 'hide' );
 
-    	var productDetailsStepRulesArray = getProductDetailsStepRules( index );
-    	removeRulesToRulesForm(productDetailsStepRulesArray);
+    var productDetailsStepRulesArray = getProductDetailsStepRules( index );
+    removeRulesToRulesForm( productDetailsStepRulesArray );
 }
 
 function manageProductDetailsStepDiv()
@@ -221,9 +221,9 @@ function getReferenceRules( index )
             var day = d.getDate();
             var month = d.getMonth() + 1;
             var year = d.getFullYear();
-            var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" +  (10 > day ? "0" : "") + day;
-		
-            return $("#citationDateBookInput" +index).val() != complete_d;
+            var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (10 > day ? "0" : "") + day;
+
+            return $( "#citationDateBookInput" + index ).val() != complete_d;
         }},
         {input: "#citationAuthorNameInput" + index, message: "This field is mandatory", action: "blur, keyup", rule: "required" },
         {input: "#citationAuthorNameInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
@@ -275,13 +275,13 @@ function createReferenceFieldset( containerIdRef, index )
             '<div class="label2 form-control-xxl" id="citationAuthorOrganisationText' + index + '">Organisation name:</div>' +
             '<input id="citationAuthorOrganisationInput' + index + '" class="form-control form-control-xl" name="citationAuthorOrganisation' + index + '" type="text">' +
             '</div>' +
-	    '</div>' +
-     	    '<div class="col-md-24 col-sm-24">' +
-	    '<div class="col-md-13 col-sm-13">' +
+            '</div>' +
+            '<div class="col-md-24 col-sm-24">' +
+            '<div class="col-md-13 col-sm-13">' +
             '<div class="label2 cursorPointer form-control-l" id="citationAuthorPositionText' + index + '" title= "Eg: PhD student, Professor, ...">Position:</div>' +
             '<input id="citationAuthorPositionInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorPosition' + index + '" type="text">' +
             '</div>' +
-	    '</div>' +
+            '</div>' +
 
             '<div class="col-md-24 col-sm-24">' +
             '<div class="col-md-13 col-sm-13">' +
@@ -321,22 +321,22 @@ function createReferenceFieldset( containerIdRef, index )
             '</fieldset>' );
 
     $( "#" + containerIdRef ).append( containerDivRef );
-  
+
     // Date
     $( "#citationDateBookInput" + index ).jqxDateTimeInput( { width: '100px', height: '20px', formatString: "yyyy"} );
 
     // Name input
     $( "#citationAuthorNameInput" + index ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
-    
+
     // Position input
     $( "#citationAuthorPositionInput" + index ).jqxInput( {placeHolder: "Eg: PhD student, ..."} );
-	
+
     // Mail input
     $( "#citationOnlineRessourceInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
 
     // DOI
     $( "#citationDOIInput" + index ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
-	
+
     // Remove button
     $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton cursorPointer" title= "Click to delete this reference">' );
     $( "#removeReferenceInfoButton" + index ).click( function()
@@ -381,10 +381,10 @@ function manageReferencesDiv()
         $( "#referencesContainerButton" ).hide();
     else
         $( "#referencesContainerButton" ).show();
-     // Hide or show the "remove Reference button"
-     if( 1 < $( 'input[id^="citationTitleInput"]' ).length )
+    // Hide or show the "remove Reference button"
+    if( 1 < $( 'input[id^="citationTitleInput"]' ).length )
         $( ".removeReferenceInfoButton" ).show();
-     else
+    else
         $( ".removeReferenceInfoButton" ).hide();
     // Numerate the list of references
     jQuery.each( $( 'div[id^="referenceNumber"]' ), function( i, element )
@@ -415,25 +415,25 @@ function manageFormDiv()
     <!--********************** REFERENCES **********************-->
     $( "#addReferenceInfoButton" ).click( function()
     {
-        if($( 'input[id^="citationTitleInput"]' ).length >= 1)
-	{
-        var referencesLastId = $( 'input[id^="citationTitleInput"]' ).last().attr( 'id' ).replace( "citationTitleInput", "" );
+        if( $( 'input[id^="citationTitleInput"]' ).length >= 1 )
+        {
+            var referencesLastId = $( 'input[id^="citationTitleInput"]' ).last().attr( 'id' ).replace( "citationTitleInput", "" );
             createReferenceFieldset( "referencesContainer", referencesLastId + 1 );
         }
-	else return false;
+        else return false;
     } );
 
     <!--********************** PRODUCT DESCRIPTION  ********************** -->
-    $( "#addProductDetailsStepButton").click( function()
-    	{
+    $( "#addProductDetailsStepButton" ).click( function()
+    {
         var productDetailsStepLastId = $( 'textarea[id^="textAreaProductDetails"]' ).last().attr( 'id' ).replace( "textAreaProductDetails", "" );
         if( 5 > $( 'textarea[id^="textAreaProductDetails"]' ).length )
         {
-        	createProductDescrStepDiv( "productDetailsDescriptionContainer", productDetailsStepLastId + 1 );
-	}
-	else
-		alert("You can't add more than 5 steps" );
-    });
+            createProductDescrStepDiv( "productDetailsDescriptionContainer", productDetailsStepLastId + 1 );
+        }
+        else
+            alert( "You can't add more than 5 steps" );
+    } );
 
     <!--********************** OTHERS FIELDS ********************** -->
     $( "#dataProductTypeFreeTextText" ).hide();
