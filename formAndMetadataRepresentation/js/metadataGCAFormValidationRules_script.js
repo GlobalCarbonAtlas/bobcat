@@ -13,9 +13,8 @@ var validatorRules = [
         var day = d.getDate();
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
-        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (day<10 ? "0" : "") + day;
+        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (10 > day ? "0" : "") + day;
         return (input.val() != complete_d);
-	//return (input.val() != "2014-06-06");
     }},
 
     <!--*********************************** PRODUCT NAME *********************************** -->
@@ -101,295 +100,131 @@ var validatorRules = [
     //temporal and geograph info:
     {input: "#temporalResolutionSelect", message: "This field is mandatory", action: "change",  rule: function()
     {
-        var temporalResolutionSelectRentre = document.forms["metadataForm"].temporalResolutionSelect.value;
-        if( temporalResolutionSelectRentre == "nullValue" )
-        {
-            temporalResolutionSelectRentre = 0;
-        }
-        else
-        {
-            temporalResolutionSelectRentre = 1
-        }
-        return temporalResolutionSelectRentre;
-    }
-    },
+        return "nullValue" != document.forms["metadataForm"].temporalResolutionSelect.value;
+    }},
+
     {input: "#temporalResolFreeTextInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
-        return ($( "#temporalResolutionSelect" ).val() != "") || ($( "#temporalResolutionSelect" ).val() == "" && "" != $( "#temporalResolFreeTextInput" ).val());
-    }
-    },
+        return ("" != $( "#temporalResolutionSelect" ).val()) || ("" == $( "#temporalResolutionSelect" ).val() && "" != $( "#temporalResolFreeTextInput" ).val());
+    }},
+
     {input: "#temporalCoverageBegin", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
     {
         var d = new Date();
         var day = d.getDate();
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
-        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (day<10 ? "0" : "") + day;
-        if( input.val() == complete_d )
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    },
+        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (10 > day ? "0" : "") + day;
+        return input.val() != complete_d;
+    }},
+
     {input: "#temporalCoverageEnd", message: "You have to change this date", action: "valuechanged, keyup", focus: true, rule: function( input )
     {
         var d = new Date();
         var day = d.getDate();
         var month = d.getMonth() + 1;
         var year = d.getFullYear();
-        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (day<10 ? "0" : "") + day;
-        if( input.val() == complete_d )
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    },
+        var complete_d = year + "-" + (10 > month ? "0" : "") + month + "-" + (10 > day ? "0" : "") + day;
+        return input.val() != complete_d;
+    }},
+
     {input: "#temporalCoverageEnd", message: "End date must be after Begin date", action: "valuechanged, keyup", focus: true, rule: function()
     {
-	 return ( $("#temporalCoverageBegin").val() < $("#temporalCoverageEnd").val() );
+        return ( $( "#temporalCoverageBegin" ).val() < $( "#temporalCoverageEnd" ).val() );
     }},
+
     {input: "#spatialResolutionValueLongInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialResolutionValueLongInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var spatialResolutionRentre = document.forms["metadataForm"].spatialResolutionValueLongInput.value;
-        if( /^[0-9.]+$/.test( spatialResolutionRentre ) )
-        {
-            spatialResolutionRentre = 1;
-        }
-        else
-        {
-            spatialResolutionRentre = 0;
-        }
-        return spatialResolutionRentre;
-    }
-    },
+        return /^[0-9.]+$/.test( document.forms["metadataForm"].spatialResolutionValueLongInput.value );
+    }},
+
     {input: "#spatialResolutionValueLatInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialResolutionValueLatInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var spatialResolutionRentre = document.forms["metadataForm"].spatialResolutionValueLatInput.value;
-        if( /^[0-9.]+$/.test( spatialResolutionRentre ) )
-        {
-            spatialResolutionRentre = 1;
-        }
-        else
-        {
-            spatialResolutionRentre = 0;
-        }
-        return spatialResolutionRentre;
-    }
-    },
+        return /^[0-9.]+$/.test( document.forms["metadataForm"].spatialResolutionValueLatInput.value );
+    }},
+
     {input: "#spatialCoverageNorthInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialCoverageNorthInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverageNorthRentre = document.forms["metadataForm"].spatialCoverageNorthInput.value;
-        if( /^[0-9.-]+$/.test( spatialCoverageNorthRentre ) )
-        {
-            spatialCoverageNorthRentre = 1;
-        }
-        else
-        {
-            spatialCoverageNorthRentre = 0;
-        }
-        return spatialCoverageNorthRentre;
-    }
-    },
+        return /^[0-9.-]+$/.test( document.forms["metadataForm"].spatialCoverageNorthInput.value );
+    }},
+
     {input: "#spatialCoverageNorthInput", message: "North latitude > 90 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverageNorthRentre = document.forms["metadataForm"].spatialCoverageNorthInput.value;
-        if( spatialCoverageNorthRentre > 90 )
-        {
-            spatialCoverageNorthRentre = 0;
-        }
-        else
-        {
-            spatialCoverageNorthRentre = 1;
-        }
-        return spatialCoverageNorthRentre;
-    }
-    },
+        return 90 >= document.forms["metadataForm"].spatialCoverageNorthInput.value;
+    }},
+
     {input: "#spatialCoverageNorthInput", message: "North latitude < -90 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverageNorthRentre = document.forms["metadataForm"].spatialCoverageNorthInput.value;
-        if( spatialCoverageNorthRentre < -90 )
-        {
-            spatialCoverageNorthRentre = 0;
-        }
-        else
-        {
-            spatialCoverageNorthRentre = 1;
-        }
-        return spatialCoverageNorthRentre;
-    }
-    },
-    {input: "#spatialCoverageNorthInput", message: "North latitude < south latitude!", action: "keyup, blur",  rule: function()
-	{
-		var spatialCoverageNorthRentre = parseInt(document.forms["metadataForm"].spatialCoverageNorthInput.value);// Si pas parseInt dit que -45>-12.
-		var spatialCoverageSouthRentre = parseInt(document.forms["metadataForm"].spatialCoverageSouthInput.value);
-		if( spatialCoverageNorthRentre < spatialCoverageSouthRentre )
-        	{
-            		spatialCoverageNorthRentre = 0;
-        	}   
-		else
-        	{
-            		spatialCoverageNorthRentre = 1;
-        	}
-        return spatialCoverageNorthRentre;
-	}
-    },
+        return document.forms["metadataForm"].spatialCoverageNorthInput.value >= -90
+    }},
 
+    {input: "#spatialCoverageNorthInput", message: "North latitude < south latitude!", action: "keyup, blur",  rule: function()
+    {
+        var spatialCoverageNorthRentre = parseInt( document.forms["metadataForm"].spatialCoverageNorthInput.value );// Si pas parseInt dit que -45>-12.
+        var spatialCoverageSouthRentre = parseInt( document.forms["metadataForm"].spatialCoverageSouthInput.value );
+        return spatialCoverageNorthRentre >= spatialCoverageSouthRentre;
+    }},
 
     {input: "#spatialCoverageSouthInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialCoverageSouthInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverageSouthRentre = document.forms["metadataForm"].spatialCoverageSouthInput.value;
-        if( /^[0-9.-]+$/.test( spatialCoverageSouthRentre ) )
-        {
-            spatialCoverageSouthRentre = 1;
-        }
-        else
-        {
-            spatialCoverageSouthRentre = 0;
-        }
-        return spatialCoverageSouthRentre;
-    }
-    },
+        return /^[0-9.-]+$/.test( document.forms["metadataForm"].spatialCoverageSouthInput.value );
+    }},
+
     {input: "#spatialCoverageSouthInput", message: "South latitude < -90 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverage = document.forms["metadataForm"].spatialCoverageSouthInput.value;
-        if( spatialCoverage >= -90)
-        {
-            spatialCoverage = 1;
-        }
-        else
-        {
-            spatialCoverage = 0;
-        }
-        return spatialCoverage;
-    }
-    },
+        return document.forms["metadataForm"].spatialCoverageSouthInput.value >= -90;
+    }},
+
     {input: "#spatialCoverageSouthInput", message: "South latitude > 90 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverage = document.forms["metadataForm"].spatialCoverageSouthInput.value;
-        if( spatialCoverage <= 90)
-        {
-            spatialCoverage = 1;
-        }
-        else
-        {
-            spatialCoverage = 0;
-        }
-        return spatialCoverage;
-    }
-    },
+        return 90 >= document.forms["metadataForm"].spatialCoverageSouthInput.value;
+    }},
+
     {input: "#spatialCoverageWestInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialCoverageWestInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverageWestRentre = document.forms["metadataForm"].spatialCoverageWestInput.value;
-        if( /^[0-9.-]+$/.test( spatialCoverageWestRentre ) )
-        {
-            spatialCoverageWestRentre = 1;
-        }
-        else
-        {
-            spatialCoverageWestRentre = 0;
-        }
-        return spatialCoverageWestRentre;
-    }
-    },
+        return /^[0-9.-]+$/.test( document.forms["metadataForm"].spatialCoverageWestInput.value );
+    }},
+
     {input: "#spatialCoverageWestInput", message: "West longitude < -180 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverage = document.forms["metadataForm"].spatialCoverageWestInput.value;
-        if( spatialCoverage >= -180 )
-        {
-            spatialCoverage = 1;
-        }
-        else
-        {
-            spatialCoverage = 0;
-        }
-        return spatialCoverage;
-    }
-    },
+        return document.forms["metadataForm"].spatialCoverageWestInput.value >= -180;
+    }},
+
     {input: "#spatialCoverageWestInput", message: "West longitude > 180 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverage = document.forms["metadataForm"].spatialCoverageWestInput.value;
-        if( spatialCoverage <= 180 )
-        {
-            spatialCoverage = 1;
-        }
-        else
-        {
-            spatialCoverage = 0;
-        }
-        return spatialCoverage;
-    }
-    },
+        return 180 >= document.forms["metadataForm"].spatialCoverageWestInput.value;
+    }},
+
     {input: "#spatialCoverageEastInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#spatialCoverageEastInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverageEastRentre = document.forms["metadataForm"].spatialCoverageEastInput.value;
-        if( /^[0-9.-]+$/.test( spatialCoverageEastRentre ) )
-        {
-            spatialCoverageEastRentre = 1;
-        }
-        else
-        {
-            spatialCoverageEastRentre = 0;
-        }
-        return spatialCoverageEastRentre;
-    }
-    },
+        return /^[0-9.-]+$/.test( document.forms["metadataForm"].spatialCoverageEastInput.value );
+    }},
+
     {input: "#spatialCoverageEastInput", message: "East longitude < west longitude!", action: "keyup, blur",  rule: function()
-	{
-		var spatialCoverageEastRentre = parseInt(document.forms["metadataForm"].spatialCoverageEastInput.value);
-		var spatialCoverageWestRentre = parseInt(document.forms["metadataForm"].spatialCoverageWestInput.value);
-		if( spatialCoverageEastRentre < spatialCoverageWestRentre )
-            		spatialCoverageEastRentre = 0;
-		else
-            		spatialCoverageEastRentre = 1;
-        return spatialCoverageEastRentre;
-	}
-    },
+    {
+        var spatialCoverageEastRentre = parseInt( document.forms["metadataForm"].spatialCoverageEastInput.value );
+        var spatialCoverageWestRentre = parseInt( document.forms["metadataForm"].spatialCoverageWestInput.value );
+        return spatialCoverageEastRentre >= spatialCoverageWestRentre;
+    }},
+
     {input: "#spatialCoverageEastInput", message: "East longitude > 180 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverage = document.forms["metadataForm"].spatialCoverageEastInput.value;
-        if( spatialCoverage <= 180 )
-        {
-            spatialCoverage = 1;
-        }
-        else
-        {
-            spatialCoverage = 0;
-        }
-        return spatialCoverage;
-    }
-    },
+        return 180 >= document.forms["metadataForm"].spatialCoverageEastInput.value;
+    }},
+
     {input: "#spatialCoverageEastInput", message: "East longitude < -180 degrees!", action: "keyup, blur",  rule: function()
     {
-        var spatialCoverage = document.forms["metadataForm"].spatialCoverageEastInput.value;
-        if( spatialCoverage <= -180 )
-        {
-            spatialCoverage = 0;
-        }
-        else
-        {
-            spatialCoverage = 1;
-        }
-        return spatialCoverage;
-    }
-    },
+        return document.forms["metadataForm"].spatialCoverageEastInput.value > -180;
+    }},
 
     <!--*********************************** PRODUCT DESCRIPTION *********************************** -->
     {input: "#addDocProductDetailsStepInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-
 
 
     <!--*********************************** KEYWORD AND REFERENCE *********************************** -->
@@ -404,27 +239,18 @@ var validatorRules = [
     {input: "#principalInvestigatorContactNameInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#principalInvestigatorContactNameInput", message: "Characters not authorized", action: "keyup, blur",  rule: function()
     {
-        var principalInvestigatorContactNameRentre = document.forms["metadataForm"].principalInvestigatorContactNameInput.value;
-        if( /^[A-Za-z .]+$/.test( principalInvestigatorContactNameRentre ) )
-        {
-            principalInvestigatorContactNameRentre = 1;
-        }
-        else
-        {
-            principalInvestigatorContactNameRentre = 0;
-        }
-        return principalInvestigatorContactNameRentre;
-    }
-    },
+        return /^[A-Za-z .]+$/.test( document.forms["metadataForm"].principalInvestigatorContactNameInput.value );
+    }},
+
     {input: "#principalInvestigatorContactMailInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
     {input: "#principalInvestigatorContactMailInput", message: "This field is mandatory", action: "blur, keyup", rule: "required" },
     {input: "#originalDataUrlInput", message: "Invalid e-mail", action: "blur, keyup", rule: "email" },
-
 
     {input: "#dataPolicyChooseSelect", message: "This field is mandatory", action: "change",  rule: function()
     {
         return "nullValue" != $( "#dataPolicyChooseSelect" ).val();
     }},
+
     {input: "#dataPolicyFreeInput", message: "This field is mandatory", action: "blur, keyup", rule: function()
     {
         return ("" != $( "#dataPolicyChooseSelect" ).val()) || ("" == $( "#dataPolicyChooseSelect" ).val() && "" != $( "#dataPolicyFreeInput" ).val());
