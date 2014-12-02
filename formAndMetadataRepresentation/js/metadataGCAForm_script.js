@@ -230,10 +230,6 @@ function getReferenceRules( index )
         {
             return ("" == arguments[0].value || /^[a-zA-Z._ -]+$/.test( arguments[0].value ));
         }},
-        {input: "#citationDOIInput" + index, message: "Characters not authorized", action: "keyup, blur",  rule: function( arguments )
-        {
-            return ("" == arguments[0].value || /^[0-9./]+$/.test( arguments[0].value ));
-        }},
         {input: "#citationCategorySelect" + index, message: "This field is mandatory", action: "change",  rule: function( arguments )
         {
             return "nullValue" != arguments[0].value;
@@ -274,12 +270,6 @@ function createReferenceFieldset( containerIdRef, index )
             '<div class="col-md-10 col-sm-10">' +
             '<div class="label2 form-control-xxl" id="citationAuthorOrganisationText' + index + '">Organisation name:</div>' +
             '<input id="citationAuthorOrganisationInput' + index + '" class="form-control form-control-xl" name="citationAuthorOrganisation' + index + '" type="text">' +
-            '</div>' +
-            '</div>' +
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-13 col-sm-13">' +
-            '<div class="label2 cursorPointer form-control-l" id="citationAuthorPositionText' + index + '" title= "Eg: PhD student, Professor, ...">Position:</div>' +
-            '<input id="citationAuthorPositionInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorPosition' + index + '" type="text">' +
             '</div>' +
             '</div>' +
 
@@ -328,14 +318,8 @@ function createReferenceFieldset( containerIdRef, index )
     // Name input
     $( "#citationAuthorNameInput" + index ).jqxInput( {height: "20px", placeHolder: "First name last name"} );
 
-    // Position input
-    $( "#citationAuthorPositionInput" + index ).jqxInput( {placeHolder: "Eg: PhD student, ..."} );
-
     // Mail input
     $( "#citationOnlineRessourceInput" + index ).jqxInput( {height: "20px", placeHolder: "someone@mail.com"} );
-
-    // DOI
-    $( "#citationDOIInput" + index ).jqxInput( {height: "20px", placeHolder: "10.1000/182"} );
 
     // Remove button
     $( "#legendReferenceId" + index ).append( '<img id="removeReferenceInfoButton' + index + '" src="img/quitChamp.png" class="img-responsive img-rounded addQuitAllContainer removeReferenceInfoButton cursorPointer" title= "Click to delete this reference">' );

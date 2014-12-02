@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="js/library/jqwidgets-ver3.2.1/jqwidgets/styles/jqx.bootstrap.css"/>
 
     <script type="text/javascript" src="../js/library/jquery-1.9.1.js"></script>
-<!--    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
     <script type="text/javascript" src="js/library/formToWizardBootstrapValidate.js"></script>
 
     <script type="text/javascript" src="js/library/jqwidgets-ver3.2.1/jqwidgets/jqxcore.js"></script>
@@ -474,52 +473,49 @@ $( document ).ready( function()
 
     // Build map
     var map = new OpenLayers.Map( 'map_element', {
-        resolutions: [0.703125,0.3515625,0.17578125,0.087890625,0.0439453125],
+        resolutions: [0.703125,0.3515625,0.17578125,0.087890625,0.0439453125]
     } );
 
     var landMaskLayer = new OpenLayers.Layer.WMS(
             "Land mask",
             "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-    {
-        VERSION: '1.1.1',
+    {   VERSION: '1.1.1',
         LAYERS: "GCA:GCA_landMask",
         transparent: true,
-        FORMAT: 'image/png',
+        FORMAT: 'image/png'
     }, {
         isBaseLayer: true,
-        opacity: 1,
+        opacity: 1
     } );
 
     var frontiersLayer = new OpenLayers.Layer.WMS(
             "Frontiers",
             "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-    {
-        VERSION: '1.1.1',
+    {   VERSION: '1.1.1',
         LAYERS: "GCA:GCA_frontiersCountryAndRegions",
         transparent: true,
-        FORMAT: 'image/png',
+        FORMAT: 'image/png'
     }, {
         isBaseLayer: false,
-        opacity: 1,
+        opacity: 1
     } );
 
     var graticulesLayer = new OpenLayers.Layer.WMS(
             "Graticules",
             "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-    {
-        VERSION: '1.1.1',
+    {   VERSION: '1.1.1',
         LAYERS: "GCA:GCA_graticules01_05_10",
         transparent: true,
-        FORMAT: 'image/png',
+        FORMAT: 'image/png'
     }, {
         isBaseLayer: false,
-        opacity: 1,
+        opacity: 1
     } );
 
     // Add zoomToMAxExtent control
     var navigation_control = new OpenLayers.Control.Navigation();
     var control_panel = new OpenLayers.Control.Panel( {
-        div: document.getElementById( "mapPanel" ),
+        div: document.getElementById( "mapPanel" )
     } );
     control_panel.addControls( [new OpenLayers.Control.ZoomToMaxExtent()] );
     map.addControl( control_panel );
@@ -715,11 +711,6 @@ $( document ).ready( function()
         var citationAuthorOrganisation111 = $( this ).find( "input[name=citationAuthorOrganisation111]" ).val();
         var citationAuthorOrganisation1111 = $( this ).find( "input[name=citationAuthorOrganisation1111]" ).val();
         var citationAuthorOrganisation11111 = $( this ).find( "input[name=citationAuthorOrganisation11111]" ).val();
-        var citationAuthorPosition1 = $( this ).find( "input[name=citationAuthorPosition1]" ).val();
-        var citationAuthorPosition11 = $( this ).find( "input[name=citationAuthorPosition11]" ).val();
-        var citationAuthorPosition111 = $( this ).find( "input[name=citationAuthorPosition111]" ).val();
-        var citationAuthorPosition1111 = $( this ).find( "input[name=citationAuthorPosition1111]" ).val();
-        var citationAuthorPosition11111 = $( this ).find( "input[name=citationAuthorPosition11111]" ).val();
         var nameMagazine1 = $( this ).find( "input[name=nameMagazine1]" ).val();
         var nameMagazine11 = $( this ).find( "input[name=nameMagazine11]" ).val();
         var nameMagazine111 = $( this ).find( "input[name=nameMagazine111]" ).val();
