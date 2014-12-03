@@ -1,6 +1,8 @@
 $( "#metadataForm" ).formToWizard();
 
-var validatorRules = [
+var validatorRules = [];
+
+var validatorRules2 = [
 
     <!--**************************************************************************************** -->
     <!--*********************************** BASIC INFORMATION ********************************** -->

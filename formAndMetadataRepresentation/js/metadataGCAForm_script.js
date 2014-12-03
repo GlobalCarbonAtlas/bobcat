@@ -32,44 +32,44 @@ function getContributorRules( index )
 function createContributorDiv( containerId, index )
 {
     var containerDiv = $( '<div id="dataContributorContainer' + index + '" class="row col-md-24 col-sm-24">' +
-            '<div id="dataProducerInfoText' + index + '" class="col-md-24 col-sm-24 label1" title="Information about the person who created the data file">Data contributors information <div id="dataContributorNumber' + index + '" class="dataContributorNumber"></div> :' +
-            '</div>' +
+        '<div id="dataProducerInfoText' + index + '" class="col-md-24 col-sm-24 label1" title="Information about the person who created the data file">Data contributors information <div id="dataContributorNumber' + index + '" class="dataContributorNumber"></div> :' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-10 col-sm-10">' +
-            '<div id="dataProducerInfoNameText' + index + '" class="label2 form-control-l">Name (*):</div>' +
-            '<input id="dataProducerInfoNameInput' + index + '" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName' + index + '" type="text">' +
-            '</div>' +
-            '<div class="col-md-13 col-sm-13">' +
-            '<div id="dataProducerInfoOrganisationText' + index + '" class="label2">Organisation name (*):</div>' +
-            '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l" name="dataProducerInfoOrganisation' + index + '" type="text">' +
-            '</div>' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="col-md-10 col-sm-10">' +
+        '<div id="dataProducerInfoNameText' + index + '" class="label2 form-control-l">Name (*):</div>' +
+        '<input id="dataProducerInfoNameInput' + index + '" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName' + index + '" type="text" value="nameeee">' +
+        '</div>' +
+        '<div class="col-md-13 col-sm-13">' +
+        '<div id="dataProducerInfoOrganisationText' + index + '" class="label2">Organisation name (*):</div>' +
+        '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l" name="dataProducerInfoOrganisation' + index + '" type="text" value="orgaaaaa">' +
+        '</div>' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-10 col-sm-10">' +
-            '<div id="dataProducerInfoMailText' + index + '" class="label2 form-control-l">email (*):</div>' +
-            '<input id="dataProducerInfoMailInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoMail' + index + '" type="text">' +
-            '</div>' +
-            '<div class="col-md-13 col-sm-13">' +
-            '<div id="dataProducerInfoRoleText' + index + '" class="label2">Role (*):</div>' +
-            '<select id="dataProducerInfoRoleSelect' + index + '" class="form-control form-control-l" name="dataProducerInfoRole' + index + '">' +
-            '<option value="nullValue">----</option>' +
-            '<option value="Originator">Originator</option>' +
-            '<option value="Point of Contact">Point of contact</option>' +
-            '<option value="Principal investigator">Principal investigator</option>' +
-            '<option value="Processor">Processor</option>' +
-            '</select>' +
-            '</div>' +
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-10 col-sm-10">' +
-            '<div id="dataProducerInfoPositionText' + index + '" class="label2 form-control-l cursorPointer" title= "Eg: PhD student, Professor, ...">Position:</div>' +
-            '<input id="dataProducerInfoPositionInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoPosition' + index + '" type="text">' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="col-md-10 col-sm-10">' +
+        '<div id="dataProducerInfoMailText' + index + '" class="label2 form-control-l">email (*):</div>' +
+        '<input id="dataProducerInfoMailInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoMail' + index + '" type="text" value="vmaigne@hotmail.com">' +
+        '</div>' +
+        '<div class="col-md-13 col-sm-13">' +
+        '<div id="dataProducerInfoRoleText' + index + '" class="label2">Role (*):</div>' +
+        '<select id="dataProducerInfoRoleSelect' + index + '" class="form-control form-control-l" name="dataProducerInfoRole' + index + '">' +
+        '<option value="nullValue">----</option>' +
+        '<option value="Originator">Originator</option>' +
+        '<option value="Point of Contact">Point of contact</option>' +
+        '<option value="Principal investigator">Principal investigator</option>' +
+        '<option value="Processor">Processor</option>' +
+        '</select>' +
+        '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="col-md-10 col-sm-10">' +
+        '<div id="dataProducerInfoPositionText' + index + '" class="label2 form-control-l cursorPointer" title= "Eg: PhD student, Professor, ...">Position:</div>' +
+        '<input id="dataProducerInfoPositionInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoPosition' + index + '" type="text">' +
+        '</div>' +
+        '</div>' +
+        '</div>' +
 
-            '</div>' );
+        '</div>' );
 
     $( "#" + containerId ).append( containerDiv );
 
@@ -151,9 +151,9 @@ function getProductDetailsStepRules( index )
 function createProductDescrStepDiv( containerId, index )
 {
     var containerDiv = $( '<div id="productDetailsDescriptionStepContainer' + index + '" class="row col-md-24 col-sm-24">' +
-            '<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div> (*):</div>' +
-            '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" class= "form-control-l"></textarea>' +
-            '</div>' );
+        '<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div> (*):</div>' +
+        '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" class= "form-control-l">zzzz</textarea>' +
+        '</div>' );
 
     $( "#" + containerId ).append( containerDiv );
 
@@ -248,67 +248,67 @@ function getReferenceRules( index )
 function createReferenceFieldset( containerIdRef, index )
 {
     var containerDivRef = $( '<fieldset id="citationFieldset' + index + '" class="fieldset2">' +
-            '<legend id= "legendReferenceId' + index + '" class="legend2">Reference <div id="referenceNumber' + index + '" class="referenceNumber"></div>:</legend>' +
-            '<div class="form-group">' +
+        '<legend id= "legendReferenceId' + index + '" class="legend2">Reference <div id="referenceNumber' + index + '" class="referenceNumber"></div>:</legend>' +
+        '<div class="form-group">' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="label1ContactLegend form-control-m" id="citationTitleText' + index + '" title="Title of the book, of the article, ...">Title (*):</div>' +
-            '<input id="citationTitleInput' + index + '" class="form-control form-control-m" name="citationTitle' + index + '" type="text">' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="label1ContactLegend form-control-m" id="citationTitleText' + index + '" title="Title of the book, of the article, ...">Title (*):</div>' +
+        '<input id="citationTitleInput' + index + '" class="form-control form-control-m" name="citationTitle' + index + '" type="text" value="citaaaa">' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="label1 form-control-l" id="citationBookDateText' + index + '">Publication date (*):</div>' +
-            '<div id="citationDateBookInput' + index + '" class="dateInput" name="citationBookDate' + index + '"></div>' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="label1 form-control-l" id="citationBookDateText' + index + '">Publication date (*):</div>' +
+        '<div id="citationDateBookInput' + index + '" class="dateInput" name="citationBookDate' + index + '"></div>' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="label1 form-control-l" id="citationAuthorText' + index + '">First author information:</div>' +
-            '<div class="col-md-13 col-sm-13">' +
-            '<div class="label2" id="citationAuthorNameText' + index + '">Name (*):</div>' +
-            '<input id="citationAuthorNameInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorName' + index + '" type="text">' +
-            '</div>' +
-            '<div class="col-md-10 col-sm-10">' +
-            '<div class="label2 form-control-xxl" id="citationAuthorOrganisationText' + index + '">Organisation name:</div>' +
-            '<input id="citationAuthorOrganisationInput' + index + '" class="form-control form-control-xl" name="citationAuthorOrganisation' + index + '" type="text">' +
-            '</div>' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="label1 form-control-l" id="citationAuthorText' + index + '">First author information:</div>' +
+        '<div class="col-md-13 col-sm-13">' +
+        '<div class="label2" id="citationAuthorNameText' + index + '">Name (*):</div>' +
+        '<input id="citationAuthorNameInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorName' + index + '" type="text" value="aaaauuutthh">' +
+        '</div>' +
+        '<div class="col-md-10 col-sm-10">' +
+        '<div class="label2 form-control-xxl" id="citationAuthorOrganisationText' + index + '">Organisation name:</div>' +
+        '<input id="citationAuthorOrganisationInput' + index + '" class="form-control form-control-xl" name="citationAuthorOrganisation' + index + '" type="text">' +
+        '</div>' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
-            '<div class="col-md-13 col-sm-13">' +
-            '<div class="label1 form-control-xxl" id="nameMagazineText' + index + '">Name of the journal (*):</div>' +
-            '<input id="nameMagazineInput' + index + '" class="form-control sameWidthReferenceClass" name="nameMagazine' + index + '" type="text" title="Reference of the journal (eg: Volume 89, number 3)">' +
-            '</div>' +
-            '<div class="col-md-10 col-sm-10">' +
-            '<div class="label1 form-control-xs" id="citationDOIText' + index + '" title="Digital Object Identifier (unique for each publication)">DOI:</div>' +
-            '<input id="citationDOIInput' + index + '" class="form-control citationDOIInputClass" name="citationDOI' + index + '" type="text">' +
-            '</div>' +
-            '</div>' +
+        '<div class="col-md-24 col-sm-24">' +
+        '<div class="col-md-13 col-sm-13">' +
+        '<div class="label1 form-control-xxl" id="nameMagazineText' + index + '">Name of the journal (*):</div>' +
+        '<input id="nameMagazineInput' + index + '" class="form-control sameWidthReferenceClass" name="nameMagazine' + index + '" type="text" title="Reference of the journal (eg: Volume 89, number 3)" value="naaame">' +
+        '</div>' +
+        '<div class="col-md-10 col-sm-10">' +
+        '<div class="label1 form-control-xs" id="citationDOIText' + index + '" title="Digital Object Identifier (unique for each publication)">DOI:</div>' +
+        '<input id="citationDOIInput' + index + '" class="form-control citationDOIInputClass" name="citationDOI' + index + '" type="text">' +
+        '</div>' +
+        '</div>' +
 
-            '<div class="col-md-24 col-sm-24">' +
+        '<div class="col-md-24 col-sm-24">' +
 
-            '<div class="col-md-13 col-sm-13">' +
-            '<div class="label1" id="citationCategoryText' + index + '" title="medium in witch it is published">Category (*):</div>' +
-            '<select id="citationCategorySelect' + index + '" name="citationBookCategory' + index + '" class="form-control sameWidthReferenceClass">' +
-            '<option value="nullValue">----</option>' +
-            '<option value="Book chapter">Book chapter</option>' +
-            '<option value="Book">Book</option>' +
-            '<option value="Report manual">Report manual</option>' +
-            '<option value="Journal article">Journal article</option>' +
-            '<option value="Magazine newspaper">Magazine newspaper</option>' +
-            '<option value="Atlas or paperMap">Atlas or paperMap</option>' +
-            '<option value="Application, program">Application, program</option>' +
-            '</select>' +
-            '</div>' +
-            '<div class="col-md-10 col-sm-10">' +
-            '<div class="label1" id="citationOnlineRessourceText' + index + '">Online resource:</div>' +
-            '<input id="citationOnlineRessourceInput' + index + '" class="form-control citationDOIInputClass" name="citationOnlineRessource' + index + '" type="text">' +
-            '</div>' +
+        '<div class="col-md-13 col-sm-13">' +
+        '<div class="label1" id="citationCategoryText' + index + '" title="medium in witch it is published">Category (*):</div>' +
+        '<select id="citationCategorySelect' + index + '" name="citationBookCategory' + index + '" class="form-control sameWidthReferenceClass">' +
+        '<option value="nullValue">----</option>' +
+        '<option value="Book chapter">Book chapter</option>' +
+        '<option value="Book">Book</option>' +
+        '<option value="Report manual">Report manual</option>' +
+        '<option value="Journal article">Journal article</option>' +
+        '<option value="Magazine newspaper">Magazine newspaper</option>' +
+        '<option value="Atlas or paperMap">Atlas or paperMap</option>' +
+        '<option value="Application, program">Application, program</option>' +
+        '</select>' +
+        '</div>' +
+        '<div class="col-md-10 col-sm-10">' +
+        '<div class="label1" id="citationOnlineRessourceText' + index + '">Online resource:</div>' +
+        '<input id="citationOnlineRessourceInput' + index + '" class="form-control citationDOIInputClass" name="citationOnlineRessource' + index + '" type="text">' +
+        '</div>' +
 
 
-            '</div>' +
+        '</div>' +
 
-            '</div>' +
-            '</fieldset>' );
+        '</div>' +
+        '</fieldset>' );
 
     $( "#" + containerIdRef ).append( containerDivRef );
 
@@ -555,6 +555,26 @@ function validateForm()
     $( ".fieldset1" ).show();
     $( '#metadataForm' ).jqxValidator( 'validate' );
     $( ".jqx-validator-hint" ).show();
+}
+
+//http://www.developerfiles.com/how-to-send-smtp-mails-with-postfix-mac-os-x-10-8/
+function sendMails(mailList, isToAdministrator)
+{
+//    var emailToVal = "vmipsl@ipsl.jussieu.fr";
+//    var emailToVal = "vmaigne@gmail.com, vmipsl@ipsl.jussieu.fr";
+    var emailFromVal = "vmaigne@gmail.com";
+    var subjectVal = "New metadata description for Global Carbon Atlas has been done";
+    var messageVal = "test double envoi 222";
+    $.post("sendMail.php",
+        { emailTo: mailList, emailFrom: emailFromVal, subject: subjectVal, message: messageVal },
+        function(){
+            if(!isToAdministrator)
+                alert( "Mail sent to the email : " + mailList );
+        }, "text")
+        .fail(function() {
+            if(!isToAdministrator)
+                alert( "Mail can't be sent. Please check the email from the 'Metadata creator information' (General information) " + mailList );
+        });
 }
 
 function hideHintByDiv( div )
