@@ -13,13 +13,14 @@
             $( this ).wrap( "<div id='step" + i + "'></div>" );
 
             var name = $( this ).find( "legend" ).html();
-            $( "#steps" ).append( "<li class= 'col-md-3 col-sm-3 stepMenu' id='stepDesc" + i + "'><span class= 'col-md-7 col-sm-7 stepsSpan'>" + name + "</span></li>" );
+            $( "#steps" ).append( "<li class= 'col-md-3 col-sm-3 stepMenu stepMenuToRead' id='stepDesc" + i + "'><span class= 'col-md-7 col-sm-7 stepsSpan'>" + name + "</span></li>" );
         } );
 
         // Menu click
         $( ".stepMenu" ).click( function( d )
         {
             $( "#steps li" ).removeClass( "current" );
+            $( this ).removeClass( "stepMenuToRead" );
             $( this ).addClass( "current" );
 
             var divToShowId = d.currentTarget.id.replace( "Desc", "" );

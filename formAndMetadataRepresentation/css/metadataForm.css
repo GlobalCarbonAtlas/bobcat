@@ -21,8 +21,13 @@ li {
     cursor: pointer;
 }
 
+.stepMenuToRead {
+    color: rgb(34, 169, 210);
+}
+
 .stepsSpan {
-    width: 63px !important;
+    text-align: center;
+    width: 89px !important;
 }
 
 span {
@@ -34,24 +39,12 @@ span {
     margin-top: 20px;
 }
 
-#stepDesc1 span {
-    margin-top: 5px;
+#stepDesc1 span, #stepDesc2 span, #stepDesc5 span {
+    margin-top: 11px;
 }
 
-#stepDesc2 span {
-    margin-top: 10px;
-}
-
-#stepDesc3 span {
-    margin-top: 10px;
-}
-
-#stepDesc4 span {
-    margin-top: 10px;
-}
-
-#stepDesc5 span {
-    margin-top: 5px;
+#stepDesc3 span, #stepDesc4 span {
+    margin-top: 21px;
 }
 
 li.current {
@@ -294,12 +287,12 @@ textarea {
     position: fixed;
     top: 33px;
     right: 2%;
-    width: 10%;
-    height: 36px;
+    width: 100px;
+    height: 36px !important;
     color: rgb(255, 255, 255) !important;
     background-color: rgb(34, 169, 210);
     border: solid 2px rgb(120, 120, 120);
-    border-radius: 3px;
+    border-radius: 6px;
     text-align: center;
     font-size: 14px !important;
 }
@@ -381,17 +374,17 @@ textarea {
 }
 
 :-moz-placeholder {
-/* Firefox 18- */
+    /* Firefox 18- */
     color: rgb(150, 150, 150) !important;
 }
 
 ::-moz-placeholder {
-/* Firefox 19+ */
+    /* Firefox 19+ */
     color: rgb(150, 150, 150) !important;
 }
 
 :-ms-input-placeholder {
-/* For ie (we have to precise opacity because put 1 by default, no firefox)*/
+    /* For ie (we have to precise opacity because put 1 by default, no firefox)*/
     color: rgba(150, 150, 150, 0.5) !important;
 }
 
