@@ -23,12 +23,12 @@ for( $i = 0; $i < sizeof( $mailArray ); $i++ )
 // Files
 for( $i = 0; $i < sizeof( $fileArray ); $i++ )
 {
-    $message = $message." ".$fileArray[$i];
+    $message = $message . "\n\n" . $fileArray[$i];
     $mail->AddAttachment( $fileArray[$i] );
 }
 
 $mail->Subject = $subject;
-$mail->Body = $message."\n\n".$messageEnd;
+$mail->Body = $message . "\n\n" . $messageEnd;
 
 $mail->Send( );
 
