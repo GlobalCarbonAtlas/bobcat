@@ -27,7 +27,7 @@
     <script type="text/javascript" src="js/metadataGCAFormValidationRules_script.js"></script>
     <script type="text/javascript" src="js/metadataGCAForm_script.js"></script>
     <script type='text/javascript' src='../js/OpenLayers-2.12/OpenLayers.js'></script>
-    <script type="text/javascript" src="../js/library/jquery.i18n.properties-1.0.9.js" ></script>
+    <script type="text/javascript" src="../js/library/jquery.i18n.properties-1.0.9.js"></script>
 
 </head>
 <body>
@@ -475,7 +475,6 @@ $( document ).ready( function()
         mode:'both'
     } );
 
-
 // *************************************************************************************************************************** //
 // *********************************** Construct a map to visualise spatial coverage ***************************************** //
 // *************************************************************************************************************************** //
@@ -487,38 +486,38 @@ $( document ).ready( function()
     var landMaskLayer = new OpenLayers.Layer.WMS(
             "Land mask",
             "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-            {   VERSION: '1.1.1',
-                LAYERS: "GCA:GCA_landMask",
-                transparent: true,
-                FORMAT: 'image/png'
-            }, {
-                isBaseLayer: true,
-                opacity: 1
-            } );
+    {   VERSION: '1.1.1',
+        LAYERS: "GCA:GCA_landMask",
+        transparent: true,
+        FORMAT: 'image/png'
+    }, {
+        isBaseLayer: true,
+        opacity: 1
+    } );
 
     var frontiersLayer = new OpenLayers.Layer.WMS(
             "Frontiers",
             "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-            {   VERSION: '1.1.1',
-                LAYERS: "GCA:GCA_frontiersCountryAndRegions",
-                transparent: true,
-                FORMAT: 'image/png'
-            }, {
-                isBaseLayer: false,
-                opacity: 1
-            } );
+    {   VERSION: '1.1.1',
+        LAYERS: "GCA:GCA_frontiersCountryAndRegions",
+        transparent: true,
+        FORMAT: 'image/png'
+    }, {
+        isBaseLayer: false,
+        opacity: 1
+    } );
 
     var graticulesLayer = new OpenLayers.Layer.WMS(
             "Graticules",
             "http://www.globalcarbonatlas.org:8080/geoserver/GCA/wms",
-            {   VERSION: '1.1.1',
-                LAYERS: "GCA:GCA_graticules01_05_10",
-                transparent: true,
-                FORMAT: 'image/png'
-            }, {
-                isBaseLayer: false,
-                opacity: 1
-            } );
+    {   VERSION: '1.1.1',
+        LAYERS: "GCA:GCA_graticules01_05_10",
+        transparent: true,
+        FORMAT: 'image/png'
+    }, {
+        isBaseLayer: false,
+        opacity: 1
+    } );
 
     // Add zoomToMAxExtent control
     var navigation_control = new OpenLayers.Control.Navigation();
@@ -752,13 +751,18 @@ $( document ).ready( function()
         var originalDataUrl = $( this ).find( "input[name=originalDataUrl]" ).val();
         var dataPolicy = $( this ).find( "select[name=dataPolicy]" ).val();
 
-        // Send mail to administrator to manage metadata & to creator
-//        sendMails(JSON.parse( jQuery.i18n.prop( "mailListForMetadataForm" ) ), true);
-//        sendMails(metadatCreatorInfoMail, false);
-
-        var post = {dateFillFormIsoPost: dateFillFormIso, nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, nDescriptionStepsPost: nDescriptionSteps, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, dataProducerInfoPosition1Post: dataProducerInfoPosition1,dataProducerInfoPosition11Post: dataProducerInfoPosition11,dataProducerInfoPosition111Post: dataProducerInfoPosition111, dataProducerInfoPosition1111Post: dataProducerInfoPosition1111, dataProducerInfoPosition11111Post: dataProducerInfoPosition11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, metadatCreatorInfoPositionPost: metadatCreatorInfoPosition, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionLongValuePost: spatialResolutionLongValue, spatialResolutionLatValuePost: spatialResolutionLatValue, productDetails1Post: productDetails1, productDetails11Post: productDetails11, productDetails111Post: productDetails111, productDetails1111Post: productDetails1111, productDetails11111Post: productDetails11111, addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails, keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, citationAuthorPosition1Post: citationAuthorPosition1, citationAuthorPosition11Post: citationAuthorPosition11, citationAuthorPosition111Post: citationAuthorPosition111, citationAuthorPosition1111Post: citationAuthorPosition1111, citationAuthorPosition11111Post: citationAuthorPosition11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11, citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy};
-        $.post( "receiveAndKeepInfoFromForm.php", post );
+        // WARNING : really ugly all these variables !! Use instead $( "#metadataForm" ).serialize() to send dynamically all form variables !
+        // $.post( "receiveAndKeepInfoFromForm.php", $( "#metadataForm" ).serialize() );
+        var post = {dateFillFormIsoPost: dateFillFormIso, nDataContributorsPost: nDataContributors, nReferencesPost: nReferences, nDescriptionStepsPost: nDescriptionSteps, dataDateCreationPost: dataDateCreation, dataProductTypeSelectPost: dataProductTypeSelect, dataProductTypeInputPost: dataProductTypeInput, dataProductCategorySelectPost: dataProductCategorySelect, dataProductCategoryInputPost: dataProductCategoryInput, prodNameTitlePost: prodNameTitle, prodNameVersionPost: prodNameVersion, dataAbstractPost: dataAbstract, dataProducerInfoName1Post: dataProducerInfoName1, dataProducerInfoName11Post: dataProducerInfoName11, dataProducerInfoName111Post: dataProducerInfoName111, dataProducerInfoName1111Post: dataProducerInfoName1111, dataProducerInfoName11111Post: dataProducerInfoName11111, dataProducerInfoOrganisation1Post: dataProducerInfoOrganisation1, dataProducerInfoOrganisation11Post: dataProducerInfoOrganisation11, dataProducerInfoOrganisation111Post: dataProducerInfoOrganisation111, dataProducerInfoOrganisation1111Post: dataProducerInfoOrganisation1111, dataProducerInfoOrganisation11111Post: dataProducerInfoOrganisation11111, dataProducerInfoMail1Post: dataProducerInfoMail1, dataProducerInfoMail11Post: dataProducerInfoMail11, dataProducerInfoMail111Post: dataProducerInfoMail111, dataProducerInfoMail1111Post: dataProducerInfoMail1111, dataProducerInfoMail11111Post: dataProducerInfoMail11111, dataProducerInfoRole1Post: dataProducerInfoRole1, dataProducerInfoRole11Post: dataProducerInfoRole11, dataProducerInfoRole111Post: dataProducerInfoRole111, dataProducerInfoRole1111Post: dataProducerInfoRole1111, dataProducerInfoRole11111Post: dataProducerInfoRole11111, dataProducerInfoPosition1Post: dataProducerInfoPosition1,dataProducerInfoPosition11Post: dataProducerInfoPosition11,dataProducerInfoPosition111Post: dataProducerInfoPosition111, dataProducerInfoPosition1111Post: dataProducerInfoPosition1111, dataProducerInfoPosition11111Post: dataProducerInfoPosition11111, metadataDateCreationPost: metadataDateCreation, metadatCreatorInfoNamePost: metadatCreatorInfoName, metadatCreatorInfoMailPost: metadatCreatorInfoMail, metadatCreatorInfoRolePost: metadatCreatorInfoRole, metadatCreatorInfoPositionPost: metadatCreatorInfoPosition, temporalResolutionSelectPost: temporalResolutionSelect, temporalResolutionInputPost: temporalResolutionInput, temporalCoverageBeginNamePost: temporalCoverageBeginName, temporalCoverageEndNamePost: temporalCoverageEndName, westBoundLongitudePost: westBoundLongitude, eastBoundLongitudePost: eastBoundLongitude, southBoundLatitudePost: southBoundLatitude, northBoundLatitudePost: northBoundLatitude, verticalLevelSelectPost: verticalLevelSelect, verticalLevelInputPost: verticalLevelInput, spatialResolutionLongUnitPost: spatialResolutionLongUnit, spatialResolutionLongValuePost: spatialResolutionLongValue, spatialResolutionLatValuePost: spatialResolutionLatValue, productDetails1Post: productDetails1, productDetails11Post: productDetails11, productDetails111Post: productDetails111, productDetails1111Post: productDetails1111, productDetails11111Post: productDetails11111, addDocProductDetailsPost: addDocProductDetails, addDocDescriptionProductDetailsPost: addDocDescriptionProductDetails, keywordsInfoPost: keywordsInfo, citationTitle1Post: citationTitle1, citationTitle11Post: citationTitle11, citationTitle111Post: citationTitle111, citationTitle1111Post: citationTitle1111, citationTitle11111Post: citationTitle11111, citationBookDate1Post: citationBookDate1, citationBookDate11Post: citationBookDate11, citationBookDate111Post: citationBookDate111, citationBookDate1111Post: citationBookDate1111, citationBookDate11111Post: citationBookDate11111, citationAuthorName1Post: citationAuthorName1, citationAuthorName11Post: citationAuthorName11, citationAuthorName111Post: citationAuthorName111, citationAuthorName1111Post: citationAuthorName1111, citationAuthorName11111Post: citationAuthorName11111, citationAuthorOrganisation1Post: citationAuthorOrganisation1, citationAuthorOrganisation11Post: citationAuthorOrganisation11, citationAuthorOrganisation111Post: citationAuthorOrganisation111, citationAuthorOrganisation1111Post: citationAuthorOrganisation1111, citationAuthorOrganisation11111Post: citationAuthorOrganisation11111, nameMagazine1Post: nameMagazine1, nameMagazine11Post: nameMagazine11, nameMagazine111Post: nameMagazine111, nameMagazine1111Post: nameMagazine1111, nameMagazine11111Post: nameMagazine11111, citationDOI1Post: citationDOI1, citationDOI11Post: citationDOI11, citationDOI111Post: citationDOI111, citationDOI1111Post: citationDOI1111, citationDOI11111Post: citationDOI11111, citationBookCategory1Post: citationBookCategory1, citationBookCategory11Post: citationBookCategory11, citationBookCategory111Post: citationBookCategory111, citationBookCategory1111Post: citationBookCategory1111, citationBookCategory11111Post: citationBookCategory11111, citationOnlineRessource1Post: citationOnlineRessource1, citationOnlineRessource11Post: citationOnlineRessource11, citationOnlineRessource111Post: citationOnlineRessource111, citationOnlineRessource1111Post: citationOnlineRessource1111, citationOnlineRessource11111Post: citationOnlineRessource11111, qualityDescriptionPost: qualityDescription, docRelatedToQualityDescUrlPost: docRelatedToQualityDescUrl, docRelatedToQualityDescDescPost: docRelatedToQualityDescDesc, principalInvestigatorContactNamePost: principalInvestigatorContactName, principalInvestigatorContactMailPost: principalInvestigatorContactMail, principalInvestigatorContactPhonePost: principalInvestigatorContactPhone, originalDataUrlPost: originalDataUrl, dataPolicyPost: dataPolicy};
+        $.post( "receiveAndKeepInfoFromForm.php", post )
+                .done( function( data )
+        {
+            // Send mail to administrator to manage metadata & to creator
+            sendMails( JSON.parse( jQuery.i18n.prop( "mailListForMetadataForm" ) ), ["xmlDoneByForm/" + linkToXml2 + ".xml"], true );
+            sendMails( metadatCreatorInfoMail, false, false );
+        } );
     } );
+
 } );
 
 </script>
