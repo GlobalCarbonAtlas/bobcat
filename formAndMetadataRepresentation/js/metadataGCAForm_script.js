@@ -38,18 +38,18 @@ function createContributorDiv( containerId, index )
             '<div class="col-md-24 col-sm-24">' +
             '<div class="col-md-10 col-sm-10">' +
             '<div id="dataProducerInfoNameText' + index + '" class="label2 form-control-l">Name (*):</div>' +
-            '<input id="dataProducerInfoNameInput' + index + '" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName' + index + '" type="text" value="nameeee">' +
+            '<input id="dataProducerInfoNameInput' + index + '" class="form-control form-control-xl mandatoryField" name="dataProducerInfoName' + index + '" type="text">' +
             '</div>' +
             '<div class="col-md-13 col-sm-13">' +
             '<div id="dataProducerInfoOrganisationText' + index + '" class="label2">Organisation name (*):</div>' +
-            '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l" name="dataProducerInfoOrganisation' + index + '" type="text" value="orgaaaaa">' +
+            '<input id="dataProducerInfoOrganisationInput' + index + '" class="form-control form-control-l" name="dataProducerInfoOrganisation' + index + '" type="text">' +
             '</div>' +
             '</div>' +
 
             '<div class="col-md-24 col-sm-24">' +
             '<div class="col-md-10 col-sm-10">' +
             '<div id="dataProducerInfoMailText' + index + '" class="label2 form-control-l">email (*):</div>' +
-            '<input id="dataProducerInfoMailInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoMail' + index + '" type="text" value="vmaigne@ho.com">' +
+            '<input id="dataProducerInfoMailInput' + index + '" class="form-control form-control-xl" name="dataProducerInfoMail' + index + '" type="text">' +
             '</div>' +
             '<div class="col-md-13 col-sm-13">' +
             '<div id="dataProducerInfoRoleText' + index + '" class="label2">Role (*):</div>' +
@@ -152,7 +152,7 @@ function createProductDescrStepDiv( containerId, index )
 {
     var containerDiv = $( '<div id="productDetailsDescriptionStepContainer' + index + '" class="row col-md-24 col-sm-24">' +
             '<div id= "stepDescription' + index + '" class= "label2 stepDescriptionClass">Step <div id="DescriptionStepNumber' + index + '" class="DescriptionStepNumberClass"></div> (*):</div>' +
-            '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" class= "form-control-l">zzzz</textarea>' +
+            '<textarea id="textAreaProductDetails' + index + '" name="productDetailsStep' + index + '" rows="5" class= "form-control-l"></textarea>' +
             '</div>' );
 
     $( "#" + containerId ).append( containerDiv );
@@ -253,7 +253,7 @@ function createReferenceFieldset( containerIdRef, index )
 
             '<div class="col-md-24 col-sm-24">' +
             '<div class="label1ContactLegend form-control-m" id="citationTitleText' + index + '" title="Title of the book, of the article, ...">Title (*):</div>' +
-            '<input id="citationTitleInput' + index + '" class="form-control form-control-m" name="citationTitle' + index + '" type="text" value="citaaaa">' +
+            '<input id="citationTitleInput' + index + '" class="form-control form-control-m" name="citationTitle' + index + '" type="text">' +
             '</div>' +
 
             '<div class="col-md-24 col-sm-24">' +
@@ -265,7 +265,7 @@ function createReferenceFieldset( containerIdRef, index )
             '<div class="label1 form-control-l" id="citationAuthorText' + index + '">First author information:</div>' +
             '<div class="col-md-13 col-sm-13">' +
             '<div class="label2" id="citationAuthorNameText' + index + '">Name (*):</div>' +
-            '<input id="citationAuthorNameInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorName' + index + '" type="text" value="aaaauuutthh">' +
+            '<input id="citationAuthorNameInput' + index + '" class="form-control sameWidthReferenceClass" name="citationAuthorName' + index + '" type="text">' +
             '</div>' +
             '<div class="col-md-10 col-sm-10">' +
             '<div class="label2 form-control-xxl" id="citationAuthorOrganisationText' + index + '">Organisation name:</div>' +
@@ -276,7 +276,7 @@ function createReferenceFieldset( containerIdRef, index )
             '<div class="col-md-24 col-sm-24">' +
             '<div class="col-md-13 col-sm-13">' +
             '<div class="label1 form-control-xxl" id="nameMagazineText' + index + '">Name of the journal (*):</div>' +
-            '<input id="nameMagazineInput' + index + '" class="form-control sameWidthReferenceClass" name="nameMagazine' + index + '" type="text" title="Reference of the journal (eg: Volume 89, number 3)" value="naaame">' +
+            '<input id="nameMagazineInput' + index + '" class="form-control sameWidthReferenceClass" name="nameMagazine' + index + '" type="text" title="Reference of the journal (eg: Volume 89, number 3)">' +
             '</div>' +
             '<div class="col-md-10 col-sm-10">' +
             '<div class="label1 form-control-xs" id="citationDOIText' + index + '" title="Digital Object Identifier (unique for each publication)">DOI:</div>' +
@@ -399,7 +399,7 @@ function manageFormDiv()
     <!--********************** REFERENCES **********************-->
     $( "#addReferenceInfoButton" ).click( function()
     {
-        if( $( 'input[id^="citationTitleInput"]' ).length >= 1 )
+        if( 1 <= $( 'input[id^="citationTitleInput"]' ).length )
         {
             var referencesLastId = $( 'input[id^="citationTitleInput"]' ).last().attr( 'id' ).replace( "citationTitleInput", "" );
             createReferenceFieldset( "referencesContainer", referencesLastId + 1 );
