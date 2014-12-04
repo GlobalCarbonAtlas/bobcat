@@ -758,9 +758,9 @@ $( document ).ready( function()
                 .done( function( data )
         {
             // Send mail to administrator to manage metadata & to creator
-            var userFileUrl = location.href.split('/').slice(0, -1).join("/");
-            sendMails( JSON.parse( jQuery.i18n.prop( "mailListForMetadataForm" ) ), ["xmlDoneByForm/" + linkToXml2 + ".xml", userFileUrl + "/xmlDoneByForm/" + linkToXml2 + ".xml"], true );
-            sendMails( metadatCreatorInfoMail, [userFileUrl + "/xmlDoneByForm/" + linkToXml2 + ".xml"], false );
+            var userFileUrl = location.href.split( '/' ).slice( 0, -1 ).join( "/" );
+            sendMails( JSON.parse( jQuery.i18n.prop( "metadataFormMailListTo" ) ), jQuery.i18n.prop( "metadataFormMailListFrom" ), ["xmlDoneByForm/" + linkToXml2 + ".xml", userFileUrl + "/xmlDoneByForm/" + linkToXml2 + ".xml"], true );
+            sendMails( metadatCreatorInfoMail, jQuery.i18n.prop( "metadataFormMailListFrom" ), [userFileUrl + "/xmlDoneByForm/" + linkToXml2 + ".xml"], false );
         } );
     } );
 

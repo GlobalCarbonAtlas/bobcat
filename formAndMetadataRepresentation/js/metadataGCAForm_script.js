@@ -558,9 +558,8 @@ function validateForm()
 }
 
 //http://www.developerfiles.com/how-to-send-smtp-mails-with-postfix-mac-os-x-10-8/
-function sendMails( mailList, fileList, isToAdministrator )
+function sendMails( mailListTo, mailFrom, fileList, isToAdministrator )
 {
-    var emailFromVal = false;
     var subjectVal = "New metadata description for Global Carbon Atlas has been done";
     var messageVal = "";
     if( isToAdministrator )
@@ -568,17 +567,18 @@ function sendMails( mailList, fileList, isToAdministrator )
     else
         messageVal = "Hi,\n\nYou just created the new metadata description : ";
     var messageEndVal = "Please do not reply to this message.\n\nThe Global Carbon Atlas administrator.";
+
     $.post( "sendMail.php",
-    { emailTo: mailList.toString(), emailFrom: emailFromVal, subject: subjectVal, message: messageVal, messageEnd: messageEndVal, fileList: fileList.toString() },
+    { emailTo: mailListTo.toString(), emailFrom: mailFrom, subject: subjectVal, message: messageVal, messageEnd: messageEndVal, fileList: fileList.toString() },
             function()
             {
                 if( !isToAdministrator )
-                    alert( "Thank you, you created a new document (sent to the email : " + mailList + ")" );
+                    alert( "Thank you, you created a new document (sent to the email : " + mailListTo.toString() + ")" );
             } )
             .fail( function()
     {
         if( !isToAdministrator )
-            alert( "Mail can't be sent. Please check the email from the 'Metadata creator information' (General information) " + mailList );
+            alert( "Mail can't be sent. Please check the email from the 'Metadata creator information' (General information) " + mailListTo.toString() );
     } );
 }
 
