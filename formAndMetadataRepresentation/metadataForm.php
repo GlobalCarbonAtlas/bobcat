@@ -600,7 +600,7 @@ $( document ).ready( function()
     // Keeping file (call php which create and keep xml file) if all ok:
     $( '#metadataForm' ).on( 'validationSuccess', function ( event )
     {
-        alert( "Your form is complete and validate." );
+        alert( "Thanks. Your form is completed and has been submited to the system." );
         $( "#showResultButton" ).show();
 
         var dateFillForm = new Date();
