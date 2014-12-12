@@ -76,7 +76,7 @@
 <th>Name:</th>
 <th>email:</th>
 <th>Role:</th>
-<th>Position:</th>
+<th>PositionRR:</th>
 </tr>
 <tr>
 <td><xsl:call-template name="metadataCreatorNameInfo">
@@ -170,7 +170,7 @@ src= "../img/hideButton3.png" title= "Click to only visualize main title"/>
 <xsl:with-param name="referencesDate" select="gmd:date/gmd:CI_Date/gmd:date/gco:Date"></xsl:with-param>
 <xsl:with-param name="referencesAuthorsName" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName/gco:CharacterString"></xsl:with-param>
 <xsl:with-param name="referencesAuthorsOrganisation" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString"></xsl:with-param>
-<xsl:with-param name="referencesAuthorsPosition" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:positionName/gco:CharacterString"></xsl:with-param>
+<!--<xsl:with-param name="referencesAuthorsPosition" select="gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:positionName/gco:CharacterString"></xsl:with-param>-->
 <xsl:with-param name="referencesNameJournal" select="gmd:series/gmd:CI_Series/gmd:name/gco:CharacterString"></xsl:with-param>
 <xsl:with-param name="referencesDOI" select="gvq:doi/gco:CharacterString"></xsl:with-param>
 <xsl:with-param name="referencesCategory" select="gvq:category/gvq:GVQ_PublicationCategoryCode"></xsl:with-param>
@@ -526,7 +526,7 @@ map.zoomTo(0);
 <xsl:param name="referencesDate"></xsl:param>
 <xsl:param name="referencesAuthorsName"></xsl:param>
 <xsl:param name="referencesAuthorsOrganisation"></xsl:param>
-<xsl:param name="referencesAuthorsPosition"></xsl:param>
+<!--<xsl:param name="referencesAuthorsPosition"></xsl:param>-->
 <xsl:param name="referencesNameJournal"></xsl:param>
 <xsl:param name="referencesDOI"></xsl:param>
 <xsl:param name="referencesCategory"></xsl:param>
@@ -548,12 +548,12 @@ map.zoomTo(0);
 <tr>
 <th>Name:</th>
 <th>Organisation:</th>
-<th>Position:</th>
+<!--<th>Position:</th>-->
 </tr>
 <tr>
 <td><xsl:value-of select="$referencesAuthorsName"/></td>
 <td><xsl:value-of select="$referencesAuthorsOrganisation"/></td>
-<td><xsl:value-of select="$referencesAuthorsPosition"/></td>
+<!--<td><xsl:value-of select="$referencesAuthorsPosition"/></td>-->
 </tr>
 
 </table>
