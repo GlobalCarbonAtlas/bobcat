@@ -14,7 +14,7 @@ var BCInterfaceW = Class.create( {
 
     initialize: function( resourcesTreeData )
     {
-        // Parameters
+//        Parameters
         this.variableDiv = $( "#variableSelect" );
         this.timeYearSelect = $( "#timeYearSelect" );
         this.timeMonthSelect = $( "#timeMonthSelect" );
@@ -179,7 +179,6 @@ var BCInterfaceW = Class.create( {
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
                 + "_" + selectedPeriod + "_XYT.nc";
-
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;

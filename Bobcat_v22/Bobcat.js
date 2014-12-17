@@ -242,6 +242,8 @@ var Bobcat = Class.create( {
     },
 
 
+
+
 // **************************************************************
 // ************************ LEGEND ******************************
 // **************************************************************
@@ -305,10 +307,12 @@ var Bobcat = Class.create( {
         var items = new Array();
         if( showLegend )
             items.push( { text: "Show legend", icon: this.imgPath + "/legend_display.png", alias:"showLegend", action: jQuery.proxy( this.onClickShowLegend, this )} );
+        // Pascal : la partie else sert à avoir cette meme info qd click droit/carte..
         else
             items.push( { text: "Hide legend", icon: this.imgPath + "/legend_hide.png", alias:"hideLegend", action: jQuery.proxy( this.onClickHideLegend, this )} );
         items.push( { text: "Export to kmz", icon: this.imgPath + "/GoogleEarth-icon.png", alias:"googleearth", action: jQuery.proxy( this.onClickExportToKMZ, this )} );
         items.push( {text: "Get the reference", icon: this.imgPath + "/information.png", alias: "linkmetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfo, this )} );
+        items.push( {text: "Get metadata information/add feedback", icon: this.imgPath + "/GeoLabelLogo22px.jpg", alias: "getAndCompleteMetadata", action: jQuery.proxy( this.onClickDisplayMetadataInfoGVQ, this )} );
 
         return { width: 200, items: items};
     },
@@ -357,6 +361,15 @@ var Bobcat = Class.create( {
             $( "#BCiconeMenu" + this.id ).fadeOut();
         }, this ) );
         iconeMenuDiv.append( iconeMetadata );
+
+        // Pascal part:
+        var iconeMetadataPascal = $( '<div class="BCiconeForMenu"><div class="BCiconeForMenuImage"><img src="' + this.imgPath + '/GeoLabelLogo22px.jpg"></div><div class="BCIconeForMenuTitle">&nbsp;Get metadata information/add feedback</div></div>' );
+        iconeMetadataPascal.on( "click", jQuery.proxy( function()
+        {
+            this.onClickDisplayMetadataInfoGVQ();
+            $( "#BCiconeMenu" + this.id ).fadeOut();
+        }, this ) );
+        iconeMenuDiv.append( iconeMetadataPascal );
     },
 
     onClickShowIconeMenu: function()
@@ -484,6 +497,23 @@ var Bobcat = Class.create( {
         } );
 
     },
+
+    // Pascal part :
+    onClickDisplayMetadataInfoGVQ: function()
+    {
+        $.ajax( {
+            url: "formAndMetadataRepresentation/metadataAccess.php",
+            success: jQuery.proxy( function( data )
+            {
+                $( "<div title='Metadata of the file: " + this.mapTitle + "'>" + data + "</div>" ).dialog( { position: { my: "center", at: "center", of: "#" + this.id}, width: 500, height: 300, maxHeight: 300, maxWidth: 500 } );
+            }, this ),
+            error: jQuery.proxy( function( data )
+            {
+                $( "<div title='Metadata visualisation'>" + "Not available" + "</div>" ).dialog( { position: { my: "center", at: "center", of: "#" + this.id} } );
+            }, this )
+        } );
+    },
+
 
     onClickInitZoom: function()
     {

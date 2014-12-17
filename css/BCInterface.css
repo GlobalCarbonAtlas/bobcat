@@ -32,6 +32,9 @@
     text-align: center;
 }
 
+
+
+
 .rightMenuButton:hover, .rightMenuButton.selected {
     background: url("../img/btn_menu_active_middle.png") repeat scroll 0 0 transparent;
     border-left: 1px solid #B04B15;
@@ -89,6 +92,27 @@
 /***************************************************/
 /******************** BUTTON ***********************/
 /***************************************************/
+/* Pascal Part*/
+#createAndEditMetadata {
+    background-color: rgb(110,170,220);
+    display: inline-block;
+    height: 50px;
+    margin-left: 25%;
+    position: relative;
+    width: 38%;
+    text-align:  center;
+    color:  rgb(255,255,255);
+    font-weight:  bold;
+    padding-top:  1px;
+    margin-top: 2%;
+    margin-bottom:  2%;
+}
+#createAndEditMetadata:hover {
+	color: rgb(200,80,0);
+} 
+
+/* Fin ..*/
+
 .submitButton {
     width: 100%;
 }
