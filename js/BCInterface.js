@@ -417,6 +417,7 @@ var BCInterfaceW = Class.create( {
     // LEFT MENU PART
     overlayUncertaintyLayers: function()
     {
+        console.log(this.indexTimeArray);
         this.uncertaintyLayer = new OpenLayers.Layer.WMS(
                 "Uncertainty layer (" + this.thresholdValueForTitleLayerLeft + ")",
                 this.geoserverUrl + '/wms',
