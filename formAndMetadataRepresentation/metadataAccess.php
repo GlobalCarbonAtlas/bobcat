@@ -1,16 +1,10 @@
 <html xmlns=http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="utf-8"></meta>
-    <link rel="stylesheet" href="css/metadataAccess.css"/>
-
-    <style type="text/css">
-        #loaderGeoLabelObject {
-            margin-left: 80px;
-            margin-top: 92px;
-        }
-    </style>
+    <meta content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="formAndMetadataRepresentation/css/metadataAccess.css"/>
 </head>
+
 
 <body>
 
@@ -24,9 +18,9 @@
 <!-- To make dynamic calls : -->
 <?php
     $url = $_SERVER["SERVER_NAME"] . $_SERVER["SCRIPT_NAME"];
-$pathInfoUrl = pathinfo($url);// Array
-$dirName = $pathInfoUrl["dirname"];//Path without file name.
-$completeUrl = "http://" . $dirName;
+    $pathInfoUrl = pathinfo($url);// Array
+    $dirName = $pathInfoUrl["dirname"];//Path without file name.
+    $completeUrl = "http://" . $dirName;
 ?>
 
 <script type="text/javascript">
@@ -97,7 +91,7 @@ $completeUrl = "http://" . $dirName;
 
     <object id="geoLabelObject" class="geoLabelClass"
             data="http://www.geolabel.net/api/v1/geolabel?metadata=http://webportals.ipsl.jussieu.fr/ScientificApps/rc/bobcat/v06_forkPascal/bobcat/formAndMetadataRepresentation/xmlDoneByForm/CO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml&feedback=http://geoviqua.stcorp.nl/api/v1/feedback/collections%3Ftarget_code%3DCO2-flux_Inversion-model_lsce-inversion-analytic_v1_2014-07-02T23_09_03.741Z.xml%26target_codespace%3Dhttp://webportals.ipsl.jussieu.fr/ScientificApps/rc/bobcat/v06_forkPascal/bobcat/formAndMetadataRepresentation/xmlDoneByForm/%26format%3Dxml&size=50"
-            type="image/svg+xml" height="200"></object>
+            type="image/svg+xml" height="180"></object>
 
     <div id="geoLabelLink">The "GeoLabel" has been created by the <a href="http://www.geoviqua.org/" TARGET="_new"
                                                                      title="">GeoViQua

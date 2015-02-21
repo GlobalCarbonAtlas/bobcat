@@ -3,6 +3,7 @@
     position: relative;
     width: 100%;
 }
+
 #syntheticInfoText {
     color: rgb(10, 40, 200);
     left: -2%;
@@ -11,12 +12,14 @@
     width: 45%;
     z-index: 102;
 }
+
 #geoLabelObject {
-    left: -2%;
+    left: 1%;
     position: absolute;
-    top: 40px;
+    top: 50px;
     z-index: 101;
 }
+
 .feedbackButtonClass {
     height: 30px;
     left: 60%;
@@ -26,6 +29,7 @@
     z-index: 102;
     border:  2px solid rgb(70,70,70)!important;
 }
+
 .seeCompleteMetadatButtonClass {
     height: 30px;
     left: 60%;
@@ -37,17 +41,19 @@
 }
 
 .ui-button {
-	background-color: rgb(220, 220, 220);
-	border: 2px solid black;
-	border-radius: 10px;
-    	color: rgb(60, 60, 60);
+    background-color: rgb(220, 220, 220);
+    border: 2px solid black;
+    border-radius: 10px;
+    color: rgb(60, 60, 60);
 }
+
 .ui-button {
-	background-color: rgb(220, 220, 220);
-	border: 2px solid black;
-	border-radius: 10px;
-    	color: rgb(60, 60, 60);
+    background-color: rgb(220, 220, 220);
+    border: 2px solid black;
+    border-radius: 10px;
+    color: rgb(60, 60, 60);
 }
+
 .ui-button-text {
     color: rgb(70,70,70);
     display: block;
@@ -55,23 +61,32 @@
     font-weight: bold;
     font-size: 14;
 }
+
 .feedbackButtonClass .ui-button-text {
     left:  20px;
 }
+
 .seeCompleteMetadatButtonClass .ui-button-text {
-	left:  13px;
+    left:  13px;
 }
 
 .ui-button-text:hover {
-	color: rgb(250, 130, 0);
+    color: rgb(250, 130, 0);
 }
+
 #geoLabelLink {
-	color: rgb(130, 130, 130);
-    	display: block;
-    	font-size: 11px;
-    	position: absolute;
-    	top: 241px;
+    color: rgb(130, 130, 130);
+    display: block;
+    font-size: 11px;
+    position: absolute;
+    top: 241px;
 }
+
 .cursorPointer {
-	cursor: pointer;
+    cursor: pointer;
+}
+
+#loaderGeoLabelObject {
+    margin-left: 80px;
+    margin-top: 110px;
 }
