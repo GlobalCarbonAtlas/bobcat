@@ -241,6 +241,8 @@ var Bobcat = Class.create( {
         this.map.addLayers( [this.wms1, this.landMaskLayer, this.oceanMaskLayer, this.frontiersLayer, this.namesLayer, this.urbanAreasLayer, this.lakesAndRiversLayer, this.graticulesLayer] );
     },
 
+
+
 // **************************************************************
 // ************************ LEGEND ******************************
 // **************************************************************
@@ -466,7 +468,6 @@ var Bobcat = Class.create( {
 
     onClickDisplayMetadataInfo: function()
     {
-
         // Replace thredds/wms by thredds/fileServer
         var infofile = this.resource.replace( "thredds/wms/", "thredds/fileServer/" );
         // Change extension
@@ -498,8 +499,17 @@ var Bobcat = Class.create( {
     // Pascal part :
     onClickDisplayMetadataInfoGVQ: function()
     {
+        var metadataFile = this.resource.replace( "thredds/wms/", "thredds/fileServer/" );
+        // Change extension
+        metadataFile = metadataFile.substr( 0, metadataFile.lastIndexOf( "." ) ) + ".xml";
+        var fileName = metadataFile.substr( metadataFile.lastIndexOf( "/" ), metadataFile.length );
+        var filePath = metadataFile.substr( 0, metadataFile.lastIndexOf( "/" ));
+        console.log(metadataFile +", "+fileName+", "+filePath);
+
         $.ajax( {
             url: "formAndMetadataRepresentation/metadataAccess.php",
+            method: "post",
+            data: {filePath: filePath, fileName: fileName},
             success: jQuery.proxy( function( data )
             {
                 $( "<div title='Metadata of the file: " + this.mapTitle + "'>" + data + "</div>" ).dialog( { position: { my: "center", at: "center", of: "#" + this.id}, width: 500, height: 300, maxHeight: 300, maxWidth: 500 } );
