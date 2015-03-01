@@ -583,6 +583,109 @@ span.fancytree-title:hover div.complexToolTip {
 //   top:-2px;
 }
 
+/* Pascal part : */
+/******************** UNCERTAINTY ***********************/
+#uncertaintySelect {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 19px;
+    font-size: 12px;
+}
+
+.uncertaintySelectElementClass {
+    margin-bottom: 7px;
+}
+
+#overlayStdDevCase {
+    margin-left: 5px;
+    font-size: 11px;
+    margin-top: 0;
+    /*background-color: blue;*/
+}
+
+#overlayStdDevCaseLeft {
+    margin-left: 3px;
+    font-size: 12px;
+    margin-top: -9px;
+    /*background-color: red;*/
+}
+
+#overlayStdDevCase label{
+    font-weight:normal;
+   display: inline;
+   margin-left: -3px;
+   position: relative;
+   top:-2px;
+}
+
+#uncertaintyWithStippling {
+    margin-bottom: -4px;
+    margin-left: -13px;
+}
+
+#uncertaintyWithStipplingLeft {
+    margin-bottom: 0px;
+    margin-left: 0px;
+}
+
+#uncertaintyWithMasking {
+    margin-left: -23px;
+    margin-bottom: -13px;
+}
+
+#uncertaintyWithMaskingLeft {
+    margin-bottom: -13px;
+    margin-left: 0px;
+    margin-top: 9px;
+}
+
+#uncertaintyWithStipplingLeft {
+    display: block;
+}
+
+#uncertaintySliderLabel, #uncertaintySliderLabelLeft {
+   cursor: pointer;
+   left: 2px;
+   margin-left: 7px;
+   position: relative;
+}
+
+#uncertaintySelectElementText {
+    cursor: pointer;
+}
+
+#uncertaintyLevelSlider,  #uncertaintyLevelSliderLeft {
+    margin-top: 2px;
+    width: 85%;
+    margin-left: 7px;
+}
+
+#uncertaintySliderValueInput {
+      background-color: #f2f2f2;
+      border: 0 none;
+      display: inline-block;
+      font-size: 11px;
+      height: 16px;
+      left: -1px;
+      position: relative;
+      text-align: center;
+      top: -2px;
+      width: 20%;
+}
+
+#uncertaintySliderValueInputLeft {
+      background-color: #f2f2f2;
+      border: 0 none;
+      display: inline-block;
+      font-size: 11px;
+      height: 22px;
+      left: -2px;
+      position: relative;
+      text-align: center;
+      top: 0px;
+      width: 18%;
+}
 /******************** OTHER ***********************/
 .noticeLSCE {
 //    border-top: 1px solid #CCCCCC;

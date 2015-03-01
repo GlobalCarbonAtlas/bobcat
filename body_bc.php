@@ -69,104 +69,241 @@
             </div>
         </div>
 
-        <div class="noticeLSCE leftMenu">
-            Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.2
+    <!--Pascal part : -->
+    <!-- Add way to choose uncertainty : -->
+    <div id="uncertaintyLeft" class="leftMenu">
+        <h2 title="Visualize uncertainty information displaying std dev layer or overlaying std dev information above the layer">
+            <img src="img/6step.png">
+            UNCERTAINTY
+        </h2>
+
+        <div id="uncertaintySelectLeft">
+            <input id="displayStdDevLeft" class="uncertaintySelectElementClass" type="checkbox" name="displayOrOverlayUncertainty">
+            <label class="uncertaintySelectLabelClass" for="displayStdDevLeft">
+                <span class="variable">Display st dev</span>
+            </label>
+            <br>
+            <input id="displayOverlayStdDevLeft" class="uncertaintySelectElementClass" type="checkbox" name="displayOrOverlayUncertainty">
+            <label class="uncertaintySelectLabelClass" for="displayOverlayStdDevLeft">
+                <span id="uncertaintySelectElementTextLeft" class="variable" title="Explain what is done with this option">Overlay st dev</span>
+            </label>
+            <br>
         </div>
 
-    </div>
+        <!-- LEFT MENU : pour appliquer individuellement a chq carte : -->
+        <div id="overlayStdDevCaseLeft">
+            <div id="uncertaintyWithMaskingLeft">
+                <input id="uncertaintyWithMaskingInputLeft" type="radio" name="displayOverlayUncertaintyModeLeft" checked="checked">
+                <label for="uncertaintyWithMaskingLeft">
+                    <span class="variable2">Mask areas > threshold</span>
+                </label>
+            </div>
+            <br>
 
-    <div id="hideOrShowLeftMenu">
-        <div class="hideOrShowLeftMenu"><img src="img/grabber.png"/></div>
-    </div>
+            <div id="uncertaintyWithStipplingLeft">
+                <input id="uncertaintyWithStipplingInputLeft" type="radio" name="displayOverlayUncertaintyModeLeft">
+                <label for="uncertaintyWithStipplingInputLeft">
+                    <span class="variable2">Stipple areas <  threshold</span>
+                </label>
+            </div>
+            <br>
+            <!-- Slider part: -->
+            <!-- Way to do it: put in an input element value's slider. To describe input, label associated.-->
+            <div id="uncertaintySliderLabelDivLeft">
+                <label id="uncertaintySliderLabelLeft" for="uncertaintySliderValueInput"
+                       title="Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">St dev threshold: </label>
+                <input id="uncertaintySliderValueInputLeft" type="text" readonly>
 
-    <div id="printable"></div>
-
-
-    <div id="rightMenu" class="non-printable">
-        <div class="rightMenuTitle">&nbsp;&nbsp;TOOLS</div>
-
-        <div class="rightMenuTool">
-            Number of maps column<br>
-            <select id="mapsNumberSelect" style="width: 60px;">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-
-        <div class="rightMenuTool">
-            <div class="rightMenuButtons">
-                <div id="submitDeleteMaps" class="rightMenuButton" title="Remove all maps">
-                    <div class="lonelyToolIcone"><img src="img/fileclose.png"/></div>
-                </div>
-                <div id="submitShowAllLegends" class="rightMenuButton" title="Show all legends">
-                    <div class="lonelyToolIcone"><img src="img/legend_display_all.png"/></div>
-                </div>
-                <div id="submitHideAllLegends" class="rightMenuButton" title="Hide all legends">
-                    <div class="lonelyToolIcone"><img src="img/legend_hide_all.png"/></div>
+                <div id="uncertaintyLevelSliderLeft">
+                    <!-- End slider part: -->
                 </div>
             </div>
         </div>
-
-        <div class="rightMenuTool">
-            <HR width="50%" class="rightMenuHR"/>
-        </div>
-
-        <div class="rightMenuTool">
-            <h2>RANGE</h2>
-
-            <div class="rightMenuSubTool">
-                <input id="getRange" type="button" title="Get range from variable" value="Get range"/>
-                <input type="text" id="slider-range-text" size="9" style="width: 80%; text-align: center;"/>
-            </div>
-            <div id="slider-range" style="width: 80%;"></div>
-        </div>
-
-        <div class="rightMenuTool">
-            <HR width="50%" class="rightMenuHR"/>
-        </div>
-
-        <div class="rightMenuTool">
-            <h2>PALETTES</h2>
-            <select id="paletteSelect" style="width: 80%;">
-                <option value="alg">alg</option>
-                <option value="alg2">alg2</option>
-                <option value="blue_yellow_red">blue_yellow_red</option>
-                <option value="ferret">ferret</option>
-                <option value="greyscale">greyscale</option>
-                <option value="ncview">ncview</option>
-                <option value="occam">occam</option>
-                <option value="occam_pastel-30">occam_pastel-30</option>
-                <option value="redblue">redblue</option>
-                <option value="sst_36">sst_36</option>
-                <option value="green_magenta">green_magenta</option>
-            </select>
-        </div>
-
-        <div class="rightMenuTool">&nbsp;
-            <HR width="50%" class="rightMenuHR"/>
-        </div>
-
-        <div class="rightMenuTool">
-            <h2>LEGEND</h2>
-
-            <div class="rightMenuSubTool">
-                Colors number : <span id="slider-nbcolorbands-text"/>
-            </div>
-            <div id="slider-nbcolorbands"></div>
-            <BR/><BR/>
-
-            <div id="legend"></div>
-        </div>
     </div>
+    <!-- End Pascal part -->
 
-    <div id="hideOrShowRightMenu">
-        <div class="rightMenuBubble"><img src="img/bubbleBlack_left_X.png"/></div>
+    <div class="noticeLSCE leftMenu">
+        Realised by <span title="Climate and Environment Sciences Laboratory" style="font-weight:bold;">LSCE</span> &nbsp;&nbsp;&nbsp; v1.2
     </div>
 
 </div>
+
+<div id="hideOrShowLeftMenu">
+    <div class="hideOrShowLeftMenu"><img src="img/grabber.png"/></div>
+</div>
+
+<div id="printable"></div>
+
+
+<div id="rightMenu" class="non-printable">
+    <div class="rightMenuTitle">&nbsp;&nbsp;TOOLS</div>
+
+    <div class="rightMenuTool">
+        Number of maps column<br>
+        <select id="mapsNumberSelect" style="width: 60px;">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+
+    <div class="rightMenuTool">
+        <div class="rightMenuButtons">
+            <div id="submitDeleteMaps" class="rightMenuButton" title="Remove all maps">
+                <div class="lonelyToolIcone"><img src="img/fileclose.png"/></div>
+            </div>
+            <div id="submitShowAllLegends" class="rightMenuButton" title="Show all legends">
+                <div class="lonelyToolIcone"><img src="img/legend_display_all.png"/></div>
+            </div>
+            <div id="submitHideAllLegends" class="rightMenuButton" title="Hide all legends">
+                <div class="lonelyToolIcone"><img src="img/legend_hide_all.png"/></div>
+            </div>
+        </div>
+
+    <div class="rightMenuTool">
+        <HR width="50%" class="rightMenuHR"/>
+    </div>
+
+    <div class="rightMenuTool">
+        <h2>RANGE</h2>
+
+        <div class="rightMenuSubTool">
+            <input id="getRange" type="button" title="Get range from variable" value="Get range"/>
+            <input type="text" id="slider-range-text" size="9" style="width: 80%; text-align: center;"/>
+        </div>
+        <div id="slider-range" style="width: 80%;"></div>
+    </div>
+
+    <div class="rightMenuTool">
+        <HR width="50%" class="rightMenuHR"/>
+    </div>
+
+    <div class="rightMenuTool">
+        <h2>PALETTES</h2>
+        <select id="paletteSelect" style="width: 80%;">
+            <option value="alg">alg</option>
+            <option value="alg2">alg2</option>
+            <option value="blue_yellow_red">blue_yellow_red</option>
+            <option value="ferret">ferret</option>
+            <option value="greyscale">greyscale</option>
+            <option value="ncview">ncview</option>
+            <option value="occam">occam</option>
+            <option value="occam_pastel-30">occam_pastel-30</option>
+            <option value="redblue">redblue</option>
+            <option value="sst_36">sst_36</option>
+            <option value="green_magenta">green_magenta</option>
+        </select>
+    </div>
+
+    <div class="rightMenuTool">&nbsp;
+        <HR width="50%" class="rightMenuHR"/>
+    </div>
+
+    <div class="rightMenuTool">
+        <h2>LEGEND</h2>
+
+        <div class="rightMenuSubTool">
+            Colors number : <span id="slider-nbcolorbands-text"/>
+        </div>
+        <div id="slider-nbcolorbands"></div>
+        <BR/><BR/>
+
+        <div id="legend"></div>
+    </div>
+
+    <!-- Pascal part : -->
+    <div id="overlayStdDevCase" class="rightMenuTool">
+        <div class="rightMenuTool">&nbsp;
+            <HR width="50%" class="rightMenuHR"/>
+        </div>
+        <h2>UNCERTAINTY</h2>
+
+        <div id="uncertaintyWithMasking">
+            <input id="uncertaintyWithMaskingInput" class="uncertaintyRepresentationRightMenuClass" type="radio" name="displayOverlayUncertaintyMode">
+            <label for="uncertaintyWithMasking">
+                <span class="variable2">Mask areas > threshold</span>
+            </label>
+        </div>
+        <br>
+
+        <div id="uncertaintyWithStippling">
+            <input id="uncertaintyWithStipplingInput" class="uncertaintyRepresentationRightMenuClass" type="radio" name="displayOverlayUncertaintyMode">
+            <label for="uncertaintyWithStipplingInput">
+                <span class="variable2">Stipple areas <  threshold</span>
+            </label>
+        </div>
+        <br>
+        <!-- Slider part: -->
+        <!-- Way to do it: put in an input element value's slider. To describe input, label associated.-->
+        <label id="uncertaintySliderLabel" for="uncertaintySliderValueInput"
+               title="Choose uncertainty threshold between 0.5 std dev mean (# mean), 1 std dev mean, 1.5 std dev mean and 2 std dev mean">St dev threshold: </label>
+        <input id="uncertaintySliderValueInput" type="text" readonly>
+
+        <div id="uncertaintyLevelSlider"></div>
+    </div>
+    <!--End Pascal part : -->
+
+</div>
+
+<div id="hideOrShowRightMenu">
+    <div class="rightMenuBubble"><img src="img/bubbleBlack_left_X.png"/></div>
+</div>
+
+</div>
+
+<?php
+
+$properties = parse_ini_file( "bobcat.properties" );
+
+function fancytree_build_children( $dirtoread, $category, $elementToSelect )
+{
+    $files = glob( $dirtoread . "*.nc" );
+    $len = count( $files );
+    $counter = 0;
+    echo "\n";
+    foreach( $files as $file )
+    {
+        if( is_file( $file ) )
+        {
+            $counter++;
+            $bfile = basename( $file );
+            $pfile = explode( "_", $bfile );
+            // $pfile[1] represent the title, character "-" replaced by " "
+            $sfile = implode( "_", array_slice( $pfile, 0, 4 ) );
+            $fileInfo = explode( '.nc', $file );
+            $fileInfo = $fileInfo[0] . '.info';
+            if( file_exists( $fileInfo ) )
+            {
+                $fileInfoContent = file_get_contents( $fileInfo );
+                $fileInfoContent = str_replace( "\n", "<br>", $fileInfoContent );
+                $fileInfoContent = str_replace( "Ref :", "<b>Ref :</b>", $fileInfoContent );
+                $fileInfoContent = str_replace( "Contact :", "<b>Contact :</b>", $fileInfoContent );
+            }
+            else
+                $fileInfoContent = "Not available";
+            // If first element to be selected use next line and set true for elementToSelect argument
+            //$selectedElement = $elementToSelect && ($counter == 1) ? true : false;
+            // To select a specific element
+            $selectedElement = $elementToSelect && strpos( $sfile, $elementToSelect ) ? true : false;
+            echo '                    {title:"' . str_replace( "-", " ", $pfile[1] ) . '", key:"' . $sfile . '", selected: "' . $selectedElement . '", icon:false, url:"' . $category . '", complexToolTip:"' . $fileInfoContent . '",}';
+            if( $counter != $len )
+            {
+                echo ',' . "\n";
+            }
+            else
+            {
+                // last line without ,
+                echo "\n";
+            }
+        }
+    }
+    echo "\n";
+
+}
+
+?>
 
 <script type="text/javascript">
     $( document ).ready( function ()
