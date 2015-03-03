@@ -231,7 +231,7 @@ var BCInterfaceW = Class.create( {
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
-        var mapUncertaintyTitle = 'Uncertainty data for: ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
+        var mapUncertaintyTitle = 'Uncertainty (stdev) : ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
                 this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapUncertaintyShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
 
