@@ -167,6 +167,8 @@ var BCInterfaceW = Class.create( {
             {
                 $( "#overlayStdDevCaseLeft" ).show();
                 $( "#overlayStdDevCase" ).show();
+                $("#uncertaintyWithMaskingInput").prop("checked", $("#uncertaintyWithMaskingInputLeft").is(":checked"));
+                $("#uncertaintyWithStipplingInput").prop("checked", $("#uncertaintyWithStipplingInputLeft").is(":checked"));
             }
             else
             {
@@ -227,12 +229,12 @@ var BCInterfaceW = Class.create( {
 
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
-                + "_" + selectedPeriod + "_XYT.nc";
+            + "_" + selectedPeriod + "_XYT.nc";
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
-                this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
         var mapUncertaintyTitle = 'Uncertainty (stdev) : ' + this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
-                this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapUncertaintyShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
 
         var options = {container: $( '#printable' ),
@@ -389,55 +391,55 @@ var BCInterfaceW = Class.create( {
     {
         // ------------------------- Define parameters for left and right  menu (overlay uncertainty information + update all: --------------------------------------------- //
         // ******** Retrieve parameters to build overlay uncertainty maps (LEFT PART) : **************************
-                this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
-                this.modelType = this.hashResources.get( resource )[1];
-                this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
+        this.urlResourceUncertainty = this.geoserverUrl + '/wms'; // = Where are the data, url to the data.
+        this.modelType = this.hashResources.get( resource )[1];
+        this.modelName = this.hashResources.get( resource )[0]; // Si :  this.hashResources.get( this.selectedResourceKeys[iSelectedResourceKeys] )[0]; , ne me donne que le dernier dc ne va pas, besoin qu'il boucle sur les noms de chq modele.
 
-                if( $( '#uncertaintyWithMaskingInputLeft' ).is( ':checked' ) )
-                {
-                    this.overlayModeLeft = 'mk'
-                }
-                else if( $( '#uncertaintyWithStipplingInputLeft' ).is( ':checked' ) )
-                {
-                    this.overlayModeLeft = 'st'
-                }
-                // Retrieve threshold value f(slider nivel).
-                this.thresholdValueLeft = $( "#uncertaintySliderValueInputLeft" ).val();// Note : on a besoin de declarer ds initialise this.(...).
-                this.thresholdValueForTitleLayerLeft = this.thresholdValueLeft.replace( ' σ', 'stdDev' );
-                //this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace( '.', '' );
-                switch (this.thresholdValueLeft)
-                {
-                    case '0.5 σ':
-                        this.thresholdValueForPyLeft = 0;
-                        break;
-                    case '1 σ':
-                        this.thresholdValueForPyLeft = 1;
-                        break;
-                    case '1.5 σ':
-                        this.thresholdValueForPyLeft = 2;
-                        break;
-                    case '2 σ':
-                        this.thresholdValueForPyLeft = 3;
-                        break;
-                    case '2.5 σ':
-                        this.thresholdValueForPyLeft = 4;
-                        break;
-                    case '3 σ':
-                        this.thresholdValueForPyLeft = 5;
-                        break;
-                }
-                // Set time step to call .shp files (uncertainty files) in GS: --> In these files, time steps information  = index of numTimeSTeps.
-                this.indexTimeArray = this.timeArray.indexOf(this.time);
-                // Set uncertainty variable:
-                switch( this.variable )
-                        {
-                            case "Terrestrial_flux":
-                                this.uncertaintyVariable = 'Terrestrial_fluxUncertainty';
-                                break;
-                            case "Ocean_flux":
-                                this.uncertaintyVariable = 'Ocean_fluxUncertainty';
-                                break;
-                        }
+        if( $( '#uncertaintyWithMaskingInputLeft' ).is( ':checked' ) )
+        {
+            this.overlayModeLeft = 'mk'
+        }
+        else if( $( '#uncertaintyWithStipplingInputLeft' ).is( ':checked' ) )
+        {
+            this.overlayModeLeft = 'st'
+        }
+        // Retrieve threshold value f(slider nivel).
+        this.thresholdValueLeft = $( "#uncertaintySliderValueInputLeft" ).val();// Note : on a besoin de declarer ds initialise this.(...).
+        this.thresholdValueForTitleLayerLeft = this.thresholdValueLeft.replace( ' σ', 'stdDev' );
+        //this.thresholdValueForPyLeft = this.thresholdValueForTitleLayer.replace( '.', '' );
+        switch (this.thresholdValueLeft)
+        {
+            case '0.5 σ':
+                this.thresholdValueForPyLeft = 0;
+                break;
+            case '1 σ':
+                this.thresholdValueForPyLeft = 1;
+                break;
+            case '1.5 σ':
+                this.thresholdValueForPyLeft = 2;
+                break;
+            case '2 σ':
+                this.thresholdValueForPyLeft = 3;
+                break;
+            case '2.5 σ':
+                this.thresholdValueForPyLeft = 4;
+                break;
+            case '3 σ':
+                this.thresholdValueForPyLeft = 5;
+                break;
+        }
+        // Set time step to call .shp files (uncertainty files) in GS: --> In these files, time steps information  = index of numTimeSTeps.
+        this.indexTimeArray = this.timeArray.indexOf(this.time);
+        // Set uncertainty variable:
+        switch( this.variable )
+        {
+            case "Terrestrial_flux":
+                this.uncertaintyVariable = 'Terrestrial_fluxUncertainty';
+                break;
+            case "Ocean_flux":
+                this.uncertaintyVariable = 'Ocean_fluxUncertainty';
+                break;
+        }
         // Retrieve averaging period parameter: already done, in initialise class : = this.selectedPeriod. Right now, only longterm.
         // Retrieve resource parameter ( = nom de chaque modèle, ex : CCAM est un Inversion model). --> resourceght now, only mean for Inversion, Land and Ocean models.
     },
@@ -458,16 +460,16 @@ var BCInterfaceW = Class.create( {
     {
         this.hashBobcats.each( jQuery.proxy( function( key )
         {
-        // 2 parameters especific to right part: overlayMode and threshold values --> Others values usefull to update, right part: set in getUncertaintyParameters (when map done).
-           // OverlayMode
-           if( $( '#uncertaintyWithMaskingInput' ).is( ':checked' ) )
-                                    {
-                                        this.overlayMode = 'mk'
-                                    }
-                                    else if( $( '#uncertaintyWithStipplingInput' ).is( ':checked' ) )
-                                    {
-                                        this.overlayMode = 'st'
-                                    }
+            // 2 parameters especific to right part: overlayMode and threshold values --> Others values usefull to update, right part: set in getUncertaintyParameters (when map done).
+            // OverlayMode
+            if( $( '#uncertaintyWithMaskingInput' ).is( ':checked' ) )
+            {
+                this.overlayMode = 'mk'
+            }
+            else if( $( '#uncertaintyWithStipplingInput' ).is( ':checked' ) )
+            {
+                this.overlayMode = 'st'
+            }
 
 
             var map = this.hashBobcats.get( key ).map;
@@ -476,19 +478,19 @@ var BCInterfaceW = Class.create( {
 
                 map.layers[0].destroy();
                 var uncertaintyLayerNewThreshold = new OpenLayers.Layer.WMS(
-                        "Uncertainty layer (" + thresholdValueForTitleLayerRight + ")",
-                        this.geoserverUrl + '/wms',
-                {
-                    VERSION: '1.1.1',
-                    LAYERS: 'binary' + this.selectedPeriod  + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.indexTimeArray + this.uncertaintyVariable + '_' + this.overlayMode + '_fco2',
-                    transparent: true,
-                    FORMAT: 'image/png'
-                }, {
-                    isBaseLayer: false,
-                    opacity: 1,
-                    singleTile: true,
-                    visibility: true
-                } );
+                    "Uncertainty layer (" + thresholdValueForTitleLayerRight + ")",
+                    this.geoserverUrl + '/wms',
+                    {
+                        VERSION: '1.1.1',
+                        LAYERS: 'binary' + this.selectedPeriod  + this.modelType + 'thr-' + this.thresholdValueForPy + '_' + this.indexTimeArray + this.uncertaintyVariable + '_' + this.overlayMode + '_fco2',
+                        transparent: true,
+                        FORMAT: 'image/png'
+                    }, {
+                        isBaseLayer: false,
+                        opacity: 1,
+                        singleTile: true,
+                        visibility: true
+                    } );
                 map.addLayer( uncertaintyLayerNewThreshold );
                 map.setLayerIndex( uncertaintyLayerNewThreshold, 0 );// We want that uncertainty overlay be at bottom compare with all others overlays layers. See http://gis.stackexchange.com/questions/15238/how-to-define-layer-order-in-openlayers
 
@@ -506,19 +508,19 @@ var BCInterfaceW = Class.create( {
     {
         console.log(this.indexTimeArray);
         this.uncertaintyLayer = new OpenLayers.Layer.WMS(
-                "Uncertainty layer (" + this.thresholdValueForTitleLayerLeft + ")",
-                this.geoserverUrl + '/wms',
-        {
-            VERSION: '1.1.1',
-            LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.indexTimeArray + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
-            transparent: true,
-            FORMAT: 'image/png'
-        }, {
-            isBaseLayer: false,
-            opacity: 1,
-            singleTile: true,
-            visibility: true
-        } );
+            "Uncertainty layer (" + this.thresholdValueForTitleLayerLeft + ")",
+            this.geoserverUrl + '/wms',
+            {
+                VERSION: '1.1.1',
+                LAYERS: 'binary' + this.selectedPeriod + this.modelType + 'thr-' + this.thresholdValueForPyLeft + '_' + this.indexTimeArray + this.uncertaintyVariable + '_' + this.overlayModeLeft + '_fco2',
+                transparent: true,
+                FORMAT: 'image/png'
+            }, {
+                isBaseLayer: false,
+                opacity: 1,
+                singleTile: true,
+                visibility: true
+            } );
         // ***************** Apply visualisations modality to overlay maps f(user choices) about uncertainty information: **************************
         if( $( "#displayOverlayStdDevLeft" ).is( ":checked" ) && this.modelName == 'MEAN' )
         {
@@ -539,9 +541,9 @@ var BCInterfaceW = Class.create( {
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( resource )[1] );
         // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
         var urlResource = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( resource )[1] + "/" + selectedPeriod + "/" + resource
-                + "_" + selectedPeriod + "_XYT.nc";
+            + "_" + selectedPeriod + "_XYT.nc";
         var mapTitle = this.hashResources.get( resource )[1].replace( /\//g, ' / ' ) + ' / ' +
-                this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
+            this.hashResources.get( resource )[0] + ' / ' + this.hashVariables.get( this.variable )[0];
         var mapShortTitle = selectedPeriod.indexOf( "longterm" ) != -1 ? selectedPeriod.replace( "longterm-", "" ) : false;
         var options = {container: $( '#printable' ),
             id: id,
@@ -798,26 +800,26 @@ var BCInterfaceW = Class.create( {
         // Filter
         var tree = $( "#resourceSelect" ).fancytree( "getTree" );
         $( "input[name=searchResource]" ).keyup(
-                function( e )
+            function( e )
+            {
+                tree.options.filter.mode = "hide";
+                var match = $( this ).val();
+                if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
                 {
-                    tree.options.filter.mode = "hide";
-                    var match = $( this ).val();
-                    if( e && e.which === $.ui.keyCode.ESCAPE || "" === $.trim( match ) )
-                    {
-                        $( "button#btnResetSearchResource" ).click();
-                        return;
-                    }
-                    // Pass text as filter string (will be matched as substring in the node title)
-                    var n = tree.applyFilter( match );
-                    $( "button#btnResetSearchResource" ).attr( "disabled", false );
-                } );
+                    $( "button#btnResetSearchResource" ).click();
+                    return;
+                }
+                // Pass text as filter string (will be matched as substring in the node title)
+                var n = tree.applyFilter( match );
+                $( "button#btnResetSearchResource" ).attr( "disabled", false );
+            } );
 
         $( "button#btnResetSearchResource" ).click(
-                function( e )
-                {
-                    $( "input[name=searchResource]" ).val( "" );
-                    tree.clearFilter();
-                } ).attr( "disabled", true );
+            function( e )
+            {
+                $( "input[name=searchResource]" ).val( "" );
+                tree.clearFilter();
+            } ).attr( "disabled", true );
     },
 
     onSelectResource: function( isInit, data )
@@ -863,7 +865,7 @@ var BCInterfaceW = Class.create( {
             var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[i] )[1] );
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[i] )[1] + "/" + selectedPeriod + "/" +
-                    this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+                this.selectedResourceKeys[i] + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
             this.getVariables( url, i, this.selectedResourceKeys[i] );
 
             // Pascal part : if title model = mean, activate possibility to add uncertainty information.
@@ -991,8 +993,8 @@ var BCInterfaceW = Class.create( {
     fillVariablesError: function()
     {
         var message = $( '<div></div>' )
-                .html( "<BR/>Unable to read file" )
-                .dialog(
+            .html( "<BR/>Unable to read file" )
+            .dialog(
             {
                 modal: true,
                 resizable: false,
@@ -1054,7 +1056,7 @@ var BCInterfaceW = Class.create( {
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var url = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( fileArray[i] )[1] + "/" + selectedPeriod + "/" +
-                    this.basename( fileArray[i] ) + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
+                this.basename( fileArray[i] ) + "_" + selectedPeriod + "_XYT.nc" + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities";
 
             this.getTimes( url, i );
         }
@@ -1214,8 +1216,8 @@ var BCInterfaceW = Class.create( {
     getTimesError: function()
     {
         var message = $( '<div></div>' )
-                .html( "Unable to get Dimension Time" )
-                .dialog(
+            .html( "Unable to get Dimension Time" )
+            .dialog(
             {
                 modal: true,
                 resizable: false,
@@ -1271,13 +1273,13 @@ var BCInterfaceW = Class.create( {
 
             // ajax communication need exact same domain so without 8080 (need a connector for that : AJP JKMount)
             var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-                    + "_" + selectedPeriod + "_XYT.nc";
+                + "_" + selectedPeriod + "_XYT.nc";
 
             var url = resourceUrl
-                    + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMetadata&item=minmax&SRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=200&HEIGHT=200"
-                    + "&TIME=" + this.time
-                    + "&ELEVATION=" + this.elevation
-                    + "&LAYERS=" + this.variable;
+                + "?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMetadata&item=minmax&SRS=EPSG:4326&BBOX=-180,-90,180,90&WIDTH=200&HEIGHT=200"
+                + "&TIME=" + this.time
+                + "&ELEVATION=" + this.elevation
+                + "&LAYERS=" + this.variable;
 
             this.getRange( url, previousRange );
         }, this ) );
@@ -1326,8 +1328,8 @@ var BCInterfaceW = Class.create( {
         $( "#slider-range-text" ).val( previousRange );
         this.rangeDiv.blur();
         var message = $( '<div></div>' )
-                .html( "Unable to get range" )
-                .dialog(
+            .html( "Unable to get range" )
+            .dialog(
             {
                 modal: true,
                 autoOpen: false,
@@ -1385,18 +1387,18 @@ var BCInterfaceW = Class.create( {
         var selectedPeriod = this.getSelectedPeriodValue( this.hashResources.get( this.selectedResourceKeys[0] )[1] );
 
         var resourceUrl = "http://" + this.hostName + "/thredds/wms/" + this.threddsPath + "/" + this.hashResources.get( this.selectedResourceKeys[0] )[1] + "/" + selectedPeriod + "/" + this.selectedResourceKeys[0]
-                + "_" + selectedPeriod + "_XYT.nc";
+            + "_" + selectedPeriod + "_XYT.nc";
         var colorscalerange = $( "#slider-range-text" ).val().replace( /[\]\[]/g, '' );
         var numcolorbands = $( "#slider-nbcolorbands-text" ).html();
         // Initial legend size is 110x264 ; here take 80% of the size
         $( "#legend" ).html( "<img id='legendImg' width='88px;' height='211px;' src='"
-                + resourceUrl
-                + "?REQUEST=GetLegendGraphic"
-                + "&LAYER=" + this.variable
-                + "&PALETTE=" + this.palette
-                + "&COLORSCALERANGE=" + colorscalerange
-                + "&NUMCOLORBANDS=" + numcolorbands
-                + "' alt=''/>" );
+            + resourceUrl
+            + "?REQUEST=GetLegendGraphic"
+            + "&LAYER=" + this.variable
+            + "&PALETTE=" + this.palette
+            + "&COLORSCALERANGE=" + colorscalerange
+            + "&NUMCOLORBANDS=" + numcolorbands
+            + "' alt=''/>" );
 
         $( "#legendImg" ).load( jQuery.proxy( function()
         {
@@ -1418,10 +1420,10 @@ var BCInterfaceW = Class.create( {
                 COLORSCALERANGE: colorscalerange } );
             // replace also the inner legend image
             $( "#BClegendImg" + key ).replaceWith( "<img id='BClegendImg" + key + "' width='66px;' height='158px;' src='" +
-                    resourceUrl + "?REQUEST=GetLegendGraphic" + "&LAYER=" + map.variable +
-                    "&PALETTE=" + this.palette + "&COLORSCALERANGE=" + colorscalerange +
-                    "&NUMCOLORBANDS=" + numcolorbands
-                    + "' alt=''/>" );
+                resourceUrl + "?REQUEST=GetLegendGraphic" + "&LAYER=" + map.variable +
+                "&PALETTE=" + this.palette + "&COLORSCALERANGE=" + colorscalerange +
+                "&NUMCOLORBANDS=" + numcolorbands
+                + "' alt=''/>" );
         }, this ) );
 
     },
@@ -1485,29 +1487,29 @@ var BCInterfaceW = Class.create( {
             {
                 $( "#uncertaintySliderValueInput" ).val( valueArray[ui.value] );// If we want to put in input different value (my case): relation with slider's values done by index array.
                 // Threshold: --> Set here and then use in updateUncertMapRightPart (pass like parameters).
-                        this.thresholdValueSliderRight = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
-                        this.thresholdValueForTitleLayerRight = this.thresholdValueSliderRight.replace( ' σ', 'stdDev' );
-                        switch (this.thresholdValueSliderRight)
-                        {
-                                case '0.5 σ':
-                                        this.thresholdValueForPy = 0;
-                                break;
-                                case '1 σ':
-                                        this.thresholdValueForPy = 1;
-                                break;
-                                case '1.5 σ':
-                                        this.thresholdValueForPy = 2;
-                                break;
-                                case '2 σ':
-                                        this.thresholdValueForPy = 3;
-                                break;
-                                case '2.5 σ':
-                                        this.thresholdValueForPy = 4;
-                                break;
-                                case '3 σ':
-                                        this.thresholdValueForPy = 5;
-                                break;
-                        }
+                this.thresholdValueSliderRight = $( "#uncertaintySliderValueInput" ).val();// Note : on a besoin de declarer ds initialise this.(...).
+                this.thresholdValueForTitleLayerRight = this.thresholdValueSliderRight.replace( ' σ', 'stdDev' );
+                switch (this.thresholdValueSliderRight)
+                {
+                    case '0.5 σ':
+                        this.thresholdValueForPy = 0;
+                        break;
+                    case '1 σ':
+                        this.thresholdValueForPy = 1;
+                        break;
+                    case '1.5 σ':
+                        this.thresholdValueForPy = 2;
+                        break;
+                    case '2 σ':
+                        this.thresholdValueForPy = 3;
+                        break;
+                    case '2.5 σ':
+                        this.thresholdValueForPy = 4;
+                        break;
+                    case '3 σ':
+                        this.thresholdValueForPy = 5;
+                        break;
+                }
                 this.updateUncertMapRightPart( this.selectedPeriod, this.modelType, this.thresholdValueForPy, this.indexTimeArray, this.uncertaintyVariable, this.overlayMode, this.thresholdValueForTitleLayerRight );
             }, this )
         } );
@@ -1829,10 +1831,10 @@ var BCInterfaceW = Class.create( {
         this.help.wrapper.append( divFooter );
 
         var divContentFooter = $( '' +
-                '<div class="helpFooterContentRight">' +
-                '<div class="helpFooterContentFloat">A project realised by</div>' +
-                '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
-                '</div>' );
+            '<div class="helpFooterContentRight">' +
+            '<div class="helpFooterContentFloat">A project realised by</div>' +
+            '<div class="helpFooterContentFloat" title="Climate and Environment Sciences Laboratory"><div><img src="' + this.imgPath + '/logo_lsce_small.png"/></div><div><img src="' + this.imgPath + '/logo_LSCE_text_2_small.png"/></div></div>' +
+            '</div>' );
 
         divFooter.append( divContentFooter );
     },
