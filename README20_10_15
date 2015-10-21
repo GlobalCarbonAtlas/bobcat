@@ -1,0 +1,4 @@
+Depot git for bobcat
+Concrètement, je l'ai cloné de GitHub le 20/10/15, pour répondre au besoin de Philippe P
+de changer la validationde l'input Originaldata url (id= originaldataUrlInput) : on ne pouvait
+entrer que un mail, il faut pouvoir entrer une url également.
